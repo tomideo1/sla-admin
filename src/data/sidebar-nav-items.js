@@ -1,32 +1,32 @@
 export default function () {
   return [{
-    title: 'Blog Dashboard',
+    title: ' Dashboard',
     to: {
-      name: 'blog-overview',
+      name: 'dashboard',
     },
-    htmlBefore: '<i class="material-icons">edit</i>',
+    htmlBefore: '<i class="material-icons">dashboard</i>',
     htmlAfter: '',
   }, {
-    title: 'Blog Posts',
-    htmlBefore: '<i class="material-icons">vertical_split</i>',
+    title: 'Courses',
+    htmlBefore: '<i class="material-icons">library_books</i>',
     to: {
       name: 'blog-posts',
     },
   }, {
-    title: 'Add New Post',
-    htmlBefore: '<i class="material-icons">note_add</i>',
+    title: 'Coaches',
+    htmlBefore: '<i class="material-icons">school</i>',
     to: {
       name: 'add-new-post',
     },
   }, {
-    title: 'Forms & Components',
-    htmlBefore: '<i class="material-icons">view_module</i>',
+    title: 'Messaging',
+    htmlBefore: '<i class="material-icons">message</i>',
     to: {
       name: 'components-overview',
     },
   }, {
-    title: 'Tables',
-    htmlBefore: '<i class="material-icons">table_chart</i>',
+    title: 'Groups',
+    htmlBefore: '<i class="material-icons">people</i>',
     to: {
       name: 'tables',
     },
@@ -37,8 +37,8 @@ export default function () {
       name: 'user-profile-lite',
     },
   }, {
-    title: 'Errors',
-    htmlBefore: '<i class="material-icons">error</i>',
+    title: 'Reports',
+    htmlBefore: '<i class="material-icons">report</i>',
     to: {
       name: 'errors',
     },

@@ -13,10 +13,12 @@ import router from './router';
 
 // Layouts
 import Default from '@/layouts/Default.vue';
+import noSideBar from '@/layouts/no-sidebar.vue';
 
 ShardsVue.install(Vue);
 
 Vue.component('default-layout', Default);
+Vue.component('no-sidebar', noSideBar);
 
 Vue.config.productionTip = false;
 Vue.prototype.$eventHub = new Vue();

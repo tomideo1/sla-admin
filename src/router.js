@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-
-import PersonalBlog from './views/PersonalBlog.vue';
+import Welcome from './views/static/welcome.vue';
+import Login from './views/auth/login.vue';
+import forgotPassword from './views/auth/forgotPassword.vue';
+import Dashboard from './views/dashboard.vue';
 import UserProfileLite from './views/UserProfileLite.vue';
 import AddNewPost from './views/AddNewPost.vue';
 import Errors from './views/Errors.vue';
@@ -22,12 +24,26 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/blog-overview',
+      name: '',
+      meta: { layout: 'no-sidebar' },
+      component: Welcome,
     },
     {
-      path: '/blog-overview',
-      name: 'blog-overview',
-      component: PersonalBlog,
+      path: '/login',
+      name: 'login',
+      meta: { layout: 'no-sidebar' },
+      component: Login,
+    },
+    {
+      path: '/forgot-password',
+      name: 'forgotPassword',
+      meta: { layout: 'no-sidebar' },
+      component: forgotPassword,
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard,
     },
     {
       path: '/user-profile-lite',

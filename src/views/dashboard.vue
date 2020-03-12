@@ -4,45 +4,45 @@
     <d-row no-gutters class="page-header py-4">
       <d-col col sm="4" class="text-center text-sm-left mb-4 mb-sm-0">
         <span class="text-uppercase page-subtitle">Dashboard</span>
-        <h3 class="page-title">Personal Blog</h3>
+        <h3 class="page-title">Admin Dashboard</h3>
       </d-col>
     </d-row>
 
     <!-- Small Stats Blocks -->
-    <d-row>
-      <d-col lg v-for="(stats, idx) in smallStats" :key="idx" class="mb-4">
-        <small-stats :id="`small-stats-${idx}`" variation="1" :chart-data="stats.datasets" :label="stats.label" :value="stats.value" :percentage="stats.percentage" :increase="stats.increase" :decrease="stats.decrease" />
-      </d-col>
-    </d-row>
+<!--    <d-row>-->
+<!--      <d-col lg v-for="(stats, idx) in smallStats" :key="idx" class="mb-4">-->
+<!--        <small-stats :id="`small-stats-${idx}`" variation="1" :chart-data="stats.datasets" :label="stats.label" :value="stats.value" :percentage="stats.percentage" :increase="stats.increase" :decrease="stats.decrease" />-->
+<!--      </d-col>-->
+<!--    </d-row>-->
 
-    <d-row>
-      <!-- Users Overview -->
-      <d-col lg="8" md="6" sm="12" class="mb-4">
-        <bo-users-overview />
-      </d-col>
+<!--    <d-row>-->
+<!--      &lt;!&ndash; Users Overview &ndash;&gt;-->
+<!--      <d-col lg="8" md="6" sm="12" class="mb-4">-->
+<!--        <bo-users-overview />-->
+<!--      </d-col>-->
 
-      <!-- Users by Device (lite) -->
-      <d-col lg="4" md="6" sm="12" class="mb-4">
-        <bo-users-by-device />
-      </d-col>
-    </d-row>
+<!--      &lt;!&ndash; Users by Device (lite) &ndash;&gt;-->
+<!--      <d-col lg="4" md="6" sm="12" class="mb-4">-->
+<!--        <bo-users-by-device />-->
+<!--      </d-col>-->
+<!--    </d-row>-->
 
-    <d-row>
-      <!-- New Draft -->
-      <d-col lg="4" md="6" sm="12" class="mb-4">
-        <bo-new-draft />
-      </d-col>
+<!--    <d-row>-->
+<!--      &lt;!&ndash; New Draft &ndash;&gt;-->
+<!--      <d-col lg="4" md="6" sm="12" class="mb-4">-->
+<!--        <bo-new-draft />-->
+<!--      </d-col>-->
 
-      <!-- Discussions -->
-      <d-col lg="5" md="12" sm="12" class="mb-4">
-        <bo-discussions @approve="handleApprove" @reject="handleReject" @edit="handleEdit" @view-all-comments="handleViewAllComments" />
-      </d-col>
+<!--      &lt;!&ndash; Discussions &ndash;&gt;-->
+<!--      <d-col lg="5" md="12" sm="12" class="mb-4">-->
+<!--        <bo-discussions @approve="handleApprove" @reject="handleReject" @edit="handleEdit" @view-all-comments="handleViewAllComments" />-->
+<!--      </d-col>-->
 
-      <!-- Top Referrals -->
-      <d-col lg="3" md="12" sm="12" class="mb-4">
-        <bo-top-referrals />
-      </d-col>
-    </d-row>
+<!--      &lt;!&ndash; Top Referrals &ndash;&gt;-->
+<!--      <d-col lg="3" md="12" sm="12" class="mb-4">-->
+<!--        <bo-top-referrals />-->
+<!--      </d-col>-->
+<!--    </d-row>-->
   </d-container>
 </template>
 
