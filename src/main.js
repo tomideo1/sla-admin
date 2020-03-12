@@ -9,7 +9,7 @@ import '@/assets/scss/date-range.scss';
 
 // Core
 import App from './App.vue';
-import router from './router';
+import router from './router/router';
 
 // Layouts
 import Default from '@/layouts/Default.vue';
