@@ -15,7 +15,7 @@ import store from "@/store/app";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
 import forgotPassword from "../views/auth/forgotPassword";
-import Dashboard from "../views/dashboard";
+import Dashboard from "../../../../../Downloads/Shards-Dashboard-Pro-Vue-1.0.1-Standard/src/views/dashboard";
 
 const router =  new Router({
   mode: 'history',
