@@ -1,10 +1,10 @@
 /* eslint-disable */
 import Vue from 'vue';
 import ShardsVue from 'shards-vue';
+import VueAnalytics from 'vue-analytics';
 
-// Styles
 import 'bootstrap/dist/css/bootstrap.css';
-import '@/scss/shards-dashboards.scss';
+import '@/assets/shards-dashboard-pro/shards-dashboards.scss';
 import '@/assets/scss/date-range.scss';
 
 // Core
@@ -14,10 +14,16 @@ import router from './router/router';
 // Layouts
 import Default from '@/layouts/Default.vue';
 import noSideBar from '@/layouts/no-sidebar.vue';
+import HeaderNavigation from '@/layouts/HeaderNavigation.vue';
+import IconSidebar from '@/layouts/IconSidebar.vue';
+
+const isProd = process.env.NODE_ENV === 'production';
 
 ShardsVue.install(Vue);
 
 Vue.component('default-layout', Default);
+Vue.component('header-navigation-layout', HeaderNavigation);
+Vue.component('icon-sidebar-layout', IconSidebar);
 Vue.component('no-sidebar', noSideBar);
 
 Vue.config.productionTip = false;

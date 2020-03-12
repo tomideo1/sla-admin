@@ -4,8 +4,8 @@
         <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
           <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
             <div class="d-table m-auto">
-              <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="@/assets/logos/logo.png" alt="Shards Dashboard">
-              <span v-if="!hideLogoText" class="d-none d-md-inline ml-1">Sla Dashboard</span>
+              <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="@/assets/images/shards-dashboards-logo.svg" alt="Shards Dashboard">
+              <span v-if="!hideLogoText" class="d-none d-md-inline ml-1">Shards Dashboard</span>
             </div>
           </a>
           <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none" @click="handleToggleSidebar()">
@@ -26,20 +26,23 @@
       </form>
 
       <div class="nav-wrapper">
-          <d-nav class="flex-column">
-            <li v-for="(item, navItemIdx) in items" :key="navItemIdx" class="nav-item dropdown">
-              <d-link :class="['nav-link', item.items && item.items.length ? 'dropdown-toggle' : '']" :to="item.to" v-d-toggle="`snc-${navItemIdx}`">
+        <div v-if="items" v-for="(nav, navIdx) in items" :key="navIdx">
+          <h6 v-if="nav.title" class="main-sidebar__nav-title">{{ nav.title }}</h6>
+          <d-nav v-if="typeof nav.items !== 'undefined' && nav.items.length" class="nav--no-borders flex-column">
+            <li v-for="(item, navItemIdx) in nav.items" :key="navItemIdx" class="nav-item dropdown">
+              <d-link :class="['nav-link', item.items && item.items.length ? 'dropdown-toggle' : '']" :to="item.to" v-d-toggle="`snc-${navIdx}-${navItemIdx}`">
                 <div class="item-icon-wrapper" v-if="item.htmlBefore" v-html="item.htmlBefore" />
                 <span v-if="item.title">{{ item.title }}</span>
                 <div class="item-icon-wrapper" v-if="item.htmlAfter" v-html="item.htmlAfter" />
               </d-link>
-              <d-collapse v-if="item.items && item.items.length" :id="`snc-${navItemIdx}`" class="dropdown-menu dropdown-menu-small" accordion="sidebar-items-accordion">
+              <d-collapse v-if="item.items && item.items.length" :id="`snc-${navIdx}-${navItemIdx}`" class="dropdown-menu dropdown-menu-small" accordion="sidebar-items-accordion">
                 <d-dropdown-item v-for="(subItem, subItemIdx) in item.items" :key="subItemIdx" :href="subItem.href" :to="subItem.to">
                   {{ subItem.title }}
                 </d-dropdown-item>
               </d-collapse>
             </li>
           </d-nav>
+        </div>
       </div>
   </aside>
 </template>

@@ -15,7 +15,7 @@ import store from "@/store/app";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
 import forgotPassword from "../views/auth/forgotPassword";
-import Dashboard from "../views/Dashboard";
+import Dashboard from "../views/dashboard";
 
 const router =  new Router({
   mode: 'history',

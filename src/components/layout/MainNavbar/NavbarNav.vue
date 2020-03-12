@@ -1,6 +1,6 @@
 <template>
-  <d-navbar-nav class="border-left flex-row">
-    <li class="nav-item border-right dropdown notifications">
+  <d-navbar-nav class="flex-row">
+    <li class="nav-item border-left border-right dropdown notifications">
       <a class="nav-link nav-link-icon text-center" v-d-toggle.notifications>
         <div class="nav-link-icon__wrapper">
           <i class="material-icons">&#xE7F4;</i>
@@ -38,10 +38,10 @@
         <img class="user-avatar rounded-circle mr-2" src="@/assets/images/avatars/0.jpg" alt="User Avatar"> <span class="d-none d-md-inline-block">Sierra Brooks</span>
       </a>
       <d-collapse id="user-actions" class="dropdown-menu dropdown-menu-small">
-        <d-dropdown-item><i class="material-icons">&#xE7FD;</i> Profile</d-dropdown-item>
-        <d-dropdown-item><i class="material-icons">&#xE8B8;</i> Edit Profile</d-dropdown-item>
-        <d-dropdown-item><i class="material-icons">&#xE2C7;</i> Files</d-dropdown-item>
-        <d-dropdown-item><i class="material-icons">&#xE896;</i> Transactions</d-dropdown-item>
+        <d-dropdown-item to="user-profile"><i class="material-icons">&#xE7FD;</i> Profile</d-dropdown-item>
+        <d-dropdown-item to="edit-user-profile"><i class="material-icons">&#xE8B8;</i> Edit Profile</d-dropdown-item>
+        <d-dropdown-item to="file-manager-list"><i class="material-icons">&#xE2C7;</i> Files</d-dropdown-item>
+        <d-dropdown-item to="transaction-history"><i class="material-icons">&#xE896;</i> Transactions</d-dropdown-item>
         <d-dropdown-divider />
         <d-dropdown-item href="#" class="text-danger">
           <i class="material-icons text-danger">&#xE879;</i> Logout
@@ -54,5 +54,18 @@
 <style>
   .nav-link:hover {
     cursor: pointer;
+  }
+
+  /* IE11 Navbar flex fix. */
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .navbar-nav {
+      align-items: stretch !important;
+      flex: 1 1 100%;
+      flex-flow: row wrap;
+    }
+
+    .nav-item.notifications {
+      margin-left: auto !important;
+    }
   }
 </style>
