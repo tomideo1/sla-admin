@@ -21,25 +21,34 @@
           <span style="font-size: 16px;" class="d-block mb-2 text-muted"><strong>Colors</strong></span>
         </d-col>
         <d-col class="mb-4">
-          <div class="bg-primary rounded text-white text-center p-4" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+          <div class="bg-primary rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
         </d-col>
         <d-col class="mb-4">
-          <div class="bg-secondary rounded text-white text-center p-4" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+          <div class="bg-secondary rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
         </d-col>
         <d-col class="mb-4">
-          <div class="bg-success rounded text-white text-center p-4" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+          <div class="bg-success rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
         </d-col>
         <d-col class="mb-4">
-          <div class="bg-info rounded text-white text-center p-4" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+          <div class="bg-info rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
         </d-col>
         <d-col class="mb-4">
-          <div class="bg-warning rounded text-white text-center p-4" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+          <div class="bg-warning rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
         </d-col>
         <d-col class="mb-4">
-          <div class="bg-danger rounded text-white text-center p-4" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+          <div class="bg-danger rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
         </d-col>
         <d-col class="mb-4">
-          <div class="bg-dark rounded text-white text-center p-4" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+          <div class="bg-dark rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+        </d-col>
+        <d-col class="mb-4">
+          <div class="bg-salmon rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+        </d-col>
+        <d-col class="mb-4">
+          <div class="bg-royal-blue rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
+        </d-col>
+        <d-col class="mb-4">
+          <div class="bg-java rounded text-center p-3" style="box-shadow: inset 0 0 5px rgba(0,0,0,.2);"></div>
         </d-col>
       </d-row>
 
