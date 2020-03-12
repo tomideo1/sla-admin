@@ -218,3 +218,22 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  /* IE11 height and chart positioning fix */
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .card-body {
+      min-height: 140px;
+      position: relative;
+    }
+
+    .stats-small canvas {
+      left: 0;
+    }
+
+    .stats-small--1 .stats-small__data {
+        align-items: center !important;
+        padding-top: 20px;
+    }
+  }
+</style>

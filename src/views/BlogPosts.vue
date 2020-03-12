@@ -79,7 +79,7 @@
     <!-- Fourth Row of Posts -->
     <d-row>
       <d-col v-for="(post, idx) in PostsListFour" :key="idx" lg="3" md="6" sm="12" class="mb-4">
-        <d-card class="card-small card-post h-10">
+        <d-card class="card-small card-post h-100">
           <div class="card-post__image" :style="{ backgroundImage: 'url(\'' + post.backgroundImage + '\')' }"></div>
           <d-card-body>
             <h5 class="card-title">
