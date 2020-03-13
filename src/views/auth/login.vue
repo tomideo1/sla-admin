@@ -52,9 +52,16 @@ export default {
   },
   methods: {
     async submit() {
-
-      let res = await this.login(this.form)
-      console.log(res)
+      try {
+        let res = await this.login(this.form)
+        // route to dashboard
+        this.$router.replace({
+          name: 'dashboard'
+        })
+      }catch(e) {
+        // display error messages
+        console.log(e.response)
+      }
     },
     ...mapActions({
       login: 'auth/login'
