@@ -33,6 +33,35 @@ const router =  new Router({
       component: Welcome,
     },
     {
+      path: '/courses',
+      meta: {},
+      component: () => import("@/views/courses/index.vue"),
+      children: [
+        {
+          path: '',
+          name: 'all-courses',
+          component: () => import("@/views/courses/home.vue")
+        }
+      ]
+    },
+    {
+      path: '/groups',
+      meta: {},
+      component: () => import("@/views/groups/index.vue"),
+      children: [
+        {
+          path: '',
+          name: 'all-groups',
+          component: () => import("@/views/groups/home.vue")
+        },
+        {
+          path: '/',
+          name: 'all-groups',
+          component: () => import("@/views/groups/home.vue")
+        }
+      ]
+    },
+    {
       path: '/login',
       name: 'login',
       meta: { layout: 'no-sidebar' },

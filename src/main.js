@@ -4,6 +4,7 @@ import ShardsVue from 'shards-vue';
 import VueAnalytics from 'vue-analytics';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import 'shards-ui/dist/css/shards.css'
 import '@/assets/shards-dashboard-pro/shards-dashboards.scss';
 import '@/assets/scss/date-range.scss';
 
