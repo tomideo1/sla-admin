@@ -15,7 +15,7 @@ import store from "@/store/app";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
 import forgotPassword from "../views/auth/forgotPassword";
-import Dashboard from "../../../../../Downloads/Shards-Dashboard-Pro-Vue-1.0.1-Standard/src/views/dashboard";
+import Dashboard from "@/views/Dashboard.vue";
 
 const router =  new Router({
   mode: 'history',
@@ -31,6 +31,35 @@ const router =  new Router({
       name: '',
       meta: { layout: 'no-sidebar' },
       component: Welcome,
+    },
+    {
+      path: '/courses',
+      meta: {},
+      component: () => import("@/views/courses/index.vue"),
+      children: [
+        {
+          path: '',
+          name: 'all-courses',
+          component: () => import("@/views/courses/home.vue")
+        }
+      ]
+    },
+    {
+      path: '/groups',
+      meta: {},
+      component: () => import("@/views/groups/index.vue"),
+      children: [
+        {
+          path: '',
+          name: 'all-groups',
+          component: () => import("@/views/groups/home.vue")
+        },
+        {
+          path: '/',
+          name: 'all-groups',
+          component: () => import("@/views/groups/home.vue")
+        }
+      ]
     },
     {
       path: '/login',
