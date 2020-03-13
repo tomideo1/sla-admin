@@ -14,20 +14,18 @@
             <d-form>
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <d-input type="email" id="exampleInputEmail1" placeholder="Enter email" />
+                <d-input type="email" v-model="form.email" id="exampleInputEmail1" placeholder="Enter email" />
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <d-input type="password" id="exampleInputPassword1" placeholder="Password" />
+                <d-input type="password" v-model="form.password" id="exampleInputPassword1" placeholder="Password" />
               </div>
               <div class="form-group mb-3 d-table mx-auto">
                 <d-checkbox value="remember">Remember me for 30 days.</d-checkbox>
               </div>
-              <d-button pill type="submit" class="btn-accent d-table mx-auto">Access Account</d-button>
+              <d-button @click.prevent="submit" pill type="submit" class="btn-accent d-table mx-auto">Access Account</d-button>
             </d-form>
           </d-card-body>
-
-          <!-- Social Icons -->
 
         </d-card>
 
@@ -41,12 +39,30 @@
 </template>
 
 <script>
-
+import { mapActions } from "vuex"
 export default {
-  name: 'login',
-  components: {
-
+  name: 'sla-login',
+  data () {
+    return {
+      form: {
+        email: null,
+        password: null
+      }
+    }
   },
+  methods: {
+    submit() {
+
+      this.login(this.form)
+      .then(response => {
+        console.log(response)
+      })
+    },
+    ...mapActions({
+      login: 'auth/login'
+    }),
+
+  }
 };
 </script>
 
