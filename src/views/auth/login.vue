@@ -51,12 +51,10 @@ export default {
     }
   },
   methods: {
-    submit() {
+    async submit() {
 
-      this.login(this.form)
-      .then(response => {
-        console.log(response)
-      })
+      let res = await this.login(this.form)
+      console.log(res)
     },
     ...mapActions({
       login: 'auth/login'
