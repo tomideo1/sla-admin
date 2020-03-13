@@ -28,20 +28,12 @@
           </d-card-body>
 
           <!-- Social Icons -->
-          <d-card-footer class="border-top">
-            <ul class="auth-form__social-icons d-table mx-auto">
-              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-              <li><a href="#"><i class="fab fa-github"></i></a></li>
-              <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-            </ul>
-          </d-card-footer>
+
         </d-card>
 
         <!-- Meta Details -->
         <div class="auth-form__meta d-flex mt-4">
           <d-link tag="a" to="forgot-password">Forgot your password?</d-link>
-          <d-link tag="a" to="register" class="ml-auto">Create a new account?</d-link>
         </div>
       </d-col>
     </d-row>
