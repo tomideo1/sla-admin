@@ -52,7 +52,6 @@ export default {
   },
   methods: {
     submit() {
-
       this.login(this.form)
       .then(response => {
         console.log(response)
