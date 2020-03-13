@@ -5,7 +5,7 @@ import UserProfileLite from '../views/UserProfileLite.vue';
 import AddNewPost from '../views/AddNewPost.vue';
 import Errors from '../views/Errors.vue';
 import ComponentsOverview from '../views/ComponentsOverview.vue';
-import Tables from '../views/Tables.vue';
+import Groups from '../views/Groups.vue';
 import BlogPosts from '../views/BlogPosts.vue';
 import auth from './middleware/auth.js'
 import middlewarePipeline from './kernel/middlewarePipeline'
@@ -15,7 +15,7 @@ import store from "@/store/app";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
 import forgotPassword from "../views/auth/forgotPassword";
-import Dashboard from "../../../../../Downloads/Shards-Dashboard-Pro-Vue-1.0.1-Standard/src/views/dashboard";
+import Dashboard from "@/views/Dashboard.vue";
 
 const router =  new Router({
   mode: 'history',
@@ -46,7 +46,7 @@ const router =  new Router({
     },
     {
       path: '/dashboard',
-      name: 'dashboard',
+      name: 'Dashboard',
       component: Dashboard,
 
     },
@@ -76,9 +76,9 @@ const router =  new Router({
       component: ComponentsOverview,
     },
     {
-      path: '/tables',
-      name: 'tables',
-      component: Tables,
+      path: '/groups',
+      name: 'Groups',
+      component: Groups,
     },
     {
       path: '/blog-posts',

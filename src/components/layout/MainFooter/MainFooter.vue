@@ -43,13 +43,16 @@ export default {
         return defaultMenuItems;
       },
     },
+
     /**
        * The copyright information.
        */
     copyright: {
       type: String,
-      default: 'Copyright © 2018 DesignRevision',
+      default: 'Copyright © '+ new Date().getFullYear()+' SheLeads Africa',
     },
+
+
     /**
        * Whether the footer should be wrapped in a container, or not.
        */

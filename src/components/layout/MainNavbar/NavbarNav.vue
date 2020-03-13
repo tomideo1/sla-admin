@@ -35,15 +35,18 @@
     </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle text-nowrap px-3" v-d-toggle.user-actions>
-        <img class="user-avatar rounded-circle mr-2" src="@/assets/images/avatars/0.jpg" alt="User Avatar"> <span class="d-none d-md-inline-block">Sierra Brooks</span>
+        <img class="user-avatar rounded-circle mr-2" src="@/assets/images/avatars/user.png" alt="User Avatar"> <span class="d-none d-md-inline-block">
+        Admin
+      </span>
       </a>
       <d-collapse id="user-actions" class="dropdown-menu dropdown-menu-small">
-        <d-dropdown-item to="user-profile"><i class="material-icons">&#xE7FD;</i> Profile</d-dropdown-item>
+        <d-dropdown-item to="dashboard"><i class="material-icons">dashboard</i> Dashboard</d-dropdown-item>
+        <d-dropdown-item to="file-manager-list"><i class="material-icons">library_books</i> Courses</d-dropdown-item>
+        <d-dropdown-item to="transaction-history"><i class="material-icons">school</i> Coaches</d-dropdown-item>
         <d-dropdown-item to="edit-user-profile"><i class="material-icons">&#xE8B8;</i> Edit Profile</d-dropdown-item>
-        <d-dropdown-item to="file-manager-list"><i class="material-icons">&#xE2C7;</i> Files</d-dropdown-item>
-        <d-dropdown-item to="transaction-history"><i class="material-icons">&#xE896;</i> Transactions</d-dropdown-item>
+
         <d-dropdown-divider />
-        <d-dropdown-item href="#" class="text-danger">
+        <d-dropdown-item to="login" class="text-danger">
           <i class="material-icons text-danger">&#xE879;</i> Logout
         </d-dropdown-item>
       </d-collapse>
