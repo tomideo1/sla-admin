@@ -4,9 +4,10 @@ export default function () {
     title: 'Dashboards',
     items: [{
       title: 'Dashboard',
-      to: 'dashboard',
       htmlBefore: '<i class="material-icons">dashboard</i>',
-      htmlAfter: '',
+      to:{
+        name:'Dashboard'
+      }
     },
     {
       title: 'Courses',
@@ -17,7 +18,7 @@ export default function () {
     },
     {
       title: 'Groups',
-      htmlBefore: '<i class="material-icons">library_books</i>',
+      htmlBefore: '<i class="material-icons">people</i>',
       to: {
         name: 'all-groups'
       }
@@ -34,13 +35,6 @@ export default function () {
       htmlBefore: '<i class="material-icons">message</i>',
       to: {
         name: 'components-overview',
-      },
-    },
-    {
-      title: 'Groups',
-      htmlBefore: '<i class="material-icons">people</i>',
-      to: {
-        name: 'tables',
       },
     },
     {
