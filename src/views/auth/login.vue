@@ -82,7 +82,9 @@ export default {
           name: 'dashboard'
         })
       } else {
-        this.$toast.error(res.data.error);
+        this.$toast.error(
+          res.data.error
+        );
         this.isLoading = false;
       }
 

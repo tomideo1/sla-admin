@@ -27,23 +27,25 @@ export default function () {
       title: 'Coaches',
       htmlBefore: '<i class="material-icons">school</i>',
       to: {
-        name: 'add-new-post',
+        name: 'all-coaches',
       },
     },
     {
       title: 'Messaging',
       htmlBefore: '<i class="material-icons">message</i>',
       to: {
-        name: 'components-overview',
+        name: 'all-messages',
       },
     },
     {
-    title: 'User Profile',
+    title: 'Admin',
     htmlBefore: '<i class="material-icons">person</i>',
     to: {
-      name: 'user-profile-lite',
+      name: 'edit-profile',
     },
-  }, {
+  },
+      {
+
     title: 'Reports',
     htmlBefore: '<i class="material-icons">report</i>',
     to: {

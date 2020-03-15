@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import UserProfileLite from '../views/UserProfileLite.vue';
-import AddNewPost from '../views/AddNewPost.vue';
-import Errors from '../views/Errors.vue';
-import ComponentsOverview from '../views/ComponentsOverview.vue';
-import Groups from '../views/Groups.vue';
-import BlogPosts from '../views/BlogPosts.vue';
+import UserProfileLite from '../views/common/UserProfileLite.vue';
+import AddNewPost from '../views/common/AddNewPost.vue';
+import Errors from '../views/common/Errors.vue';
+import ComponentsOverview from '../views/common/ComponentsOverview.vue';
+import Groups from '../views/common/Groups.vue';
+import BlogPosts from '../views/common/BlogPosts.vue';
 import auth from './middleware/auth.js'
 import middlewarePipeline from './kernel/middlewarePipeline'
 Vue.use(Router);
@@ -34,7 +34,11 @@ const router =  new Router({
     },
     {
       path: '/courses',
-      meta: {},
+      meta: {
+        middleware: [
+          auth
+        ]
+      },
       component: () => import("@/views/courses/index.vue"),
       children: [
         {
@@ -42,11 +46,16 @@ const router =  new Router({
           name: 'all-courses',
           component: () => import("@/views/courses/home.vue")
         }
-      ]
+      ],
+
     },
     {
       path: '/groups',
-      meta: {},
+      meta: {
+        middleware: [
+          auth
+        ]
+      },
       component: () => import("@/views/groups/index.vue"),
       children: [
         {
@@ -59,6 +68,59 @@ const router =  new Router({
           name: 'all-groups',
           component: () => import("@/views/groups/home.vue")
         }
+      ]
+    },
+    {
+      path: '/coaches',
+      meta: {
+        middleware: [
+          auth
+        ]
+      },
+      component: () => import("@/views/coaches/index.vue"),
+      children: [
+        {
+          path: '',
+          name: 'all-coaches',
+          component: () => import("@/views/coaches/home.vue")
+        },
+        {
+          path: '/',
+          name: 'all-coaches',
+          component: () => import("@/views/coaches/home.vue")
+        }
+      ]
+    },
+    {
+      path: '/messages',
+      meta: {
+        middleware: [
+          auth
+        ]
+      },
+      component: () => import("@/views/messages/index.vue"),
+      children: [
+        {
+          path: '/',
+          name: 'all-messages',
+          component: () => import("@/views/messages/home.vue")
+        },
+      ]
+    },
+    {
+      path: '/admin',
+      meta: {
+        middleware: [
+          auth
+        ]
+      },
+      component: () => import("@/views/admin/index.vue"),
+      children: [
+        {
+          path: '/',
+          name: 'edit-profile',
+          component: () => import("@/views/admin/adminProfile.vue")
+        },
       ]
     },
     {
@@ -77,44 +139,22 @@ const router =  new Router({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
-
-    },
-    {
-      path: '/user-profile-lite',
-      name: 'user-profile-lite',
-      component: UserProfileLite,
       meta: {
         middleware: [
           auth
         ]
       }
-    },
-    {
-      path: '/add-new-post',
-      name: 'add-new-post',
-      component: AddNewPost,
+
     },
     {
       path: '/errors',
       name: 'errors',
+      meta: { layout: 'no-sidebar' },
       component: Errors,
     },
     {
-      path: '/components-overview',
-      name: 'components-overview',
-      component: ComponentsOverview,
-    },
-    {
-      path: '/groups',
-      name: 'Groups',
-      component: Groups,
-    },
-    {
-      path: '/blog-posts',
-      name: 'blog-posts',
-      component: BlogPosts,
-    }, {
       path: '*',
+      meta: { layout: 'no-sidebar' },
       redirect: '/errors',
     },
   ],

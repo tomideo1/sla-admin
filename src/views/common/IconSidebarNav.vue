@@ -1,6 +1,5 @@
 <template>
   <d-container fluid class="main-content-container px-4">
-
     <!-- Page Header -->
     <d-row no-gutters class="page-header py-4">
 
@@ -20,15 +19,14 @@
 
       <!-- Page Header - Datepicker -->
       <d-col sm="4" class="d-flex">
-        <d-input-group size="sm" class="d-flex justify-content-end my-auto date-range">
-          <d-datepicker v-model="dateRange.from" :highlighted="{ from: dateRange.from, to: dateRange.to || new Date() }" typeable placeholder="Start date" small />
-          <d-datepicker v-model="dateRange.to" :highlighted="{ from: dateRange.from, to: dateRange.to || new Date() }" typeable placeholder="End date" small />
+        <d-input-group size="sm" class="date-range d-flex justify-content-end my-auto">
+          <d-datepicker v-model="dateRange.from" :highlighted="{ from: dateRange.from, to: dateRange.to || new Date() }" typeable small placeholder="Start Date" />
+          <d-datepicker v-model="dateRange.to" :highlighted="{ from: dateRange.from, to: dateRange.to || new Date() }" typeable small placeholder="End date" />
           <d-input-group-text slot="append">
             <i class="material-icons">&#xE916;</i>
           </d-input-group-text>
         </d-input-group>
       </d-col>
-
     </d-row>
 
     <!-- Small Stats Blocks -->
@@ -75,10 +73,9 @@ import Sessions from '@/components/analytics/Sessions.vue';
 import UsersByDevice from '@/components/analytics/UsersByDevice.vue';
 import GoalsOverview from '@/components/analytics/GoalsOverview/GoalsOverview.vue';
 
-import colors from '../utils/colors';
+import colors from '../../utils/colors';
 
 export default {
-  name: 'analytics',
   components: {
     SmallStats,
     CountryReports,

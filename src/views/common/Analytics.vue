@@ -1,10 +1,13 @@
 <template>
   <d-container fluid class="main-content-container px-4">
+
+    <!-- Page Header -->
     <d-row no-gutters class="page-header py-4">
+
       <!-- Page Header - Title -->
       <d-col col sm="4" class="text-center text-sm-left mb-4 mb-sm-0">
-        <span class="text-uppercase page-subtitle">Dashboards</span>
-        <h3 class="page-title">Sales Overview</h3>
+        <span class="text-uppercase page-subtitle">Overview</span>
+        <h3 class="page-title">Analytics</h3>
       </d-col>
 
       <!-- Page Header - Actions -->
@@ -17,14 +20,15 @@
 
       <!-- Page Header - Datepicker -->
       <d-col sm="4" class="d-flex">
-        <d-input-group size="sm" class="date-range d-flex justify-content-end my-auto">
-          <d-datepicker v-model="dateRange.from" :highlighted="{ from: dateRange.from, to: dateRange.to || new Date() }" placeholder="Start Date" typeable small />
-          <d-datepicker v-model="dateRange.to" :highlighted="{ from: dateRange.from, to: dateRange.to || new Date() }" placeholder="End Date" typeable small />
+        <d-input-group size="sm" class="d-flex justify-content-end my-auto date-range">
+          <d-datepicker v-model="dateRange.from" :highlighted="{ from: dateRange.from, to: dateRange.to || new Date() }" typeable placeholder="Start date" small />
+          <d-datepicker v-model="dateRange.to" :highlighted="{ from: dateRange.from, to: dateRange.to || new Date() }" typeable placeholder="End date" small />
           <d-input-group-text slot="append">
             <i class="material-icons">&#xE916;</i>
           </d-input-group-text>
         </d-input-group>
       </d-col>
+
     </d-row>
 
     <!-- Small Stats Blocks -->
@@ -35,26 +39,29 @@
     </d-row>
 
     <d-row>
-      <!-- Sales Report -->
+      <!-- Sessions -->
       <d-col lg="8" md="12" sm="12" class="mb-4">
-        <os-sales-report />
+        <ao-sessions />
       </d-col>
 
-      <!-- Sales by Category -->
+      <!-- Users by Device -->
       <d-col lg="4" md="6" sm="6" class="mb-4">
-        <os-sales-by-category />
+        <ao-users-by-device />
       </d-col>
-    </d-row>
 
-    <d-row>
-      <!-- Users by Country -->
-      <d-col lg="4" class="mb-4">
-        <country-reports />
+      <!-- Top Referrals -->
+      <d-col lg="3" sm="6" class="mb-4">
+        <ao-top-referrals />
       </d-col>
 
       <!-- Goals Overview -->
-      <d-col lg="8" class="mb-4">
-        <os-latest-orders />
+      <d-col lg="5" class="mb-4">
+        <ao-goals-overview />
+      </d-col>
+
+      <!-- Users by Country -->
+      <d-col lg="4" class="mb-4">
+        <country-reports />
       </d-col>
     </d-row>
   </d-container>
@@ -63,25 +70,28 @@
 <script>
 import SmallStats from '@/components/common/SmallStats.vue';
 import CountryReports from '@/components/common/CountryReports.vue';
-import SalesReport from '@/components/ecommerce/SalesReport.vue';
-import SalesByCategory from '@/components/ecommerce/SalesByCategory.vue';
-import LatestOrders from '@/components/ecommerce/LatestOrders.vue';
+import TopReferrals from '@/components/common/TopReferrals.vue';
+import Sessions from '@/components/analytics/Sessions.vue';
+import UsersByDevice from '@/components/analytics/UsersByDevice.vue';
+import GoalsOverview from '@/components/analytics/GoalsOverview/GoalsOverview.vue';
 
-import colors from '../utils/colors';
+import colors from '../../utils/colors';
 
 export default {
+  name: 'analytics',
   components: {
     SmallStats,
     CountryReports,
-    osSalesReport: SalesReport,
-    osSalesByCategory: SalesByCategory,
-    osLatestOrders: LatestOrders,
+    aoSessions: Sessions,
+    aoUsersByDevice: UsersByDevice,
+    aoTopReferrals: TopReferrals,
+    aoGoalsOverview: GoalsOverview,
   },
   data() {
     return {
       dateRange: {
-        to: null,
         from: null,
+        to: null,
       },
     };
   },
@@ -89,21 +99,22 @@ export default {
     // Small Stats Components Data
     smallStats() {
       return [{
-        label: 'Total Revenue',
-        value: '$29,219',
-        percentage: '2.93%',
+        label: 'Users',
+        value: '2,390',
+        percentage: '12.4%',
         increase: true,
+        decrease: false,
         datasets: [{
           label: 'Today',
           fill: 'start',
           borderWidth: 1.5,
           backgroundColor: colors.primary.toRGBA(0.1),
           borderColor: colors.primary.toRGBA(),
-          data: [4, 4, 4, 9, 20],
+          data: [9, 3, 3, 9, 9],
         }],
       }, {
-        label: 'Revenue Today',
-        value: '$8,391',
+        label: 'Sessions',
+        value: '8,391',
         percentage: '7.21%',
         increase: false,
         decrease: true,
@@ -113,24 +124,25 @@ export default {
           borderWidth: 1.5,
           backgroundColor: colors.success.toRGBA(0.1),
           borderColor: colors.success.toRGBA(),
-          data: [1, 9, 1, 9, 9],
+          data: [3.9, 4, 4, 9, 4],
         }],
       }, {
-        label: 'Total Customers',
-        value: '981',
+        label: 'Pageviews',
+        value: '21,293',
         percentage: '3.71%',
         increase: true,
+        decrease: false,
         datasets: [{
           label: 'Today',
           fill: 'start',
           borderWidth: 1.5,
           backgroundColor: colors.warning.toRGBA(0.1),
           borderColor: colors.warning.toRGBA(),
-          data: [9, 9, 3, 9, 9],
+          data: [6, 6, 9, 3, 3],
         }],
       }, {
-        label: 'New Customers',
-        value: '29',
+        label: 'Pages/Session',
+        value: '6.43',
         percentage: '2.71%',
         increase: false,
         decrease: true,
@@ -140,7 +152,7 @@ export default {
           borderWidth: 1.5,
           backgroundColor: colors.salmon.toRGBA(0.1),
           borderColor: colors.salmon.toRGBA(),
-          data: [3, 3, 4, 9, 4],
+          data: [0, 9, 3, 3, 3],
         }],
       }];
     },

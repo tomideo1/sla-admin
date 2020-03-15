@@ -75,7 +75,7 @@ import Sessions from '@/components/analytics/Sessions.vue';
 import UsersByDevice from '@/components/analytics/UsersByDevice.vue';
 import GoalsOverview from '@/components/analytics/GoalsOverview/GoalsOverview.vue';
 
-import colors from '../utils/colors';
+import colors from '../../utils/colors';
 
 export default {
   components: {

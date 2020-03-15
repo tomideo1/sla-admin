@@ -1,26 +1,26 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Analytics from './views/Analytics.vue';
-import OnlineStore from './views/OnlineStore.vue';
-import HeaderNavigation from './views/HeaderNavigation.vue';
-import IconSidebarNav from './views/IconSidebarNav.vue';
-import PersonalBlog from './views/PersonalBlog.vue';
-import UserProfile from './views/UserProfile.vue';
-import UserProfileLite from './views/UserProfileLite.vue';
-import EditUserProfile from './views/EditUserProfile.vue';
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
-import ForgotPassword from './views/ForgotPassword.vue';
-import ChangePassword from './views/ChangePassword.vue';
-import FileManagerList from './views/FileManagerList.vue';
-import FileManagerCards from './views/FileManagerCards.vue';
-import TransactionHistory from './views/TransactionHistory.vue';
-import AddNewPost from './views/AddNewPost.vue';
-import Errors from './views/Errors.vue';
-import ComponentsOverview from './views/ComponentsOverview.vue';
-import Tables from './views/Groups.vue';
-import BlogPosts from './views/BlogPosts.vue';
+import Analytics from './views/common/Analytics.vue';
+import OnlineStore from './views/common/OnlineStore.vue';
+import HeaderNavigation from './views/common/HeaderNavigation.vue';
+import IconSidebarNav from './views/common/IconSidebarNav.vue';
+import PersonalBlog from './views/common/PersonalBlog.vue';
+import UserProfile from './views/common/UserProfile.vue';
+import UserProfileLite from './views/common/UserProfileLite.vue';
+import EditUserProfile from './views/common/EditUserProfile.vue';
+import Login from './views/common/Login.vue';
+import Register from './views/common/Register.vue';
+import ForgotPassword from './views/common/ForgotPassword.vue';
+import ChangePassword from './views/common/ChangePassword.vue';
+import FileManagerList from './views/common/FileManagerList.vue';
+import FileManagerCards from './views/common/FileManagerCards.vue';
+import TransactionHistory from './views/common/TransactionHistory.vue';
+import AddNewPost from './views/common/AddNewPost.vue';
+import Errors from './views/common/Errors.vue';
+import ComponentsOverview from './views/common/ComponentsOverview.vue';
+import Tables from './views/common/Groups.vue';
+import BlogPosts from './views/common/BlogPosts.vue';
 
 Vue.use(Router);
 

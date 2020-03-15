@@ -4,7 +4,6 @@ export const  login = async ({ commit }, payload) => {
 	let res = await Api.post('/api/login', payload)
 
 	if (res.status == 200) {
-	  return true;
 		// set JWT
 		// set userData
 		commit('setToken', {name: 'dapo'})
