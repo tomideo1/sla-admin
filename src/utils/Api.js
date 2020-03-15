@@ -8,6 +8,7 @@ const instance = axios.create({
 // request interceptor
 instance.interceptors.request.use((config, reqAuth) => {
 	// do somethong here
+  // console.log(store.state.auth)
 	return config;
 }, error => {
 

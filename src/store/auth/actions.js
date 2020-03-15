@@ -8,6 +8,7 @@ export const  login = async ({ commit }, payload) => {
 		// set JWT
 		// set userData
 		commit('setToken', {name: 'dapo'})
+		return true
 	}else {
 		return res
 	}
