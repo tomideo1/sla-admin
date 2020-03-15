@@ -12,7 +12,8 @@ import '@/assets/scss/date-range.scss';
 // Core
 import App from './App.vue';
 import router from './router/router';
-
+import VueBootstrapToasts from "vue-bootstrap-toasts";
+Vue.use(VueBootstrapToasts);
 // Layouts
 import Default from '@/layouts/Default.vue';
 import noSideBar from '@/layouts/no-sidebar.vue';
