@@ -5,18 +5,14 @@ export default function () {
     {
       "title":"Admin",
       "htmlBefore":"<i class=\"material-icons\">person</i>",
-      "item": [
+      "items": [
         {
-          "title":"Dashboard",
-          "htmlBefore":"<i class=\"material-icons\">dashboard</i>",
+          "title":"Add New",
           "to":{
-            "name":"dashboard"
+            "name":"edit-profile"
           }
         },
-      ],
-      "to":{
-        "name":"edit-profile"
-      }
+      ]
     },
   ]
   console.log(store.state.auth)
