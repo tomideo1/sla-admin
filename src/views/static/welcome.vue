@@ -72,7 +72,7 @@
     },
     methods: {
       async submit() {
-        console.log('something gets here')
+        // console.log('something gets here')
         this.isLoading = true;
         let res =  await this.login(this.form)
         if(res === true) {
