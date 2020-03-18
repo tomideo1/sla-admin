@@ -77,9 +77,9 @@ export default {
       if(res === true) {
         // route to dashboard
         this.isLoading = false;
-        // this.$router.replace({
-        //   name: 'dashboard'
-        // })
+        this.$router.replace({
+          name: 'dashboard'
+        })
       } else {
         this.$toast.error(
           res.data.message

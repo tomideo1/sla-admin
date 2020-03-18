@@ -11,7 +11,7 @@ import auth from './middleware/auth.js'
 import middlewarePipeline from './kernel/middlewarePipeline'
 Vue.use(Router);
 
-import store from "@/store/app";
+import store from "@/store/index";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
 import forgotPassword from "../views/auth/forgotPassword";
