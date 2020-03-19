@@ -14,6 +14,9 @@
         <d-col lg="6" md="8" class="bg-white" >
           <div class="login d-flex align-items-center py-5">
             <div class="container">
+              <d-alert :theme="error.type" @alert-dismissed="error.show = false" :show="error.show" dismissible>
+                {{error.message}}
+              </d-alert>
               <d-row>
                 <d-col md="12" lg="12" sm="12" class="d-none d-lg-block d-md-block">
                   <d-image center class="mb-lg-4 pb-lg-4 " src="https://res.cloudinary.com/dwpu7jpku/image/upload/v1584552409/SLA_Logo_Color_3_yzo3ce.png"/>
@@ -21,12 +24,10 @@
                 <d-col md="12" lg="12" sm="12">
                   <p class="font-poppings text-center login-text mb-5 `" > Create Your Password</p>
                 </d-col>
-
               </d-row>
               <d-row class="mt-5 mt-lg-0 pt-2 pt-lg-0">
                 <d-col md="9" lg="8" class="mx-auto">
                   <d-form>
-
                     <div class="form-group mb-lg-4 mb-5">
                       <label for="password" class="form-text">Password </label>
 
@@ -45,7 +46,6 @@
                                 :badge="false"
                                 :toggle="true" @score="showScore"/>
                     </div>
-
                     <div class="form-group mb-lg-4 mb-5">
                       <label for="password" class="form-text">Re-type Password </label>
 
@@ -59,8 +59,7 @@
 
                       </d-input-group>
                     </div>
-
-                    <button  @click.prevent="submit" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
+                    <button  @click.prevent="handleInput" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
                       Set Password
                       <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
                     </button>
@@ -77,74 +76,111 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
-    import Password from 'vue-password-strength-meter'
-    export default {
-      components: { Password },
-      name: "password-create",
-      data () {
-        return {
-          isLoading:false,
-          theme:'success',
-          isAlert:false,
-          alert_type:null,
-          alert_message:null,
-          eye:false,
-          type:'password',
-          form: {
-            email: null,
-            password: null,
-            confirm_password: null
-          }
-        }
+import axios from "axios"
+import { mapMutations, mapState } from "vuex";
+import Password from 'vue-password-strength-meter'
+export default {
+  components: { Password },
+  name: "password-create",
+  data () {
+    return {
+      token: null,
+      isLoading:false,
+      error: {
+        message: null,
+        type: null,
+        show: false
       },
-      methods: {
-        async submit() {
-          // console.log('something gets here')
-          this.isLoading = true;
-          let res =  await this.login(this.form)
-          if(res === true) {
-            // route to dashboard
-            this.isLoading = false;
-            this.$router.replace({
-              name: 'dashboard'
-            })
-          } else {
-            this.$toast.error(
-              res.data.error
-            );
-            this.isLoading = false;
-          }
-
-        },
-        ...mapActions({
-          login: 'auth/login'
-        }),
-        switchVisibility() {
-          if(this.type === 'password') {
-            this.type = 'text';
-            this.eye = true;
-          } else {
-            this.type = 'password';
-            this.eye = false
-          }
-        },
-        switchVisibility2() {
-          if(this.type === 'password') {
-            this.type = 'text';
-            this.eye = true;
-          } else {
-            this.type  ='password';
-            this.eye = false
-          }
-        },
-        showScore (score) {
-          console.log('💯', score)
-        }
-
-      },
-
+      eye: false,
+      type:'password',
+      form: {
+        password: null,
+        confirm_password: null
+      }
     }
+  },
+  methods: {
+    ...mapMutations('auth/', [
+      "setUserDetails",
+      "setToken"
+    ]),
+    handleInput () {
+      this.error.show = false
+      if(!this.form.password || !this.form.confirm_password){
+        this.error.message = "All fields are required"
+        this.error.type = "danger"
+        this.error.show = true
+        return
+      }
+
+      if(!this.form.password !== !this.form.confirm_password){
+        this.error.message = "Passwords must be the same"
+        this.error.type = "danger"
+        this.error.show = true
+        return
+      }
+
+      this.submit()
+    },
+    async submit() {
+      try {
+        let res = await axios.post(`${process.env.VUE_APP_API}/admin/password/create`, this.form,
+        {
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          }
+        })
+
+        this.setToken(res.data.token)
+        this.setUserDetails(res.data.admin)
+
+        this.error.message = "Password changed successfuly"
+        this.error.type = "success"
+        this.error.show = true
+
+        //route to dashboard
+        setTimeout(()=> {
+          this.$router.replace({
+            name: 'dashboard'
+          })
+        }, 2000)
+      }catch(e) {
+        this.error.message = e.response.data.message
+        this.error.type = "danger"
+        this.error.show = true
+      }
+    },
+    switchVisibility() {
+      if(this.type === 'password') {
+        this.type = 'text';
+        this.eye = true;
+      } else {
+        this.type = 'password';
+        this.eye = false
+      }
+    },
+    switchVisibility2() {
+      if(this.type === 'password') {
+        this.type = 'text';
+        this.eye = true;
+      } else {
+        this.type  ='password';
+        this.eye = false
+      }
+    },
+    showScore (score) {
+      console.log('💯', score)
+    }
+  },
+  mounted() {
+    this.token = this.$route.query.token
+
+    if (!this.token || typeof this.token != 'string') {
+      alert('Invalid Token')
+    }
+  }
+
+}
 </script>
 
 <style scoped  lang="scss">
