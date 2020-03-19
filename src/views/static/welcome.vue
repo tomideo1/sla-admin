@@ -32,10 +32,10 @@
 
                     <div class="form-group mb-lg-4 mb-5">
                       <d-input-group seamless>
-                        <d-input-group-text slot="append">
-                          <span @click="switchVisibility">
-                          <d-button class="btn btn-info" type="button">  <i  :class="[eye ? 'fa fa-eye' : 'fa fa-eye-slash', 'fa']"></i></d-button>
-                          </span>
+                        <d-input-group-text slot="append"  >
+                         <a @click="switchVisibility" href="javascript:void(0)">
+                           <i  :class="eye ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                         </a>
                         </d-input-group-text>
                         <d-input :type="type"  class="form-control "  v-model="form.password" placeholder="Password" required/>
 
