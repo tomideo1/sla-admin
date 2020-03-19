@@ -1,5 +1,5 @@
 <template>
-  <component :is="layout">
+  <component class="font-open-sans" :is="layout">
     <router-view/>
   </component>
 </template>
@@ -13,3 +13,13 @@ export default {
   },
 };
 </script>
+
+<style>
+  .font-open-sans{
+    font-family: "Open Sans",serif !important;
+    font-style: normal;
+  }
+  .font-poppings{
+    font-family: "Poppins",serif !important;
+  }
+</style>

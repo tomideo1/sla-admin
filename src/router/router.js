@@ -14,6 +14,7 @@ Vue.use(Router);
 import store from "@/store/index";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
+import PasswordCreate from "../views/auth/password-create";
 import forgotPassword from "../views/auth/forgotPassword";
 import Dashboard from "@/views/Dashboard.vue";
 
@@ -131,6 +132,12 @@ const router =  new Router({
       name: 'login',
       meta: { layout: 'no-sidebar' },
       component: Login,
+    },
+    {
+      path: '/password-create',
+      name: 'password-create',
+      meta: { layout: 'no-sidebar' },
+      component: PasswordCreate,
     },
     {
       path: '/forgot-password',
