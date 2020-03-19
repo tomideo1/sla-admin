@@ -122,8 +122,18 @@ const router =  new Router({
       children: [
         {
           path: '/',
+          name: 'admin',
+          component: () => import("@/views/admin/index.vue")
+        },
+        {
+          path: '/profile',
           name: 'edit-profile',
           component: () => import("@/views/admin/adminProfile.vue")
+        },
+        {
+          path: '/creat-admin',
+          name: 'create-admin',
+          component: () => import("@/views/admin/createAdmin.vue")
         },
       ]
     },

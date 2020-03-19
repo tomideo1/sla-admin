@@ -41,8 +41,22 @@ export default function () {
     title: 'Admin',
     htmlBefore: '<i class="material-icons">person</i>',
     to: {
-      name: 'edit-profile',
+      name: '/',
     },
+          items: [
+            {
+            title: 'Create Admin',
+            to: {
+              name: 'create-admin',
+            },
+          },
+            {
+              title: ' Admin Profile',
+              to: {
+                name: 'edit-profile',
+              },
+            }
+        ],
   },
       {
 
