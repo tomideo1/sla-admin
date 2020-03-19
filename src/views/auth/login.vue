@@ -33,9 +33,7 @@
                     <div class="form-group mb-lg-4 mb-5">
                       <d-input-group seamless>
                         <d-input-group-text slot="append"  >
-                          <a @click="switchVisibility" href="javascript:void(0)">
-                            <i  :class="eye ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
-                          </a>
+                            <button type="button"   @click="switchVisibility" class="eye-button"  ><i :class="eye ? 'fa fa-eye' : 'fa fa-eye-slash'"></i></button>
                         </d-input-group-text>
                         <d-input :type="type"  class="form-control "  v-model="form.password" placeholder="Password" required/>
 
@@ -46,7 +44,7 @@
                     <button  @click.prevent="submit" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Log in
                       <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
                     </button>
-                    <div class="text-center mt-4 text-forgot" >
+                    <div class="text-center mt-4 form-text" >
                       Forgot password? &nbsp;<router-link to="forgot-password">Click here</router-link></div>
                   </d-form>
                 </d-col>
@@ -144,7 +142,7 @@
     border-radius: 5px;
     height: 52px;
   }
-  .text-forgot{
+  .form-text{
     color: #999999;
   }
   .container-fluid{
@@ -157,6 +155,10 @@
     font-style: normal;
     font-weight: 500;
   }
-
+.eye-button{
+  padding: 0;
+  border: none;
+  background: none;
+}
 
 </style>
