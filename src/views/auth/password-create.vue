@@ -51,7 +51,7 @@
 
                       <d-input-group seamless>
                         <d-input-group-text slot="append"  >
-                          <a @click="switchVisibility" href="javascript:void(0)">
+                          <a @click="switchVisibility2" href="javascript:void(0)">
                             <i  :class="eye ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
                           </a>
                         </d-input-group-text>
@@ -126,6 +126,15 @@
             this.eye = true;
           } else {
             this.type = 'password';
+            this.eye = false
+          }
+        },
+        switchVisibility2() {
+          if(this.type === 'password') {
+            this.type = 'text';
+            this.eye = true;
+          } else {
+            this.type  ='password';
             this.eye = false
           }
         },
