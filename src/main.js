@@ -8,8 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'shards-ui/dist/css/shards.css'
 import '@/assets/shards-dashboard-pro/shards-dashboards.scss';
 import '@/assets/scss/date-range.scss';
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
+
 // Core
 import App from './App.vue';
 import router from './router/router';
