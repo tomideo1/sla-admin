@@ -6,7 +6,7 @@ export default function () {
       title: 'Dashboard',
       htmlBefore: '<i class="material-icons">dashboard</i>',
       to:{
-        name:'Dashboard'
+        name:'dashboard'
       }
     },
     {

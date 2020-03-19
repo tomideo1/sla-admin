@@ -28,9 +28,13 @@ const router =  new Router({
   routes: [
     {
       path: '/',
-      name: '',
-      meta: { layout: 'no-sidebar' },
-      component: Welcome,
+      name: 'dashboard',
+      component: Dashboard,
+      meta: {
+        middleware: [
+          auth
+        ]
+      }
     },
     {
       path: '/courses',
@@ -47,7 +51,6 @@ const router =  new Router({
           component: () => import("@/views/courses/home.vue")
         }
       ],
-
     },
     {
       path: '/groups',
@@ -134,17 +137,6 @@ const router =  new Router({
       name: 'forgotPassword',
       meta: { layout: 'no-sidebar' },
       component: forgotPassword,
-    },
-    {
-      path: '/dashboard',
-      name: 'Dashboard',
-      component: Dashboard,
-      meta: {
-        middleware: [
-          auth
-        ]
-      }
-
     },
     {
       path: '/errors',
