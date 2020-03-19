@@ -6,17 +6,21 @@ export default function () {
       "title":"Admin",
       "htmlBefore":"<i class=\"material-icons\">person</i>",
       "items": [
+      {
+          "title":"All Admins",
+          "to":{
+            "name":"dashboard"
+          }
+        },
         {
           "title":"Add New",
           "to":{
-            "name":"edit-profile"
+            "name":"create-admin"
           }
         },
       ]
     },
-  ]
-  console.log(store.state.auth)
-  
+  ]  
 
   let appRoutes = [
   {

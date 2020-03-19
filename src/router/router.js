@@ -38,19 +38,19 @@ const router =  new Router({
     },
     {
       path: '/courses',
-      meta: {
-        middleware: [
-          auth
-        ]
-      },
       component: () => import("@/views/courses/index.vue"),
       children: [
         {
           path: '',
           name: 'all-courses',
-          component: () => import("@/views/courses/home.vue")
+          component: () => import("@/views/courses/home.vue"),
+          meta: {
+            middleware: [
+              auth
+            ]
+          }
         }
-      ],
+      ]
     },
     {
       path: '/groups',
@@ -112,17 +112,17 @@ const router =  new Router({
     },
     {
       path: '/admin',
-      meta: {
-        middleware: [
-          auth
-        ]
-      },
       component: () => import("@/views/admin/index.vue"),
       children: [
         {
-          path: '/',
-          name: 'edit-profile',
-          component: () => import("@/views/admin/adminProfile.vue")
+          path: 'create-admin',
+          name: 'create-admin',
+          component: () => import("@/views/admin/adminProfile.vue"),
+          meta: {
+            middleware: [
+              auth
+            ]
+          },
         },
       ]
     },
@@ -143,12 +143,7 @@ const router =  new Router({
       name: 'errors',
       meta: { layout: 'no-sidebar' },
       component: Errors,
-    },
-    {
-      path: '*',
-      meta: { layout: 'no-sidebar' },
-      redirect: '/errors',
-    },
+    }
   ],
 });
 
@@ -156,6 +151,8 @@ const router =  new Router({
 
 
 router.beforeEach((to, from, next) => {
+  console.log(to)
+
   if(!to.meta.middleware) {
     return next()
   }
