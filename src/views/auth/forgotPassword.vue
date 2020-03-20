@@ -7,7 +7,7 @@
         </d-col>
         <d-col lg="6" md="8" class="bg-white"  >
           <div class="login d-flex align-items-center py-5"  >
-            <div class="container" v-if="isSuccess">
+            <div class="container" v-if="!isSuccess">
               <d-row>
                 <d-col md="12" lg="12" sm="12" class="d-none d-lg-block d-md-block">
                   <d-image center class="mb-lg-4 pb-lg-4 " src="https://res.cloudinary.com/dwpu7jpku/image/upload/v1584552409/SLA_Logo_Color_3_yzo3ce.png"/>
@@ -18,13 +18,15 @@
               </d-row>
               <d-row class="mt-5 mt-lg-0 pt-2 pt-lg-0" >
                 <d-col md="9" lg="8" class="mx-auto">
-                  <d-form >
+                  <d-form @submit="handleInput"  >
                     <div class="form-group mb-lg-4 mb-5">
                       <label for="email" class="form-text d-lg-none d-md-block d-block">Type in your email address </label>
-                      <d-input type="email" id="inputEmail" v-model="form.email"  class="form-control" placeholder="Email address" required autofocus/>
+                      <d-input id="emailAddress" type="email"  class="form-control" :class="error.type === 'danger' ? 'is-invalid' : error.type==='success'?'is-valid': ''" v-model="form.email"  required />
+                        <div class="invalid-feedback">{{error.message}}</div>
+                        <div class="valid-feedback" >{{error.message}}</div>
                     </div>
 
-                    <button  @click.prevent="submit" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
+                    <button  class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
                       Send Reset Notifications
                       <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
                     </button>
@@ -34,7 +36,7 @@
                 </d-col>
               </d-row>
             </div>
-            <div class="container" v-if="!isSuccess">
+            <div class="container" v-if="isSuccess">
               <d-row>
                 <d-col md="12" lg="12" sm="12" class="d-none d-lg-block d-md-block">
                   <d-image center class="mb-lg-4 pb-lg-4 " src="https://res.cloudinary.com/dwpu7jpku/image/upload/v1584552409/SLA_Logo_Color_3_yzo3ce.png"/>
@@ -59,7 +61,9 @@
 
 
 <script>
-    import {mapActions} from "vuex";
+  import axios from "axios"
+  import { mapGetters, mapState } from "vuex";
+  import store from "@/store/index"
 
     export default {
         name: "forgotPassword",
@@ -67,9 +71,11 @@
           return{
             isLoading:false,
             theme:'success',
-            isAlert:false,
-            alert_type:null,
-            alert_message:null,
+            error: {
+              message: null,
+              type: null,
+              show: false
+            },
             isSuccess:false,
             eye:false,
             type:'password',
@@ -78,31 +84,39 @@
             }
           }
       },
-      methods: {
-        async submit() {
-          // console.log('something gets here')
+      methods:{
+        ...mapGetters('auth/', [
+          "getToken"
+        ]),
+        handleInput(e){
+          e.preventDefault();
           this.isLoading = true;
-          let res =  await this.login(this.form)
-          if(res === true) {
-            // route to dashboard
-            this.isLoading = false;
-            this.$router.replace({
-              name: 'dashboard'
-            })
-          } else {
-            this.$toast.error(
-              res.data.error
-            );
-            this.isLoading = false;
-          }
+          this.submit(this.token);
 
         },
-        ...mapActions({
-          login: 'auth/login'
-        }),
+        async submit() {
+          let token = store.state.auth.token
+          try {
+            let res = await axios.post(`${process.env.VUE_APP_API}/admin/password/reset`, this.form,
+              {
+                headers: {
+                  'Authorization': `Bearer ${token} `
+                }
+              })
+            this.isLoading = false;
 
+            this.error.message = "Email Sent  successfuly"
+            this.error.type = "success"
+            this.error.show = true
 
-      },
+          }catch(e) {
+            this.isLoading = false;
+            this.error.message = e.response.data.message
+            this.error.type = "danger"
+            this.error.show = true
+          }
+        },
+      }
     }
 </script>
 
