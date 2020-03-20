@@ -36,19 +36,22 @@
                 </d-col>
               </d-row>
             </div>
-            <div class="container" v-if="isSuccess">
+            <div class="container " v-if="isSuccess">
               <d-row>
                 <d-col md="12" lg="12" sm="12" class="d-none d-lg-block d-md-block">
                   <d-image center class="mb-lg-4 pb-lg-4 " src="https://res.cloudinary.com/dwpu7jpku/image/upload/v1584552409/SLA_Logo_Color_3_yzo3ce.png"/>
                 </d-col>
-                <d-col md="12" lg="12" sm="12" class="d-block d-lg-block d-md-block">
-                  <img  class="d-block mx-auto" src="@/assets/images/icons/email.png" alt="User Avatar">
-                </d-col>
-                <d-col md="12" lg="12" sm="12" class="p-lg-3 p-2">
-                  <p class="font-poppings text-center login-text mb-5 p-lg-3 " >
-                    Instructions have been sent to your email for you to reset your password
-                  </p>
-                </d-col>
+                <div class="animated bounce">
+                  <d-col md="12" lg="12" sm="12" class="d-block d-lg-block d-md-block">
+                    <img  class="d-block mx-auto" src="@/assets/images/icons/email.png" alt="User Avatar">
+                  </d-col>
+                  <d-col md="12" lg="12" sm="12" class="p-lg-3 p-2">
+                    <p class="font-poppings text-center login-text mb-5 p-lg-3 " >
+                      Instructions have been sent to your email for you to reset your password
+                    </p>
+                  </d-col>
+                </div>
+
               </d-row>
             </div>
           </div>
@@ -108,6 +111,9 @@
             this.error.message = "Email Sent  successfuly"
             this.error.type = "success"
             this.error.show = true
+            setTimeout(()=> {
+              this.isSuccess = true;
+            }, 2000)
 
           }catch(e) {
             this.isLoading = false;
@@ -163,6 +169,33 @@
     font-style: normal;
     font-weight: 500;
   }
+  .animated {
+    background-image: url(/css/images/logo.png);
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-top:95px;
+    margin-bottom:60px;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
 
+  @-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+    40% {-webkit-transform: translateY(-30px);}
+    60% {-webkit-transform: translateY(-15px);}
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-30px);}
+    60% {transform: translateY(-15px);}
+  }
+
+  .bounce {
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
+  }
 
 </style>
