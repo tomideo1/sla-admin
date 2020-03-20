@@ -5,15 +5,13 @@
         <d-card class="card-small edit-user-details mb-4">
           <d-card-header class="p-0">
 
-
-
           </d-card-header>
           <d-card-body class="p-0">
 
             <!-- Nav Wrapper -->
             <div class="border-bottom clearfix d-flex">
               <d-nav tabs class="border-0 mt-auto mx-4 pt-2">
-                <d-nav-item active>General</d-nav-item>
+                <d-nav-item active>Profile</d-nav-item>
               </d-nav>
             </div>
 

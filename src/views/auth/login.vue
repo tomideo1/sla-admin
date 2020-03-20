@@ -107,10 +107,10 @@
           this.type = 'password';
           this.eye = false
         }
-      }
 
+      }
     }
-  };
+  }
 </script>
 
 <style scoped  lang="scss">

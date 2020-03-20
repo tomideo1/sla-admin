@@ -7,7 +7,7 @@
         </d-col>
         <d-col lg="6" md="8" class="bg-white"  >
           <div class="login d-flex align-items-center py-5"  >
-            <div class="container" v-if="isSuccess">
+            <div class="container" v-if="!isSuccess">
               <d-row>
                 <d-col md="12" lg="12" sm="12" class="d-none d-lg-block d-md-block">
                   <d-image center class="mb-lg-4 pb-lg-4 " src="https://res.cloudinary.com/dwpu7jpku/image/upload/v1584552409/SLA_Logo_Color_3_yzo3ce.png"/>
@@ -29,12 +29,12 @@
                       <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
                     </button>
                     <div class="text-center mt-4 form-text" >
-                      Remembered password? &nbsp;<router-link to="login">Login here</router-link></div>
+                      Remembered password? &nbsp;<router-link to="/login">Login here</router-link></div>
                   </d-form>
                 </d-col>
               </d-row>
             </div>
-            <div class="container" v-if="!isSuccess">
+            <div class="container" v-if="isSuccess">
               <d-row>
                 <d-col md="12" lg="12" sm="12" class="d-none d-lg-block d-md-block">
                   <d-image center class="mb-lg-4 pb-lg-4 " src="https://res.cloudinary.com/dwpu7jpku/image/upload/v1584552409/SLA_Logo_Color_3_yzo3ce.png"/>

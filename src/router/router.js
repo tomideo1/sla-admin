@@ -11,7 +11,7 @@ import auth from './middleware/auth.js'
 import middlewarePipeline from './kernel/middlewarePipeline'
 Vue.use(Router);
 
-import store from "@/store/app";
+import store from "@/store/index";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
 import PasswordCreate from "../views/auth/password-create";
@@ -39,19 +39,19 @@ const router =  new Router({
     },
     {
       path: '/courses',
-      meta: {
-        middleware: [
-          auth
-        ]
-      },
       component: () => import("@/views/courses/index.vue"),
       children: [
         {
           path: '',
           name: 'all-courses',
-          component: () => import("@/views/courses/home.vue")
+          component: () => import("@/views/courses/home.vue"),
+          meta: {
+            middleware: [
+              auth
+            ]
+          }
         }
-      ],
+      ]
     },
     {
       path: '/groups',
@@ -113,11 +113,6 @@ const router =  new Router({
     },
     {
       path: '/admin',
-      meta: {
-        middleware: [
-          auth
-        ]
-      },
       component: () => import("@/views/admin/index.vue"),
       children: [
         {
@@ -131,7 +126,7 @@ const router =  new Router({
           component: () => import("@/views/admin/adminProfile.vue")
         },
         {
-          path: '/creat-admin',
+          path: '/create-admin',
           name: 'create-admin',
           component: () => import("@/views/admin/createAdmin.vue")
         },
@@ -160,12 +155,7 @@ const router =  new Router({
       name: 'errors',
       meta: { layout: 'no-sidebar' },
       component: Errors,
-    },
-    {
-      path: '*',
-      meta: { layout: 'no-sidebar' },
-      redirect: '/errors',
-    },
+    }
   ],
 });
 
@@ -173,6 +163,8 @@ const router =  new Router({
 
 
 router.beforeEach((to, from, next) => {
+  console.log(to)
+
   if(!to.meta.middleware) {
     return next()
   }

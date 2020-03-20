@@ -1,10 +1,10 @@
-export default function({ next }) {
-  // if(true) {
-  //   console.log("NOT_LOGGED_IN")
-  //   return next({
-  //     name: 'login'
-  //   })
-  // }
+export default function({ store, next }) {
 
+  if(!store.state.auth.isLoggedIn) {
+    return next({
+      name: 'login'
+    })
+  }
+  
   next()
 }

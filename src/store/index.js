@@ -12,9 +12,10 @@ export default new Vuex.Store({
   modules: {
     auth
   },
-  plugins: [ 
+  plugins: [
     createPersistedState({
     	key: 'sheleads-admin'
-    }) 
+    })
   ]
 })
+

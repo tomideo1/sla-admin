@@ -21,11 +21,11 @@
       </span>
       </a>
       <d-collapse id="user-actions" class="dropdown-menu dropdown-menu-small">
-        <d-dropdown-item to="dashboard"><i class="material-icons">dashboard</i> Dashboard</d-dropdown-item>
+        <d-dropdown-item to="/"><i class="material-icons">dashboard</i> Dashboard</d-dropdown-item>
         <d-dropdown-item to="courses"><i class="material-icons">library_books</i> Courses</d-dropdown-item>
         <d-dropdown-item to="messages"><i class="material-icons">message</i> Messages</d-dropdown-item>
         <d-dropdown-item to="coaches"><i class="material-icons">school</i> Coaches</d-dropdown-item>
-        <d-dropdown-item to="admin"><i class="material-icons">&#xE8B8;</i> Edit Profile</d-dropdown-item>
+        <d-dropdown-item to="profile"><i class="material-icons">&#xE8B8;</i> Edit Profile</d-dropdown-item>
 
         <d-dropdown-divider />
         <d-dropdown-item to="login" class="text-danger">
