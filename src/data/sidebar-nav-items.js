@@ -9,7 +9,7 @@ export default function () {
       {
           "title":"All Admins",
           "to":{
-            "name":"dashboard"
+            "name":"all-admins"
           }
         },
         {

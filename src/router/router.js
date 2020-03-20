@@ -15,6 +15,7 @@ import store from "@/store/index";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
 import PasswordCreate from "../views/auth/password-create";
+import PasswordReset from "../views/auth/password-reset";
 import forgotPassword from "../views/auth/forgotPassword";
 import Dashboard from "@/views/Dashboard.vue";
 
@@ -121,6 +122,11 @@ const router =  new Router({
           component: () => import("@/views/admin/index.vue")
         },
         {
+          path: '/all-admins',
+          name: 'all-admins',
+          component: () => import("@/views/admin/all-admins.vue")
+        },
+        {
           path: '/profile',
           name: 'edit-profile',
           component: () => import("@/views/admin/adminProfile.vue")
@@ -139,10 +145,16 @@ const router =  new Router({
       component: Login,
     },
     {
-      path: '/password-create',
+      path: '/admin/password-create',
       name: 'password-create',
       meta: { layout: 'no-sidebar' },
       component: PasswordCreate,
+    },
+    {
+      path: '/admin/password-reset',
+      name: 'password-reset',
+      meta: { layout: 'no-sidebar' },
+      component: PasswordReset,
     },
     {
       path: '/forgot-password',
