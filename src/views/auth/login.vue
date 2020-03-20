@@ -1,12 +1,5 @@
 <template>
   <div class="d-md-flex h-md-100 align-items-center">
-    <Toasts
-      :show-progress="false"
-      :rtl="false"
-      :max-messages="5"
-      :time-out="3000"
-      :closeable="false"
-    ></Toasts>
     <d-container fluid>
       <d-row no-gutters>
         <d-col lg="6" md="4"   class="d-none d-md-flex d-lg-flex bg-image">
@@ -27,7 +20,9 @@
                 <d-col md="9" lg="8" class="mx-auto">
                   <d-form>
                     <div class="form-group mb-lg-4 mb-5">
-                      <d-input type="email" id="inputEmail" v-model="form.email"  class="form-control" placeholder="Email address" required autofocus/>
+                      <d-input type="email" id="inputEmail" v-model="form.email" class="form-control"  :class="error.type === 'email' ? 'is-invalid': ''" placeholder="Email address" required autofocus/>
+                      <div class="invalid-feedback">{{error.message}}</div>
+
                     </div>
 
                     <div class="form-group mb-lg-4 mb-5">
@@ -35,8 +30,8 @@
                         <d-input-group-text slot="append"  >
                             <button type="button"   @click="switchVisibility" class="eye-button"  ><i :class="eye ? 'fa fa-eye' : 'fa fa-eye-slash'"></i></button>
                         </d-input-group-text>
-                        <d-input :type="type"  class="form-control "  v-model="form.password" placeholder="Password" required/>
-
+                        <d-input :type="type"  class="form-control"  :class="error.type === 'password' ? 'is-invalid': ''" v-model="form.password" placeholder="Password" required/>
+                        <div class="invalid-feedback">{{error.message}}</div>
                       </d-input-group>
 
                     </div>
@@ -65,9 +60,11 @@
       return {
         isLoading:false,
         theme:'success',
-        isAlert:false,
-        alert_type:null,
-        alert_message:null,
+        error: {
+          message: null,
+          type: null,
+          show: false
+        },
         eye:false,
         type:'password',
         form: {
@@ -88,10 +85,8 @@
             name: 'dashboard'
           })
         } else {
-          this.$toast.error(
-            res.data.error
-          );
-          console.log(res.data.message)
+          this.error.type =  res.data.type;
+          this.error.message = res.data.message ;
           this.isLoading = false;
         }
 
