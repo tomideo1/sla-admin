@@ -124,7 +124,8 @@ export default {
         this.error.show = true
         return
       }
-      if(! this.password_strength <=2){
+      console.log(this.password_strength)
+      if(this.password_strength  < 2){
         this.isLoading = false;
         this.error.message = "Passwords Strength is weak"
         this.error.type = "danger"
