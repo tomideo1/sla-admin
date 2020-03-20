@@ -116,7 +116,7 @@ export default {
         return
       }
 
-      if(! this.form.password !== this.form.confirm_password){
+      if( this.form.password !== this.form.confirm_password){
         console.log('validate password');
         this.isLoading = false;
         this.error.message = "Passwords must be the same"
