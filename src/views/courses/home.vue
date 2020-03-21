@@ -9,20 +9,25 @@
     </d-row>
 
     <d-row>
-      <d-col v-for="(post, idx) in PostsListOne" :key="idx" lg="3" md="6" sm="12" class="mb-4">
+      <d-col v-for="(course, idx) in courses" :key="idx" lg="3" md="6" sm="12" class="mb-4">
         <d-card class="card-small card-post card-post--1">
-          <div class="card-post__image" :style="{ backgroundImage: 'url(\'' + post.backgroundImage + '\')' }">
-            <d-badge pill :class="['card-post__category', 'bg-' + post.categoryTheme ]">{{ post.category }}</d-badge>
+          <div class="card-post__image" :style="{ backgroundImage: 'url(\'' + course.cover_image + '\')' }">
+
             <div class="card-post__author d-flex">
-              <a href="#" class="card-post__author-avatar card-post__author-avatar--small" :style="{ backgroundImage: 'url(\'' + post.authorAvatar + '\')' }">Written by {{ post.author }}</a>
+<!--              <a href="#" class="card-post__author-avatar card-post__author-avatar&#45;&#45;small" :style="{ backgroundImage: 'url(\'' + post.authorAvatar + '\')' }">Written by {{ post.author }}</a>-->
             </div>
           </div>
           <d-card-body>
             <h5 class="card-title">
-              <a href="#" class="text-fiord-blue">{{ post.title }}</a>
+              <a href="#" class="text-fiord-blue">{{ course.title }}</a>
             </h5>
-            <p class="card-text d-inline-block mb-3">{{ post.body }}</p>
-            <span class="text-muted">{{ post.date }}</span>
+            <router-link to="/login">
+              <d-badge pill :class="['card-post__category']">View More</d-badge>
+            </router-link>
+            <p class="card-text d-inline-block mb-3">{{ course.details }}</p>
+            <br/>
+            <span class="text-muted">{{ course.updatedAt |  moment(" MMMM Do YYYY") }}
+            </span>
           </d-card-body>
         </d-card>
       </d-col>
@@ -88,8 +93,8 @@ export default {
       "getAllCourses"
     ])
   },
-  mounted() {
-    this.getAllCourses()
+  async mounted() {
+   this.getAllCourses();
   }
 }
 </script>

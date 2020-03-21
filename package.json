@@ -23,6 +23,7 @@
     "vue": "^2.5.17",
     "vue-analytics": "^5.16.0",
     "vue-bootstrap-toasts": "^1.0.7",
+    "vue-moment": "^4.1.0",
     "vue-password-strength-meter": "^1.7.1",
     "vue-router": "^3.0.1",
     "vue-tables-2": "^1.4.70",

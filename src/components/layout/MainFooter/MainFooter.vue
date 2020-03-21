@@ -7,30 +7,13 @@
             <d-link class="nav-link" :to="item.to">{{ item.title }}</d-link>
           </li>
         </ul>
-        <span class="copyright ml-auto my-auto mr-2">{{ copyright }}</span>
+        <span class="copyright ml-auto my-auto mr-2 mt-4">{{ copyright }}</span>
       </div>
     </div>
   </footer>
 </template>
 
 <script>
-const defaultMenuItems = [{
-  title: 'Home',
-  to: '#',
-}, {
-  title: 'Services',
-  to: '#',
-}, {
-  title: 'About',
-  to: '#',
-}, {
-  title: 'Products',
-  to: '#',
-}, {
-  title: 'Blog',
-  to: '#',
-}];
-
 export default {
   name: 'main-footer',
   props: {
@@ -40,7 +23,9 @@ export default {
     menuItems: {
       type: Array,
       default() {
-        return defaultMenuItems;
+        return {
+
+        };
       },
     },
 
