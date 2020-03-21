@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       columns: ["first_name", "last_name", "phone_number", "email", "actions"],
-      isLoading: true,
+      isLoading: false,
       /**
        * Table Data
        */
@@ -101,9 +101,7 @@ export default {
   },
   async mounted() {
     const self = this;
-    setTimeout(function() {
-      self.isLoading = false;
-    }, 300);
+    setTimeout(function() {}, 3);
     this.getAllAdmins();
   }
 };
