@@ -43,9 +43,20 @@ export default function () {
     {
       "title":"Courses",
       "htmlBefore":"<i class=\"material-icons\">library_books</i>",
-      "to":{
-        "name":"all-courses"
-      }
+      "items": [
+      {
+          "title":"All Courses",
+          "to":{
+            "name":"all-courses"
+          }
+        },
+        {
+          "title":"Add New",
+          "to":{
+            "name":"create-course"
+          }
+        },
+      ]
     },
     {
       "title":"Groups",

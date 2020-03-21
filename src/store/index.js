@@ -5,11 +5,13 @@ import Api from "@/utils/Api.js"
 
 Vue.use(Vuex)
 import auth from "@/store/auth"
+import app from "@/store/app"
 
 
 
 export default new Vuex.Store({
   modules: {
+  	app,
     auth
   },
   plugins: [

@@ -69,11 +69,27 @@ const PostsListOne = [{
   date: '29 February 2019',
 }];
 
+import { mapActions, mapGetters } from "vuex"
+
 export default {
+  name: "course-home",
 	data () {
 		return {
 			PostsListOne
 		}
-	}
+	},
+  computed: {
+    ...mapGetters({
+      courses: "app/getCourses"
+    })
+  },
+  methods: {
+    ...mapActions("app/", [
+      "getAllCourses"
+    ])
+  },
+  mounted() {
+    this.getAllCourses()
+  }
 }
 </script>

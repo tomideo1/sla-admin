@@ -1,6 +1,7 @@
 import axios from "axios"
 import store from "@/store"
 
+// console.log(store.state.auth)
 const instance = axios.create({
 	baseURL: process.env.VUE_APP_API
 })
@@ -8,7 +9,6 @@ const instance = axios.create({
 // request interceptor
 instance.interceptors.request.use((config, reqAuth) => {
 	// do somethong here
-  // console.log(store.state.auth)
 	return config;
 }, error => {
 
@@ -21,11 +21,11 @@ class Api {
     try {
       let config = {
         headers: {
-          // 'Authorization': `Bearer ${stores.state.auth.jwt}`
+          'Authorization': `Bearer ${store.state.auth.token}`
         }
       }
       let response = requireAuth ? await instance.get(url, config) : await instance.get(url)
-      return response.data
+      return response
     } catch (error) {
       return error.response
     }
@@ -35,7 +35,7 @@ class Api {
     try {
       let config = {
         headers: {
-          // 'Authorization': `Bearer ${stores.state.auth.jwt}`
+          'Authorization': `Bearer ${store.state.auth.token}`
         }
       }
       let response = requireAuth ? await instance.post(url, payload, config) : await instance.post(url, payload)
@@ -49,7 +49,7 @@ class Api {
     try {
       let config = {
         headers: {
-          // 'Authorization': `Bearer ${stores.state.auth.jwt}`
+          'Authorization': `Bearer ${store.state.auth.token}`
         }
       }
       let response = requireAuth ? await instance.put(url, payload, config) : await instance.put(url, payload)
@@ -63,7 +63,7 @@ class Api {
     try {
       let config = {
         headers: {
-          // 'Authorization': `Bearer ${stores.state.auth.jwt}`
+          'Authorization': `Bearer ${store.state.auth.token}`
         },
         data: payload
       }
