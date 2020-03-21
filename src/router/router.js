@@ -50,6 +50,16 @@ const router =  new Router({
               auth
             ]
           }
+        },
+        {
+          path: 'create',
+          name: 'create-course',
+          component: () => import("@/views/courses/create.vue"),
+          meta: {
+            middleware: [
+              auth
+            ]
+          }
         }
       ]
     },
