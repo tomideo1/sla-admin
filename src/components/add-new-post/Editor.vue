@@ -12,7 +12,7 @@
 <script>
 import Quill from "quill";
 import quillEmij from "quill-emoji/dist/quill-emoji";
-
+import "quill-emoji/dist/quill-emoji.css";
 export default {
   name: "editor",
   mounted() {
