@@ -4,7 +4,3 @@ export const getCourses = state => {
 export const getAdmins = state => {
   return state.Admins;
 };
-
-export const getFirstname = state => {
-  return state.data.first_name;
-};

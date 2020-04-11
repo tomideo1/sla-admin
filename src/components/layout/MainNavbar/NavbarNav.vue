@@ -1,11 +1,8 @@
 <template>
   <d-navbar-nav class="flex-row ">
-    <li class="nav-item mr-5 dropdown">
-      <a
-        class="nav-link font-weight-bold text-nowrap px-3 mt-2"
-        v-d-toggle.user-actions
-      >
-        &nbsp;
+    <li class="nav-item mr-5 dropdown border-left">
+      <a class="nav-link  text-nowrap px-3 mt-2" v-d-toggle.user-actions>
+        <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
         <img
           class="user-avatar rounded-circle mr-2 "
           width="25px"
@@ -42,10 +39,12 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  data() {},
+  data() {
+    return {};
+  },
   computed: {
     ...mapGetters({
-      firstname: "app/getFirstname"
+      Admin: "auth/getAdmin"
     })
   }
 };

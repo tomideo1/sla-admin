@@ -13,7 +13,7 @@
       <nav
         class="navbar align-items-stretch navbar-light bg-primary flex-md-nowrap border-bottom p-0"
       >
-        <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
+        <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px; ">
           <div class="d-table m-auto">
             <img
               id="main-logo"
@@ -53,7 +53,7 @@
       </div>
     </form>
 
-    <div class="nav-wrapper">
+    <div class="nav-wrapper bg-primary text shadow ">
       <div v-if="items" v-for="(nav, navIdx) in items" :key="navIdx">
         <h6 v-if="nav.title" class="main-sidebar__nav-title">
           {{ nav.title }}
@@ -98,6 +98,7 @@
                 :key="subItemIdx"
                 :href="subItem.href"
                 :to="subItem.to"
+                :class="['bg-primary', 'text-white']"
               >
                 {{ subItem.title }}
               </d-dropdown-item>
@@ -147,16 +148,28 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .main-sidebar {
   .item-icon-wrapper {
-    display: inline-block;
+    display: inline-block !important;
   }
   .dropdown-menu {
-    display: block;
+    display: block !important;
   }
 }
+
 .bg-primary {
-  background: #0087db;
+  background: #0087db !important;
+}
+* {
+  border: none !important;
+  color: #ffffff !important;
+}
+
+.main-sidebar .nav .nav-item.active,
+.main-sidebar .nav .nav-item .nav-link.active,
+.main-sidebar .nav .nav-item:hover,
+.main-sidebar .nav .nav-item .nav-link:hover {
+  background: #186bb4 !important;
 }
 </style>

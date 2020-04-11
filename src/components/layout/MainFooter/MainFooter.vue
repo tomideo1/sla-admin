@@ -15,36 +15,33 @@
 
 <script>
 export default {
-  name: 'main-footer',
+  name: "main-footer",
   props: {
     /**
-       * The footer menu items.
-       */
+     * The footer menu items.
+     */
     menuItems: {
-      type: Array,
+      type: Object,
       default() {
-        return {
-
-        };
-      },
+        return {};
+      }
     },
 
     /**
-       * The copyright information.
-       */
+     * The copyright information.
+     */
     copyright: {
       type: String,
-      default: 'Copyright © '+ new Date().getFullYear()+' SheLeads Africa',
+      default: "Copyright © " + new Date().getFullYear() + " SheLeads Africa"
     },
-
 
     /**
-       * Whether the footer should be wrapped in a container, or not.
-       */
+     * Whether the footer should be wrapped in a container, or not.
+     */
     contained: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 };
 </script>
