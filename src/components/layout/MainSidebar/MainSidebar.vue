@@ -55,9 +55,6 @@
 
     <div class="nav-wrapper bg-primary text shadow ">
       <div v-if="items" v-for="(nav, navIdx) in items" :key="navIdx">
-        <h6 v-if="nav.title" class="main-sidebar__nav-title">
-          {{ nav.title }}
-        </h6>
         <d-nav
           v-if="typeof nav.items !== 'undefined' && nav.items.length"
           class="nav--no-borders flex-column"
@@ -75,17 +72,28 @@
               :to="item.to"
               v-d-toggle="`snc-${navIdx}-${navItemIdx}`"
             >
-              <div
-                class="item-icon-wrapper"
-                v-if="item.htmlBefore"
-                v-html="item.htmlBefore"
-              />
-              <span v-if="item.title">{{ item.title }}</span>
+              <div class="d-flex flex-row " v-if="item.htmlBefore">
+                <icon
+                  class="mr-2"
+                  size="xs"
+                  v-if="item.htmlBefore"
+                  :name="item.htmlBefore"
+                  style="opacity: 1"
+                />
+                <span v-if="item.title">{{ item.title }}</span>
+              </div>
               <div
                 class="item-icon-wrapper"
                 v-if="item.htmlAfter"
                 v-html="item.htmlAfter"
-              />
+              >
+                <icon
+                  class="m-2"
+                  size="xs"
+                  v-if="item.htmlAfter"
+                  :name="item.htmlAfter"
+                />
+              </div>
             </d-link>
             <d-collapse
               v-if="item.items && item.items.length"
@@ -140,6 +148,9 @@ export default {
   beforeDestroy() {
     this.$eventHub.$off("toggle-sidebar");
   },
+  components: {
+    Icon: () => import("@/components/SlaIcon.vue")
+  },
   methods: {
     handleToggleSidebar() {
       this.sidebarVisible = !this.sidebarVisible;
@@ -151,10 +162,10 @@ export default {
 <style lang="scss" scoped>
 .main-sidebar {
   .item-icon-wrapper {
-    display: inline-block !important;
+    display: inline-block;
   }
   .dropdown-menu {
-    display: block !important;
+    display: block;
   }
 }
 
@@ -163,13 +174,21 @@ export default {
 }
 * {
   border: none !important;
-  color: #ffffff !important;
 }
 
-.main-sidebar .nav .nav-item.active,
-.main-sidebar .nav .nav-item .nav-link.active,
-.main-sidebar .nav .nav-item:hover,
-.main-sidebar .nav .nav-item .nav-link:hover {
-  background: #186bb4 !important;
+.nav .nav-item {
+  .nav-link {
+    color: #ffffff !important;
+    background: #0087db !important;
+  }
+  .nav-link:hover {
+    background: #186bb4 !important;
+  }
+  .active {
+    background: #186bb4 !important;
+    i {
+      color: #ffffff !important;
+    }
+  }
 }
 </style>

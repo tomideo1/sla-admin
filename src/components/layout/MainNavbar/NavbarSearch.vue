@@ -3,8 +3,15 @@
     <d-input-group class="ml-3" seamless>
       <d-input class="navbar-search" />
       <div class="input-group-text" style="border: none">
-        <i class="fas fa-search"></i>
+        <icon size="xs" name="search" />
       </div>
     </d-input-group>
   </d-form>
 </template>
+<script>
+export default {
+  components: {
+    Icon: () => import("@/components/SlaIcon")
+  }
+};
+</script>

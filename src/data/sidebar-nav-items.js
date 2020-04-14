@@ -1,99 +1,157 @@
-import store from "@/store/index"
+import store from "@/store/index";
 
-export default function () {
+export default function() {
   let superAdminRoutes = [
     {
-      "title":"Admin",
-      "htmlBefore":"<i class=\"material-icons\">person</i>",
-      "items": [
-      {
-          "title":"All Admins",
-          "to":{
-            "name":"all-admins"
-          }
-        },
+      title: "Admin",
+      htmlBefore: "group",
+      items: [
         {
-          "title":"Add New",
-          "to":{
-            "name":"create-admin"
-          }
-        },
-        {
-          title: ' Admin Profile',
+          title: "All Admins",
           to: {
-            name: 'edit-profile',
-          },
+            name: "all-admins"
+          }
+        },
+        {
+          title: "Add New",
+          to: {
+            name: "create-admin"
+          }
+        },
+        {
+          title: " Admin Profile",
+          to: {
+            name: "edit-profile"
+          }
         }
       ]
-      ,
-    },
-  ]
+    }
+  ];
 
   let appRoutes = [
-  {
-  "title":"Dashboards",
-  "items":[
     {
-      "title":"Dashboard",
-      "htmlBefore":"<i class=\"material-icons\">dashboard</i>",
-      "to":{
-        "name":"dashboard"
-      }
-    },
-    {
-      "title":"Courses",
-      "htmlBefore":"<i class=\"material-icons\">library_books</i>",
-      "items": [
-      {
-          "title":"All Courses",
-          "to":{
-            "name":"all-courses"
+      title: "Menu",
+      items: [
+        {
+          title: "Home",
+          htmlBefore: "home",
+          to: {
+            name: "dashboard"
           }
         },
         {
-          "title":"Add New",
-          "to":{
-            "name":"create-course"
+          title: "Activity",
+          htmlBefore: "activity",
+          to: {
+            name: "all-coaches"
           }
         },
+
+        {
+          title: "Courses",
+          htmlBefore: "courses",
+          items: [
+            {
+              title: "Course Library",
+              to: {
+                name: "create-course"
+              }
+            },
+            {
+              title: "Create Courses",
+              to: {
+                name: "all-courses"
+              }
+            },
+            {
+              title: "Schedule Courses",
+              to: {
+                name: "all-courses"
+              }
+            }
+          ]
+        },
+        {
+          title: "Announcements",
+          htmlBefore: "announce",
+          items: [
+            {
+              title: "view All Announcement",
+              to: {
+                name: "all-announcements"
+              }
+            },
+            {
+              title: "Create Announcements",
+              to: {
+                name: "create-announcement"
+              }
+            }
+          ]
+        },
+        {
+          title: "Groups",
+          htmlBefore: "group",
+          to: {
+            name: "all-groups"
+          }
+        },
+        {
+          title: "Members",
+          htmlBefore: "group",
+          to: {
+            name: "all-messages"
+          }
+        },
+        {
+          title: "Leaderboard",
+          htmlBefore: "leaderboard",
+          to: {
+            name: "all-groups"
+          }
+        },
+        {
+          title: "Scorecard",
+          htmlBefore: "scorecard",
+          to: {
+            name: "all-groups"
+          }
+        },
+        {
+          title: "Survey",
+          htmlBefore: "survey",
+          to: {
+            name: "all-groups"
+          }
+        },
+        {
+          title: "Asset",
+          htmlBefore: "asset",
+          to: {
+            name: "all-groups"
+          }
+        },
+        {
+          title: "FAQs",
+          htmlBefore: "faq",
+          to: {
+            name: "all-groups"
+          }
+        },
+        {
+          title: "Logout",
+          htmlBefore: "logout",
+          to: {
+            name: "all-groups"
+          }
+        }
       ]
-    },
-    {
-      "title":"Groups",
-      "htmlBefore":"<i class=\"material-icons\">people</i>",
-      "to":{
-        "name":"all-groups"
-      }
-    },
-    {
-      "title":"Coaches",
-      "htmlBefore":"<i class=\"material-icons\">school</i>",
-      "to":{
-        "name":"all-coaches"
-      }
-    },
-    {
-      "title":"Messaging",
-      "htmlBefore":"<i class=\"material-icons\">message</i>",
-      "to":{
-        "name":"all-messages"
-      }
-    },
-    {
-      "title":"Reports",
-      "htmlBefore":"<i class=\"material-icons\">report</i>",
-      "to":{
-        "name":"errors"
-      }
     }
-  ]
-},
   ];
 
-  if(store.state.auth.role === "superadmin") {
-    appRoutes[0].items = [ ...appRoutes[0].items, ...superAdminRoutes];
+  if (store.state.auth.role === "superadmin") {
+    appRoutes[0].items = [...appRoutes[0].items, ...superAdminRoutes];
   }
-
 
   return appRoutes;
 }

@@ -1,6 +1,37 @@
 <template>
   <d-navbar-nav class="flex-row ">
-    <li class="nav-item mr-5 dropdown border-left">
+    <li class="nav-item   dropdown notifications">
+      <a class="nav-link mt-2 text-center" v-d-toggle.notifications>
+        <icon size="xs" name="bell" />
+      </a>
+      <d-collapse id="notifications" class="dropdown-menu dropdown-menu-small">
+        <d-dropdown-item>
+          Notifications
+        </d-dropdown-item>
+        <d-dropdown-item class="notification__all text-center"
+          >View all Notifications</d-dropdown-item
+        >
+      </d-collapse>
+    </li>
+    <li class="nav-item   dropdown messages">
+      <a class="nav-link mt-2 text-center" v-d-toggle.messages>
+        <icon size="xs" name="message" />
+      </a>
+      <d-collapse id="messages" class="dropdown-menu dropdown-menu-small">
+        <d-dropdown-item>
+          Messages
+        </d-dropdown-item>
+        <d-dropdown-item class="notification__all text-center"
+          >View all Messages</d-dropdown-item
+        >
+      </d-collapse>
+    </li>
+    <li class="nav-item  ">
+      <a class="nav-link mt-2 text-center">
+        <icon size="xs" name="setting" />
+      </a>
+    </li>
+    <li class="nav-item mr-2 dropdown border-left">
       <a class="nav-link  text-nowrap px-3 mt-2" v-d-toggle.user-actions>
         <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
         <img
@@ -46,10 +77,13 @@ export default {
     ...mapGetters({
       Admin: "auth/getAdmin"
     })
+  },
+  components: {
+    Icon: () => import("@/components/SlaIcon.vue")
   }
 };
 </script>
-<style>
+<style lang="css" scoped>
 .nav-link:hover {
   cursor: pointer;
 }
@@ -65,5 +99,8 @@ export default {
   .nav-item.notifications {
     margin-left: auto !important;
   }
+}
+.main-navbar .navbar .nav-link {
+  min-width: 2.45rem;
 }
 </style>

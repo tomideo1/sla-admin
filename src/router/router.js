@@ -78,6 +78,30 @@ const router = new Router({
       ]
     },
     {
+      path: "/announcements",
+      meta: {
+        middleware: [auth]
+      },
+      component: () => import("@/views/announcement/index.vue"),
+      children: [
+        {
+          path: "",
+          name: "all-announcements",
+          component: () => import("@/views/announcement/home.vue")
+        },
+        {
+          path: "create",
+          name: "create-announcement",
+          component: () => import("@/views/announcement/create.vue")
+        },
+        {
+          path: "edit",
+          name: "edit-announcement",
+          component: () => import("@/views/announcement/edit.vue")
+        }
+      ]
+    },
+    {
       path: "/coaches",
       meta: {
         middleware: [auth]
@@ -170,7 +194,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  // console.log(to)
+  console.log(to);
 
   if (!to.meta.middleware) {
     return next();
