@@ -18,6 +18,14 @@
     <pencil v-if="name === 'pencil'"></pencil>
     <bin v-if="name === 'bin'"></bin>
     <left v-if="name === 'left'"></left>
+    <add v-if="name === 'add'"></add>
+    <plus v-if="name === 'plus'"></plus>
+    <camera v-if="name === 'camera'"></camera>
+    <headset v-if="name === 'headset'"></headset>
+    <thumb v-if="name === 'thumb'"></thumb>
+    <gif v-if="name === 'gif'"></gif>
+    <vid v-if="name === 'vid'"></vid>
+    <eclipse v-if="name === 'eclipse'"></eclipse>
   </span>
 </template>
 <script>
@@ -48,7 +56,16 @@ export default {
     setting: () => import("@/components/__private__/media/settings.vue"),
     pencil: () => import("@/components/__private__/media/pencil.vue"),
     bin: () => import("@/components/__private__/media/bin.vue"),
-    left: () => import("@/components/__private__/media/left.vue")
+    left: () => import("@/components/__private__/media/left.vue"),
+    plus: () => import("@/components/__private__/media/plus.vue"),
+    Add: () => import("@/components/__private__/media/add.vue"),
+    Camera: () => import("@/components/__private__/media/camera.vue"),
+    Headset: () => import("@/components/__private__/media/audio.vue"),
+    thumb: () => import("@/components/__private__/media/thumb.vue"),
+    vid: () => import("@/components/__private__/media/video.vue"),
+    Gif: () => import("@/components/__private__/media/gif.vue"),
+    Bin: () => import("@/components/__private__/media/bin.vue"),
+    eclipse: () => import("@/components/__private__/media/eclipse.vue")
   }
 };
 </script>

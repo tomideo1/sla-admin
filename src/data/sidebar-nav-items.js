@@ -50,26 +50,9 @@ export default function() {
         {
           title: "Courses",
           htmlBefore: "courses",
-          items: [
-            {
-              title: "Course Library",
-              to: {
-                name: "create-course"
-              }
-            },
-            {
-              title: "Create Courses",
-              to: {
-                name: "all-courses"
-              }
-            },
-            {
-              title: "Schedule Courses",
-              to: {
-                name: "all-courses"
-              }
-            }
-          ]
+          to: {
+            name: "create-course"
+          }
         },
         {
           title: "Announcements",

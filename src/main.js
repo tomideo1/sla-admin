@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Vue from "vue";
 import ShardsVue from "shards-vue";
+import "vue-trix";
 import VueAnalytics from "vue-analytics";
 import store from "@/store/";
 

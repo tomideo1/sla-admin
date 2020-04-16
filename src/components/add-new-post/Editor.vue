@@ -2,7 +2,7 @@
   <d-card class="card-small mb-3">
     <d-card-body>
       <d-form class="add-new-post">
-        <d-input size="lg" class="mb-3" placeholder="Course Title" />
+        <d-input size="lg" class="mb-3" placeholder="Lesson Title" />
         <div ref="editor" class="add-new-post__editor mb-1"></div>
       </d-form>
     </d-card-body>

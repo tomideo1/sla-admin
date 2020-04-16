@@ -183,12 +183,17 @@ export default {
   }
   .nav-link:hover {
     background: #186bb4 !important;
+    box-shadow: inset 0.1875rem 0 0 #e1e5eb;
   }
-  .active {
+  .nav-link.active {
     background: #186bb4 !important;
+    box-shadow: inset 0.1875rem 0 0 #e1e5eb;
     i {
       color: #ffffff !important;
     }
+  }
+  .active {
+    box-shadow: inset 0.1875rem 0 0 #e1e5eb;
   }
 }
 </style>
