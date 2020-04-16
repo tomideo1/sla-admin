@@ -51,12 +51,13 @@
                 </d-select>
               </div>
 
-              <div class="m-2" v-if="item.type === 'text'">
-                <!--              <div class="m-2">-->
+              <!--              <div class="m-2" v-if="item.type === 'text'">-->
+              <div class="m-2">
                 <VueTrix
                   inputId="editor1"
                   v-model="editorContent"
                   placeholder="enter your content..."
+                  @trix-attachment-add="handleAttachmentChanges"
                 />
 
                 <!--                <d-textarea style="min-height: 100px; border: none;" class="form-control  border-bottom " placeholder="Note in Details"/>-->
@@ -375,6 +376,24 @@ export default {
     updateEditorContent(value) {
       console.log(value);
       // Update new content into the database via state mutations.
+    },
+
+    handleAttachmentChanges(event) {
+      const remoteHost = "your remote host";
+      // 1. get file object
+      let file = event.attachment.file;
+
+      console.log(file);
+      // 2. upload file to remote server with FormData
+      // ...
+
+      // 3. if upload success, set back the attachment's URL attribute
+      // @param object data from remote server response data after upload.
+      let attributes = {
+        url: remoteHost + data.path,
+        href: remoteHost + data.path
+      };
+      event.attachment.setAttributes(attributes);
     }
   },
   watch: {
