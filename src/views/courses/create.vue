@@ -45,15 +45,17 @@
                   style="border: none;"
                   v-model="item.type"
                 >
-                  <option selected value="undefined">Text</option>
-                  <option selected value="video">Video</option>
-                  <option selected value="audio">Audio</option>
+                  <option selected :value="undefined">Text</option>
+                  <option value="video">Video</option>
+                  <option value="audio">Audio</option>
                 </d-select>
               </div>
-
-              <!--              <div class="m-2" v-if="item.type === 'text'">-->
-              <div class="m-2">
+              <div
+                class="m-2"
+                v-show="item.type === 'text' || item.type === undefined"
+              >
                 <VueTrix
+                  id="trix-editor"
                   inputId="editor1"
                   v-model="editorContent"
                   placeholder="enter your content..."
@@ -130,14 +132,16 @@
 
             <!--Add Quiz-->
             <div class="p-4" v-for="(item, index) in quiz">
-              <h5 class="text-dark">Quiz {{ index + 1 }}</h5>
+              <h5 class="text-dark">
+                {{ questions_type.value }} {{ index + 1 }}
+              </h5>
               <d-card>
                 <div class="row m-2">
                   <d-input
                     class="col-md-8 col-8 col-lg-8 border-bottom m-2"
                     style="border: none;"
                     v-model="item.title"
-                    placeholder="Quiz"
+                    :placeholder="questions_type.value"
                   />
                   <d-select
                     class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
@@ -145,8 +149,8 @@
                     v-model="questions_type.value"
                   >
                     <option selected value="quiz">Quiz</option>
-                    <option selected value="survey">Survey</option>
-                    <option selected value="poll">Poll</option>
+                    <option value="Survey">Survey</option>
+                    <option value="Poll">Poll</option>
                   </d-select>
                 </div>
                 <div>
@@ -299,9 +303,12 @@ export default {
         thumbnailHeight: 300,
         addRemoveLinks: true,
         maxFilesize: 2, // MB
-        maxFiles: 1
+        maxFiles: 1,
+        resizeWidth: 300,
+        resizeHeight: 300,
+        preventDuplicates: true
       },
-      editorContent: "<h1>Editor contents</h1>",
+      editorContent: "<h1>SLA contents</h1>",
 
       formData: {
         title: null,
@@ -334,6 +341,20 @@ export default {
   },
 
   methods: {
+    resize: file => {
+      let resizeInfo = {
+        srcX: 0,
+        srcY: 0,
+        trgX: 0,
+        trgY: 0,
+        srcWidth: file.width,
+        srcHeight: file.height,
+        trgWidth: this.options.thumbnailWidth,
+        trgHeight: this.options.thumbnailHeight
+      };
+
+      return resizeInfo;
+    },
     handleUpload: e => {
       e.preventDefault();
     },
