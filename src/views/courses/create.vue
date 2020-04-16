@@ -51,13 +51,12 @@
                 </d-select>
               </div>
 
-              <!--            <div class="m-2" v-if="item.type === 'text'">-->
-              <div class="m-2">
+              <div class="m-2" v-if="item.type === 'text'">
+                <!--              <div class="m-2">-->
                 <VueTrix
                   inputId="editor1"
                   v-model="editorContent"
                   placeholder="enter your content..."
-                  @keypress="handleEditor"
                 />
 
                 <!--                <d-textarea style="min-height: 100px; border: none;" class="form-control  border-bottom " placeholder="Note in Details"/>-->
@@ -373,16 +372,14 @@ export default {
 
       this.lesson.fields[index].value = string.replace("watch?v=", "embed/");
     },
-    methods: {
-      updateEditorContent(value) {
-        console.log(value);
-        // Update new content into the database via state mutations.
-      }
-    },
-    watch: {
-      editorContent: {
-        handler: "updateEditorContent"
-      }
+    updateEditorContent(value) {
+      console.log(value);
+      // Update new content into the database via state mutations.
+    }
+  },
+  watch: {
+    editorContent: {
+      handler: "updateEditorContent"
     }
   },
   computed: {
