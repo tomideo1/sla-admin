@@ -39,9 +39,10 @@ const router = new Router({
     {
       path: "/courses",
       component: () => import("@/views/courses/index.vue"),
+      name: "courses",
       children: [
         {
-          path: "",
+          path: "all",
           name: "all-courses",
           component: () => import("@/views/courses/home.vue"),
           meta: {

@@ -51,7 +51,7 @@ export default function() {
           title: "Courses",
           htmlBefore: "courses",
           to: {
-            name: "create-course"
+            name: "courses"
           }
         },
         {

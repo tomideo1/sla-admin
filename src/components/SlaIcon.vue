@@ -26,6 +26,8 @@
     <gif v-if="name === 'gif'"></gif>
     <vid v-if="name === 'vid'"></vid>
     <eclipse v-if="name === 'eclipse'"></eclipse>
+    <arrow-right v-if="name === 'arrow-right'"></arrow-right>
+    <cancel v-if="name === 'cancel'"></cancel>
   </span>
 </template>
 <script>
@@ -65,7 +67,9 @@ export default {
     vid: () => import("@/components/__private__/media/video.vue"),
     Gif: () => import("@/components/__private__/media/gif.vue"),
     Bin: () => import("@/components/__private__/media/bin.vue"),
-    eclipse: () => import("@/components/__private__/media/eclipse.vue")
+    eclipse: () => import("@/components/__private__/media/eclipse.vue"),
+    arrowRight: () => import("@/components/__private__/media/arrow-right.vue"),
+    cancel: () => import("@/components/__private__/media/cancel.vue")
   }
 };
 </script>

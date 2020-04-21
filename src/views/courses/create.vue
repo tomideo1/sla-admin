@@ -1,36 +1,81 @@
 <template>
   <d-container fluid class="main-content-container px-4">
-    <div class="d-flex flex-row">
-      <h3 class="page-title text-dark m-4 ">Create Courses</h3>
+    <Toasts
+      :show-progress="false"
+      :rtl="false"
+      :max-messages="5"
+      :time-out="4000"
+      :closeable="false"
+    ></Toasts>
+    <div class="d-flex flex-row m-2">
+      <a
+        href="javascript:void(0)"
+        style="color: inherit;text-decoration: none;"
+        :class="['mr-2  ', pages.courseInfo ? 'text-dark' : '']"
+        @click="step('course_info')"
+        >Course Info
+        <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span
+      ></a>
+      <a
+        href="javascript:void(0)"
+        style="color: inherit;text-decoration: none;"
+        :class="['mr-2  ', pages.lessons ? 'text-dark' : '']"
+        @click="step('lesson')"
+        >Add Lesson
+        <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span
+      ></a>
+      <a
+        href="javascript:void(0)"
+        style="color: inherit;text-decoration: none;"
+        :class="['mr-2  ', pages.quiz ? 'text-dark' : '']"
+        @click="step('quiz')"
+      >
+        Add Quiz</a
+      >
     </div>
-    <d-form @submit="handleUpload">
-      <d-row no-gutters class="page-header py-4">
-        <d-col sm="12" md="6" lg="6">
+
+    <d-row no-gutters class="page-header py-4">
+      <d-col sm="12" md="6" lg="6">
+        <div v-show="pages.courseInfo">
           <d-input
             size="lg"
             class="mb-3"
             v-model="formData.title"
             placeholder=" Title"
           />
-          <d-input
-            size="lg"
-            class="mb-3"
-            v-model="formData.description"
-            placeholder="Description"
-          />
-          <d-input
+          <multiselect
             size="lg"
             class="mb-3"
             v-model="formData.category"
-            placeholder="Category"
-          />
+            placeholder="Search or add a course tag"
+            :multiple="true"
+            :taggable="true"
+            :close-on-select="false"
+            :clear-on-select="false"
+            :preserve-search="true"
+            :preselect-first="false"
+            @tag="addTag"
+            :options="options"
+          >
+          </multiselect>
           <d-textarea
             style="min-height: 140px;"
-            v-model="formData.requirement"
+            v-model="formData.details"
             class="form-control"
-            placeholder="Requirements"
+            placeholder="Description"
           />
-          <!--Add Lesson-->
+          <div class="text-center">
+            <d-button
+              class="btn btn-outline-light  mt-4  p-3 col-md-8  text-uppercase"
+              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+              @click="step('lesson')"
+            >
+              Next
+            </d-button>
+          </div>
+        </div>
+        <!--Add Lesson-->
+        <div v-show="pages.lessons">
           <div class="p-4" v-for="(item, index) in lesson.fields">
             <h5 class="text-dark">Lesson {{ index + 1 }}</h5>
             <d-card>
@@ -55,29 +100,31 @@
                 v-show="item.type === 'text' || item.type === undefined"
               >
                 <VueTrix
-                  id="trix-editor"
-                  inputId="editor1"
-                  v-model="editorContent"
+                  v-model="item.value"
                   placeholder="enter your content..."
                   @trix-attachment-add="handleAttachmentChanges"
+                  :localStorage="true"
                 />
 
-                <!--                <d-textarea style="min-height: 100px; border: none;" class="form-control  border-bottom " placeholder="Note in Details"/>-->
+                <!--                <d-textarea style="min-height: 100px; border: none;" class="form-control
+                border-bottom " placeholder="Note in Details"/>-->
               </div>
               <div class="m-2 text-center " v-if="item.type === 'video'">
-                <iframe
-                  style="width: 100%;"
-                  v-bind:src="item.value"
-                  frameborder="0"
-                  v-if="
-                    item.value !== undefined &&
-                      item.value !== '' &&
-                      item.value !== null &&
-                      urlValidator(item.value) === true
-                  "
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
+                <!--                  <iframe-->
+                <!--                    style="width: 100%;"-->
+                <!--                    v-bind:src="item.value"-->
+                <!--                    frameborder="0"-->
+                <!--                    v-if="-->
+                <!--                    item.value !== undefined &&-->
+                <!--                      item.value !== '' &&-->
+                <!--                      item.value !== null &&-->
+                <!--                      urlValidator(item.value) === true-->
+                <!--                  "-->
+                <!--                    allow="accelerometer; autoplay; encrypted-media; gyroscope;
+                picture-in-picture"-->
+                <!--                    allowfullscreen-->
+                <!--                  ></iframe>-->
+                <div v-html="item.value"></div>
                 <!--               -->
                 <d-input-group seamless>
                   <d-input
@@ -86,24 +133,18 @@
                     v-model="item.value"
                     placeholder="Post a link to your video file "
                   />
-                  <div class="input-group-text" style="border: none">
-                    <i
-                      class="fa fa-eye"
-                      @click="replaceYoutubeEmbed(item.value, index)"
-                    ></i>
-                  </div>
+                  <!--                    <div class="input-group-text" style="border: none">-->
+                  <!--                      <i-->
+                  <!--                        class="fa fa-eye"-->
+                  <!--                        @click="replaceYoutubeEmbed(item.value, index)"-->
+                  <!--                      ></i>-->
+                  <!--                    </div>-->
                 </d-input-group>
               </div>
               <div class="m-2" v-if="item.type === 'audio'">
-                <iframe
-                  width="100%"
-                  height="300"
-                  scrolling="no"
-                  frameborder="no"
-                  allow="autoplay"
-                  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/158721013&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-                ></iframe>
+                <div v-html="item.value"></div>
                 <d-input
+                  v-model="item.value"
                   class="border-bottom p-3"
                   style="border: none;"
                   placeholder="Post a link to your audio file"
@@ -129,76 +170,87 @@
             >
               <icon name="add" /> <span> Add Lesson</span>
             </d-button>
+            <d-button
+              class="btn btn-outline-light  mt-4  p-3 col-md-8  text-uppercase"
+              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+              @click="step('quiz')"
+            >
+              Next
+            </d-button>
 
             <!--Add Quiz-->
-            <div class="p-4" v-for="(item, index) in quiz">
-              <h5 class="text-dark">
-                {{ questions_type.value }} {{ index + 1 }}
-              </h5>
-              <d-card>
-                <div class="row m-2">
-                  <d-input
-                    class="col-md-8 col-8 col-lg-8 border-bottom m-2"
-                    style="border: none;"
-                    v-model="item.title"
-                    :placeholder="questions_type.value"
+          </div>
+        </div>
+        <div v-show="pages.quiz">
+          <div class="p-4" v-for="(item, index) in quiz">
+            <h5 class="text-dark">
+              {{ questions_type.value }} {{ index + 1 }}
+            </h5>
+            <d-card>
+              <div class="row m-2">
+                <d-input
+                  class="col-md-8 col-8 col-lg-8 border-bottom m-2"
+                  style="border: none;"
+                  v-model="item.title"
+                  :placeholder="questions_type.value"
+                />
+                <d-select
+                  class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
+                  style="border: none;"
+                  v-model="questions_type.value"
+                >
+                  <option selected value="quiz">Quiz</option>
+                  <option value="Survey">Survey</option>
+                  <option value="Poll">Poll</option>
+                </d-select>
+              </div>
+              <div>
+                <div
+                  class="m-2 d-flex flex-row"
+                  v-for="(item2, index2) in quiz[index].fields.option"
+                >
+                  <icon
+                    class="m-2 "
+                    v-model="item2.option"
+                    size="lg"
+                    name="eclipse"
+                  /><d-input
+                    class="col-md-4 m-2"
+                    v-model="item2.value"
+                    placeholder="Option1"
                   />
-                  <d-select
-                    class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
-                    style="border: none;"
-                    v-model="questions_type.value"
-                  >
-                    <option selected value="quiz">Quiz</option>
-                    <option value="Survey">Survey</option>
-                    <option value="Poll">Poll</option>
-                  </d-select>
+                  <icon
+                    size="lg"
+                    class="ml-auto"
+                    @click="deleteOption(index, index2)"
+                    name="cancel"
+                  />
                 </div>
-                <div>
-                  <div
-                    class="m-2 d-flex flex-row"
-                    v-for="(item2, index2) in quiz[index].fields.option"
-                  >
-                    <icon
-                      class="m-2 "
-                      v-model="item2.option"
-                      size="lg"
-                      name="eclipse"
-                    /><d-input
-                      class="col-md-4 m-2"
-                      v-model="item2.value"
-                      placeholder="Option1"
-                    />
-                    <icon
-                      size="lg"
-                      class=" m-2"
-                      @click="deleteOption(index, index2)"
-                      name="bin"
-                    />
-                  </div>
-                  <div class="d-flex flex-row m-2">
-                    <icon
-                      size="lg"
-                      class=" "
-                      @click="addOption(index)"
-                      name="add"
-                    />
-                    <icon
-                      size="lg"
-                      class="ml-auto  border-right"
-                      @click="deleteQuiz(index)"
-                      name="bin"
-                    />
-                    <div class="d-flex flex-row m-1 mt-n1">
-                      <label class="mt-2 p-1" style="color: #999999;"
-                        >Required</label
-                      >
-                      <input class="m-2" type="checkbox" />
-                    </div>
+                <div class="d-flex flex-row m-2">
+                  <icon
+                    size="lg"
+                    class=" "
+                    @click="addOption(index)"
+                    name="add"
+                  />
+                  <icon
+                    size="lg"
+                    class="ml-auto  border-right"
+                    @click="deleteQuiz(index)"
+                    name="bin"
+                  />
+                  <div class="d-flex flex-row m-1 mt-n1">
+                    <label class="mt-2 p-1" style="color: #999999;"
+                      >Required</label
+                    >
+                    <input class="m-2" type="checkbox" />
                   </div>
                 </div>
-              </d-card>
-              <!--          <Editor />-->
-            </div>
+              </div>
+            </d-card>
+            <!--          <Editor />-->
+          </div>
+          <div class="text-center">
             <d-button
               class="btn btn-outline-light  mt-4  p-3 col-md-8 "
               style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
@@ -207,122 +259,183 @@
               <icon name="add" /> <span> Add Quiz</span>
             </d-button>
           </div>
-        </d-col>
-        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-          <vue-dropzone
-            :options="dropzoneOptions"
-            v-model="formData.cover_image"
-            :id="formData.cover_image"
-            :useCustomSlot="true"
-            class="mx-auto"
-          >
-            <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
-            <div class="subtitle p-2 mt-3">Click to add cover image</div>
-            <div class="subtitle p-2 text-danger">
-              Image must be 300x300px
-            </div>
-          </vue-dropzone>
-          <p class="text-center mt-2 ">
-            <span class="text-black">Create Reminder </span
-            ><span>(DD/MM/YY)</span>
-          </p>
-          <d-input-group class="justify-content-center m-2 ">
-            <d-select v-model="time.days" class="col-md-2 mr-2">
-              <option :value="'0'">Day:</option>
-              <option v-for="i in 31">{{ i }}</option>
-            </d-select>
-            <d-select class="col-md-2 mr-2" v-model="time.month">
-              <option :value="'0'">Month:</option>
-
-              <option v-for="i in 12">{{ i }}</option>
-            </d-select>
-            <d-select class="col-md-2 mr-2 " v-model="time.year">
-              <option value="0">Year:</option>
-              <option v-for="year in years" :value="year">{{ year }}</option>
-            </d-select>
-            <d-input class="col-md-1" v-model="time.hour" />
-          </d-input-group>
-          <p class="text-center mt-2  text-dark">
-            Estimated Time to Complete Course
-          </p>
-          <d-input-group class="justify-content-center">
-            <d-input class="col-md-8 " v-model="formData.estimatedTime" />
-          </d-input-group>
-          <p class="text-center mt-2 ">
-            <span class="text-black">Launch Course </span
-            ><span>(DD/MM/YY)</span>
-          </p>
-          <d-input-group class="justify-content-center m-2 ">
-            <d-select v-model="time.days" class="col-md-2 mr-2">
-              <option :value="'0'">Day:</option>
-              <option v-for="i in 31">{{ i }}</option>
-            </d-select>
-            <d-select class="col-md-2 mr-2" v-model="time.month">
-              <option :value="'0'">Month:</option>
-
-              <option v-for="i in 12">{{ i }}</option>
-            </d-select>
-            <d-select class="col-md-2 mr-2 " v-model="time.year">
-              <option value="0">Year:</option>
-              <option v-for="year in years" :value="year">{{ year }}</option>
-            </d-select>
-            <d-input class="col-md-1" v-model="time.hour" />
-          </d-input-group>
-          <div class="text-center">
-            <d-button
-              class=" btn-primary btn-outline-primary p-3 mt-4   col-md-8 "
-            >
-              SCHEDULE
-            </d-button>
-            <d-button
-              class=" btn-primary btn-outline-primary p-3 mt-4  col-md-6 "
-            >
-              Save
-            </d-button>
-            <br />
-            <d-button class=" btn-primary  p-3 mt-4  col-md-8 ">
-              PUBLISH
-            </d-button>
+        </div>
+      </d-col>
+      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+        <vue-dropzone
+          v-model="formData.cover_image"
+          :options="dropzoneOptions"
+          id="dropZone"
+          :useCustomSlot="true"
+          class="mx-auto"
+          ref="courseImage"
+          style="width: 300px; height: 300px"
+        >
+          <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
+          <div class="subtitle p-2 mt-3">Click to add cover image</div>
+          <div class="subtitle p-2 text-danger">
+            Image must be 300x300px
           </div>
-        </d-col>
-      </d-row>
-    </d-form>
+        </vue-dropzone>
+        <p class="text-center mt-2 ">
+          <span class="text-black">Create Reminder </span
+          ><span>(DD/MM/YY)</span>
+        </p>
+        <d-input-group class="justify-content-center m-2 ">
+          <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
+            <option :value="undefined">Day:</option>
+            <option v-for="i in 31">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2" v-model="time.reminder.month">
+            <option :value="undefined">Month:</option>
+
+            <option v-for="i in 12">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2 " v-model="time.reminder.year">
+            <option :value="undefined">Year:</option>
+            <option v-for="year in years" :value="year">{{ year }}</option>
+          </d-select>
+          <d-input class="col-md-3" type="time" v-model="time.reminder.hour" />
+          <input type="hidden" v-model="reminderDate" />
+        </d-input-group>
+
+        <p class="text-center mt-2  text-dark">
+          Estimated Time to Complete Course
+        </p>
+        <d-input-group class="justify-content-center">
+          <d-input
+            class="col-md-8 "
+            v-model="formData.estimate"
+            placeholder=" e.g 50 hours at 3 hours per week "
+          />
+        </d-input-group>
+        <p class="text-center mt-2 ">
+          <span class="text-black">Launch Course </span><span>(DD/MM/YY)</span>
+        </p>
+        <d-input-group class="justify-content-center m-2 ">
+          <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+            <option :value="undefined">Day:</option>
+            <option :value="i" v-for="i in 31">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+            <option :value="undefined">Month:</option>
+            <option :value="i" v-for="i in 12">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+            <option :value="undefined">Year:</option>
+            <option v-for="year in years" :value="year">{{ year }}</option>
+          </d-select>
+          <input
+            class="col-md-3 form-control"
+            type="time"
+            v-model="time.schedule.hour"
+          />
+          <input type="hidden" v-model="scheduledDate" />
+        </d-input-group>
+
+        <div class="text-center">
+          <d-button
+            class=" btn-primary btn-outline-primary p-3 mt-4   col-md-8 "
+            @click="handleSubmit"
+            v-show="buttons.schedule"
+          >
+            SCHEDULE
+            <span
+              v-if="buttons.isLoading"
+              class="spinner-border spinner-border-sm ml-3"
+            ></span>
+          </d-button>
+          <d-button
+            class=" btn-primary btn-outline-primary p-3 mt-4  col-md-6 "
+            @click="handleSubmit"
+            v-if="buttons.save"
+          >
+            Save
+            <span
+              v-if="buttons.isLoading"
+              class="spinner-border spinner-border-sm ml-3"
+            ></span>
+          </d-button>
+          <br />
+          <d-button
+            class=" btn-primary  p-3 mt-4  col-md-8 "
+            @click="handleSubmit"
+            v-show="buttons.published"
+          >
+            PUBLISH
+            <span
+              v-if="buttons.isLoading"
+              class="spinner-border spinner-border-sm ml-3"
+            ></span>
+          </d-button>
+        </div>
+      </d-col>
+    </d-row>
   </d-container>
 </template>
 <script>
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import VueTrix from "vue-trix";
+import axios from "axios";
+import Multiselect from "vue-multiselect";
+import store from "@/store/index";
 export default {
   name: "course-create",
-  data() {
+  data: () => {
     return {
-      dropzoneOptions: {
-        url: "https://httpbin.org/post",
-        thumbnailWidth: 300, // px
-        thumbnailHeight: 300,
-        addRemoveLinks: true,
-        maxFilesize: 2, // MB
-        maxFiles: 1,
-        resizeWidth: 300,
-        resizeHeight: 300,
-        preventDuplicates: true
+      pages: {
+        courseInfo: true,
+        lessons: false,
+        quiz: false
       },
-      editorContent: "<h1>SLA contents</h1>",
+      buttons: {
+        schedule: false,
+        published: false,
+        save: false,
+        isLoading: false
+      },
+      options: [],
+      error: {
+        status: null,
+        message: null
+      },
+      dropzoneOptions: {
+        // url:'localhost:8080',
+        url: `${process.env.VUE_APP_API}`,
+        // acceptedFiles: "images/*",
+        // thumbnailMethod:'contain',
+        addRemoveLinks: true,
+        maxFileSizeInMB: 2, // MB
+        maxNumberOfFiles: 1,
+        preventDuplicates: true
 
+        // resize: this.resize,
+      },
       formData: {
         title: null,
-        description: null,
-        category: null,
-        requirement: null,
+        details: null,
+        category: [],
         cover_image: "",
-        estimatedTime: null
+        estimate: null,
+        schedule: null,
+        remainder: null
       },
       time: {
-        days: undefined,
-        month: undefined,
-        year: undefined,
-        hour: undefined
+        reminder: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        },
+        schedule: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        }
       },
       lesson: {
         fields: []
@@ -337,11 +450,12 @@ export default {
     Editor: () => import("@/components/add-new-post/Editor"),
     Icon: () => import("@/components/SlaIcon"),
     vueDropzone: vue2Dropzone,
-    VueTrix
+    VueTrix,
+    Multiselect
   },
 
   methods: {
-    resize: file => {
+    resize() {
       let resizeInfo = {
         srcX: 0,
         srcY: 0,
@@ -349,38 +463,39 @@ export default {
         trgY: 0,
         srcWidth: file.width,
         srcHeight: file.height,
-        trgWidth: this.options.thumbnailWidth,
-        trgHeight: this.options.thumbnailHeight
+        trgWidth: 300,
+        trgHeight: 300
       };
 
       return resizeInfo;
     },
-    handleUpload: e => {
-      e.preventDefault();
-    },
-    deleteValue: function(index) {
+    deleteValue(index) {
       this.lesson.fields.splice(index, 1);
     },
-    addValue: function() {
+    addValue() {
       this.lesson.fields.push({});
       // this.$emit('input', this.fields);
     },
-    addQuiz: function() {
+    addQuiz() {
       this.quiz.push({ fields: { option: [] } });
       console.log(this.quiz);
 
       // this.$emit('input', this.fields);
     },
-    deleteQuiz: function(index) {
+    deleteQuiz(index) {
       this.quiz.splice(index, 1);
     },
-    addOption: function(index) {
+    addOption(index) {
       this.quiz[index].fields.option.push({ option: "", value: "" });
     },
-    deleteOption: function(index, index2) {
+    deleteOption(index, index2) {
       this.quiz[index].fields.option.splice(index2, 1);
     },
-    urlValidator: string => {
+    addTag(newTag) {
+      this.options.push(newTag);
+      this.formData.category.push(newTag);
+    },
+    urlValidator(string) {
       try {
         new URL(string);
       } catch (_) {
@@ -388,49 +503,262 @@ export default {
       }
       return true;
     },
-
+    step(status) {
+      switch (status) {
+        case "course_info":
+          this.pages = {
+            courseInfo: true,
+            lessons: false,
+            quiz: false
+          };
+          break;
+        case "lesson":
+          this.pages = {
+            courseInfo: false,
+            lessons: true,
+            quiz: false
+          };
+          break;
+        case "quiz":
+          this.pages = {
+            courseInfo: false,
+            lessons: false,
+            quiz: true
+          };
+          break;
+        default:
+          break;
+      }
+    },
     replaceYoutubeEmbed(string, index) {
       console.log(this.lesson.fields[index].value);
 
       this.lesson.fields[index].value = string.replace("watch?v=", "embed/");
     },
     updateEditorContent(value) {
-      console.log(value);
       // Update new content into the database via state mutations.
     },
-
-    handleAttachmentChanges(event) {
-      const remoteHost = "your remote host";
+    async handleAttachmentChanges(event) {
       // 1. get file object
       let file = event.attachment.file;
-
-      console.log(file);
-      // 2. upload file to remote server with FormData
-      // ...
+      let type = file.name.split(".").pop();
+      let data_type = null;
+      switch (type) {
+        case "png":
+          data_type = "data:image/png;base64,";
+          break;
+        case "jpg":
+          data_type = "data:image/jpg;base64,";
+          break;
+        case "gif":
+          data_type = "data:image/gif;base64,";
+          break;
+        case "pdf":
+          data_type = "data:application/pdf;base64,";
+          break;
+      }
+      await this.getBase64(file).then(data => {
+        data = data_type + data;
+        let res = axios
+          .post(`${process.env.VUE_APP_API}/files/upload`, {
+            file_to_upload: data
+          })
+          .then(res => {
+            let attributes = {
+              url: res.data.link,
+              href: res.data.link
+            };
+            event.attachment.setAttributes(attributes);
+          })
+          .catch(ex => {
+            console.log(ex);
+          });
+      });
 
       // 3. if upload success, set back the attachment's URL attribute
       // @param object data from remote server response data after upload.
-      let attributes = {
-        url: remoteHost + data.path,
-        href: remoteHost + data.path
-      };
-      event.attachment.setAttributes(attributes);
+    },
+    getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
+          if (encoded.length % 4 > 0) {
+            encoded += "=".repeat(4 - (encoded.length % 4));
+          }
+          resolve(encoded);
+        };
+        reader.onerror = error => reject(error);
+      });
+    },
+
+    watchSchedule: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.schedule.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not  input a go live date in the past!")
+        );
+        this.buttons = {
+          published: false,
+          save: false,
+          schedule: false
+        };
+      } else if (+new Date(value) === +new Date(currentDate)) {
+        this.buttons = {
+          published: true,
+          save: true,
+          schedule: false
+        };
+      } else {
+        this.buttons = {
+          published: false,
+          save: true,
+          schedule: true
+        };
+      }
+    },
+    watchReminder: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.reminder.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not input a reminder date in the past!")
+        );
+        this.buttons = {
+          published: false,
+          save: false,
+          schedule: false
+        };
+      }
+    },
+    async handleSubmit() {
+      this.buttons.isLoading = true;
+      const self = this;
+      let remainder = (
+        this.time.reminder.final_date +
+        " " +
+        this.time.reminder.hour
+      ).toString();
+      let schedule = (
+        this.time.schedule.final_date +
+        " " +
+        this.time.schedule.hour
+      ).toString();
+      this.formData.tags = JSON.stringify(this.formData.category);
+      this.formData.remainder = new Date(remainder).toISOString();
+      this.formData.schedule = new Date(schedule).toISOString();
+      this.formData.schedule = new Date(
+        this.time.schedule.final_date + "  " + this.time.schedule.hour
+      ).toISOString();
+      let token = store.state.auth.token;
+      let res = await axios
+        .post(`${process.env.VUE_APP_API}/course/create`, this.formData, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          self.buttons.isLoading = false;
+          console.log(res.data);
+        })
+        .catch(ex => {
+          self.buttons.isLoading = false;
+          console.log(ex.data);
+        });
     }
   },
   watch: {
     editorContent: {
       handler: "updateEditorContent"
+    },
+    scheduledDate: {
+      handler: "watchSchedule"
+    },
+    reminderDate: {
+      handler: "watchReminder"
     }
+  },
+  mounted() {
+    this.$refs.courseImage.dropzone.on("addedfile", file => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      const self = this;
+      reader.onload = () => {
+        let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
+        if (encoded.length % 4 > 0) {
+          encoded += "=".repeat(4 - (encoded.length % 4));
+        }
+        self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
+      };
+    });
   },
   computed: {
     years: () => {
       const year = new Date().getFullYear();
-      return Array.from({ length: year + 20 }, (value, index) => 2001 + index);
+      return Array.from({ length: year }, (value, index) => year + index);
+    },
+    days: () => {
+      const day = new Date().getDay();
+      return Array.from({ length: day + 31 }, (value, index) => day + index);
+    },
+    scheduledDate() {
+      if (
+        this.time.schedule.days !== undefined &&
+        this.time.schedule.year !== undefined &&
+        this.time.schedule.month !== undefined &&
+        this.time.schedule.hour !== undefined
+      ) {
+        this.time.schedule.final_date =
+          this.time.schedule.year +
+          "-" +
+          this.time.schedule.month +
+          "-" +
+          this.time.schedule.days;
+        return this.time.schedule.final_date;
+      }
+    },
+    reminderDate() {
+      if (
+        this.time.reminder.days !== undefined &&
+        this.time.reminder.year !== undefined &&
+        this.time.reminder.month !== undefined &&
+        this.time.reminder.hour !== undefined
+      ) {
+        this.time.reminder.final_date =
+          this.time.reminder.year +
+          "-" +
+          this.time.reminder.month +
+          "-" +
+          this.time.reminder.days;
+        return this.time.reminder.final_date;
+      }
     }
   }
 };
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped lang="scss">
+.bg-primary::v-deep .multiselect {
+  .multiselect__tags {
+    background: #03a9f4;
+  }
+}
 .btn-outline-primary {
   border: 1px solid #0087db;
   box-sizing: border-box;
@@ -455,11 +783,9 @@ input[type="checkbox"] {
   transition: 1s;
   top: 2px;
 }
-
 input:checked[type="checkbox"] {
   background: #03a9f4;
 }
-
 input[type="checkbox"]:before {
   content: "";
   position: absolute;
@@ -472,11 +798,9 @@ input[type="checkbox"]:before {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: 0.5s;
 }
-
 input:checked[type="checkbox"]:before {
   left: 20px;
 }
-
 .btn-primary {
   background: #03a9f4;
 }
