@@ -1,19 +1,28 @@
 <template>
   <div>
-    <d-container fluid class="mt-3 mb-3">
-      <div class=" d-flex flex-row ">
-        <div class="border-right p-1">
-          <h5 class="text-black mr-3 " v-if="$route.path === '/courses'">
+    <d-container fluid class="mt-5 mb-3 d-none d-md-block d-lg-block">
+      <div class=" d-lg-flex d-md-flex flex-row  flex-grow-1 ">
+        <div class="border-right  ">
+          <h5
+            class="text-black mr-lg-3 mr-1 "
+            v-if="$route.path === '/courses'"
+          >
             Courses Home
           </h5>
-          <h5 class="text-black mr-3 " v-if="$route.path === '/courses/create'">
+          <h5
+            class="text-black mr-lg-3  mr-1"
+            v-if="$route.path === '/courses/create'"
+          >
             Create Course
           </h5>
-          <h5 class="text-black mr-3 " v-if="$route.path === '/courses/all'">
+          <h5
+            class="text-black mr-lg-3 pr-2 "
+            v-if="$route.path === '/courses/all'"
+          >
             Courses Library
           </h5>
           <h5
-            class="text-black mr-3 "
+            class="text-black mr-lg-3  mr-1"
             v-if="$route.path === '/courses/scheduled'"
           >
             Scheduled Courses
@@ -22,7 +31,7 @@
             Saved Courses
           </h5>
         </div>
-        <div class="">
+        <div class=" ml-3 mr-1">
           <button
             @click="$router.push('/courses/create')"
             :class="
@@ -30,11 +39,12 @@
                 ? 'btn btn-sm btn-primary'
                 : 'btn btn-sm btn-light'
             "
+            style="border-radius: 10px;"
           >
             Create
           </button>
         </div>
-        <div class="">
+        <div class="mr-1">
           <button
             @click="$router.push('/courses/all')"
             :class="
@@ -42,11 +52,12 @@
                 ? 'btn btn-sm btn-primary'
                 : 'btn btn-sm btn-light'
             "
+            style="border-radius: 10px;"
           >
             View All
           </button>
         </div>
-        <div class="">
+        <div class="mr-1">
           <button
             @click="$router.push('/courses/scheduled')"
             :class="
@@ -54,11 +65,12 @@
                 ? 'btn btn-sm btn-primary'
                 : 'btn btn-sm btn-light'
             "
+            style="border-radius: 10px;"
           >
             Scheduled
           </button>
         </div>
-        <div class="">
+        <div class="mr-1">
           <button
             @click="$router.push('/courses/saved')"
             :class="
@@ -66,6 +78,7 @@
                 ? 'btn btn-sm btn-primary'
                 : 'btn btn-sm btn-light'
             "
+            style="border-radius: 10px;"
           >
             Saved
           </button>

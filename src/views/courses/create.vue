@@ -7,7 +7,7 @@
       :time-out="4000"
       :closeable="false"
     ></Toasts>
-    <div class="d-flex flex-row m-2">
+    <div class="d-flex flex-row m-4">
       <a
         href="javascript:void(0)"
         style="color: inherit;text-decoration: none;"
@@ -84,32 +84,38 @@
                   class="col-md-8 col-8 col-lg-8 border-bottom m-2"
                   style="border: none;"
                   placeholder="Title"
+                  v-model="item.title"
                 />
+
                 <d-select
                   class="col-md-3 col-3 col-lg-3 border-bottom m-2"
                   style="border: none;"
-                  v-model="item.type"
+                  v-model="item.lesson_type"
                 >
-                  <option selected :value="undefined">Text</option>
+                  <option selected :value="undefined">Select Type</option>
+                  <option selected :value="'article'">Article</option>
                   <option value="video">Video</option>
                   <option value="audio">Audio</option>
                 </d-select>
+                <d-textarea
+                  class="col-md-12 col-12 col-lg-12 border-bottom m-2"
+                  style="border: none;"
+                  placeholder="Details"
+                  v-model="item.details"
+                />
               </div>
-              <div
-                class="m-2"
-                v-show="item.type === 'text' || item.type === undefined"
-              >
+              <div class="m-2" v-show="item.lesson_type === 'article'">
                 <VueTrix
-                  v-model="item.value"
+                  v-model="item.content"
                   placeholder="enter your content..."
                   @trix-attachment-add="handleAttachmentChanges"
-                  :localStorage="true"
+                  :localStorage="false"
                 />
 
                 <!--                <d-textarea style="min-height: 100px; border: none;" class="form-control
                 border-bottom " placeholder="Note in Details"/>-->
               </div>
-              <div class="m-2 text-center " v-if="item.type === 'video'">
+              <div class="m-2 text-center " v-if="item.lesson_type === 'video'">
                 <!--                  <iframe-->
                 <!--                    style="width: 100%;"-->
                 <!--                    v-bind:src="item.value"-->
@@ -124,13 +130,16 @@
                 picture-in-picture"-->
                 <!--                    allowfullscreen-->
                 <!--                  ></iframe>-->
-                <div v-html="item.value"></div>
+                <div
+                  style="width: inherit!important;height: inherit!important;"
+                  v-html="item.content"
+                ></div>
                 <!--               -->
                 <d-input-group seamless>
                   <d-input
                     class="border-bottom p-3"
                     style="border: none;"
-                    v-model="item.value"
+                    v-model="item.content"
                     placeholder="Post a link to your video file "
                   />
                   <!--                    <div class="input-group-text" style="border: none">-->
@@ -141,10 +150,10 @@
                   <!--                    </div>-->
                 </d-input-group>
               </div>
-              <div class="m-2" v-if="item.type === 'audio'">
-                <div v-html="item.value"></div>
+              <div class="m-2" v-if="item.lesson_type === 'audio'">
+                <div v-html="item.content"></div>
                 <d-input
-                  v-model="item.value"
+                  v-model="item.content"
                   class="border-bottom p-3"
                   style="border: none;"
                   placeholder="Post a link to your audio file"
@@ -438,7 +447,14 @@ export default {
         }
       },
       lesson: {
-        fields: []
+        fields: [
+          {
+            title: undefined,
+            lesson_type: undefined,
+            details: undefined,
+            content: undefined
+          }
+        ]
       },
       quiz: [],
       questions_type: {
@@ -531,9 +547,9 @@ export default {
       }
     },
     replaceYoutubeEmbed(string, index) {
-      console.log(this.lesson.fields[index].value);
+      console.log(this.lesson.fields[index].content);
 
-      this.lesson.fields[index].value = string.replace("watch?v=", "embed/");
+      this.lesson.fields[index].content = string.replace("watch?v=", "embed/");
     },
     updateEditorContent(value) {
       // Update new content into the database via state mutations.
@@ -660,7 +676,7 @@ export default {
         " " +
         this.time.schedule.hour
       ).toString();
-      this.formData.tags = JSON.stringify(this.formData.category);
+      this.formData.tags = this.formData.category.join();
       this.formData.remainder = new Date(remainder).toISOString();
       this.formData.schedule = new Date(schedule).toISOString();
       this.formData.schedule = new Date(
@@ -674,7 +690,21 @@ export default {
           }
         })
         .then(res => {
-          self.buttons.isLoading = false;
+          let res2 = axios
+            .post(
+              `${process.env.VUE_APP_API}/course/` +
+                res.data.course._id +
+                `/lesson/create`,
+              this.lesson.fields[0],
+              {
+                headers: {
+                  Authorization: `Bearer ${token} `
+                }
+              }
+            )
+            .then(res => {
+              this.buttons.isLoading = true;
+            });
           console.log(res.data);
         })
         .catch(ex => {

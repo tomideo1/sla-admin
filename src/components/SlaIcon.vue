@@ -27,6 +27,7 @@
     <vid v-if="name === 'vid'"></vid>
     <eclipse v-if="name === 'eclipse'"></eclipse>
     <arrow-right v-if="name === 'arrow-right'"></arrow-right>
+    <arrow-left v-if="name === 'arrow-left'"></arrow-left>
     <cancel v-if="name === 'cancel'"></cancel>
   </span>
 </template>
@@ -69,7 +70,8 @@ export default {
     Bin: () => import("@/components/__private__/media/bin.vue"),
     eclipse: () => import("@/components/__private__/media/eclipse.vue"),
     arrowRight: () => import("@/components/__private__/media/arrow-right.vue"),
-    cancel: () => import("@/components/__private__/media/cancel.vue")
+    cancel: () => import("@/components/__private__/media/cancel.vue"),
+    arrowLeft: () => import("@/components/__private__/media/arrow-left.vue")
   }
 };
 </script>
