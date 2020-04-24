@@ -54,8 +54,7 @@
             :clear-on-select="false"
             :preserve-search="true"
             :preselect-first="false"
-            @tag="addTag"
-            :options="options"
+            :options="categories"
           >
           </multiselect>
           <d-textarea
@@ -77,7 +76,20 @@
         <!--Add Lesson-->
         <div v-show="pages.lessons">
           <div class="p-4" v-for="(item, index) in lesson.fields">
-            <h5 class="text-dark">Lesson {{ index + 1 }}</h5>
+            <div class="row">
+              <h5 class="text-dark col-md-6 ">Lesson {{ index + 1 }}</h5>
+              <label class="ml-auto col-md-4 ">
+                Order
+                <d-select class=" col-md-4" v-model="item.lesson_number">
+                  <option
+                    :selected="item.lesson_number === index + 1"
+                    :value="i"
+                    v-for="i in lesson.fields.length"
+                    >{{ i }}</option
+                  >
+                </d-select>
+              </label>
+            </div>
             <d-card>
               <div class="row m-2">
                 <d-input
@@ -116,20 +128,19 @@
                 border-bottom " placeholder="Note in Details"/>-->
               </div>
               <div class="m-2 text-center " v-if="item.lesson_type === 'video'">
-                <!--                  <iframe-->
-                <!--                    style="width: 100%;"-->
-                <!--                    v-bind:src="item.value"-->
-                <!--                    frameborder="0"-->
-                <!--                    v-if="-->
-                <!--                    item.value !== undefined &&-->
-                <!--                      item.value !== '' &&-->
-                <!--                      item.value !== null &&-->
-                <!--                      urlValidator(item.value) === true-->
-                <!--                  "-->
-                <!--                    allow="accelerometer; autoplay; encrypted-media; gyroscope;
-                picture-in-picture"-->
-                <!--                    allowfullscreen-->
-                <!--                  ></iframe>-->
+                <!--          <iframe
+                  style="width: 100%;"
+                  v-bind:src="item.value"
+                  frameborder="0"
+                  v-if="
+                                    item.value !== undefined &&
+                                      item.value !== '' &&
+                                      item.value !== null &&
+                                      urlValidator(item.value) === true
+                                  "
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope;picture-in-picture"
+                  allowfullscreen
+                ></iframe>-->
                 <div
                   style="width: inherit!important;height: inherit!important;"
                   v-html="item.content"
@@ -169,7 +180,6 @@
                 <div class="d-flex flex-row m-1 mt-n1"></div>
               </div>
             </d-card>
-            <!--          <Editor />-->
           </div>
           <div class="text-center">
             <d-button
@@ -186,7 +196,6 @@
             >
               Next
             </d-button>
-
             <!--Add Quiz-->
           </div>
         </div>
@@ -200,33 +209,47 @@
                 <d-input
                   class="col-md-8 col-8 col-lg-8 border-bottom m-2"
                   style="border: none;"
-                  v-model="item.title"
-                  :placeholder="questions_type.value"
+                  v-model="item.question_text"
+                  placeholder="Enter the quiz question"
                 />
+
+                <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
+
                 <d-select
                   class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
                   style="border: none;"
                   v-model="questions_type.value"
                 >
                   <option selected value="quiz">Quiz</option>
-                  <option value="Survey">Survey</option>
-                  <option value="Poll">Poll</option>
                 </d-select>
+                <d-input
+                  class="col-md-5 col-5 col-lg-5 border-bottom m-2"
+                  style="border: none;"
+                  v-model="item.answer"
+                  placeholder="Enter the quiz answer"
+                />
+                <d-input
+                  class="col-md-6 col-6 col-lg-6 border-bottom m-2"
+                  style="border: none;"
+                  v-model="item.correction"
+                  placeholder="Enter the quiz correction text"
+                />
+                <d-input
+                  class="col-md-6 col-6 col-lg-6 border-bottom m-2"
+                  style="border: none;"
+                  v-model="item.reward"
+                  placeholder="Enter the reward"
+                />
               </div>
               <div>
                 <div
                   class="m-2 d-flex flex-row"
-                  v-for="(item2, index2) in quiz[index].fields.option"
+                  v-for="(item2, index2) in quiz[index].options"
                 >
-                  <icon
-                    class="m-2 "
-                    v-model="item2.option"
-                    size="lg"
-                    name="eclipse"
-                  /><d-input
+                  <icon class="m-2 " size="lg" name="eclipse" /><d-input
                     class="col-md-4 m-2"
                     v-model="item2.value"
-                    placeholder="Option1"
+                    :placeholder="'option' + (index2 + 1)"
                   />
                   <icon
                     size="lg"
@@ -242,6 +265,7 @@
                     @click="addOption(index)"
                     name="add"
                   />
+
                   <icon
                     size="lg"
                     class="ml-auto  border-right"
@@ -452,11 +476,21 @@ export default {
             title: undefined,
             lesson_type: undefined,
             details: undefined,
-            content: undefined
+            content: undefined,
+            lesson_number: undefined
           }
         ]
       },
-      quiz: [],
+      quiz: [
+        {
+          question_text: "",
+          has_options: true,
+          reward: "",
+          answer: "",
+          correction: "",
+          options: []
+        }
+      ],
       questions_type: {
         value: "quiz"
       }
@@ -493,7 +527,16 @@ export default {
       // this.$emit('input', this.fields);
     },
     addQuiz() {
-      this.quiz.push({ fields: { option: [] } });
+      this.quiz.push({
+        fields: {
+          question_text: "",
+          has_options: true,
+          reward: "",
+          answer: "",
+          correction: "",
+          options: []
+        }
+      });
       console.log(this.quiz);
 
       // this.$emit('input', this.fields);
@@ -502,10 +545,10 @@ export default {
       this.quiz.splice(index, 1);
     },
     addOption(index) {
-      this.quiz[index].fields.option.push({ option: "", value: "" });
+      this.quiz[index].options.push({ value: "" });
     },
     deleteOption(index, index2) {
-      this.quiz[index].fields.option.splice(index2, 1);
+      this.quiz[index].options.splice(index2, 1);
     },
     addTag(newTag) {
       this.options.push(newTag);
@@ -664,7 +707,6 @@ export default {
       }
     },
     async handleSubmit() {
-      this.buttons.isLoading = true;
       const self = this;
       let remainder = (
         this.time.reminder.final_date +
@@ -679,10 +721,8 @@ export default {
       this.formData.tags = this.formData.category.join();
       this.formData.remainder = new Date(remainder).toISOString();
       this.formData.schedule = new Date(schedule).toISOString();
-      this.formData.schedule = new Date(
-        this.time.schedule.final_date + "  " + this.time.schedule.hour
-      ).toISOString();
-      let token = store.state.auth.token;
+      const token = store.state.auth.token;
+      this.buttons.isLoading = true;
       let res = await axios
         .post(`${process.env.VUE_APP_API}/course/create`, this.formData, {
           headers: {
@@ -690,26 +730,52 @@ export default {
           }
         })
         .then(res => {
+          this.formData = {};
+          this.$toast.success((this.error.message = res.data.message));
+          const courseId = res.data.course._id;
           let res2 = axios
             .post(
               `${process.env.VUE_APP_API}/course/` +
-                res.data.course._id +
-                `/lesson/create`,
-              this.lesson.fields[0],
+                courseId +
+                `/lesson/multiple-create`,
+              { lessons: this.lesson.fields },
               {
                 headers: {
                   Authorization: `Bearer ${token} `
                 }
               }
             )
-            .then(res => {
-              this.buttons.isLoading = true;
+            .then(res2 => {
+              this.lesson.fields = [];
+              this.$toast.success((this.error.message = res2.data.message));
+              let res3 = axios
+                .post(
+                  `${process.env.VUE_APP_API}/quiz/` +
+                    courseId +
+                    `/multiple-create`,
+                  { quizzes: this.quiz.fields },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token} `
+                    }
+                  }
+                )
+                .then(res3 => {
+                  this.buttons.isLoading = false;
+                  this.quiz.fields = [];
+                  this.$toast.success((this.error.message = res3.data.message));
+                });
             });
           console.log(res.data);
         })
         .catch(ex => {
           self.buttons.isLoading = false;
           console.log(ex.data);
+          this.$toast.error(
+            (this.error.message = error.response
+              ? error.response.message
+              : "An error occured")
+          );
         });
     }
   },
@@ -746,6 +812,25 @@ export default {
     days: () => {
       const day = new Date().getDay();
       return Array.from({ length: day + 31 }, (value, index) => day + index);
+    },
+    categories: () => {
+      const token = store.state.auth.token;
+      let tags = [];
+      let res = axios
+        .get(`${process.env.VUE_APP_API}/category/admin/list`, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          let categories = res.data.data.categories;
+          categories.forEach(category => {
+            tags.push(category.name);
+          });
+          return tags;
+        })
+        .catch(ex => {});
+      return tags;
     },
     scheduledDate() {
       if (

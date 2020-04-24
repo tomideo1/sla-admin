@@ -8,13 +8,14 @@
     </d-row>
     <d-row no-gutters class="py-4">
       <d-form class="col-md-6">
-        <d-input size="lg" class="mb-3" placeholder=" Title" />
+        <d-input size="md" class="mb-3" placeholder=" Title" />
         <VueTrix
           inputId="editor1"
           v-model="editorContent"
           placeholder="enter your content..."
         />
-        <div class="form-group">
+        <d-input size="md" class="mb-3 mt-3" placeholder="Category" />
+        <div class="form-group mt-3 mb-3 ">
           <d-select :value="null" class="col-md-3">
             <option :value="null">To Everyone</option>
             <option>Participant</option>
