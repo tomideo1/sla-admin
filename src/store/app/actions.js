@@ -18,3 +18,12 @@ export const getAllAdmins = async ({ commit }) => {
     return res;
   }
 };
+
+export const getAllAssets = async ({ commit }) => {
+  let res = await Api.get(`assets/getAll`, true);
+  if (res.status === 200) {
+    commit("setAssets", res.data);
+  } else {
+    return res;
+  }
+};

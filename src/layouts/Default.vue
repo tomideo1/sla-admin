@@ -4,7 +4,10 @@
       <!-- Main Sidebar -->
       <main-sidebar :items="sidebarItems" />
 
-      <d-col class="main-content offset-lg-1 offset-md-1 p-0 " tag="main">
+      <d-col
+        class="main-content offset-lg-1 offset-md-1 p-0 overflow-scroll"
+        tag="main"
+      >
         <!-- Main Navbar -->
         <!--        <main-navbar />-->
 

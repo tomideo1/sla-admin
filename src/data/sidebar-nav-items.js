@@ -57,20 +57,9 @@ export default function() {
         {
           title: "Announcements",
           htmlBefore: "announce",
-          items: [
-            {
-              title: "view All Announcement",
-              to: {
-                name: "all-announcements"
-              }
-            },
-            {
-              title: "Create Announcements",
-              to: {
-                name: "create-announcement"
-              }
-            }
-          ]
+          to: {
+            name: "announcements"
+          }
         },
         {
           title: "Groups",
@@ -90,7 +79,7 @@ export default function() {
           title: "Leaderboard",
           htmlBefore: "leaderboard",
           to: {
-            name: "all-groups"
+            name: "leaderboard"
           }
         },
         {
@@ -101,17 +90,24 @@ export default function() {
           }
         },
         {
-          title: "Survey",
+          title: "survey",
           htmlBefore: "survey",
           to: {
-            name: "all-groups"
+            name: "surveys"
+          }
+        },
+        {
+          title: "polls",
+          htmlBefore: "poll",
+          to: {
+            name: "polls"
           }
         },
         {
           title: "Asset",
           htmlBefore: "asset",
           to: {
-            name: "all-groups"
+            name: "assets"
           }
         },
         {

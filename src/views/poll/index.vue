@@ -3,40 +3,34 @@
     <d-container fluid class="mt-5 mb-3 d-none d-md-block d-lg-block">
       <div class=" d-lg-flex d-md-flex flex-row  flex-grow-1 ">
         <div class="border-right  ">
-          <h5
-            class="text-black mr-lg-3 mr-1 "
-            v-if="$route.path === '/announcements'"
-          >
-            Announcements Home
+          <h5 class="text-black mr-lg-3 mr-1 " v-if="$route.path === '/polls'">
+            Polls Home
           </h5>
           <h5
             class="text-black mr-lg-3  mr-1"
-            v-if="$route.path === '/announcements/create'"
+            v-if="$route.path === '/polls/create'"
           >
-            Create Announcements
+            Create Polls
           </h5>
           <h5
             class="text-black mr-lg-3 pr-2 "
-            v-if="$route.path === '/announcements/all'"
+            v-if="$route.path === '/polls/all'"
           >
-            View All Announcements
+            View All Polls
           </h5>
           <h5
             class="text-black mr-lg-3  mr-1"
-            v-if="$route.path === '/announcements/scheduled'"
+            v-if="$route.path === '/polls/scheduled'"
           >
-            Scheduled Announcements
+            Scheduled Polls
           </h5>
-          <h5
-            class="text-black mr-3 "
-            v-if="$route.path === '/announcements/saved'"
-          >
-            Saved Announcements
+          <h5 class="text-black mr-3 " v-if="$route.path === '/polls/saved'">
+            Saved Polls
           </h5>
         </div>
         <div class=" ml-3 mr-1">
           <button
-            @click="$router.push('/announcements/create')"
+            @click="$router.push('/polls/create')"
             :class="
               $route.path === '/courses/create'
                 ? 'btn btn-sm btn-primary'
@@ -49,7 +43,7 @@
         </div>
         <div class="mr-1">
           <button
-            @click="$router.push('/announcements/all')"
+            @click="$router.push('/polls/all')"
             :class="
               $route.path === '/courses/all'
                 ? 'btn btn-sm btn-primary'
@@ -62,7 +56,7 @@
         </div>
         <div class="mr-1">
           <button
-            @click="$router.push('/announcements/scheduled')"
+            @click="$router.push('/polls/scheduled')"
             :class="
               $route.path === '/courses/scheduled'
                 ? 'btn btn-sm btn-primary'
@@ -75,7 +69,7 @@
         </div>
         <div class="mr-1">
           <button
-            @click="$router.push('/announcements/saved')"
+            @click="$router.push('/polls/saved')"
             :class="
               $route.path === '/courses/saved'
                 ? 'btn btn-sm btn-primary'

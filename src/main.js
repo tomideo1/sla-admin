@@ -23,7 +23,9 @@ import Default from "@/layouts/Default.vue";
 import noSideBar from "@/layouts/no-sidebar.vue";
 import HeaderNavigation from "@/layouts/HeaderNavigation.vue";
 import IconSidebar from "@/layouts/IconSidebar.vue";
+import VueMasonry from "vue-masonry-css";
 
+Vue.use(VueMasonry);
 const isProd = process.env.NODE_ENV === "production";
 
 ShardsVue.install(Vue);

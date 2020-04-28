@@ -55,6 +55,7 @@
             :preserve-search="true"
             :preselect-first="false"
             :options="categories"
+            @tag="addTag"
           >
           </multiselect>
           <d-textarea
@@ -141,10 +142,8 @@
                   allow="accelerometer; autoplay; encrypted-media; gyroscope;picture-in-picture"
                   allowfullscreen
                 ></iframe>-->
-                <div
-                  style="width: inherit!important;height: inherit!important;"
-                  v-html="item.content"
-                ></div>
+
+                <div v-html="item.content"></div>
                 <!--               -->
                 <d-input-group seamless>
                   <d-input
@@ -367,40 +366,14 @@
         </d-input-group>
 
         <div class="text-center">
-          <d-button
-            class=" btn-primary btn-outline-primary p-3 mt-4   col-md-8 "
-            @click="handleSubmit"
-            v-show="buttons.schedule"
-          >
-            SCHEDULE
-            <span
-              v-if="buttons.isLoading"
-              class="spinner-border spinner-border-sm ml-3"
-            ></span>
-          </d-button>
-          <d-button
-            class=" btn-primary btn-outline-primary p-3 mt-4  col-md-6 "
-            @click="handleSubmit"
-            v-if="buttons.save"
-          >
-            Save
-            <span
-              v-if="buttons.isLoading"
-              class="spinner-border spinner-border-sm ml-3"
-            ></span>
-          </d-button>
           <br />
-          <d-button
-            class=" btn-primary  p-3 mt-4  col-md-8 "
+          <button
+            class=" btn btn-primary  p-3 mt-4  col-md-8 "
             @click="handleSubmit"
-            v-show="buttons.published"
+            :disabled="buttons.isLoading"
           >
-            PUBLISH
-            <span
-              v-if="buttons.isLoading"
-              class="spinner-border spinner-border-sm ml-3"
-            ></span>
-          </d-button>
+            {{ buttons.text }}
+          </button>
         </div>
       </d-col>
     </d-row>
@@ -426,7 +399,8 @@ export default {
         schedule: false,
         published: false,
         save: false,
-        isLoading: false
+        isLoading: true,
+        text: "Schedule"
       },
       options: [],
       error: {
@@ -439,10 +413,13 @@ export default {
         // acceptedFiles: "images/*",
         // thumbnailMethod:'contain',
         addRemoveLinks: true,
+        thumbnailWidth: 300,
+        thumbnailHeight: 300,
         maxFileSizeInMB: 2, // MB
         maxNumberOfFiles: 1,
-        preventDuplicates: true
-
+        preventDuplicates: true,
+        resizeWidth: 300,
+        resizeHeight: 300
         // resize: this.resize,
       },
       formData: {
@@ -528,14 +505,12 @@ export default {
     },
     addQuiz() {
       this.quiz.push({
-        fields: {
-          question_text: "",
-          has_options: true,
-          reward: "",
-          answer: "",
-          correction: "",
-          options: []
-        }
+        question_text: "",
+        has_options: true,
+        reward: "",
+        answer: "",
+        correction: "",
+        options: []
       });
       console.log(this.quiz);
 
@@ -550,9 +525,29 @@ export default {
     deleteOption(index, index2) {
       this.quiz[index].options.splice(index2, 1);
     },
-    addTag(newTag) {
+    async addTag(newTag) {
       this.options.push(newTag);
-      this.formData.category.push(newTag);
+      let token = store.state.auth.token;
+      let res = await axios
+        .post(
+          `${process.env.VUE_APP_API}/category/admin/create`,
+          { name: newTag },
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
+          }
+        )
+        .then(res => {
+          this.formData.category.push(newTag);
+        })
+        .catch(ex => {
+          this.$toast.error(
+            (this.error.message = ex.response.data
+              ? ex.response.data.message.message
+              : "An error occured")
+          );
+        });
     },
     urlValidator(string) {
       try {
@@ -666,23 +661,9 @@ export default {
           (this.error.message =
             "You can not  input a go live date in the past!")
         );
-        this.buttons = {
-          published: false,
-          save: false,
-          schedule: false
-        };
-      } else if (+new Date(value) === +new Date(currentDate)) {
-        this.buttons = {
-          published: true,
-          save: true,
-          schedule: false
-        };
+        this.buttons.isLoading = true;
       } else {
-        this.buttons = {
-          published: false,
-          save: true,
-          schedule: true
-        };
+        this.buttons.isLoading = false;
       }
     },
     watchReminder: function() {
@@ -699,30 +680,16 @@ export default {
           (this.error.message =
             "You can not input a reminder date in the past!")
         );
-        this.buttons = {
-          published: false,
-          save: false,
-          schedule: false
-        };
+        this.buttons.isLoading = true;
       }
+      this.buttons.isLoading = false;
     },
     async handleSubmit() {
-      const self = this;
-      let remainder = (
-        this.time.reminder.final_date +
-        " " +
-        this.time.reminder.hour
-      ).toString();
-      let schedule = (
-        this.time.schedule.final_date +
-        " " +
-        this.time.schedule.hour
-      ).toString();
-      this.formData.tags = this.formData.category.join();
-      this.formData.remainder = new Date(remainder).toISOString();
-      this.formData.schedule = new Date(schedule).toISOString();
-      const token = store.state.auth.token;
       this.buttons.isLoading = true;
+      this.buttons.text = "Loading.....";
+      const self = this;
+      this.formData.tags = this.formData.category.join();
+      const token = store.state.auth.token;
       let res = await axios
         .post(`${process.env.VUE_APP_API}/course/create`, this.formData, {
           headers: {
@@ -730,15 +697,15 @@ export default {
           }
         })
         .then(res => {
-          this.formData = {};
-          this.$toast.success((this.error.message = res.data.message));
+          self.formData = {};
+          self.$toast.success((this.error.message = res.data.message));
           const courseId = res.data.course._id;
           let res2 = axios
             .post(
               `${process.env.VUE_APP_API}/course/` +
                 courseId +
                 `/lesson/multiple-create`,
-              { lessons: this.lesson.fields },
+              { lessons: self.lesson.fields },
               {
                 headers: {
                   Authorization: `Bearer ${token} `
@@ -753,7 +720,7 @@ export default {
                   `${process.env.VUE_APP_API}/quiz/` +
                     courseId +
                     `/multiple-create`,
-                  { quizzes: this.quiz.fields },
+                  { quizzes: self.quiz },
                   {
                     headers: {
                       Authorization: `Bearer ${token} `
@@ -761,19 +728,19 @@ export default {
                   }
                 )
                 .then(res3 => {
-                  this.buttons.isLoading = false;
-                  this.quiz.fields = [];
-                  this.$toast.success((this.error.message = res3.data.message));
+                  self.buttons.isLoading = false;
+                  self.buttons.text = "Schedule";
+                  self.quiz = [];
+                  self.$toast.success((this.error.message = res3.data.message));
                 });
             });
-          console.log(res.data);
         })
         .catch(ex => {
           self.buttons.isLoading = false;
-          console.log(ex.data);
-          this.$toast.error(
-            (this.error.message = error.response
-              ? error.response.message
+          self.buttons.text = "Schedule";
+          self.$toast.error(
+            (self.error.message = ex.response.data
+              ? ex.response.data.message.message
               : "An error occured")
           );
         });
@@ -844,7 +811,13 @@ export default {
           "-" +
           this.time.schedule.month +
           "-" +
-          this.time.schedule.days;
+          this.time.schedule.days +
+          " " +
+          this.time.schedule.hour;
+        this.formData.schedule = new Date(
+          this.time.schedule.final_date
+        ).toISOString();
+
         return this.time.schedule.final_date;
       }
     },
@@ -861,6 +834,14 @@ export default {
           this.time.reminder.month +
           "-" +
           this.time.reminder.days;
+        this.formData.remainder = (
+          this.time.reminder.final_date +
+          " " +
+          this.time.reminder.hour
+        ).toString();
+        this.formData.remainder = new Date(
+          this.time.reminder.final_date
+        ).toISOString();
         return this.time.reminder.final_date;
       }
     }
@@ -919,7 +900,7 @@ input:checked[type="checkbox"]:before {
 .btn-primary {
   background: #03a9f4;
 }
-.btn-outline-primary {
+.btn-outline-light {
   background: #ffffff;
   border-color: #03a9f4;
   color: #03a9f4;

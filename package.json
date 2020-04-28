@@ -47,6 +47,7 @@
     "node-sass": "^4.9.0",
     "prettier": "1.19.1",
     "sass-loader": "^7.0.1",
+    "vue-masonry-css": "^1.0.3",
     "vue-template-compiler": "^2.5.17"
   },
   "prettier": {

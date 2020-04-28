@@ -18,6 +18,8 @@ import PasswordCreate from "../views/auth/password-create";
 import PasswordReset from "../views/auth/password-reset";
 import forgotPassword from "../views/auth/forgotPassword";
 import Dashboard from "@/views/Dashboard.vue";
+import LeaderBoard from "@/views/leaderboard.vue";
+import Asset from "@/views/asset.vue";
 
 const router = new Router({
   mode: "history",
@@ -29,7 +31,7 @@ const router = new Router({
   },
   routes: [
     {
-      path: "/",
+      path: "/dashboard",
       name: "dashboard",
       component: Dashboard,
       meta: {
@@ -40,6 +42,7 @@ const router = new Router({
       path: "/courses",
       component: () => import("@/views/courses/index.vue"),
       name: "courses",
+      middleware: [auth],
       children: [
         {
           path: "all",
@@ -83,6 +86,7 @@ const router = new Router({
       meta: {
         middleware: [auth]
       },
+      name: "announcements",
       component: () => import("@/views/announcement/index.vue"),
       children: [
         {
@@ -101,6 +105,72 @@ const router = new Router({
           component: () => import("@/views/announcement/edit.vue")
         }
       ]
+    },
+    {
+      path: "/surveys",
+      meta: {
+        middleware: [auth]
+      },
+      name: "surveys",
+      component: () => import("@/views/survey/index.vue"),
+      children: [
+        {
+          path: "",
+          name: "all-surveys",
+          component: () => import("@/views/survey/home.vue")
+        },
+        {
+          path: "create",
+          name: "create-survey",
+          component: () => import("@/views/survey/create.vue")
+        },
+        {
+          path: "edit",
+          name: "edit-survey",
+          component: () => import("@/views/survey/edit.vue")
+        }
+      ]
+    },
+    {
+      path: "/polls",
+      meta: {
+        middleware: [auth]
+      },
+      name: "polls",
+      component: () => import("@/views/poll/index.vue"),
+      children: [
+        {
+          path: "",
+          name: "all-polls",
+          component: () => import("@/views/poll/home.vue")
+        },
+        {
+          path: "create",
+          name: "create-poll",
+          component: () => import("@/views/poll/create.vue")
+        },
+        {
+          path: "edit",
+          name: "edit-polls",
+          component: () => import("@/views/poll/edit.vue")
+        }
+      ]
+    },
+    {
+      path: "/leaderboard",
+      name: "leaderboard",
+      component: LeaderBoard,
+      meta: {
+        middleware: [auth]
+      }
+    },
+    {
+      path: "/assets",
+      name: "assets",
+      component: Asset,
+      meta: {
+        middleware: [auth]
+      }
     },
     {
       path: "/coaches",

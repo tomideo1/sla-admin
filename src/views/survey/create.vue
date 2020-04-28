@@ -18,7 +18,7 @@
             placeholder="Announcement Title"
             v-model="formData.title"
           />
-          <editor v-model="formData.rich_details" />
+          <editor v-model="formData.details" />
           <multiselect
             size="lg"
             class="mb-3"
@@ -49,9 +49,6 @@
             @tag="addTag"
           >
           </multiselect>
-          <p class="font-poppins text-bold" style="font-weight: bold">
-            Recipients
-          </p>
           <div class="form-group mt-3 mb-3 ">
             <d-select v-model="formData.recipients" class="col-md-3">
               <option selected value="everyone">To Everyone</option>
@@ -140,8 +137,7 @@ export default {
       },
       formData: {
         title: null,
-        rich_details: "",
-        normal_details: "",
+        details: "",
         category: [],
         tags: [],
         recipients: "everyone",
@@ -193,12 +189,11 @@ export default {
         .then(res => {
           this.buttons.isLoading = false;
           this.buttons.text = "Publish";
-          this.$toast.success(
-            (this.error.message = res.data
-              ? res.data.message
+          this.$toast.error(
+            (this.error.message = ex.response.data
+              ? ex.response.data.message.message
               : "An error occured")
           );
-          this.formData = {};
         })
         .catch(ex => {
           this.buttons.isLoading = false;
