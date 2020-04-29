@@ -30,6 +30,8 @@
     <arrow-left v-if="name === 'arrow-left'"></arrow-left>
     <cancel v-if="name === 'cancel'"></cancel>
     <poll v-if="name === 'poll'"></poll>
+    <medal v-if="name === 'medal'"></medal>
+    <share v-if="name === 'share'"></share>
   </span>
 </template>
 <script>
@@ -73,7 +75,9 @@ export default {
     arrowRight: () => import("@/components/__private__/media/arrow-right.vue"),
     cancel: () => import("@/components/__private__/media/cancel.vue"),
     arrowLeft: () => import("@/components/__private__/media/arrow-left.vue"),
-    poll: () => import("@/components/__private__/media/poll.vue")
+    poll: () => import("@/components/__private__/media/poll.vue"),
+    medal: () => import("@/components/__private__/media/medal.vue"),
+    share: () => import("@/components/__private__/media/share.vue")
   }
 };
 </script>

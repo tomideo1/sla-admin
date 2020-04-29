@@ -7,3 +7,6 @@ export const getAdmins = state => {
 export const getAssets = state => {
   return state.Assets;
 };
+export const getLeaderboard = state => {
+  return state.Leaders;
+};

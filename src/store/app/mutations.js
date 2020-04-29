@@ -8,3 +8,6 @@ export const setAdmins = (state, data) => {
 export const setAssets = (state, data) => {
   state.Assets = data.data.assets;
 };
+export const setLeaderboard = (state, data) => {
+  state.Leaders = data.data.leaderboard;
+};

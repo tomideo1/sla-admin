@@ -27,3 +27,12 @@ export const getAllAssets = async ({ commit }) => {
     return res;
   }
 };
+
+export const getAllLeaderboard = async ({ commit }) => {
+  let res = await Api.get(`admin/leaderboard/getAll`, true);
+  if (res.status === 200) {
+    commit("setLeaderboard", res.data);
+  } else {
+    return res;
+  }
+};

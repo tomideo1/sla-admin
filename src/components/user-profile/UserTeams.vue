@@ -11,7 +11,7 @@
         <!-- Teams List -->
         <d-row v-for="(team, idx) in teams" :key="idx" class="px-3">
           <d-col lg="12" sm="1" class="user-teams__image my-auto p-0">
-            <img class="rounded" :src="team.image" :alt="team.name">
+            <img class="rounded" :src="team.image" :alt="team.name" />
           </d-col>
           <d-col class="user-teams__info pl-3">
             <h6 class="m-0">{{ team.name }}</h6>
@@ -26,31 +26,31 @@
 <script>
 const defaultTeamsData = [
   {
-    image: require('@/assets/images/user-profile/team-thumb-1.png'),
-    name: 'Team Edison',
-    members: '21 Members',
+    image: require("@/assets/images/user-profile/leader_2.png"),
+    name: "Team Edison",
+    members: "21 Members"
   },
   {
-    image: require('@/assets/images/user-profile/team-thumb-2.png'),
-    name: 'Team Shelby',
-    members: '21 Members',
+    image: require("@/assets/images/user-profile/team-thumb-2.png"),
+    name: "Team Shelby",
+    members: "21 Members"
   },
   {
-    image: require('@/assets/images/user-profile/team-thumb-3.png'),
-    name: 'Team Dante',
-    members: '21 Members',
-  },
+    image: require("@/assets/images/user-profile/team-thumb-3.png"),
+    name: "Team Dante",
+    members: "21 Members"
+  }
 ];
 
 export default {
-  name: 'user-teams',
+  name: "user-teams",
   props: {
     /**
      * Component title.
      */
     title: {
       type: String,
-      default: 'Teams',
+      default: "Teams"
     },
     /**
      * Teams data.
@@ -59,8 +59,8 @@ export default {
       type: Array,
       default() {
         return defaultTeamsData;
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>

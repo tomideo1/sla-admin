@@ -1,5 +1,6 @@
 export default {
   courseObj: null,
   Admins: null,
-  Assets: null
+  Assets: null,
+  Leaders: null
 };
