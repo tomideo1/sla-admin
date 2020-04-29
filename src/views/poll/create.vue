@@ -33,7 +33,7 @@
                 class="col-md-12 col-12 col-lg-12 border-bottom m-2"
                 style="border: none;"
                 v-model="formData.question"
-                placeholder="Enter the quiz question"
+                placeholder="Enter the  question"
               />
             </div>
             <div>

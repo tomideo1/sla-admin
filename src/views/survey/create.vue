@@ -1,7 +1,6 @@
 <template>
   <d-container fluid class="main-content-container px-4">
     <!-- Page Header -->
-
     <d-row no-gutters class="page-header py-4">
       <Toasts
         :show-progress="false"
@@ -11,53 +10,83 @@
         :closeable="false"
       ></Toasts>
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <d-form>
-          <d-input
-            size="lg"
-            class="mb-3"
-            placeholder="Announcement Title"
-            v-model="formData.title"
-          />
-          <editor v-model="formData.details" />
-          <multiselect
-            size="lg"
-            class="mb-3"
-            v-model="formData.category"
-            placeholder="Category"
-            :multiple="true"
-            :taggable="true"
-            :close-on-select="false"
-            :clear-on-select="false"
-            :preserve-search="true"
-            :preselect-first="false"
-            :options="categories"
-            @tag="addTag"
+        <d-input
+          size="lg"
+          class="mb-3"
+          placeholder="Survey Title"
+          v-model="formData.title"
+        />
+        <d-textarea
+          v-model="formData.description"
+          rows="8"
+          class="mb-3"
+          placeholder="Description"
+        />
+        <div class="form-group">
+          <label class="font-poppins " style="font-weight: bold;color: black"
+            >For Recipients</label
           >
-          </multiselect>
-          <multiselect
-            size="lg"
-            class="mb-3"
-            v-model="formData.tags"
-            placeholder="Tags"
-            :multiple="true"
-            :taggable="true"
-            :close-on-select="false"
-            :clear-on-select="false"
-            :preserve-search="true"
-            :preselect-first="false"
-            :options="categories"
-            @tag="addTag"
+          <br />
+          <d-card v-show="showQuestion">
+            <div class="row m-2">
+              <d-input
+                class="col-md-12 col-12 col-lg-12 border-bottom m-2"
+                style="border: none;"
+                v-model="formData.question"
+                placeholder="Enter the  question"
+              />
+            </div>
+            <div>
+              <div
+                class="m-2 d-flex flex-row"
+                v-for="(item, index) in formData.options"
+              >
+                <icon class="m-2 " size="lg" name="eclipse" /><d-input
+                  class="col-md-4 m-2"
+                  v-model="item.value"
+                  :placeholder="'option' + (index + 1)"
+                />
+                <icon
+                  size="lg"
+                  class="ml-auto"
+                  @click="deleteOption(index)"
+                  name="cancel"
+                />
+              </div>
+              <div class="d-flex flex-row m-2">
+                <icon size="lg" class=" " @click="addOption" name="add" />
+                <icon
+                  size="lg"
+                  class="ml-auto  border-right"
+                  @click="removeQuestion"
+                  name="bin"
+                />
+              </div>
+            </div>
+          </d-card>
+          <button
+            class="btn btn-sm btn-outline-light mt-2 "
+            style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+            @click="addQuestion()"
           >
-          </multiselect>
-          <div class="form-group mt-3 mb-3 ">
-            <d-select v-model="formData.recipients" class="col-md-3">
-              <option selected value="everyone">To Everyone</option>
-              <option value="participant">Participant</option>
-              <option value="admin">Admins</option>
-              <option value="coaches">Coaches</option>
-            </d-select>
-          </div>
-        </d-form>
+            <icon name="add" /> <span> Add Question</span>
+          </button>
+        </div>
+        <label
+          class="font-poppins text-bold"
+          style="font-weight: bold;color: black;"
+        >
+          Recipients</label
+        >
+        <br />
+        <div class="form-group mt-3 mb-3 ">
+          <d-select v-model="formData.recipients" class="col-md-3">
+            <option selected value="everyone">To Everyone</option>
+            <option value="participant">Participant</option>
+            <option value="admin">Admins</option>
+            <option value="coaches">Coaches</option>
+          </d-select>
+        </div>
       </d-col>
 
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
@@ -66,7 +95,7 @@
           :options="dropzoneOptions"
           id="dropZone"
           :useCustomSlot="true"
-          class="mx-auto"
+          class="mx-auto mb-3"
           ref="courseImage"
           style="width: 300px; height: 300px"
         >
@@ -77,11 +106,54 @@
           </div>
         </vue-dropzone>
 
+        <small class="text-black mt-4  ml-5">Expiry Date</small>
+
+        <d-input-group class="justify-content-center m-2 ">
+          <d-select v-model="time.expiry.days" class="col-md-2 mr-2">
+            <option :value="undefined">Day:</option>
+            <option :value="i" v-for="i in 31">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2" v-model="time.expiry.month">
+            <option :value="undefined">Month:</option>
+            <option :value="i" v-for="i in 12">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2 " v-model="time.expiry.year">
+            <option :value="undefined">Year:</option>
+            <option v-for="year in years" :value="year">{{ year }}</option>
+          </d-select>
+          <input
+            class="col-md-3 form-control"
+            type="time"
+            v-model="time.expiry.hour"
+          />
+          <input type="hidden" v-model="expiryDate" />
+        </d-input-group>
+        <small class="text-black mt-4  ml-5"
+          >Remind Users About Expiry Date on:
+        </small>
+        <d-input-group class="justify-content-center m-2 ">
+          <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
+            <option :value="undefined">Day:</option>
+            <option v-for="i in 31">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2" v-model="time.reminder.month">
+            <option :value="undefined">Month:</option>
+
+            <option v-for="i in 12">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2 " v-model="time.reminder.year">
+            <option :value="undefined">Year:</option>
+            <option v-for="year in years" :value="year">{{ year }}</option>
+          </d-select>
+          <d-input class="col-md-3" type="time" v-model="time.reminder.hour" />
+          <input type="hidden" v-model="reminderDate" />
+        </d-input-group>
+
         <div class="text-center">
           <br />
           <button
-            @click="handleSubmit"
             class=" btn btn-primary  p-3 mt-4  col-md-8 "
+            @click="handleSubmit"
             :disabled="buttons.isLoading"
           >
             {{ buttons.text }}
@@ -116,7 +188,7 @@ export default {
       },
       buttons: {
         published: false,
-        isLoading: false,
+        isLoading: true,
         text: "Publish"
       },
       options: [],
@@ -137,39 +209,92 @@ export default {
       },
       formData: {
         title: null,
-        details: "",
-        category: [],
-        tags: [],
+        description: "",
+        question: "",
         recipients: "everyone",
-        cover_image: ""
-      }
+        cover_image: "",
+        options: []
+      },
+      time: {
+        reminder: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        },
+        expiry: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        }
+      },
+      showQuestion: false
     };
   },
   components: {
     Icon: () => import("@/components/SlaIcon"),
     vueDropzone: vue2Dropzone,
     Multiselect,
-    Editor: () => import("@/components/add-new-post/Editor")
+    Editor: () => import("@/components/add-new-post/Editor"),
+    Icon: () => import("@/components/SlaIcon")
   },
   computed: {
-    categories: () => {
-      const token = store.state.auth.token;
-      let tags = [];
-      let res = axios
-        .get(`${process.env.VUE_APP_API}/category/admin/list`, {
-          headers: {
-            Authorization: `Bearer ${token} `
-          }
-        })
-        .then(res => {
-          let categories = res.data.data.categories;
-          categories.forEach(category => {
-            tags.push(category.name);
-          });
-          return tags;
-        })
-        .catch(ex => {});
-      return tags;
+    years: () => {
+      const year = new Date().getFullYear();
+      return Array.from({ length: year }, (value, index) => year + index);
+    },
+    days: () => {
+      const day = new Date().getDay();
+      return Array.from({ length: day + 31 }, (value, index) => day + index);
+    },
+    expiryDate() {
+      if (
+        this.time.expiry.days !== undefined &&
+        this.time.expiry.year !== undefined &&
+        this.time.expiry.month !== undefined &&
+        this.time.expiry.hour !== undefined
+      ) {
+        this.time.expiry.final_date =
+          this.time.expiry.year +
+          "-" +
+          this.time.expiry.month +
+          "-" +
+          this.time.expiry.days +
+          " " +
+          this.time.expiry.hour;
+        this.formData.expiry = new Date(
+          this.time.expiry.final_date
+        ).toISOString();
+
+        return this.time.expiry.final_date;
+      }
+    },
+    reminderDate() {
+      if (
+        this.time.reminder.days !== undefined &&
+        this.time.reminder.year !== undefined &&
+        this.time.reminder.month !== undefined &&
+        this.time.reminder.hour !== undefined
+      ) {
+        this.time.reminder.final_date =
+          this.time.reminder.year +
+          "-" +
+          this.time.reminder.month +
+          "-" +
+          this.time.reminder.days;
+        this.formData.remainder = (
+          this.time.reminder.final_date +
+          " " +
+          this.time.reminder.hour
+        ).toString();
+        this.formData.remainder = new Date(
+          this.time.reminder.final_date
+        ).toISOString();
+        return this.time.reminder.final_date;
+      }
     }
   },
   methods: {
@@ -177,21 +302,17 @@ export default {
       this.buttons.isLoading = true;
       this.buttons.text = "Loading...";
       let res = await axios
-        .post(
-          `${process.env.VUE_APP_API}/annoucement/admin/create`,
-          this.formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token} `
-            }
+        .post(`${process.env.VUE_APP_API}/survey/create`, this.formData, {
+          headers: {
+            Authorization: `Bearer ${token} `
           }
-        )
+        })
         .then(res => {
           this.buttons.isLoading = false;
           this.buttons.text = "Publish";
-          this.$toast.error(
-            (this.error.message = ex.response.data
-              ? ex.response.data.message.message
+          this.$toast.success(
+            (this.error.message = res.data
+              ? res.data.message
               : "An error occured")
           );
         })
@@ -228,6 +349,44 @@ export default {
               : "An error occured")
           );
         });
+    },
+    watchExpiry: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+
+      let value = this.time.expiry.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not  input a go live date in the past!")
+        );
+        this.buttons.isLoading = true;
+      } else {
+        this.buttons.isLoading = false;
+      }
+    },
+    watchReminder: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.reminder.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not input a reminder date in the past!")
+        );
+        this.buttons.isLoading = true;
+      }
+      this.buttons.isLoading = false;
     }
   },
   mounted() {
@@ -243,6 +402,14 @@ export default {
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
       };
     });
+  },
+  watch: {
+    expiryDate: {
+      handler: "watchExpiry"
+    },
+    reminderDate: {
+      handler: "watchReminder"
+    }
   }
 };
 </script>
@@ -253,6 +420,12 @@ export default {
 }
 .btn-outline-primary {
   border-color: #0087db !important;
+}
+
+.btn-outline-light {
+  background: #ffffff;
+  border-color: #03a9f4;
+  color: #03a9f4;
 }
 .dropzone {
   width: 330px;
