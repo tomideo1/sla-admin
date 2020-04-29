@@ -27,47 +27,82 @@
             >For Recipients</label
           >
           <br />
-          <d-card v-show="showQuestion">
-            <div class="row m-2">
-              <d-input
-                class="col-md-12 col-12 col-lg-12 border-bottom m-2"
-                style="border: none;"
-                v-model="formData.question"
-                placeholder="Enter the  question"
-              />
-            </div>
-            <div>
-              <div
-                class="m-2 d-flex flex-row"
-                v-for="(item, index) in formData.options"
-              >
-                <icon class="m-2 " size="lg" name="eclipse" /><d-input
-                  class="col-md-4 m-2"
-                  v-model="item.value"
-                  :placeholder="'option' + (index + 1)"
+          <div class="p-4" v-for="(item, index) in formData.questions">
+            <d-card>
+              <div class="row m-2">
+                <d-input
+                  class="col-md-8 col-8 col-lg-8 border-bottom m-2"
+                  style="border: none;"
+                  v-model="item.question_text"
+                  placeholder="Enter the Survey question"
                 />
-                <icon
-                  size="lg"
-                  class="ml-auto"
-                  @click="deleteOption(index)"
-                  name="cancel"
-                />
+
+                <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
+
+                <d-select
+                  class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
+                  style="border: none;"
+                  v-model="item.has_options"
+                >
+                  <option disabled selected :value="undefined"
+                    >Select Survey Type</option
+                  >
+                  <option selected :value="true">Multiple</option>
+                  <option selected :value="false">Long Text</option>
+                </d-select>
               </div>
-              <div class="d-flex flex-row m-2">
-                <icon size="lg" class=" " @click="addOption" name="add" />
-                <icon
-                  size="lg"
-                  class="ml-auto  border-right"
-                  @click="removeQuestion"
-                  name="bin"
-                />
+              <div v-show="formData.questions[index].has_options">
+                <div
+                  class="m-2 d-flex flex-row"
+                  v-for="(item2, index2) in formData.questions[index]
+                    .possible_options"
+                >
+                  <icon class="m-2 " size="lg" name="eclipse" /><d-input
+                    class="col-md-4 m-2"
+                    v-model="item2.value"
+                    :placeholder="'option' + (index2 + 1)"
+                  />
+                  <icon
+                    size="lg"
+                    class="ml-auto"
+                    @click="deleteOption(index, index2)"
+                    name="cancel"
+                  />
+                </div>
+                <div class="d-flex flex-row m-2">
+                  <icon
+                    size="lg"
+                    class=" "
+                    @click="addOption(index)"
+                    name="add"
+                    v-show="formData.questions[index].has_options"
+                  />
+
+                  <icon
+                    size="lg"
+                    class="ml-auto  border-right"
+                    @click="deleteQuiz(index)"
+                    name="bin"
+                  />
+                  <div class="d-flex flex-row m-1 mt-n1">
+                    <label class="mt-2 p-1" style="color: #999999;"
+                      >Required</label
+                    >
+                    <input
+                      class="m-2"
+                      type="checkbox"
+                      v-model="item.required"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </d-card>
+            </d-card>
+            <!--          <Editor />-->
+          </div>
           <button
-            class="btn btn-sm btn-outline-light mt-2 "
+            class="btn btn-sm btn-outline-light     "
             style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-            @click="addQuestion()"
+            @click="addQuiz()"
           >
             <icon name="add" /> <span> Add Question</span>
           </button>
@@ -213,7 +248,7 @@ export default {
         question: "",
         recipients: "everyone",
         cover_image: "",
-        options: []
+        questions: []
       },
       time: {
         reminder: {
@@ -265,7 +300,7 @@ export default {
           this.time.expiry.days +
           " " +
           this.time.expiry.hour;
-        this.formData.expiry = new Date(
+        this.formData.schedule_at = new Date(
           this.time.expiry.final_date
         ).toISOString();
 
@@ -363,7 +398,7 @@ export default {
       if (new Date(value) < new Date(currentDate)) {
         this.$toast.error(
           (this.error.message =
-            "You can not  input a go live date in the past!")
+            "You can not  input an expiry  date in the past!")
         );
         this.buttons.isLoading = true;
       } else {
@@ -387,6 +422,24 @@ export default {
         this.buttons.isLoading = true;
       }
       this.buttons.isLoading = false;
+    },
+    addQuiz() {
+      this.formData.questions.push({
+        question_text: "",
+        has_options: undefined,
+        possible_options: []
+      });
+
+      // this.$emit('input', this.fields);
+    },
+    deleteQuiz(index) {
+      this.formData.questions.splice(index, 1);
+    },
+    addOption(index) {
+      this.formData.questions[index].possible_options.push({ value: "" });
+    },
+    deleteOption(index, index2) {
+      this.formData.questions[index].possible_options.splice(index2, 1);
     }
   },
   mounted() {
@@ -430,5 +483,35 @@ export default {
 .dropzone {
   width: 330px;
   height: 330px;
+}
+input[type="checkbox"] {
+  position: relative;
+  width: 41px;
+  height: 25px;
+  -webkit-appearance: none;
+  background: #c6c6c6;
+  outline: none;
+  border-radius: 100px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: 1s;
+  top: 2px;
+}
+input:checked[type="checkbox"] {
+  background: #03a9f4;
+}
+input[type="checkbox"]:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  top: 2px;
+  left: 2px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+}
+input:checked[type="checkbox"]:before {
+  left: 20px;
 }
 </style>

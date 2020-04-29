@@ -378,7 +378,7 @@ export default {
       if (new Date(value) < new Date(currentDate)) {
         this.$toast.error(
           (this.error.message =
-            "You can not  input a go live date in the past!")
+            "You can not  input an expiry date in the past!")
         );
         this.buttons.isLoading = true;
       } else {
