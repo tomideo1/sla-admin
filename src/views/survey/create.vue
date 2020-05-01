@@ -350,6 +350,9 @@ export default {
               ? res.data.message
               : "An error occured")
           );
+          setTimeout(function() {
+            this.$route.push({ path: "surveys/all" });
+          }, 2000);
         })
         .catch(ex => {
           this.buttons.isLoading = false;

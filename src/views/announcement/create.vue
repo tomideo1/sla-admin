@@ -22,7 +22,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="formData.category"
+            v-model="formData.list_category"
             placeholder="Category"
             :multiple="true"
             :taggable="true"
@@ -37,7 +37,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="formData.tags"
+            v-model="formData.list_tags"
             placeholder="Tags"
             :multiple="true"
             :taggable="true"
@@ -142,8 +142,8 @@ export default {
         title: null,
         rich_details: "",
         normal_details: "",
-        category: [],
-        tags: [],
+        list_category: [],
+        list_tags: [],
         recipients: "everyone",
         cover_image: ""
       }
@@ -179,6 +179,8 @@ export default {
   methods: {
     async handleSubmit() {
       this.buttons.isLoading = true;
+      this.formData.tags = this.formData.list_tags.join();
+      this.formData.category = this.formData.list_category.join();
       this.buttons.text = "Loading...";
       let res = await axios
         .post(
@@ -198,6 +200,10 @@ export default {
               ? res.data.message
               : "An error occured")
           );
+          setTimeout(function() {
+            this.$route.push({ path: "announcement/all" });
+          }, 2000);
+
           this.formData = {};
         })
         .catch(ex => {
@@ -223,8 +229,8 @@ export default {
           }
         )
         .then(res => {
-          this.formData.category.push(newTag);
-          this.formData.tags.push(newTag);
+          this.formData.list_category.push(newTag);
+          this.formData.list_rags.push(newTag);
         })
         .catch(ex => {
           this.$toast.error(

@@ -732,6 +732,9 @@ export default {
                   self.buttons.text = "Schedule";
                   self.quiz = [];
                   self.$toast.success((this.error.message = res3.data.message));
+                  setTimeout(function() {
+                    this.$route.push({ path: "courses/all" });
+                  }, 2000);
                 });
             });
         })

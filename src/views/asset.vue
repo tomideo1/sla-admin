@@ -144,7 +144,6 @@ export default {
   },
   async mounted() {
     this.getAllAssets();
-    console.log(this.assets);
   }
 };
 </script>

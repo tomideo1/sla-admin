@@ -119,10 +119,7 @@ export default function() {
         },
         {
           title: "Logout",
-          htmlBefore: "logout",
-          to: {
-            name: "all-groups"
-          }
+          htmlBefore: "logout"
         }
       ]
     }
