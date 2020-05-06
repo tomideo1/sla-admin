@@ -50,7 +50,9 @@ const router = new Router({
       path: "/users",
       component: () => import("@/views/users/index.vue"),
       name: "users",
-      middleware: [auth],
+      meta: {
+        middleware: [auth]
+      },
       children: [
         {
           path: "all",
@@ -74,7 +76,9 @@ const router = new Router({
       path: "/courses",
       component: () => import("@/views/courses/index.vue"),
       name: "courses",
-      middleware: [auth],
+      meta: {
+        middleware: [auth]
+      },
       children: [
         {
           path: "all",
