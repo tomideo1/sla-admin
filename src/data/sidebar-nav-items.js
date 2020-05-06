@@ -40,6 +40,13 @@ export default function() {
           }
         },
         {
+          title: "users",
+          htmlBefore: "group",
+          to: {
+            name: "users"
+          }
+        },
+        {
           title: "Activity",
           htmlBefore: "activity",
           to: {
@@ -119,7 +126,10 @@ export default function() {
         },
         {
           title: "Logout",
-          htmlBefore: "logout"
+          htmlBefore: "logout",
+          to: {
+            name: "logout"
+          }
         }
       ]
     }

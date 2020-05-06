@@ -201,7 +201,7 @@ export default {
               : "An error occured")
           );
           setTimeout(function() {
-            this.$route.push({ path: "announcement/all" });
+            this.$router.push({ path: "/announcement/all" });
           }, 2000);
 
           this.formData = {};

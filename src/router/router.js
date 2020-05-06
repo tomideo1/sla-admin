@@ -14,6 +14,7 @@ Vue.use(Router);
 import store from "@/store/index";
 import Welcome from "../views/static/welcome";
 import Login from "../views/auth/login";
+import Logout from "../views/auth/logout";
 import PasswordCreate from "../views/auth/password-create";
 import PasswordReset from "../views/auth/password-reset";
 import forgotPassword from "../views/auth/forgotPassword";
@@ -31,12 +32,43 @@ const router = new Router({
   },
   routes: [
     {
+      path: "/",
+      name: "",
+      meta: {
+        middleware: [auth]
+      }
+    },
+    {
       path: "/dashboard",
       name: "dashboard",
       component: Dashboard,
       meta: {
         middleware: [auth]
       }
+    },
+    {
+      path: "/users",
+      component: () => import("@/views/users/index.vue"),
+      name: "users",
+      middleware: [auth],
+      children: [
+        {
+          path: "all",
+          name: "all-users",
+          component: () => import("@/views/users/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "create",
+          name: "create-user",
+          component: () => import("@/views/users/create.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        }
+      ]
     },
     {
       path: "/courses",
@@ -72,12 +104,18 @@ const router = new Router({
         {
           path: "",
           name: "all-groups",
-          component: () => import("@/views/groups/home.vue")
+          component: () => import("@/views/groups/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "/",
           name: "all-groups",
-          component: () => import("@/views/groups/home.vue")
+          component: () => import("@/views/groups/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },
@@ -92,17 +130,26 @@ const router = new Router({
         {
           path: "",
           name: "all-announcements",
-          component: () => import("@/views/announcement/home.vue")
+          component: () => import("@/views/announcement/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "create",
           name: "create-announcement",
-          component: () => import("@/views/announcement/create.vue")
+          component: () => import("@/views/announcement/create.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "edit",
           name: "edit-announcement",
-          component: () => import("@/views/announcement/edit.vue")
+          component: () => import("@/views/announcement/edit.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },
@@ -117,17 +164,26 @@ const router = new Router({
         {
           path: "",
           name: "all-surveys",
-          component: () => import("@/views/survey/home.vue")
+          component: () => import("@/views/survey/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "create",
           name: "create-survey",
-          component: () => import("@/views/survey/create.vue")
+          component: () => import("@/views/survey/create.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "edit",
           name: "edit-survey",
-          component: () => import("@/views/survey/edit.vue")
+          component: () => import("@/views/survey/edit.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },
@@ -138,21 +194,31 @@ const router = new Router({
       },
       name: "polls",
       component: () => import("@/views/poll/index.vue"),
+
       children: [
         {
           path: "",
           name: "all-polls",
-          component: () => import("@/views/poll/home.vue")
+          component: () => import("@/views/poll/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "create",
           name: "create-poll",
-          component: () => import("@/views/poll/create.vue")
+          component: () => import("@/views/poll/create.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "edit",
           name: "edit-polls",
-          component: () => import("@/views/poll/edit.vue")
+          component: () => import("@/views/poll/edit.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },
@@ -182,12 +248,18 @@ const router = new Router({
         {
           path: "",
           name: "all-coaches",
-          component: () => import("@/views/coaches/home.vue")
+          component: () => import("@/views/coaches/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "/",
           name: "all-coaches",
-          component: () => import("@/views/coaches/home.vue")
+          component: () => import("@/views/coaches/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },
@@ -201,7 +273,10 @@ const router = new Router({
         {
           path: "/",
           name: "all-messages",
-          component: () => import("@/views/messages/home.vue")
+          component: () => import("@/views/messages/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },
@@ -212,22 +287,34 @@ const router = new Router({
         {
           path: "/",
           name: "admin",
-          component: () => import("@/views/admin/index.vue")
+          component: () => import("@/views/admin/index.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "/all-admins",
           name: "all-admins",
-          component: () => import("@/views/admin/all-admins.vue")
+          component: () => import("@/views/admin/all-admins.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "/profile",
           name: "edit-profile",
-          component: () => import("@/views/admin/adminProfile.vue")
+          component: () => import("@/views/admin/adminProfile.vue"),
+          meta: {
+            middleware: [auth]
+          }
         },
         {
           path: "/create-admin",
           name: "create-admin",
-          component: () => import("@/views/admin/createAdmin.vue")
+          component: () => import("@/views/admin/createAdmin.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },
@@ -236,6 +323,11 @@ const router = new Router({
       name: "login",
       meta: { layout: "no-sidebar" },
       component: Login
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      component: Logout
     },
     {
       path: "/admin/password-create",

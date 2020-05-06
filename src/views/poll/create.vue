@@ -331,7 +331,7 @@ export default {
               : "An error occured")
           );
           setTimeout(function() {
-            this.$route.push({ path: "polls/all" });
+            this.$router.push({ path: "/polls/all" });
           }, 2000);
         })
         .catch(ex => {
