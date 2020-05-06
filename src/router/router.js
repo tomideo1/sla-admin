@@ -166,7 +166,7 @@ const router = new Router({
       component: () => import("@/views/survey/index.vue"),
       children: [
         {
-          path: "",
+          path: "all",
           name: "all-surveys",
           component: () => import("@/views/survey/home.vue"),
           meta: {

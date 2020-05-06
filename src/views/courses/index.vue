@@ -1,16 +1,19 @@
 <template>
   <div>
-    <d-container fluid class="mt-5 mb-3 d-none d-md-block d-lg-block">
+    <d-container
+      fluid
+      class="mt-5 mb-3 d-block text-center mx-auto d-md-block d-lg-block"
+    >
       <div class=" d-lg-flex d-md-flex flex-row  flex-grow-1 ">
-        <div class="border-right  ">
+        <div class="border-right mr-lg-3  ">
           <h5
-            class="text-black mr-lg-3 mr-1 "
+            class="text-black mr-lg-3 mr-md-1 "
             v-if="$route.path === '/courses'"
           >
             Courses Home
           </h5>
           <h5
-            class="text-black mr-lg-3  mr-1"
+            class="text-black mr-lg-3 "
             v-if="$route.path === '/courses/create'"
           >
             Create Course
@@ -27,11 +30,14 @@
           >
             Scheduled Courses
           </h5>
-          <h5 class="text-black mr-3 " v-if="$route.path === '/courses/saved'">
+          <h5
+            class="text-black mr-lg-3 "
+            v-if="$route.path === '/courses/saved'"
+          >
             Saved Courses
           </h5>
         </div>
-        <div class=" ml-3 mr-1">
+        <div class="mr-lg-2">
           <button
             @click="$router.push('/courses/create')"
             :class="
@@ -44,7 +50,7 @@
             Create
           </button>
         </div>
-        <div class="mr-1">
+        <div class="mr-lg-2">
           <button
             @click="$router.push('/courses/all')"
             :class="
@@ -57,7 +63,7 @@
             View All
           </button>
         </div>
-        <div class="mr-1">
+        <div class="mr-lg-2">
           <button
             @click="$router.push('/courses/scheduled')"
             :class="
@@ -70,7 +76,7 @@
             Scheduled
           </button>
         </div>
-        <div class="mr-1">
+        <div class="mr-lg-2">
           <button
             @click="$router.push('/courses/saved')"
             :class="

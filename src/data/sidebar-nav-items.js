@@ -79,7 +79,7 @@ export default function() {
           title: "Members",
           htmlBefore: "group",
           to: {
-            name: "all-messages"
+            name: ""
           }
         },
         {
@@ -93,7 +93,7 @@ export default function() {
           title: "Scorecard",
           htmlBefore: "scorecard",
           to: {
-            name: "all-groups"
+            name: ""
           }
         },
         {
@@ -121,7 +121,7 @@ export default function() {
           title: "FAQs",
           htmlBefore: "faq",
           to: {
-            name: "all-groups"
+            name: ""
           }
         },
         {

@@ -35,7 +35,7 @@
           <button
             @click="$router.push('/surveys/create')"
             :class="
-              $route.path === '/courses/create'
+              $route.path === '/survey/create'
                 ? 'btn btn-sm btn-primary'
                 : 'btn btn-sm btn-light'
             "
@@ -48,7 +48,7 @@
           <button
             @click="$router.push('/surveys/all')"
             :class="
-              $route.path === '/courses/all'
+              $route.path === '/surveys/all'
                 ? 'btn btn-sm btn-primary'
                 : 'btn btn-sm btn-light'
             "
@@ -61,7 +61,7 @@
           <button
             @click="$router.push('/surveys/scheduled')"
             :class="
-              $route.path === '/courses/scheduled'
+              $route.path === '/surveys/scheduled'
                 ? 'btn btn-sm btn-primary'
                 : 'btn btn-sm btn-light'
             "
@@ -74,7 +74,7 @@
           <button
             @click="$router.push('/surveys/saved')"
             :class="
-              $route.path === '/courses/saved'
+              $route.path === '/survey/saved'
                 ? 'btn btn-sm btn-primary'
                 : 'btn btn-sm btn-light'
             "
