@@ -855,7 +855,7 @@ export default {
 <style scoped lang="scss">
 .bg-primary::v-deep .multiselect {
   .multiselect__tags {
-    background: #03a9f4;
+    background: #0087db;
   }
 }
 .btn-outline-primary {
@@ -883,7 +883,7 @@ input[type="checkbox"] {
   top: 2px;
 }
 input:checked[type="checkbox"] {
-  background: #03a9f4;
+  background: #0087db;
 }
 input[type="checkbox"]:before {
   content: "";
@@ -901,11 +901,11 @@ input:checked[type="checkbox"]:before {
   left: 20px;
 }
 .btn-primary {
-  background: #03a9f4;
+  background: #0087db;
 }
 .btn-outline-light {
   background: #ffffff;
-  border-color: #03a9f4;
-  color: #03a9f4;
+  border-color: #0087db;
+  color: #0087db;
 }
 </style>

@@ -58,14 +58,14 @@ export default function() {
           title: "Courses",
           htmlBefore: "courses",
           to: {
-            name: "courses"
+            name: "all-courses"
           }
         },
         {
           title: "Announcements",
           htmlBefore: "announce",
           to: {
-            name: "announcements"
+            name: "all-announcements"
           }
         },
         {
@@ -100,14 +100,14 @@ export default function() {
           title: "survey",
           htmlBefore: "survey",
           to: {
-            name: "surveys"
+            name: "all-surveys"
           }
         },
         {
           title: "polls",
           htmlBefore: "poll",
           to: {
-            name: "polls"
+            name: "all-polls"
           }
         },
         {

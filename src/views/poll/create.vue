@@ -442,8 +442,8 @@ export default {
 
 .btn-outline-light {
   background: #ffffff;
-  border-color: #03a9f4;
-  color: #03a9f4;
+  border-color: #0087db;
+  color: #0087db;
 }
 .dropzone {
   width: 330px;

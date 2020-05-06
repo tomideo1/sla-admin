@@ -11,3 +11,6 @@ export const setAssets = (state, data) => {
 export const setLeaderboard = (state, data) => {
   state.Leaders = data.data.leaderboard;
 };
+export const setUsers = (state, data) => {
+  state.Users = data.data.users;
+};

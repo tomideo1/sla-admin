@@ -5,9 +5,9 @@
       <d-col col sm="12" class="text-center text-sm-left mb-4 mb-sm-0">
         <h3 class="page-title">Leaderboard</h3>
       </d-col>
-      <d-col col sm="12">
+      <d-col sm="12" md="12" lg="12">
         <div
-          class="card text-dark mt-5 col-md-12"
+          class="card text-dark mt-5 mx-auto"
           style="border: 1px solid #E7E6E6;
          box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.03); border-radius: 0"
         >
@@ -120,7 +120,7 @@
       </d-col>
 
       <d-col col sm="12" class="mt-4">
-        <table class="table mb-0">
+        <table class="table mb-0 table-responsive">
           <thead class="bg-light">
             <tr>
               <th scope="col" class="border-0">Rank</th>

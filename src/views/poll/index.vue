@@ -94,10 +94,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .btn-primary {
-  background: #03a9f4;
-  border-color: #03a9f4;
+  background: #0087db;
+  border-color: #0087db;
   :focus {
-    color: #03a9f4;
+    color: #0087db;
   }
 }
 </style>

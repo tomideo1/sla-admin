@@ -480,8 +480,8 @@ export default {
 
 .btn-outline-light {
   background: #ffffff;
-  border-color: #03a9f4;
-  color: #03a9f4;
+  border-color: #0087db;
+  color: #0087db;
 }
 .dropzone {
   width: 330px;
@@ -500,7 +500,7 @@ input[type="checkbox"] {
   top: 2px;
 }
 input:checked[type="checkbox"] {
-  background: #03a9f4;
+  background: #0087db;
 }
 input[type="checkbox"]:before {
   content: "";
