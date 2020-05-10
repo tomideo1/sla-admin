@@ -7,48 +7,48 @@
       </d-col>
       <d-col sm="12" md="12" lg="12">
         <div
-          class="card text-dark mt-5 mx-auto"
+          class="card text-dark mt-5 mx-auto container"
           style="border: 1px solid #E7E6E6;
          box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.03); border-radius: 0"
         >
           <h4 class="mt-3 mb-3 text-center">Milestones</h4>
           <div class="row">
-            <div class="col-md-2 text-center  d-flex flex-column">
+            <div class="col-md-2 col-4 text-center  d-flex flex-column">
               <div>
                 <icon size="lg" name="medal"></icon>
                 <p class="mt-2">Filling Out Surveys</p>
                 <p class="mt-n2">1 Point</p>
               </div>
             </div>
-            <div class="col-md-2 text-center  d-flex flex-column">
+            <div class="col-md-2 col-4  text-center  d-flex flex-column">
               <div>
                 <icon size="lg" name="medal"></icon>
                 <p class="mt-2">Completing a Course</p>
                 <p class="mt-n2">10 Points</p>
               </div>
             </div>
-            <div class="col-md-2 text-center  d-flex flex-column">
+            <div class="col-md-2 col-4 text-center  d-flex flex-column">
               <div>
                 <icon size="lg" name="medal"></icon>
                 <p class="mt-2">Completing a Lesson</p>
                 <p class="mt-n2">50 Points</p>
               </div>
             </div>
-            <div class="col-md-2 text-center  d-flex flex-column">
+            <div class="col-md-2 col-4  text-center  d-flex flex-column">
               <div>
                 <icon size="lg" name="medal"></icon>
                 <p class="mt-2">Engaging with Community</p>
                 <p class="mt-n2">2 Points</p>
               </div>
             </div>
-            <div class="col-md-2 text-center  d-flex flex-column">
+            <div class="col-md-2 col-4 text-center  d-flex flex-column">
               <div>
                 <icon size="lg" name="medal"></icon>
                 <p class="mt-2">Completing a Quiz</p>
                 <p class="mt-n2">1 Point</p>
               </div>
             </div>
-            <div class="col-md-2 text-center  d-flex flex-column">
+            <div class="col-md-2 col-4 text-center  d-flex flex-column">
               <div>
                 <icon size="lg" name="medal"></icon>
                 <p class="mt-2">Completing a Poll</p>
@@ -65,8 +65,8 @@
          background: linear-gradient(133.56deg, #0087DB -33.88%, #1F497D 95.84%);
          box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.03); border-radius: 0"
         >
-          <div class="row mx-auto ">
-            <div class="col-md-3 mr-3  ">
+          <div class="row  ">
+            <div class="col-md-3   mr-3  ">
               <div
                 class="leader_small text-center text-white mx-auto "
                 style="background:  #0087DB;"
@@ -74,15 +74,15 @@
                 2
               </div>
               <img
-                class="leader leader_2 mt-5  "
-                src="@/assets/images/user-profile/leader.png"
+                class="leader  col-3  "
+                src="@/assets/images/user-profile/leader_2.png"
               />
               <div class="text-white text-center">
                 <p class="mt-2">Aina Oluwatosin</p>
                 <p class="mt-n4">10 Points</p>
               </div>
             </div>
-            <div class="col-md-4 ">
+            <div class="col-md-3 col-3 ">
               <div
                 class="leader_1_small text-center text-white mx-auto "
                 style="background:  #0087DB;"
@@ -90,7 +90,7 @@
                 1
               </div>
               <img
-                class="leader leader_1 mt-n1"
+                class="leader  "
                 src="@/assets/images/user-profile/leader_2.png"
               />
               <div class="text-white text-center">
@@ -99,7 +99,7 @@
               </div>
             </div>
 
-            <div class="col-md-3 ml-2">
+            <div class="col-md-3 col-3 ml-2">
               <div
                 class="leader_small text-center text-white mx-auto "
                 style="background:  #0087DB;"
@@ -107,8 +107,8 @@
                 3
               </div>
               <img
-                class="leader leader_2  mt-5"
-                src="@/assets/images/user-profile/leader.png"
+                class="leader"
+                src="@/assets/images/user-profile/leader_2.png"
               />
               <div class="text-white text-center">
                 <p class="mt-2">Aina Oluwatosin</p>

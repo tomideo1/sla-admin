@@ -58,28 +58,21 @@ export default function() {
           title: "Courses",
           htmlBefore: "courses",
           to: {
-            name: "all-courses"
+            name: "courses"
           }
         },
         {
           title: "Announcements",
           htmlBefore: "announce",
           to: {
-            name: "all-announcements"
+            name: "announcements"
           }
         },
         {
           title: "Groups",
           htmlBefore: "group",
           to: {
-            name: "all-groups"
-          }
-        },
-        {
-          title: "Members",
-          htmlBefore: "group",
-          to: {
-            name: ""
+            name: "groups"
           }
         },
         {
@@ -93,21 +86,21 @@ export default function() {
           title: "Scorecard",
           htmlBefore: "scorecard",
           to: {
-            name: ""
+            name: "scorecards"
           }
         },
         {
           title: "survey",
           htmlBefore: "survey",
           to: {
-            name: "all-surveys"
+            name: "surveys"
           }
         },
         {
           title: "polls",
           htmlBefore: "poll",
           to: {
-            name: "all-polls"
+            name: "polls"
           }
         },
         {

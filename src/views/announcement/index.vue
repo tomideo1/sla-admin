@@ -1,100 +1,34 @@
 <template>
   <div>
-    <d-container fluid class="mt-5 mb-3 d-none d-md-block d-lg-block">
-      <div class=" d-lg-flex d-md-flex flex-row  flex-grow-1 ">
-        <div class="border-right  ">
-          <h5
-            class="text-black mr-lg-3 mr-1 "
-            v-if="$route.path === '/announcements'"
-          >
-            Announcements Home
-          </h5>
-          <h5
-            class="text-black mr-lg-3  mr-1"
-            v-if="$route.path === '/announcements/create'"
-          >
-            Create Announcements
-          </h5>
-          <h5
-            class="text-black mr-lg-3 pr-2 "
-            v-if="$route.path === '/announcements/all'"
-          >
-            View All Announcements
-          </h5>
-          <h5
-            class="text-black mr-lg-3  mr-1"
-            v-if="$route.path === '/announcements/scheduled'"
-          >
-            Scheduled Announcements
-          </h5>
-          <h5
-            class="text-black mr-3 "
-            v-if="$route.path === '/announcements/saved'"
-          >
-            Saved Announcements
-          </h5>
-        </div>
-        <div class=" ml-3 mr-1">
-          <button
-            @click="$router.push('/announcements/create')"
-            :class="
-              $route.path === '/courses/create'
-                ? 'btn btn-sm btn-primary'
-                : 'btn btn-sm btn-light'
-            "
-            style="border-radius: 10px;"
-          >
-            Create
-          </button>
-        </div>
-        <div class="mr-1">
-          <button
-            @click="$router.push('/announcements/all')"
-            :class="
-              $route.path === '/courses/all'
-                ? 'btn btn-sm btn-primary'
-                : 'btn btn-sm btn-light'
-            "
-            style="border-radius: 10px;"
-          >
-            View All
-          </button>
-        </div>
-        <div class="mr-1">
-          <button
-            @click="$router.push('/announcements/scheduled')"
-            :class="
-              $route.path === '/courses/scheduled'
-                ? 'btn btn-sm btn-primary'
-                : 'btn btn-sm btn-light'
-            "
-            style="border-radius: 10px;"
-          >
-            Scheduled
-          </button>
-        </div>
-        <div class="mr-1">
-          <button
-            @click="$router.push('/announcements/saved')"
-            :class="
-              $route.path === '/courses/saved'
-                ? 'btn btn-sm btn-primary'
-                : 'btn btn-sm btn-light'
-            "
-            style="border-radius: 10px;"
-          >
-            Saved
-          </button>
-        </div>
-      </div>
-    </d-container>
+    <nav-menu :navs="navigation" />
     <router-view />
   </div>
 </template>
 <script>
 export default {
+  data() {
+    return {
+      navigation: {
+        title: [
+          { name: "Announcement Create", path: "/announcement/create" },
+          { name: "View All Announcement", path: "/announcement/all" },
+          { name: "Scheduled Announcement", path: "/announcement/schedule" },
+          { name: "Saved Announcement", path: "/announcement/save" }
+        ],
+        actions: [
+          { name: "create", path: "/announcement/create" },
+          { name: "view all", path: "/announcement/all" },
+          { name: "schedule", path: "/announcement/schedule" },
+          { name: "saved", path: "/announcement/save" }
+        ]
+      }
+    };
+  },
   mounted() {
-    console.log("COURSES_LOADED");
+    console.log(this.navigation);
+  },
+  components: {
+    NavMenu: () => import("@/components/NavMenu")
   }
 };
 </script>

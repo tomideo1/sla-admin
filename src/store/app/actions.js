@@ -36,3 +36,10 @@ export const getAllLeaderboard = async ({ commit }) => {
     return res;
   }
 };
+
+export const getUsers = async ({ commit }) => {
+  let res = await Api.get(`admin/users/getAll`, true);
+  if (res.status === 200) {
+    commit("setUsers", res.data);
+  } else return res;
+};

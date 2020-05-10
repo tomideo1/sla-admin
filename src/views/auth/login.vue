@@ -71,20 +71,21 @@
                         <div class="invalid-feedback">{{ error.message }}</div>
                       </d-input-group>
                     </div>
-
-                    <button
-                      @click.prevent="submit"
-                      class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"
-                      type="submit"
-                    >
-                      Log in
-                      <span
-                        v-if="isLoading"
-                        class="spinner-border spinner-border-sm"
-                      ></span>
-                    </button>
+                    <div class="text-center">
+                      <sla-button
+                        @click.prevent="submit"
+                        class="btn col-md-8   text-uppercase font-weight-bold mb-2"
+                        :disabled="isLoading"
+                        :text="button.text"
+                        size="md"
+                        type="filled"
+                      >
+                      </sla-button>
+                    </div>
                     <div class="text-center mt-4 form-text">
-                      Forgot password? &nbsp;<router-link to="forgot-password"
+                      Forgot password? &nbsp;<router-link
+                        style="color: #0087DB; "
+                        to="forgot-password"
                         >Click here</router-link
                       >
                     </div>
@@ -106,6 +107,9 @@ export default {
   data() {
     return {
       isLoading: false,
+      button: {
+        text: "Login"
+      },
       theme: "success",
       error: {
         message: null,
@@ -126,15 +130,19 @@ export default {
     }),
     async submit() {
       // console.log('something gets here')
+      this.button.text = "Loading....";
       this.isLoading = true;
+
       let res = await this.login(this.form);
       if (res === true) {
         // route to dashboard
         this.isLoading = false;
+        this.button.text = "Login";
         this.$router.replace({
           name: "dashboard"
         });
       } else {
+        this.button.text = "Login";
         this.error.type = res.data.type !== undefined ? res.data.type : "error";
         this.error.message = res.data.message;
         this.isLoading = false;
@@ -150,6 +158,9 @@ export default {
         this.eye = false;
       }
     }
+  },
+  components: {
+    SlaButton: () => import("@/components/SlaButton")
   }
 };
 </script>

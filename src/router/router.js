@@ -95,6 +95,22 @@ const router = new Router({
           meta: {
             middleware: [auth]
           }
+        },
+        {
+          path: "schedule",
+          name: "schedule-courses",
+          component: () => import("@/views/courses/scheduled.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "save",
+          name: "saved-courses",
+          component: () => import("@/views/courses/save.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },
@@ -103,10 +119,11 @@ const router = new Router({
       meta: {
         middleware: [auth]
       },
+      name: "groups",
       component: () => import("@/views/groups/index.vue"),
       children: [
         {
-          path: "",
+          path: "all",
           name: "all-groups",
           component: () => import("@/views/groups/home.vue"),
           meta: {
@@ -114,9 +131,9 @@ const router = new Router({
           }
         },
         {
-          path: "/",
-          name: "all-groups",
-          component: () => import("@/views/groups/home.vue"),
+          path: "create",
+          name: "create-group",
+          component: () => import("@/views/groups/create.vue"),
           meta: {
             middleware: [auth]
           }
@@ -132,7 +149,7 @@ const router = new Router({
       component: () => import("@/views/announcement/index.vue"),
       children: [
         {
-          path: "",
+          path: "all",
           name: "all-announcements",
           component: () => import("@/views/announcement/home.vue"),
           meta: {

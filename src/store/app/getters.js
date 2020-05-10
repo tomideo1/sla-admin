@@ -10,3 +10,7 @@ export const getAssets = state => {
 export const getLeaderboard = state => {
   return state.Leaders;
 };
+
+export const getUsers = state => {
+  return state.Users;
+};

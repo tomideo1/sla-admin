@@ -1,7 +1,7 @@
 <template>
   <d-container fluid>
     <d-row>
-      <d-col lg="3" sm="3" md="3" v-for="i in 20">
+      <div class="col-12 col-lg-3 col-md-6" v-for="i in 20">
         <d-card class="m-3">
           <d-card-header class="border-bottom text-center">
             <!-- User Avatar -->
@@ -23,7 +23,7 @@
             <p class="mb-2 text-primary font-weight-bold">View Profile</p>
           </d-card-header>
         </d-card>
-      </d-col>
+      </div>
     </d-row>
   </d-container>
 </template>
