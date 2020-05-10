@@ -32,9 +32,12 @@
     <poll v-if="name === 'poll'"></poll>
     <medal v-if="name === 'medal'"></medal>
     <share v-if="name === 'share'"></share>
+    <copy v-if="name === 'copy'"></copy>
+    <resource v-if="name === 'resource'"></resource>
   </span>
 </template>
 <script>
+import Resource from "./resource";
 export default {
   props: {
     name: {
@@ -45,6 +48,7 @@ export default {
     }
   },
   components: {
+    Resource,
     Home: () => import("@/components/__private__/media/home.vue"),
     activity: () => import("@/components/__private__/media/analytics.vue"),
     announce: () => import("@/components/__private__/media/announce.vue"),
@@ -77,7 +81,9 @@ export default {
     arrowLeft: () => import("@/components/__private__/media/arrow-left.vue"),
     poll: () => import("@/components/__private__/media/poll.vue"),
     medal: () => import("@/components/__private__/media/medal.vue"),
-    share: () => import("@/components/__private__/media/share.vue")
+    share: () => import("@/components/__private__/media/share.vue"),
+    copy: () => import("@/components/__private__/media/copy.vue"),
+    resource: () => import("@/components/__private__/media/resource.vue")
   }
 };
 </script>

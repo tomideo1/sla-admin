@@ -2,6 +2,7 @@
   <d-container
     fluid
     class="mt-5 mb-3 d-block text-center mx-auto d-md-block d-lg-block"
+    v-if="!$route.path.endsWith('single')"
   >
     <div class=" d-lg-flex d-md-flex flex-row  flex-grow-1 ">
       <h5

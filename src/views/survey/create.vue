@@ -487,34 +487,4 @@ export default {
   width: 330px;
   height: 330px;
 }
-input[type="checkbox"] {
-  position: relative;
-  width: 41px;
-  height: 25px;
-  -webkit-appearance: none;
-  background: #c6c6c6;
-  outline: none;
-  border-radius: 100px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  transition: 1s;
-  top: 2px;
-}
-input:checked[type="checkbox"] {
-  background: #0087db;
-}
-input[type="checkbox"]:before {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 100px;
-  top: 2px;
-  left: 2px;
-  background: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: 0.5s;
-}
-input:checked[type="checkbox"]:before {
-  left: 20px;
-}
 </style>

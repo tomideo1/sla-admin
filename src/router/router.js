@@ -244,6 +244,92 @@ const router = new Router({
       ]
     },
     {
+      path: "/scorecards",
+      meta: {
+        middleware: [auth]
+      },
+      name: "scorecards",
+      component: () => import("@/views/scoreCard/index.vue"),
+
+      children: [
+        {
+          path: "all",
+          name: "all-scorecards",
+          component: () => import("@/views/scoreCard/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "create",
+          name: "create-scorecard",
+          component: () => import("@/views/scoreCard/create.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "single",
+          name: "single-scorecard",
+          component: () => import("@/views/scoreCard/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        }
+      ]
+    },
+    {
+      path: "/resources",
+      meta: {
+        middleware: [auth]
+      },
+      name: "resources",
+      component: () => import("@/views/resources/index.vue"),
+
+      children: [
+        {
+          path: "all",
+          name: "all-resources",
+          component: () => import("@/views/resources/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "create",
+          name: "create-resources",
+          component: () => import("@/views/resources/create.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "schduled",
+          name: "scheduled-resources",
+          component: () => import("@/views/resources/scheduled.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "saved",
+          name: "saved-resources",
+          component: () => import("@/views/resources/saved.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "single",
+          name: "single-resources",
+          component: () => import("@/views/resources/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        }
+      ]
+    },
+    {
       path: "/leaderboard",
       name: "leaderboard",
       component: LeaderBoard,

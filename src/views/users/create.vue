@@ -16,7 +16,6 @@
               <label for="feFirstName"> First Name</label>
               <d-form-input
                 type="text"
-                id="feFirstName"
                 placeholder="First Name"
                 v-model="formData.first_name"
               />
@@ -25,7 +24,6 @@
               <label for="feFirstName"> Last Name</label>
               <d-form-input
                 type="text"
-                id="feFirstName"
                 placeholder="First Name"
                 v-model="formData.last_name"
               />

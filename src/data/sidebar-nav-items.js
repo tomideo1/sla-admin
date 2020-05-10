@@ -111,7 +111,14 @@ export default function() {
           }
         },
         {
-          title: "FAQs",
+          title: "Resources",
+          htmlBefore: "resource",
+          to: {
+            name: "resources"
+          }
+        },
+        {
+          title: "Help",
           htmlBefore: "faq",
           to: {
             name: ""
