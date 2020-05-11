@@ -121,7 +121,7 @@ export default function() {
           title: "Help",
           htmlBefore: "faq",
           to: {
-            name: ""
+            name: "support"
           }
         },
         {

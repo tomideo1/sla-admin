@@ -330,6 +330,32 @@ const router = new Router({
       ]
     },
     {
+      path: "/support",
+      meta: {
+        middleware: [auth]
+      },
+      name: "support",
+      component: () => import("@/views/support/index.vue"),
+      children: [
+        {
+          path: "all",
+          name: "all-tickets",
+          component: () => import("@/views/support/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "single",
+          name: "single-ticket",
+          component: () => import("@/views/support/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        }
+      ]
+    },
+    {
       path: "/leaderboard",
       name: "leaderboard",
       component: LeaderBoard,

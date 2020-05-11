@@ -9,14 +9,8 @@ export default {
   data() {
     return {
       navigation: {
-        title: [
-          { name: "Create Poll", path: "/polls/create" },
-          { name: "View All Polls", path: "/polls/all" }
-        ],
-        actions: [
-          { name: "create", path: "/polls/create" },
-          { name: "view all", path: "/polls/all" }
-        ]
+        title: [{ name: "View All Support Ticket", path: "/support/all" }],
+        actions: [{ name: "View All Support Ticket", path: "/support/all" }]
       }
     };
   },

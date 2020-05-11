@@ -53,11 +53,12 @@
       </div>
     </form>
 
-    <div class="nav-wrapper bg-primary text shadow ">
+    <div class="nav-wrapper bg-primary text shadow " style="overflow-y: auto">
       <div v-if="items" v-for="(nav, navIdx) in items" :key="navIdx">
         <d-nav
           v-if="typeof nav.items !== 'undefined' && nav.items.length"
           class="nav--no-borders flex-column"
+          style="cursor: pointer;"
         >
           <li
             v-for="(item, navItemIdx) in nav.items"

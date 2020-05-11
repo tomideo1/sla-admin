@@ -6,7 +6,7 @@
     :style="styles"
   >
     <!-- Button Text -->
-    <span v-if="text">
+    <span v-if="text" class="font-open-sans">
       {{ textProp }}
     </span>
   </button>

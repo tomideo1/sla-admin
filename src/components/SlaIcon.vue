@@ -28,6 +28,7 @@
     <eclipse v-if="name === 'eclipse'"></eclipse>
     <arrow-right v-if="name === 'arrow-right'"></arrow-right>
     <arrow-left v-if="name === 'arrow-left'"></arrow-left>
+    <arrow-up v-if="name === 'arrow-up'"></arrow-up>
     <cancel v-if="name === 'cancel'"></cancel>
     <poll v-if="name === 'poll'"></poll>
     <medal v-if="name === 'medal'"></medal>
@@ -83,7 +84,8 @@ export default {
     medal: () => import("@/components/__private__/media/medal.vue"),
     share: () => import("@/components/__private__/media/share.vue"),
     copy: () => import("@/components/__private__/media/copy.vue"),
-    resource: () => import("@/components/__private__/media/resource.vue")
+    resource: () => import("@/components/__private__/media/resource.vue"),
+    arrowUp: () => import("@/components/__private__/media/arrow-up.vue")
   }
 };
 </script>
