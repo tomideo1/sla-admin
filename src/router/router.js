@@ -21,6 +21,7 @@ import forgotPassword from "../views/auth/forgotPassword";
 import Dashboard from "@/views/Dashboard.vue";
 import LeaderBoard from "@/views/leaderboard.vue";
 import Profile from "@/views/profile.vue";
+import Settings from "@/views/settings.vue";
 import Asset from "@/views/asset.vue";
 
 const router = new Router({
@@ -448,6 +449,14 @@ const router = new Router({
       path: "/profile",
       name: "profile",
       component: Profile,
+      meta: {
+        middleware: [auth]
+      }
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: Settings,
       meta: {
         middleware: [auth]
       }
