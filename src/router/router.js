@@ -20,6 +20,7 @@ import PasswordReset from "../views/auth/password-reset";
 import forgotPassword from "../views/auth/forgotPassword";
 import Dashboard from "@/views/Dashboard.vue";
 import LeaderBoard from "@/views/leaderboard.vue";
+import Profile from "@/views/profile.vue";
 import Asset from "@/views/asset.vue";
 
 const router = new Router({
@@ -434,14 +435,6 @@ const router = new Router({
           }
         },
         {
-          path: "/profile",
-          name: "edit-profile",
-          component: () => import("@/views/admin/adminProfile.vue"),
-          meta: {
-            middleware: [auth]
-          }
-        },
-        {
           path: "/create-admin",
           name: "create-admin",
           component: () => import("@/views/admin/createAdmin.vue"),
@@ -450,6 +443,14 @@ const router = new Router({
           }
         }
       ]
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: Profile,
+      meta: {
+        middleware: [auth]
+      }
     },
     {
       path: "/login",
