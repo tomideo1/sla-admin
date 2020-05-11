@@ -304,7 +304,7 @@ const router = new Router({
           }
         },
         {
-          path: "schduled",
+          path: "schedule",
           name: "scheduled-resources",
           component: () => import("@/views/resources/scheduled.vue"),
           meta: {
@@ -312,7 +312,7 @@ const router = new Router({
           }
         },
         {
-          path: "saved",
+          path: "save",
           name: "saved-resources",
           component: () => import("@/views/resources/saved.vue"),
           meta: {
