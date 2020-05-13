@@ -61,8 +61,14 @@
           <d-textarea
             style="min-height: 140px;"
             v-model="formData.details"
-            class="form-control"
+            class="form-control mb-3"
             placeholder="Description"
+          />
+          <d-textarea
+            style="min-height: 140px;"
+            v-model="formData.requirements"
+            class="form-control"
+            placeholder="Requirements"
           />
           <div class="text-center">
             <d-button
@@ -367,6 +373,13 @@
 
         <div class="text-center">
           <br />
+          <p
+            class="font-open-sans"
+            style="color: #0087DB; cursor: pointer; font-size: 14px;"
+            @click="scheduleModal = true"
+          >
+            SCHEDULE
+          </p>
           <button
             class=" btn btn-primary  p-3 mt-4  col-md-8 "
             @click="handleSubmit"
@@ -376,6 +389,19 @@
           </button>
         </div>
       </d-col>
+      <d-modal
+        v-if="scheduleModal"
+        size="sm"
+        @close="scheduleModal = false"
+        :size="'md'"
+      >
+        <d-modal-header class="text-center">
+          <d-modal-title class="font-poppings text-black">
+            What time and Date do you want to Schedule?
+          </d-modal-title>
+        </d-modal-header>
+        <d-modal-body> </d-modal-body>
+      </d-modal>
     </d-row>
   </d-container>
 </template>
@@ -395,12 +421,13 @@ export default {
         lessons: false,
         quiz: false
       },
+      scheduleModal: false,
       buttons: {
         schedule: false,
         published: false,
         save: false,
         isLoading: true,
-        text: "Schedule"
+        text: "Publish"
       },
       options: [],
       error: {
@@ -425,6 +452,7 @@ export default {
       formData: {
         title: null,
         details: null,
+        requirements: null,
         category: [],
         cover_image: "",
         estimate: null,
@@ -646,7 +674,6 @@ export default {
         reader.onerror = error => reject(error);
       });
     },
-
     watchSchedule: function() {
       let currentDate =
         new Date().getFullYear() +
@@ -689,6 +716,8 @@ export default {
       this.buttons.text = "Loading.....";
       const self = this;
       this.formData.tags = this.formData.category.join();
+      this.formData.lessons = self.lesson.fields;
+      this.formData.quizzes = self.quiz;
       const token = store.state.auth.token;
       let res = await axios
         .post(`${process.env.VUE_APP_API}/course/create`, this.formData, {

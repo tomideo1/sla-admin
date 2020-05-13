@@ -120,10 +120,10 @@
       </d-col>
 
       <d-col col sm="12" class="mt-4">
-        <table class="table mb-0 table-responsive">
+        <table class="table mb-0 table-responsive-xl">
           <thead class="bg-light">
             <tr>
-              <th scope="col" class="border-0">Rank</th>
+              <th scope="col" class="bord er-0">Rank</th>
               <th scope="col" class="border-0">Name</th>
               <th scope="col" class="border-0">Score Card</th>
               <th scope="col" class="border-0">Survey</th>

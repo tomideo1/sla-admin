@@ -21,6 +21,7 @@ import forgotPassword from "../views/auth/forgotPassword";
 import Dashboard from "@/views/Dashboard.vue";
 import LeaderBoard from "@/views/leaderboard.vue";
 import Profile from "@/views/profile.vue";
+import SlaNotification from "@/views/notification.vue";
 import Settings from "@/views/settings.vue";
 import Asset from "@/views/asset.vue";
 
@@ -449,6 +450,14 @@ const router = new Router({
       path: "/profile",
       name: "profile",
       component: Profile,
+      meta: {
+        middleware: [auth]
+      }
+    },
+    {
+      path: "/notification",
+      name: "notification",
+      component: SlaNotification,
       meta: {
         middleware: [auth]
       }
