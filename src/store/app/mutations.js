@@ -5,6 +5,21 @@ export const setEngagedCourses = (state, data) => {
   state.engagedCourses = data.courses;
 };
 
+export const setPolls = (state, data) => {
+  state.Polls = data.polls;
+};
+
+export const setGroups = (state, data) => {
+  state.Groups = data.groups;
+};
+
+export const setSurveys = (state, data) => {
+  state.Surveys = data.surveys;
+};
+
+export const setTickets = (state, data) => {
+  state.Tickets = data.help;
+};
 export const setCategories = (state, data) => {
   state.Categories = data.categories;
 };
@@ -14,6 +29,10 @@ export const setAdmins = (state, data) => {
 
 export const setAssets = (state, data) => {
   state.Assets = data.data.assets;
+};
+
+export const setAnnouncements = (state, data) => {
+  state.Announcements = data.data.annoucements;
 };
 export const setLeaderboard = (state, data) => {
   state.Leaders = data.data.leaderboard;

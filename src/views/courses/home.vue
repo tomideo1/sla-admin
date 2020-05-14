@@ -18,12 +18,12 @@
             >
             </d-card>
             <p
-              class="title  text-capitalize mt-3 text-bold "
+              class="title  text-capitalize mt-2 text-bold "
               style="max-width: 50%!important;"
             >
               {{ course.title }}
             </p>
-            <p class=" text-capitalize mt-1 " style="color: #999999;">
+            <p class=" text-capitalize mt-n4  " style="color: #999999;">
               {{ course.tags }}
             </p>
           </div>
@@ -36,9 +36,20 @@
         <carousel refs="content">
           <div
             class="scroll m-2"
-            v-for="(course, idx) in courses"
+            v-for="(category, idx) in Categories"
             :key="idx"
-          ></div>
+          >
+            <d-card
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  'https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png' +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+            >
+            </d-card>
+          </div>
         </carousel>
       </div>
       <div class="col-lg-12">
@@ -58,12 +69,12 @@
             >
             </d-card>
             <p
-              class="title  text-capitalize mt-3 text-bold "
+              class="title  text-capitalize  text-bold "
               style="max-width: 50%!important;"
             >
               {{ course.title }}
             </p>
-            <p class=" text-capitalize mt-1 " style="color: #999999;">
+            <p class=" text-capitalize mt-n4 " style="color: #999999;">
               {{ course.tags }}
             </p>
           </div>
@@ -90,48 +101,50 @@
             >
             </d-card>
             <p
-              class="title  text-capitalize mt-3 text-bold "
+              class="title  text-capitalize  text-bold "
               style="max-width: 50%!important;"
             >
               {{ course.course.title }}
             </p>
-            <p class=" text-capitalize mt-1 " style="color: #999999;">
+            <p class=" text-capitalize  mt-n4 " style="color: #999999;">
               {{ course.course.tags }}
             </p>
           </div>
         </carousel>
       </div>
-      <div v-for="(course, idx) in courseProgram" :key="idx" class="col-lg-12">
+      <div
+        v-for="(course, idx) in courseProgram"
+        :key="idx"
+        class="col-lg-12"
+        v-if="course.courses.course.length > 0"
+      >
         <div>
           <h6 class="text-dark title text-capitalize m-1">
-            <carousel refs="content">
-              <div
-                class="scroll m-2"
-                v-for="tags in course.courses.course"
-                v-if="course.courses.course.length > 0"
-              >
-                <d-card
-                  :style="
-                    'width:200px!important;height: 120px!important;' +
-                      'backgroundImage:url(' +
-                      tags.cover_image +
-                      ');' +
-                      ' background-size:cover; background-position:center'
-                  "
-                >
-                </d-card>
-                <p
-                  class="title  text-capitalize mt-3 text-bold "
-                  style="max-width: 50%!important;"
-                >
-                  {{ tags.title }}
-                </p>
-                <p class=" text-capitalize mt-1 " style="color: #999999;">
-                  {{ tags.tags }}
-                </p>
-              </div>
-            </carousel>
+            {{ course.courses.tag }}
           </h6>
+          <carousel refs="content">
+            <div class="scroll m-2" v-for="tags in course.courses.course">
+              <d-card
+                :style="
+                  'width:200px!important;height: 120px!important;' +
+                    'backgroundImage:url(' +
+                    tags.cover_image +
+                    ');' +
+                    ' background-size:cover; background-position:center'
+                "
+              >
+              </d-card>
+              <p
+                class="title  text-capitalize mt-3 text-bold "
+                style="max-width: 50%!important;"
+              >
+                {{ tags.title }}
+              </p>
+              <p class=" text-capitalize mt-1 " style="color: #999999;">
+                {{ tags.tags }}
+              </p>
+            </div>
+          </carousel>
         </div>
       </div>
     </d-row>

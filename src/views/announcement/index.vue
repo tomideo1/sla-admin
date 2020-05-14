@@ -25,7 +25,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.navigation);
+    this.$router.push({ path: "/announcements/all" });
   },
   components: {
     NavMenu: () => import("@/components/NavMenu")

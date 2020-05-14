@@ -57,9 +57,30 @@ export const getAllLeaderboard = async ({ commit }) => {
   }
 };
 
-export const getUsers = async ({ commit }) => {
+export const getAllUsers = async ({ commit }) => {
   let res = await Api.get(`admin/users/getAll`, true);
   if (res.status === 200) {
     commit("setUsers", res.data);
+  } else return res;
+};
+
+export const getAllAnnouncements = async ({ commit }) => {
+  let res = await Api.get(`annoucement/admin/getAll`, true);
+  if (res.status === 200) {
+    commit("setAnnouncements", res.data);
+  } else return res;
+};
+
+export const getAllPolls = async ({ commit }) => {
+  let res = await Api.get(`poll/getAll`, true);
+  if (res.status === 200) {
+    commit("setPolls", res.data);
+  } else return res;
+};
+
+export const getSurveys = async ({ commit }) => {
+  let res = await Api.get(`survey/list`, true);
+  if (res.status === 200) {
+    commit("setSurveys", res.data);
   } else return res;
 };

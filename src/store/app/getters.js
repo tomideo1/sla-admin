@@ -13,6 +13,26 @@ export const getAdmins = state => {
 export const getAssets = state => {
   return state.Assets;
 };
+
+export const getAnnouncements = state => {
+  return state.Announcements;
+};
+
+export const getPolls = state => {
+  return state.Polls;
+};
+
+export const getSurveys = state => {
+  return state.Surveys;
+};
+
+export const getGroups = state => {
+  return state.Groups;
+};
+
+export const getTickets = state => {
+  return state.Tickets;
+};
 export const getLeaderboard = state => {
   return state.Leaders;
 };

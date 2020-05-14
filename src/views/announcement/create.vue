@@ -1,15 +1,14 @@
 <template>
   <d-container fluid class="main-content-container px-4">
     <!-- Page Header -->
-
+    <Toasts
+      :show-progress="false"
+      :rtl="false"
+      :max-messages="5"
+      :time-out="4000"
+      :closeable="false"
+    ></Toasts>
     <d-row no-gutters class="page-header py-4">
-      <Toasts
-        :show-progress="false"
-        :rtl="false"
-        :max-messages="5"
-        :time-out="4000"
-        :closeable="false"
-      ></Toasts>
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
         <d-form>
           <d-input
@@ -53,7 +52,7 @@
             Recipients
           </p>
           <div class="form-group mt-3 mb-3 ">
-            <d-select v-model="formData.recipients" class="col-md-3">
+            <d-select v-model="formData.recepients" class="col-md-3">
               <option selected value="everyone">To Everyone</option>
               <option value="participant">Participant</option>
               <option value="admin">Admins</option>
@@ -82,16 +81,67 @@
 
         <div class="text-center">
           <br />
-          <button
-            @click="handleSubmit"
-            class=" btn btn-primary  p-3 mt-4  col-md-8 "
+          <p
+            class="font-open-sans"
+            style="color: #0087DB; cursor: pointer; font-size: 14px;"
+            @click="scheduleModal = true"
+          >
+            SCHEDULE
+          </p>
+          <sla-button
+            type="outline"
+            size="md"
+            :text="buttons.text1"
+            class=" btn   p-3   col-md-6 m-1 "
+            @click="handleSubmit('save')"
+          >
+          </sla-button>
+          <sla-button
+            type="filled"
+            size="md"
+            :text="buttons.text"
+            class=" btn   p-3 mt-4  col-md-6  m-1"
+            @click="handleSubmit('publish')"
             :disabled="buttons.isLoading"
           >
-            {{ buttons.text }}
-          </button>
+          </sla-button>
         </div>
       </d-col>
     </d-row>
+    <d-modal
+      v-if="scheduleModal"
+      size="sm"
+      @close="scheduleModal = false"
+      :size="'md'"
+    >
+      <d-modal-header class="text-center">
+        <d-modal-title class="font-poppings text-black">
+          What time and Date do you want to Schedule?
+        </d-modal-title>
+      </d-modal-header>
+      <d-modal-body>
+        <d-input-group class="justify-content-center m-2 ">
+          <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+            <option :value="undefined">Day:</option>
+            <option :value="i" v-for="i in 31">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+            <option :value="undefined">Month:</option>
+            <option :value="i" v-for="i in 12">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+            <option :value="undefined">Year:</option>
+            <option v-for="year in years" :value="year">{{ year }}</option>
+          </d-select>
+          <input
+            class="col-md-3 form-control"
+            type="time"
+            v-model="time.schedule.hour"
+          />
+          <input type="hidden" v-model="scheduleDate" />
+        </d-input-group>
+      </d-modal-body>
+    </d-modal>
   </d-container>
 </template>
 
@@ -117,10 +167,14 @@ export default {
         status: null,
         message: null
       },
+      scheduleModal: false,
       buttons: {
+        publish: false,
         published: false,
+        save: false,
         isLoading: false,
-        text: "Publish"
+        text: "PUBLISH",
+        text1: "SAVE"
       },
       options: [],
       dropzoneOptions: {
@@ -144,8 +198,17 @@ export default {
         normal_details: "",
         list_category: [],
         list_tags: [],
-        recipients: "everyone",
+        recepients: "everyone",
         cover_image: ""
+      },
+      time: {
+        schedule: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        }
       }
     };
   },
@@ -153,7 +216,16 @@ export default {
     Icon: () => import("@/components/SlaIcon"),
     vueDropzone: vue2Dropzone,
     Multiselect,
-    Editor: () => import("@/components/add-new-post/Editor")
+    Editor: () => import("@/components/add-new-post/Editor"),
+    SlaButton: () => import("@/components/SlaButton")
+  },
+  watch: {
+    scheduleDate: {
+      handler: "watchSchedule"
+    },
+    publishdDate: {
+      handler: "watchPublish"
+    }
   },
   computed: {
     categories: () => {
@@ -174,10 +246,69 @@ export default {
         })
         .catch(ex => {});
       return tags;
+    },
+    scheduleDate() {
+      if (
+        this.time.schedule.days !== undefined &&
+        this.time.schedule.year !== undefined &&
+        this.time.schedule.month !== undefined &&
+        this.time.schedule.hour !== undefined
+      ) {
+        this.time.schedule.final_date =
+          this.time.schedule.year +
+          "-" +
+          this.time.schedule.month +
+          "-" +
+          this.time.schedule.days +
+          " " +
+          this.time.schedule.hour;
+        this.formData.schedule = new Date(
+          this.time.publish.final_date
+        ).toISOString();
+
+        return this.time.schedule.final_date;
+      }
+    },
+    publishdDate() {
+      if (
+        this.time.publish.days !== undefined &&
+        this.time.publish.year !== undefined &&
+        this.time.publish.month !== undefined &&
+        this.time.publish.hour !== undefined
+      ) {
+        this.time.publish.final_date =
+          this.time.publish.year +
+          "-" +
+          this.time.publish.month +
+          "-" +
+          this.time.publish.days +
+          " " +
+          this.time.publish.hour;
+        this.formData.schedule = new Date(
+          this.time.publish.final_date
+        ).toISOString();
+
+        return this.time.publish.final_date;
+      }
     }
   },
   methods: {
-    async handleSubmit() {
+    async handleSubmit(type) {
+      switch (type) {
+        case "save":
+          this.buttons.isLoading = true;
+          this.buttons.text1 = "Loading.....";
+          this.formData.status = "save";
+          break;
+        case "publish":
+          this.formData.status = "publish";
+
+          this.buttons.isLoading = true;
+          this.buttons.text = "Loading.....";
+          break;
+        default:
+          break;
+      }
       this.buttons.isLoading = true;
       this.formData.tags = this.formData.list_tags.join();
       this.formData.category = this.formData.list_category.join();
@@ -239,6 +370,44 @@ export default {
               : "An error occured")
           );
         });
+    },
+    watchSchedule: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.schedule.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not  input a  schedule date in the past!")
+        );
+        this.buttons.isLoading = true;
+      } else {
+        this.buttons.isLoading = false;
+      }
+    },
+    watchPublish: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.publish.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not  input a go live date in the past!")
+        );
+        this.buttons.isLoading = true;
+      } else {
+        this.buttons.isLoading = false;
+      }
     }
   },
   mounted() {
