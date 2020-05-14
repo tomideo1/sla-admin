@@ -1,6 +1,12 @@
 export const getCourses = state => {
   return state.courseObj;
 };
+export const getEngagedCourses = state => {
+  return state.engagedCourses;
+};
+export const getCategories = state => {
+  return state.Categories;
+};
 export const getAdmins = state => {
   return state.Admins;
 };

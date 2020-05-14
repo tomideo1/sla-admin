@@ -10,6 +10,26 @@ export const getAllCourses = async ({ commit }) => {
   }
 };
 
+export const getAllEngagedCourses = async ({ commit }) => {
+  let res = await Api.get(`/course/top-engagements`, true);
+
+  if (res.status == 200) {
+    commit("setEngagedCourses", res.data.data);
+  } else {
+    return res;
+  }
+};
+
+export const getAllCategories = async ({ commit }) => {
+  let res = await Api.get(`/category/admin/list`, true);
+
+  if (res.status == 200) {
+    commit("setCategories", res.data.data);
+  } else {
+    return res;
+  }
+};
+
 export const getAllAdmins = async ({ commit }) => {
   let res = await Api.get(`admin/admins/getAll `, true);
   if (res.status === 200) {

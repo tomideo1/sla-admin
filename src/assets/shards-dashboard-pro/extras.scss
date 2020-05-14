@@ -309,3 +309,14 @@ $brand-color: #2d53fe;
 .font-poppings {
   font-family: "Poppins", serif !important;
 }
+.text-bold {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+
+  letter-spacing: 0.15px;
+
+  color: #333333;
+}

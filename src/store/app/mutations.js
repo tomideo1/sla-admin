@@ -1,6 +1,13 @@
 export const setCourses = (state, data) => {
   state.courseObj = data.courses;
 };
+export const setEngagedCourses = (state, data) => {
+  state.engagedCourses = data.courses;
+};
+
+export const setCategories = (state, data) => {
+  state.Categories = data.categories;
+};
 export const setAdmins = (state, data) => {
   state.Admins = data.admin;
 };

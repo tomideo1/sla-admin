@@ -47,7 +47,7 @@
             size="lg"
             class="mb-3"
             v-model="formData.category"
-            placeholder="Search or add a course tag"
+            placeholder="Search or add a Category"
             :multiple="true"
             :taggable="true"
             :close-on-select="false"
@@ -56,6 +56,20 @@
             :preselect-first="false"
             :options="categories"
             @tag="addTag"
+          >
+          </multiselect>
+          <multiselect
+            size="lg"
+            class="mb-3"
+            v-model="formData.tags"
+            placeholder="Search for  course tag"
+            :multiple="true"
+            :taggable="true"
+            :close-on-select="false"
+            :clear-on-select="false"
+            :preserve-search="true"
+            :preselect-first="false"
+            :options="categories"
           >
           </multiselect>
           <d-textarea
@@ -100,14 +114,14 @@
             <d-card>
               <div class="row m-2">
                 <d-input
-                  class="col-md-8 col-8 col-lg-8 border-bottom m-2"
+                  class="col-md-8 col-12 col-lg-8 border-bottom m-2"
                   style="border: none;"
                   placeholder="Title"
                   v-model="item.title"
                 />
 
                 <d-select
-                  class="col-md-3 col-3 col-lg-3 border-bottom m-2"
+                  class="col-md-3 col-12 col-lg-3 border-bottom m-2"
                   style="border: none;"
                   v-model="item.lesson_type"
                 >
@@ -156,7 +170,7 @@
                     class="border-bottom p-3"
                     style="border: none;"
                     v-model="item.content"
-                    placeholder="Post a link to your video file "
+                    placeholder="Post an embedded video script of your video file "
                   />
                   <!--                    <div class="input-group-text" style="border: none">-->
                   <!--                      <i-->
@@ -172,7 +186,7 @@
                   v-model="item.content"
                   class="border-bottom p-3"
                   style="border: none;"
-                  placeholder="Post a link to your audio file"
+                  placeholder="Post an embedded video script of your audio file "
                 />
               </div>
               <div class="d-flex flex-row m-2">
@@ -206,9 +220,21 @@
         </div>
         <div v-show="pages.quiz">
           <div class="p-4" v-for="(item, index) in quiz">
-            <h5 class="text-dark">
-              {{ questions_type.value }} {{ index + 1 }}
-            </h5>
+            <div class="row">
+              <h5 class="text-dark col-md-7">
+                {{ questions_type.value }} {{ index + 1 }}
+              </h5>
+              <span class="col-md-5 mt-n3 fkoat-right">
+                <small class="text-sm"> Assign Points</small>
+                <d-select
+                  class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
+                  style="border: none;"
+                  v-model="item.reward"
+                >
+                  <option v-for="i in 10" :value="i">{{ i }}</option>
+                </d-select>
+              </span>
+            </div>
             <d-card>
               <div class="row m-2">
                 <d-input
@@ -221,29 +247,23 @@
                 <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
 
                 <d-select
-                  class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
+                  class="col-md-3 col-12 text-dark col-lg-3 border-bottom m-2"
                   style="border: none;"
                   v-model="questions_type.value"
                 >
                   <option selected value="quiz">Quiz</option>
                 </d-select>
                 <d-input
-                  class="col-md-5 col-5 col-lg-5 border-bottom m-2"
+                  class="col-md-5 col-12 col-lg-5 border-bottom m-2"
                   style="border: none;"
                   v-model="item.answer"
                   placeholder="Enter the quiz answer"
                 />
                 <d-input
-                  class="col-md-6 col-6 col-lg-6 border-bottom m-2"
+                  class="col-md-6 col-12 col-lg-6 border-bottom m-2"
                   style="border: none;"
                   v-model="item.correction"
                   placeholder="Enter the quiz correction text"
-                />
-                <d-input
-                  class="col-md-6 col-6 col-lg-6 border-bottom m-2"
-                  style="border: none;"
-                  v-model="item.reward"
-                  placeholder="Enter the reward"
                 />
               </div>
               <div>
@@ -315,7 +335,7 @@
             Image must be 300x300px
           </div>
         </vue-dropzone>
-        <p class="text-center mt-2 ">
+        <p class="text-center m-3 ">
           <span class="text-black">Create Reminder </span
           ><span>(DD/MM/YY)</span>
         </p>
@@ -337,7 +357,7 @@
           <input type="hidden" v-model="reminderDate" />
         </d-input-group>
 
-        <p class="text-center mt-2  text-dark">
+        <p class="text-center m-3  text-dark">
           Estimated Time to Complete Course
         </p>
         <d-input-group class="justify-content-center">
@@ -347,28 +367,29 @@
             placeholder=" e.g 50 hours at 3 hours per week "
           />
         </d-input-group>
-        <p class="text-center mt-2 ">
-          <span class="text-black">Launch Course </span><span>(DD/MM/YY)</span>
+        <p class="text-center m-3 ">
+          <span class="text-black text-bold">Go Live Date </span
+          ><span>(DD/MM/YY)</span>
         </p>
         <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+          <d-select v-model="time.publish.days" class="col-md-2 mr-2">
             <option :value="undefined">Day:</option>
             <option :value="i" v-for="i in 31">{{ i }}</option>
           </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+          <d-select class="col-md-2 mr-2" v-model="time.publish.month">
             <option :value="undefined">Month:</option>
             <option :value="i" v-for="i in 12">{{ i }}</option>
           </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+          <d-select class="col-md-2 mr-2 " v-model="time.publish.year">
             <option :value="undefined">Year:</option>
             <option v-for="year in years" :value="year">{{ year }}</option>
           </d-select>
           <input
             class="col-md-3 form-control"
             type="time"
-            v-model="time.schedule.hour"
+            v-model="time.publish.hour"
           />
-          <input type="hidden" v-model="scheduledDate" />
+          <input type="hidden" v-model="publishdDate" />
         </d-input-group>
 
         <div class="text-center">
@@ -380,13 +401,23 @@
           >
             SCHEDULE
           </p>
-          <button
-            class=" btn btn-primary  p-3 mt-4  col-md-8 "
-            @click="handleSubmit"
+          <sla-button
+            type="outline"
+            size="md"
+            :text="buttons.text1"
+            class=" btn   p-3   col-md-6 m-1 "
+            @click="handleSubmit('save')"
+          >
+          </sla-button>
+          <sla-button
+            type="filled"
+            size="md"
+            :text="buttons.text"
+            class=" btn   p-3 mt-4  col-md-6  m-1"
+            @click="handleSubmit('publish')"
             :disabled="buttons.isLoading"
           >
-            {{ buttons.text }}
-          </button>
+          </sla-button>
         </div>
       </d-col>
       <d-modal
@@ -400,7 +431,28 @@
             What time and Date do you want to Schedule?
           </d-modal-title>
         </d-modal-header>
-        <d-modal-body> </d-modal-body>
+        <d-modal-body>
+          <d-input-group class="justify-content-center m-2 ">
+            <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+              <option :value="undefined">Day:</option>
+              <option :value="i" v-for="i in 31">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+              <option :value="undefined">Month:</option>
+              <option :value="i" v-for="i in 12">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+              <option :value="undefined">Year:</option>
+              <option v-for="year in years" :value="year">{{ year }}</option>
+            </d-select>
+            <input
+              class="col-md-3 form-control"
+              type="time"
+              v-model="time.schedule.hour"
+            />
+            <input type="hidden" v-model="scheduleDate" />
+          </d-input-group>
+        </d-modal-body>
       </d-modal>
     </d-row>
   </d-container>
@@ -423,11 +475,12 @@ export default {
       },
       scheduleModal: false,
       buttons: {
-        schedule: false,
+        publish: false,
         published: false,
         save: false,
         isLoading: true,
-        text: "Publish"
+        text: "PUBLISH",
+        text1: "SAVE"
       },
       options: [],
       error: {
@@ -456,11 +509,19 @@ export default {
         category: [],
         cover_image: "",
         estimate: null,
-        schedule: null,
+        publish: null,
+        saved: false,
         remainder: null
       },
       time: {
         reminder: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        },
+        publish: {
           days: undefined,
           month: undefined,
           year: undefined,
@@ -502,11 +563,11 @@ export default {
     };
   },
   components: {
-    Editor: () => import("@/components/add-new-post/Editor"),
     Icon: () => import("@/components/SlaIcon"),
     vueDropzone: vue2Dropzone,
     VueTrix,
-    Multiselect
+    Multiselect,
+    SlaButton: () => import("@/components/SlaButton")
   },
 
   methods: {
@@ -674,14 +735,14 @@ export default {
         reader.onerror = error => reject(error);
       });
     },
-    watchSchedule: function() {
+    watchPublish: function() {
       let currentDate =
         new Date().getFullYear() +
         "-" +
         (new Date().getMonth() + 1) +
         "-" +
         new Date().getDate();
-      let value = this.time.schedule.final_date;
+      let value = this.time.publish.final_date;
 
       if (new Date(value) < new Date(currentDate)) {
         this.$toast.error(
@@ -707,13 +768,41 @@ export default {
           (this.error.message =
             "You can not input a reminder date in the past!")
         );
-        this.buttons.isLoading = true;
       }
-      this.buttons.isLoading = false;
     },
-    async handleSubmit() {
-      this.buttons.isLoading = true;
-      this.buttons.text = "Loading.....";
+    watchSchedule: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.schedule.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not  input a  schedule date in the past!")
+        );
+        this.buttons.isLoading = true;
+      } else {
+        this.buttons.isLoading = false;
+      }
+    },
+    async handleSubmit(type) {
+      switch (type) {
+        case "save":
+          this.buttons.isLoading = true;
+          this.buttons.text1 = "Loading.....";
+          this.formData.saved = true;
+          break;
+        case "publish":
+          this.buttons.isLoading = true;
+          this.buttons.text = "Loading.....";
+          break;
+        default:
+          break;
+      }
       const self = this;
       this.formData.tags = this.formData.category.join();
       this.formData.lessons = self.lesson.fields;
@@ -727,54 +816,52 @@ export default {
         })
         .then(res => {
           self.formData = {};
-          self.$toast.success((this.error.message = res.data.message));
-          const courseId = res.data.course._id;
-          let res2 = axios
-            .post(
-              `${process.env.VUE_APP_API}/course/` +
-                courseId +
-                `/lesson/multiple-create`,
-              { lessons: self.lesson.fields },
-              {
-                headers: {
-                  Authorization: `Bearer ${token} `
-                }
-              }
-            )
-            .then(res2 => {
-              this.lesson.fields = [];
-              this.$toast.success((this.error.message = res2.data.message));
-              let res3 = axios
-                .post(
-                  `${process.env.VUE_APP_API}/quiz/` +
-                    courseId +
-                    `/multiple-create`,
-                  { quizzes: self.quiz },
-                  {
-                    headers: {
-                      Authorization: `Bearer ${token} `
-                    }
-                  }
-                )
-                .then(res3 => {
-                  self.buttons.isLoading = false;
-                  self.buttons.text = "Schedule";
-                  self.quiz = [];
-                  self.$toast.success((this.error.message = res3.data.message));
-                  setTimeout(function() {
-                    this.$router.push({ path: "/courses/all" });
-                  }, 2000);
-                });
-            });
+          switch (type) {
+            case "save":
+              self.buttons.isLoading = false;
+              self.buttons.text1 = "Save";
+              self.quiz = [];
+              self.$toast.success((this.error.message = res3.data.message));
+              setTimeout(function() {
+                self.$router.push({ path: "/courses/all" });
+              }, 2000);
+              break;
+            case "publish":
+              self.buttons.isLoading = false;
+              self.buttons.text = "Publish";
+              self.quiz = [];
+              self.$toast.success((this.error.message = res3.data.message));
+              setTimeout(function() {
+                self.$router.push({ path: "/courses/all" });
+              }, 2000);
+              break;
+            default:
+              break;
+          }
         })
         .catch(ex => {
-          self.buttons.isLoading = false;
-          self.buttons.text = "Schedule";
-          self.$toast.error(
-            (self.error.message = ex.response.data
-              ? ex.response.data.message.message
-              : "An error occured")
-          );
+          switch (type) {
+            case "save":
+              self.buttons.isLoading = false;
+              self.buttons.text1 = "Save";
+              self.$toast.error(
+                (self.error.message = ex.response.data
+                  ? ex.response.data.message.message
+                  : "An error occured")
+              );
+              break;
+            case "publish":
+              self.buttons.isLoading = false;
+              self.buttons.text = "Publish";
+              self.$toast.error(
+                (self.error.message = ex.response.data
+                  ? ex.response.data.message.message
+                  : "An error occured")
+              );
+              break;
+            default:
+              break;
+          }
         });
     }
   },
@@ -782,7 +869,10 @@ export default {
     editorContent: {
       handler: "updateEditorContent"
     },
-    scheduledDate: {
+    publishdDate: {
+      handler: "watchPublish"
+    },
+    scheduleDate: {
       handler: "watchSchedule"
     },
     reminderDate: {
@@ -831,7 +921,29 @@ export default {
         .catch(ex => {});
       return tags;
     },
-    scheduledDate() {
+    publishdDate() {
+      if (
+        this.time.publish.days !== undefined &&
+        this.time.publish.year !== undefined &&
+        this.time.publish.month !== undefined &&
+        this.time.publish.hour !== undefined
+      ) {
+        this.time.publish.final_date =
+          this.time.publish.year +
+          "-" +
+          this.time.publish.month +
+          "-" +
+          this.time.publish.days +
+          " " +
+          this.time.publish.hour;
+        this.formData.schedule = new Date(
+          this.time.publish.final_date
+        ).toISOString();
+
+        return this.time.publish.final_date;
+      }
+    },
+    scheduleDate() {
       if (
         this.time.schedule.days !== undefined &&
         this.time.schedule.year !== undefined &&
@@ -847,7 +959,7 @@ export default {
           " " +
           this.time.schedule.hour;
         this.formData.schedule = new Date(
-          this.time.schedule.final_date
+          this.time.publish.final_date
         ).toISOString();
 
         return this.time.schedule.final_date;
