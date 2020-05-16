@@ -62,7 +62,6 @@
               :preserve-search="true"
               :preselect-first="false"
               :options="categories"
-              @tag="addTag"
             >
             </multiselect>
           </d-col>
@@ -119,8 +118,12 @@
       @close="showParticipant = false"
       :size="modalSize"
     >
-      <d-modal-header>
-        <d-modal-title>Invite Participants</d-modal-title>
+      <d-modal-header class="text-center" style="border: none!important;">
+        <d-modal-title
+          class="text-dark text-bold font-poppings w-100"
+          style="margin: 0 30% 0 30% "
+          >Invite Participants</d-modal-title
+        >
       </d-modal-header>
       <d-modal-body>
         <d-row>
@@ -131,25 +134,49 @@
             class="col-lg-6 col-md-6 col-6 p-2"
           >
             <d-row>
-              <d-col md="6">
-                <img
-                  class="avatar   "
-                  src="@/assets/images/user-profile/leader.png"
-                />
-                Jane Ogunsola
+              <d-col md="8">
+                <div class="d-flex flex-row flex-grow-1">
+                  <sla-avatar
+                    v-if="p.image === null"
+                    size="lg"
+                    :user="{ name: p.first_name }"
+                  />
+                  <sla-avatar v-else size="lg" :user="{ image: p.image }" />
+                  <span class="m-3">
+                    {{ p.first_name + " " + p.last_name }}
+                  </span>
+                </div>
               </d-col>
-              <d-col md="6">
-                <d-btn class="btn btn-primary">
-                  Invite
-                </d-btn>
+              <d-col md="4">
+                <sla-button
+                  class="btn  "
+                  size="sm "
+                  text="INVITE"
+                  type="filled"
+                  @click="formData.users.push(p._id)"
+                  v-if="!formData.users.includes(p._id)"
+                >
+                </sla-button>
+                <sla-button
+                  class="btn "
+                  size="sm "
+                  style="background: #000000!important;"
+                  text="UNINVITE"
+                  type="filled"
+                  @click="
+                    formData.users.splice(formData.users.indexOf(p._id), 1)
+                  "
+                  v-if="formData.users.includes(p._id)"
+                >
+                </sla-button>
               </d-col>
             </d-row>
           </div>
         </d-row>
       </d-modal-body>
-      <d-modal-footer>
+      <d-modal-footer style="border: none!important;">
         <div class="d-flex flex-column flex-grow-1">
-          <div class="mx-auto">
+          <div class="mx-auto m-3">
             {{ pageNumber + 1 }} of {{ pageCount }}
             <span
               ><icon
@@ -160,8 +187,20 @@
               &nbsp; <icon size="sm" name="arrow-right" @click="nextPage"
             /></span>
           </div>
-          <button class="btn p-3 m-1 mx-auto col-md-5  btn-primary ">
+          <button
+            @click="Users.filter(addAll)"
+            v-if="Users.length !== formData.users.length"
+            class="btn p-3 m-1 mx-auto col-md-5  btn-primary "
+          >
             INVITE ALL
+          </button>
+          <button
+            @click="Users.filter(removeAll)"
+            v-else
+            class="btn p-3 m-1 mx-auto col-md-5  btn-primary "
+            style="background: #000000!important;"
+          >
+            UNINVITE ALL
           </button>
         </div>
       </d-modal-footer>
@@ -207,9 +246,7 @@ import axios from "axios";
 import Multiselect from "vue-multiselect";
 import store from "@/store/index";
 
-import Quill from "quill";
-import quillEmij from "quill-emoji/dist/quill-emoji";
-import "quill-emoji/dist/quill-emoji.css";
+import { mapActions, mapGetters } from "vuex";
 
 const token = store.state.auth.token;
 
@@ -220,28 +257,7 @@ export default {
       showParticipant: false,
       showCoach: false,
       pageNumber: 0,
-      size: 6,
-      listData: [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        18,
-        19,
-        20
-      ],
+      size: 10,
       modalSize: "lg",
       error: {
         status: null,
@@ -270,12 +286,11 @@ export default {
       },
       formData: {
         title: null,
-        rich_details: "",
-        normal_details: "",
+        description: null,
         list_category: [],
         list_tags: [],
-        recipients: "everyone",
-        cover_image: ""
+        cover_image: "",
+        users: []
       }
     };
   },
@@ -284,7 +299,8 @@ export default {
     vueDropzone: vue2Dropzone,
     Multiselect,
     Editor: () => import("@/components/add-new-post/Editor"),
-    SlaButton: () => import("@/components/SlaButton")
+    SlaButton: () => import("@/components/SlaButton"),
+    SlaAvatar: () => import("@/components/avatar")
   },
   computed: {
     categories: () => {
@@ -307,15 +323,19 @@ export default {
       return tags;
     },
     pageCount() {
-      let l = this.listData.length,
+      let l = this.Users.length,
         s = this.size;
       return Math.ceil(l / s);
     },
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return this.listData.slice(start, end);
-    }
+      return this.Users.slice(start, end);
+    },
+    ...mapGetters({
+      Users: "app/getUsers"
+      // maps courses to current computed resource
+    })
   },
   methods: {
     async handleSubmit() {
@@ -323,35 +343,32 @@ export default {
       this.formData.tags = this.formData.list_tags.join();
       this.formData.category = this.formData.list_category.join();
       this.buttons.text = "Loading...";
+      const self = this;
       let res = await axios
-        .post(
-          `${process.env.VUE_APP_API}/annoucement/admin/create`,
-          this.formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token} `
-            }
+        .post(`${process.env.VUE_APP_API}/group/create`, this.formData, {
+          headers: {
+            Authorization: `Bearer ${token} `
           }
-        )
+        })
         .then(res => {
-          this.buttons.isLoading = false;
-          this.buttons.text = "Publish";
-          this.$toast.success(
-            (this.error.message = res.data
+          self.buttons.isLoading = false;
+          self.buttons.text = "Create Group";
+          self.$toast.success(
+            (self.error.message = res.data
               ? res.data.message
               : "An error occured")
           );
           setTimeout(function() {
-            this.$router.push({ path: "/announcement/all" });
+            self.$router.push({ path: "/groups/all" });
           }, 2000);
 
-          this.formData = {};
+          self.formData = {};
         })
         .catch(ex => {
-          this.buttons.isLoading = false;
-          this.buttons.text = "Publish";
-          this.$toast.error(
-            (this.error.message = ex.response.data
+          self.buttons.isLoading = false;
+          self.buttons.text = "Create Group";
+          self.$toast.error(
+            (self.error.message = ex.response.data
               ? ex.response.data.message
               : "An error occured")
           );
@@ -382,11 +399,27 @@ export default {
         });
     },
     nextPage() {
-      this.pageNumber++;
+      if (!this.pageNumber < 1) {
+        this.pageNumber++;
+      }
     },
     prevPage() {
       if (this.pageNumber !== 0) {
         this.pageNumber--;
+      }
+    },
+    ...mapActions("app/", ["getAllUsers"]),
+    addAll(user) {
+      if (!this.formData.users.includes(user._id)) {
+        return this.formData.users.push(user._id);
+      }
+    },
+    removeAll(user) {
+      if (this.formData.users.includes(user._id)) {
+        return this.formData.users.splice(
+          this.formData.users.indexOf(user._id),
+          1
+        );
       }
     }
   },
@@ -403,6 +436,7 @@ export default {
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
       };
     });
+    this.getAllUsers();
   }
 };
 </script>

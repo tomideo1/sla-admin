@@ -13,7 +13,7 @@
 </template>
 <script>
 const sizes = ["xs", "sm", "md", "lg", "xss"];
-const types = ["inverse", "filled", "outline"];
+const types = ["inverse", "filled", "outline", "outline-danger"];
 
 export default {
   name: "BvButton",
@@ -103,6 +103,7 @@ export default {
 
 <style scoped lang="scss">
 $bv-primary: #0087db;
+$bv-danger: #fe4437;
 $bv-white: #ffffff;
 $bv-grey-200: #c4c4c4;
 button,
@@ -154,6 +155,16 @@ button,
     color: $bv-primary;
     &:hover {
       background-color: lighten($bv-primary, 50%);
+    }
+  }
+
+  &.btn-outline-danger {
+    border: 1px solid $bv-danger;
+    background-color: $bv-white;
+    color: $bv-danger;
+    border: 1px solid $bv-danger !important;
+    &:hover {
+      background-color: lighten($bv-danger, 50%);
     }
   }
 

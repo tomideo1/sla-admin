@@ -9,6 +9,7 @@
       :closeable="false"
     ></Toasts>
     <d-row no-gutters class="page-header py-4">
+      <top :heading="formData.title" />
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
         <d-form>
           <d-input
@@ -108,6 +109,14 @@
         </div>
       </d-col>
     </d-row>
+    <footer class="border-top">
+      <sla-button
+        type="outline-danger"
+        class="btn btn-danger m-2 float-right"
+        text="Delete"
+        size="sm"
+      />
+    </footer>
     <d-modal
       v-if="scheduleModal"
       size="sm"
@@ -159,6 +168,7 @@ export default {
   name: "create",
   data() {
     return {
+      Announcement: null,
       error: {
         status: null,
         message: null
@@ -213,7 +223,8 @@ export default {
     vueDropzone: vue2Dropzone,
     Multiselect,
     Editor: () => import("@/components/add-new-post/Editor"),
-    SlaButton: () => import("@/components/SlaButton")
+    SlaButton: () => import("@/components/SlaButton"),
+    Top: () => import("@/components/top")
   },
   watch: {
     scheduleDate: {
@@ -438,6 +449,7 @@ export default {
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
       };
     });
+    this.formData = this.$route.params.announcement;
   }
 };
 </script>

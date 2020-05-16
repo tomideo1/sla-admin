@@ -6,11 +6,11 @@ export const setEngagedCourses = (state, data) => {
 };
 
 export const setPolls = (state, data) => {
-  state.Polls = data.polls;
+  state.Polls = data.data.polls;
 };
 
 export const setGroups = (state, data) => {
-  state.Groups = data.groups;
+  state.Groups = data.data.groups;
 };
 
 export const setSurveys = (state, data) => {
@@ -18,7 +18,7 @@ export const setSurveys = (state, data) => {
 };
 
 export const setTickets = (state, data) => {
-  state.Tickets = data.help;
+  state.Tickets = data.data.help;
 };
 export const setCategories = (state, data) => {
   state.Categories = data.categories;
@@ -38,5 +38,5 @@ export const setLeaderboard = (state, data) => {
   state.Leaders = data.data.leaderboard;
 };
 export const setUsers = (state, data) => {
-  state.Users = data.data.users;
+  state.Users = data.data.user;
 };

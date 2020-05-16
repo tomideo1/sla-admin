@@ -18,8 +18,7 @@
             >
             </d-card>
             <p
-              class="title  text-capitalize mt-2 text-bold "
-              style="max-width: 50%!important;"
+              class="titl truncate truncate-2  text-capitalize mt-2 text-bold "
             >
               {{ course.title }}
             </p>

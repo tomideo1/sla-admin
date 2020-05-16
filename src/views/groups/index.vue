@@ -11,7 +11,7 @@ export default {
       navigation: {
         title: [
           { name: "Group Create", path: "/groups/create" },
-          { name: "View All Group", path: "/groups/all" }
+          { name: "View All Groups", path: "/groups/all" }
         ],
         actions: [
           { name: "create", path: "/groups/create" },

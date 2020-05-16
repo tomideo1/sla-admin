@@ -168,9 +168,9 @@ const router = new Router({
           }
         },
         {
-          path: "edit",
-          name: "edit-announcement",
-          component: () => import("@/views/announcement/edit.vue"),
+          path: "single",
+          name: "single-announcement",
+          component: () => import("@/views/announcement/single.vue"),
           meta: {
             middleware: [auth]
           }
@@ -204,7 +204,7 @@ const router = new Router({
         {
           path: "edit",
           name: "edit-survey",
-          component: () => import("@/views/survey/edit.vue"),
+          component: () => import("@/views/survey/single.vue"),
           meta: {
             middleware: [auth]
           }
@@ -221,7 +221,7 @@ const router = new Router({
 
       children: [
         {
-          path: "",
+          path: "all",
           name: "all-polls",
           component: () => import("@/views/poll/home.vue"),
           meta: {
@@ -239,7 +239,7 @@ const router = new Router({
         {
           path: "edit",
           name: "edit-polls",
-          component: () => import("@/views/poll/edit.vue"),
+          component: () => import("@/views/poll/single.vue"),
           meta: {
             middleware: [auth]
           }

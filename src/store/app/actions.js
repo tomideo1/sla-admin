@@ -58,7 +58,7 @@ export const getAllLeaderboard = async ({ commit }) => {
 };
 
 export const getAllUsers = async ({ commit }) => {
-  let res = await Api.get(`admin/users/getAll`, true);
+  let res = await Api.get(`admin/user/getAll`, true);
   if (res.status === 200) {
     commit("setUsers", res.data);
   } else return res;
@@ -78,9 +78,23 @@ export const getAllPolls = async ({ commit }) => {
   } else return res;
 };
 
+export const getAllGroups = async ({ commit }) => {
+  let res = await Api.get(`group/list`, true);
+  if (res.status === 200) {
+    commit("setGroups", res.data);
+  } else return res;
+};
+
 export const getSurveys = async ({ commit }) => {
   let res = await Api.get(`survey/list`, true);
   if (res.status === 200) {
     commit("setSurveys", res.data);
+  } else return res;
+};
+
+export const getAllTickets = async ({ commit }) => {
+  let res = await Api.get(`help/admin/getAll`, true);
+  if (res.status === 200) {
+    commit("setTickets", res.data);
   } else return res;
 };

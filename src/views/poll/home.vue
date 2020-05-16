@@ -6,16 +6,12 @@
           Alphabetical Order (A -Z)
         </h6>
         <carousel refs="content">
-          <div
-            class="scroll m-2"
-            v-for="(announcement, idx) in announcements"
-            :key="idx"
-          >
+          <div class="scroll m-2" v-for="(poll, idx) in Polls" :key="idx">
             <d-card
               :style="
                 'width:200px!important;height: 120px!important;' +
                   'backgroundImage:url(' +
-                  announcement.cover_image +
+                  poll.cover_image +
                   ');' +
                   ' background-size:cover; background-position:center'
               "
@@ -27,7 +23,7 @@
               <p
                 class="title-card  text-capitalize mt-2  text-bold font-open-sans "
               >
-                {{ announcement.title }}
+                {{ poll.title }}
               </p>
             </div>
 
@@ -48,7 +44,7 @@ import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
 export default {
-  name: "course-home",
+  name: "polls-home",
   data() {
     return {
       ref_data: "content"
@@ -56,17 +52,17 @@ export default {
   },
   computed: {
     ...mapGetters({
-      announcements: "app/getAnnouncements"
+      Polls: "app/getPolls"
       // maps courses to current computed resource
     })
   },
   methods: {
-    ...mapActions("app/", ["getAllAnnouncements"])
+    ...mapActions("app/", ["getAllPolls"])
 
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllAnnouncements();
+    this.getAllPolls();
   },
   components: {
     Carousel: () => import("@/components/carousel"),

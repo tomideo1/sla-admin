@@ -12,6 +12,12 @@
             :key="idx"
           >
             <d-card
+              @click="
+                $router.push({
+                  name: 'single-announcement',
+                  params: { announcement: announcement }
+                })
+              "
               :style="
                 'width:200px!important;height: 120px!important;' +
                   'backgroundImage:url(' +
