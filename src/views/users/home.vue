@@ -11,11 +11,17 @@
             <!-- User Avatar -->
             <div class="mb-3  ">
               <sla-avatar
+                class="avatar"
                 v-if="user.image === null"
                 size="xl"
                 :user="{ name: user.first_name }"
               />
-              <sla-avatar v-else size="xl" :user="{ image: user.image }" />
+              <sla-avatar
+                class="avatar"
+                v-else
+                size="xl"
+                :user="{ image: user.image }"
+              />
             </div>
 
             <!-- User Name -->
@@ -68,4 +74,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.avatar {
+  display: inline-block !important;
+}
+</style>

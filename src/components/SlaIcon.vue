@@ -36,6 +36,7 @@
     <share v-if="name === 'share'"></share>
     <copy v-if="name === 'copy'"></copy>
     <resource v-if="name === 'resource'"></resource>
+    <location v-if="name === 'location'"></location>
   </span>
 </template>
 <script>
@@ -87,7 +88,8 @@ export default {
     copy: () => import("@/components/__private__/media/copy.vue"),
     resource: () => import("@/components/__private__/media/resource.vue"),
     arrowUp: () => import("@/components/__private__/media/arrow-up.vue"),
-    arrowBack: () => import("@/components/__private__/media/arrow-back.vue")
+    arrowBack: () => import("@/components/__private__/media/arrow-back.vue"),
+    Location: () => import("@/components/__private__/media/location.vue")
   }
 };
 </script>
