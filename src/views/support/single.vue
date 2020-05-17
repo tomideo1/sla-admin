@@ -99,7 +99,7 @@ export default {
       let res = await axios
         .put(
           `${process.env.VUE_APP_API}/help/admin/update/` + this.Ticket._id,
-          self.formData,
+          self.Ticket,
           {
             headers: {
               Authorization: `Bearer ${token} `

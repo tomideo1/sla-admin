@@ -72,6 +72,14 @@ const router = new Router({
           meta: {
             middleware: [auth]
           }
+        },
+        {
+          path: "single",
+          name: "single-user",
+          component: () => import("@/views/users/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },

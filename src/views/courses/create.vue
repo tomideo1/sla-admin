@@ -804,12 +804,12 @@ export default {
           break;
       }
       const self = this;
-      this.formData.tags = this.formData.category.join();
-      this.formData.lessons = self.lesson.fields;
-      this.formData.quizzes = self.quiz;
+      self.formData.tags = self.formData.category.join();
+      self.formData.lessons = self.lesson.fields;
+      self.formData.quizzes = self.quiz;
       const token = store.state.auth.token;
       let res = await axios
-        .post(`${process.env.VUE_APP_API}/course/create`, this.formData, {
+        .post(`${process.env.VUE_APP_API}/course/create`, self.formData, {
           headers: {
             Authorization: `Bearer ${token} `
           }
@@ -821,7 +821,7 @@ export default {
               self.buttons.isLoading = false;
               self.buttons.text1 = "Save";
               self.quiz = [];
-              self.$toast.success((this.error.message = res3.data.message));
+              self.$toast.success((self.error.message = res.data.message));
               setTimeout(function() {
                 self.$router.push({ path: "/courses/all" });
               }, 2000);
@@ -830,7 +830,7 @@ export default {
               self.buttons.isLoading = false;
               self.buttons.text = "Publish";
               self.quiz = [];
-              self.$toast.success((this.error.message = res3.data.message));
+              self.$toast.success((self.error.message = res.data.message));
               setTimeout(function() {
                 self.$router.push({ path: "/courses/all" });
               }, 2000);
@@ -959,7 +959,7 @@ export default {
           " " +
           this.time.schedule.hour;
         this.formData.schedule = new Date(
-          this.time.publish.final_date
+          this.time.schedule.final_date
         ).toISOString();
 
         return this.time.schedule.final_date;

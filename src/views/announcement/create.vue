@@ -152,9 +152,8 @@ import axios from "axios";
 import Multiselect from "vue-multiselect";
 import store from "@/store/index";
 import "quill-emoji/dist/quill-emoji.css";
-
+import quill from "quill";
 const token = store.state.auth.token;
-
 export default {
   name: "create",
   data() {
@@ -205,7 +204,8 @@ export default {
           hour: undefined,
           final_date: null
         }
-      }
+      },
+      CategoryIds: []
     };
   },
   components: {
@@ -218,15 +218,13 @@ export default {
   watch: {
     scheduleDate: {
       handler: "watchSchedule"
-    },
-    publishdDate: {
-      handler: "watchPublish"
     }
   },
   computed: {
     categories: () => {
       const token = store.state.auth.token;
       let tags = [];
+      const self = this;
       let res = axios
         .get(`${process.env.VUE_APP_API}/category/admin/list`, {
           headers: {
@@ -236,6 +234,7 @@ export default {
         .then(res => {
           let categories = res.data.data.categories;
           categories.forEach(category => {
+            // self.CategoryIds.push({category});
             tags.push(category.name);
           });
           return tags;
@@ -259,37 +258,35 @@ export default {
           " " +
           this.time.schedule.hour;
         this.formData.schedule = new Date(
-          this.time.publish.final_date
+          this.time.schedule.final_date
         ).toISOString();
 
         return this.time.schedule.final_date;
       }
     },
-    publishdDate() {
-      if (
-        this.time.publish.days !== undefined &&
-        this.time.publish.year !== undefined &&
-        this.time.publish.month !== undefined &&
-        this.time.publish.hour !== undefined
-      ) {
-        this.time.publish.final_date =
-          this.time.publish.year +
-          "-" +
-          this.time.publish.month +
-          "-" +
-          this.time.publish.days +
-          " " +
-          this.time.publish.hour;
-        this.formData.schedule = new Date(
-          this.time.publish.final_date
-        ).toISOString();
-
-        return this.time.publish.final_date;
-      }
+    years: () => {
+      const year = new Date().getFullYear();
+      return Array.from({ length: year }, (value, index) => year + index);
     }
   },
   methods: {
     async handleSubmit(type) {
+      this.formData.normal_details = this.extractContent(
+        this.formData.rich_details,
+        true
+      );
+      this.Categories.forEach(category => {
+        const self = this;
+        self.formData.list_category.some(list => {
+          if (category.name === list) {
+            self.formData.category = category._id;
+            return true;
+          }
+          return false;
+        });
+      });
+      alert(this.formData.categories);
+      // self.formData.tags = this.formData.list_tags.join();
       const self = this;
       switch (type) {
         case "save":
@@ -306,18 +303,13 @@ export default {
         default:
           break;
       }
-      self.formData.tags = this.formData.list_tags.join();
-      self.formData.category = this.formData.list_category.join();
+
       let res = await axios
-        .post(
-          `${process.env.VUE_APP_API}/annoucement/admin/create`,
-          self.formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token} `
-            }
+        .post(`${process.env.VUE_APP_API}/annoucement/create`, self.formData, {
+          headers: {
+            Authorization: `Bearer ${token} `
           }
-        )
+        })
         .then(res => {
           switch (type) {
             case "save":
@@ -405,24 +397,19 @@ export default {
         this.buttons.isLoading = false;
       }
     },
-    watchPublish: function() {
-      let currentDate =
-        new Date().getFullYear() +
-        "-" +
-        (new Date().getMonth() + 1) +
-        "-" +
-        new Date().getDate();
-      let value = this.time.publish.final_date;
-
-      if (new Date(value) < new Date(currentDate)) {
-        this.$toast.error(
-          (this.error.message =
-            "You can not  input a go live date in the past!")
-        );
-        this.buttons.isLoading = true;
-      } else {
-        this.buttons.isLoading = false;
+    extractContent: (s, space) => {
+      let span = document.createElement("span");
+      span.innerHTML = s;
+      if (space) {
+        let children = span.querySelectorAll("*");
+        for (let i = 0; i < children.length; i++) {
+          if (children[i].textContent) children[i].textContent += " ";
+          else children[i].innerText += " ";
+        }
       }
+      return [span.textContent || span.innerText]
+        .toString()
+        .replace(/ +/g, " ");
     }
   },
   mounted() {

@@ -5,7 +5,9 @@
       :style="{ background: avatarBackground }"
     >
       <img v-if="user.image" :src="user.image" alt="avatar" />
-      <span v-else>{{ user.name | userLetter }}</span>
+      <div v-else class="text-center mt-2">
+        <span>{{ user.name | userLetter }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -61,7 +63,7 @@ export default {
   color: color(bv-white);
   border-radius: 50%;
   text-transform: capitalize;
-  display: flex;
+  display: inline-block;
   align-items: center;
   justify-content: center;
   &::before {

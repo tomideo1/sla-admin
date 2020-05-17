@@ -1,26 +1,42 @@
 <template>
   <d-container fluid>
     <d-row>
-      <div class="col-12 col-lg-3 col-md-6" v-for="i in 20">
-        <d-card class="m-3">
-          <d-card-header class="border-bottom text-center">
+      <div
+        class="col-12 col-lg-3 col-md-6"
+        v-for="(user, idx) in Users"
+        :key="idx"
+      >
+        <d-card class="m-3 text-center">
+          <d-card-header class="border-bottom  mx-auto">
             <!-- User Avatar -->
-            <div class="mb-3 mx-auto">
-              <img
-                class="rounded-circle"
-                src="@/assets/images/user-profile/leader.png"
-                width="110"
+            <div class="mb-3  ">
+              <sla-avatar
+                v-if="user.image === null"
+                size="xl"
+                :user="{ name: user.first_name }"
               />
+              <sla-avatar v-else size="xl" :user="{ image: user.image }" />
             </div>
 
             <!-- User Name -->
-            <h5 class="mb-0">{{ "Kesha Mbatswe" }}</h5>
+            <h5 class="mb-0">{{ user.first_name + " " + user.last_name }}</h5>
 
             <!-- User Job Title -->
             <!--          <span class="text-muted d-block mb-2">{{ userDetails.jobTitle }}</span>-->
 
             <!-- User Follow -->
-            <p class="mb-2 text-primary font-weight-bold">View Profile</p>
+            <p
+              style="cursor: pointer"
+              class="mb-2 text-primary font-weight-bold"
+              @click="
+                $router.push({
+                  name: 'single-user',
+                  params: { userId: user._id }
+                })
+              "
+            >
+              View Profile
+            </p>
           </d-card-header>
         </d-card>
       </div>
@@ -28,18 +44,28 @@
   </d-container>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
-  name: "home"
+  name: "home",
+  computed: {
+    ...mapGetters({
+      Users: "app/getUsers"
+      // maps courses to current computed resource
+    })
+  },
+  methods: {
+    ...mapActions("app/", ["getAllUsers"])
+
+    //vuex call to get all courses
+  },
+  async mounted() {
+    this.getAllUsers();
+  },
+  components: {
+    SlaAvatar: () => import("@/components/avatar")
+  }
 };
 </script>
 
-<style scoped>
-.avatar {
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid #ffffff;
-  box-sizing: border-box;
-  width: 100px !important;
-  height: 100px !important;
-}
-</style>
+<style scoped></style>
