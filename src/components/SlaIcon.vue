@@ -37,6 +37,7 @@
     <copy v-if="name === 'copy'"></copy>
     <resource v-if="name === 'resource'"></resource>
     <location v-if="name === 'location'"></location>
+    <video v-if="name === 'video'"></video>
   </span>
 </template>
 <script>
@@ -75,7 +76,7 @@ export default {
     Camera: () => import("@/components/__private__/media/camera.vue"),
     Headset: () => import("@/components/__private__/media/audio.vue"),
     thumb: () => import("@/components/__private__/media/thumb.vue"),
-    vid: () => import("@/components/__private__/media/video.vue"),
+    video: () => import("@/components/__private__/media/video.vue"),
     Gif: () => import("@/components/__private__/media/gif.vue"),
     Bin: () => import("@/components/__private__/media/bin.vue"),
     eclipse: () => import("@/components/__private__/media/eclipse.vue"),

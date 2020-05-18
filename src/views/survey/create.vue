@@ -77,23 +77,20 @@
                     name="add"
                     v-show="formData.questions[index].has_options"
                   />
-
-                  <icon
-                    size="lg"
-                    class="ml-auto  border-right"
-                    @click="deleteQuiz(index)"
-                    name="bin"
-                  />
-                  <div class="d-flex flex-row m-1 mt-n1">
-                    <label class="mt-2 p-1" style="color: #999999;"
-                      >Required</label
-                    >
-                    <input
-                      class="m-2"
-                      type="checkbox"
-                      v-model="item.required"
-                    />
-                  </div>
+                </div>
+              </div>
+              <div class="d-flex flex-row m-2">
+                <icon
+                  size="lg"
+                  class="ml-auto  border-right"
+                  @click="deleteQuiz(index)"
+                  name="bin"
+                />
+                <div class="d-flex flex-row m-1 mt-n1">
+                  <label class="mt-2 p-1" style="color: #999999;"
+                    >Required</label
+                  >
+                  <input class="m-2" type="checkbox" v-model="item.required" />
                 </div>
               </div>
             </d-card>
@@ -122,6 +119,13 @@
             <option value="coaches">Coaches</option>
           </d-select>
         </div>
+        <footer class="text-center text-grey">
+          <p>
+            Assign Points (This is the point a user will get for completing this
+            survey)
+          </p>
+          <d-input class="col-md-1 mx-auto" v-model="formData.reward" />
+        </footer>
       </d-col>
 
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
@@ -140,32 +144,10 @@
             Image must be 300x300px
           </div>
         </vue-dropzone>
-
-        <small class="text-black mt-4  ml-5">Expiry Date</small>
-
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.expiry.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option :value="i" v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.expiry.month">
-            <option :value="undefined">Month:</option>
-            <option :value="i" v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.expiry.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <input
-            class="col-md-3 form-control"
-            type="time"
-            v-model="time.expiry.hour"
-          />
-          <input type="hidden" v-model="expiryDate" />
-        </d-input-group>
-        <small class="text-black mt-4  ml-5"
-          >Remind Users About Expiry Date on:
-        </small>
+        <p class="text-center m-3 ">
+          <span class="text-black">Create Reminder </span
+          ><span>(DD/MM/YY)</span>
+        </p>
         <d-input-group class="justify-content-center m-2 ">
           <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
             <option :value="undefined">Day:</option>
@@ -184,17 +166,103 @@
           <input type="hidden" v-model="reminderDate" />
         </d-input-group>
 
+        <p class="text-center m-3  text-dark">
+          Estimated Time to Complete Course
+        </p>
+        <d-input-group class="justify-content-center">
+          <d-input
+            class="col-md-8 "
+            v-model="formData.estimate"
+            placeholder=" e.g 50 hours at 3 hours per week "
+          />
+        </d-input-group>
+        <p class="text-center m-3 ">
+          <span class="text-black text-bold">Go Live Date </span
+          ><span>(DD/MM/YY)</span>
+        </p>
+        <d-input-group class="justify-content-center m-2 ">
+          <d-select v-model="time.publish.days" class="col-md-2 mr-2">
+            <option :value="undefined">Day:</option>
+            <option :value="i" v-for="i in 31">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2" v-model="time.publish.month">
+            <option :value="undefined">Month:</option>
+            <option :value="i" v-for="i in 12">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2 " v-model="time.publish.year">
+            <option :value="undefined">Year:</option>
+            <option v-for="year in years" :value="year">{{ year }}</option>
+          </d-select>
+          <input
+            class="col-md-3 form-control"
+            type="time"
+            v-model="time.publish.hour"
+          />
+          <input type="hidden" v-model="publishdDate" />
+        </d-input-group>
+
         <div class="text-center">
           <br />
-          <button
-            class=" btn btn-primary  p-3 mt-4  col-md-8 "
-            @click="handleSubmit"
+          <p
+            class="font-open-sans"
+            style="color: #0087DB; cursor: pointer; font-size: 14px;"
+            @click="scheduleModal = true"
+          >
+            SCHEDULE
+          </p>
+          <sla-button
+            type="outline"
+            size="md"
+            :text="buttons.text1"
+            class=" btn   p-3   col-md-6 m-1 "
+            @click="handleSubmit('save')"
+          >
+          </sla-button>
+          <sla-button
+            type="filled"
+            size="md"
+            :text="buttons.text"
+            class=" btn   p-3 mt-4  col-md-6  m-1"
+            @click="handleSubmit('publish')"
             :disabled="buttons.isLoading"
           >
-            {{ buttons.text }}
-          </button>
+          </sla-button>
         </div>
       </d-col>
+      <d-modal
+        v-if="scheduleModal"
+        size="sm"
+        @close="scheduleModal = false"
+        :size="'md'"
+      >
+        <d-modal-header class="text-center">
+          <d-modal-title class="font-poppings text-black">
+            What time and Date do you want to Schedule?
+          </d-modal-title>
+        </d-modal-header>
+        <d-modal-body>
+          <d-input-group class="justify-content-center m-2 ">
+            <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+              <option :value="undefined">Day:</option>
+              <option :value="i" v-for="i in 31">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+              <option :value="undefined">Month:</option>
+              <option :value="i" v-for="i in 12">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+              <option :value="undefined">Year:</option>
+              <option v-for="year in years" :value="year">{{ year }}</option>
+            </d-select>
+            <input
+              class="col-md-3 form-control"
+              type="time"
+              v-model="time.schedule.hour"
+            />
+            <input type="hidden" v-model="scheduleDate" />
+          </d-input-group>
+        </d-modal-body>
+      </d-modal>
     </d-row>
   </d-container>
 </template>
@@ -221,10 +289,14 @@ export default {
         status: null,
         message: null
       },
+      scheduleModal: false,
       buttons: {
+        publish: false,
         published: false,
+        save: false,
         isLoading: true,
-        text: "Publish"
+        text: "PUBLISH",
+        text1: "SAVE"
       },
       options: [],
       dropzoneOptions: {
@@ -258,7 +330,14 @@ export default {
           hour: undefined,
           final_date: null
         },
-        expiry: {
+        publish: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        },
+        schedule: {
           days: undefined,
           month: undefined,
           year: undefined,
@@ -274,94 +353,84 @@ export default {
     vueDropzone: vue2Dropzone,
     Multiselect,
     Editor: () => import("@/components/add-new-post/Editor"),
-    Icon: () => import("@/components/SlaIcon")
-  },
-  computed: {
-    years: () => {
-      const year = new Date().getFullYear();
-      return Array.from({ length: year }, (value, index) => year + index);
-    },
-    days: () => {
-      const day = new Date().getDay();
-      return Array.from({ length: day + 31 }, (value, index) => day + index);
-    },
-    expiryDate() {
-      if (
-        this.time.expiry.days !== undefined &&
-        this.time.expiry.year !== undefined &&
-        this.time.expiry.month !== undefined &&
-        this.time.expiry.hour !== undefined
-      ) {
-        this.time.expiry.final_date =
-          this.time.expiry.year +
-          "-" +
-          this.time.expiry.month +
-          "-" +
-          this.time.expiry.days +
-          " " +
-          this.time.expiry.hour;
-        this.formData.schedule_at = new Date(
-          this.time.expiry.final_date
-        ).toISOString();
-
-        return this.time.expiry.final_date;
-      }
-    },
-    reminderDate() {
-      if (
-        this.time.reminder.days !== undefined &&
-        this.time.reminder.year !== undefined &&
-        this.time.reminder.month !== undefined &&
-        this.time.reminder.hour !== undefined
-      ) {
-        this.time.reminder.final_date =
-          this.time.reminder.year +
-          "-" +
-          this.time.reminder.month +
-          "-" +
-          this.time.reminder.days;
-        this.formData.remainder = (
-          this.time.reminder.final_date +
-          " " +
-          this.time.reminder.hour
-        ).toString();
-        this.formData.remainder = new Date(
-          this.time.reminder.final_date
-        ).toISOString();
-        return this.time.reminder.final_date;
-      }
-    }
+    SlaButton: () => import("@/components/SlaButton")
   },
   methods: {
-    async handleSubmit() {
-      this.buttons.isLoading = true;
-      this.buttons.text = "Loading...";
+    async handleSubmit(type) {
+      switch (type) {
+        case "save":
+          this.buttons.isLoading = true;
+          this.buttons.text1 = "Loading.....";
+          this.formData.save_type = "Save";
+          break;
+        case "publish":
+          this.buttons.isLoading = true;
+          this.formData.save_type = "published";
+
+          this.buttons.text = "Loading.....";
+          break;
+        default:
+          break;
+      }
+      const self = this;
+      const token = store.state.auth.token;
+      self.formData.survey_image = self.formData.cover_image;
+      self.formData.survey_image = self.formData.cover_image;
+      self.formData.survey_image = self.formData.cover_image;
       let res = await axios
-        .post(`${process.env.VUE_APP_API}/survey/create`, this.formData, {
+        .post(`${process.env.VUE_APP_API}/survey/create`, self.formData, {
           headers: {
             Authorization: `Bearer ${token} `
           }
         })
         .then(res => {
-          this.buttons.isLoading = false;
-          this.buttons.text = "Publish";
-          this.$toast.success(
-            (this.error.message = res.data
-              ? res.data.message
-              : "An error occured")
-          );
-          setTimeout(function() {
-            this.$router.push({ path: "/surveys/all" });
-          }, 2000);
+          self.formData = {};
+          switch (type) {
+            case "save":
+              self.buttons.isLoading = false;
+              self.buttons.text1 = "Save";
+              self.quiz = [];
+              self.$toast.success((self.error.message = res.data.message));
+              setTimeout(function() {
+                self.$router.push({ path: "/surveys/all" });
+              }, 2000);
+              break;
+            case "publish":
+              self.buttons.isLoading = false;
+              self.buttons.text = "Publish";
+              self.quiz = [];
+              self.$toast.success((self.error.message = res.data.message));
+              setTimeout(function() {
+                self.$router.push({ path: "/surveys/all" });
+              }, 2000);
+              break;
+            default:
+              break;
+          }
         })
         .catch(ex => {
-          this.buttons.isLoading = false;
-          this.buttons.text = "Publish";
-          this.$toast.error(
-            (this.error.message = ex.response.data
-              ? ex.response.data.message
-              : "An error occured")
-          );
+          switch (type) {
+            case "save":
+              self.buttons.isLoading = false;
+              self.buttons.text1 = "Save";
+              self.$toast.error(
+                (self.error.message = ex.response.data
+                  ? ex.response.data.message.message
+                  : "An error occured")
+              );
+              break;
+            case "publish":
+              self.buttons.isLoading = false;
+              self.buttons.text = "Publish";
+              self.$toast.error(
+                (self.error.message = ex.response.data
+                  ? ex.response.data.message.message
+                  : "An error occured")
+              );
+              break;
+            default:
+              break;
+          }
         });
     },
     async addTag(newTag) {
@@ -388,20 +457,19 @@ export default {
           );
         });
     },
-    watchExpiry: function() {
+    watchPublish: function() {
       let currentDate =
         new Date().getFullYear() +
         "-" +
         (new Date().getMonth() + 1) +
         "-" +
         new Date().getDate();
-
-      let value = this.time.expiry.final_date;
+      let value = this.time.publish.final_date;
 
       if (new Date(value) < new Date(currentDate)) {
         this.$toast.error(
           (this.error.message =
-            "You can not  input an expiry  date in the past!")
+            "You can not  input a go live date in the past!")
         );
         this.buttons.isLoading = true;
       } else {
@@ -422,9 +490,26 @@ export default {
           (this.error.message =
             "You can not input a reminder date in the past!")
         );
-        this.buttons.isLoading = true;
       }
-      this.buttons.isLoading = false;
+    },
+    watchSchedule: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.schedule.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not  input a  schedule date in the past!")
+        );
+        this.buttons.isLoading = true;
+      } else {
+        this.buttons.isLoading = false;
+      }
     },
     addQuiz() {
       this.formData.questions.push({
@@ -445,6 +530,20 @@ export default {
       this.formData.questions[index].possible_options.splice(index2, 1);
     }
   },
+  watch: {
+    editorContent: {
+      handler: "updateEditorContent"
+    },
+    publishdDate: {
+      handler: "watchPublish"
+    },
+    scheduleDate: {
+      handler: "watchSchedule"
+    },
+    reminderDate: {
+      handler: "watchReminder"
+    }
+  },
   mounted() {
     this.$refs.courseImage.dropzone.on("addedfile", file => {
       const reader = new FileReader();
@@ -459,12 +558,101 @@ export default {
       };
     });
   },
-  watch: {
-    expiryDate: {
-      handler: "watchExpiry"
+  computed: {
+    years: () => {
+      const year = new Date().getFullYear();
+      return Array.from({ length: year }, (value, index) => year + index);
     },
-    reminderDate: {
-      handler: "watchReminder"
+    days: () => {
+      const day = new Date().getDay();
+      return Array.from({ length: day + 31 }, (value, index) => day + index);
+    },
+    categories: () => {
+      const token = store.state.auth.token;
+      let tags = [];
+      let res = axios
+        .get(`${process.env.VUE_APP_API}/category/admin/list`, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          let categories = res.data.data.categories;
+          categories.forEach(category => {
+            tags.push(category.name);
+          });
+          return tags;
+        })
+        .catch(ex => {});
+      return tags;
+    },
+    publishdDate() {
+      if (
+        this.time.publish.days !== undefined &&
+        this.time.publish.year !== undefined &&
+        this.time.publish.month !== undefined &&
+        this.time.publish.hour !== undefined
+      ) {
+        this.time.publish.final_date =
+          this.time.publish.year +
+          "-" +
+          this.time.publish.month +
+          "-" +
+          this.time.publish.days +
+          " " +
+          this.time.publish.hour;
+        this.formData.reminder = new Date(
+          this.time.publish.final_date
+        ).toISOString();
+
+        return this.time.publish.final_date;
+      }
+    },
+    scheduleDate() {
+      if (
+        this.time.schedule.days !== undefined &&
+        this.time.schedule.year !== undefined &&
+        this.time.schedule.month !== undefined &&
+        this.time.schedule.hour !== undefined
+      ) {
+        this.time.schedule.final_date =
+          this.time.schedule.year +
+          "-" +
+          this.time.schedule.month +
+          "-" +
+          this.time.schedule.days +
+          " " +
+          this.time.schedule.hour;
+        this.formData.scheduled_at = new Date(
+          this.time.schedule.final_date
+        ).toISOString();
+
+        return this.time.schedule.final_date;
+      }
+    },
+    reminderDate() {
+      if (
+        this.time.reminder.days !== undefined &&
+        this.time.reminder.year !== undefined &&
+        this.time.reminder.month !== undefined &&
+        this.time.reminder.hour !== undefined
+      ) {
+        this.time.reminder.final_date =
+          this.time.reminder.year +
+          "-" +
+          this.time.reminder.month +
+          "-" +
+          this.time.reminder.days;
+        this.formData.reminder = (
+          this.time.reminder.final_date +
+          " " +
+          this.time.reminder.hour
+        ).toString();
+        this.formData.expiry = new Date(
+          this.time.reminder.final_date
+        ).toISOString();
+        return this.time.reminder.final_date;
+      }
     }
   }
 };
@@ -486,5 +674,35 @@ export default {
 .dropzone {
   width: 330px;
   height: 330px;
+}
+input[type="checkbox"] {
+  position: relative;
+  width: 41px;
+  height: 25px;
+  -webkit-appearance: none;
+  background: #c6c6c6;
+  outline: none;
+  border-radius: 100px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: 1s;
+  top: 2px;
+}
+input:checked[type="checkbox"] {
+  background: #0087db;
+}
+input[type="checkbox"]:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  top: 2px;
+  left: 2px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+}
+input:checked[type="checkbox"]:before {
+  left: 20px;
 }
 </style>

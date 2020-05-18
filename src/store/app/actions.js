@@ -85,7 +85,7 @@ export const getAllGroups = async ({ commit }) => {
   } else return res;
 };
 
-export const getSurveys = async ({ commit }) => {
+export const getAllSurveys = async ({ commit }) => {
   let res = await Api.get(`survey/list`, true);
   if (res.status === 200) {
     commit("setSurveys", res.data);

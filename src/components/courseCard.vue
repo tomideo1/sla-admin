@@ -1,45 +1,28 @@
 <template>
   <div>
-    <div class="sla-course-card">
-      <div class="overlay"></div>
-      <div class="image cursor-pointer">
+    <div class="details-card d-flex flex-column">
+      <div class="image position-relative">
         <img class="object-cover" :src="image" alt="" />
       </div>
-      <div
-        class="content d-flex flex-column justify-content-between px-12 py-12"
-      >
-        <div class="text-align-left text-white">
-          <icon name="bookmark" />
-        </div>
-        <div class="title" style="width: 167px">
-          <span class="font-poppins text-white">
-            {{ title }}
-          </span>
-        </div>
-        <div class="text-align-right text-white">
-          <icon name="video" />
-        </div>
+      <div class="p-2">
+        <span class="text-bold truncate truncate-2">
+          <p class="font-open-sans course-title">{{ title }}</p></span
+        >
       </div>
-    </div>
-    <div class="mt-8">
-      <router-link
-        :to="{ name: 'courseDetail', params: { courseId: id } }"
-        class="text-bolder truncate truncate-2"
-        >{{ title }}</router-link
+      <div
+        class=" p-2 d-flex justify-content-between text-grey"
+        :class="[this.completed ? 'mb-1' : '']"
       >
-      <span class="mt-4">
-        <icon name="like" /> <span class="ml-12">2000</span>
-      </span>
+        <span v-if="completed" class="text-bold">Completed</span>
+        <icon class="z-index-0" name="video" />
+      </div>
     </div>
   </div>
 </template>
 <script>
 export default {
   props: {
-    id: {
-      type: String,
-      required: true
-    },
+    id: {},
     image: {
       type: String,
       required: true
@@ -47,6 +30,18 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    hasProgress: {
+      type: Boolean,
+      default: false
+    },
+    completed: {
+      type: Boolean,
+      default: false
+    },
+    percentage: {
+      type: String,
+      default: "33.33"
     }
   },
   components: {
@@ -54,43 +49,51 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-a {
-  text-decoration: none;
-  color: color(bv-grey-900);
-}
-.sla-course-card {
-  height: 190px;
-  width: 326px;
-  overflow: hidden;
-  position: relative;
-  border-radius: 5px;
+<style lang="scss">
+.details-card {
+  border-radius: 10px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
+  width: 222px;
+  // height: 196px;
 
-  .content {
-    height: 100%;
-  }
-
-  .overlay {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    z-index: -1;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.85) 100%
-    );
-  }
   .image {
-    position: absolute;
-    z-index: -2;
-    width: 100%;
-
     img {
-      height: 190px !important;
-      width: 100%;
+      height: 105px !important;
+      width: 100% !important;
+      border-top-left-radius: 10px !important;
+      border-top-right-radius: 10px !important;
     }
   }
 }
+
+a {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    color: color(bv-primary);
+  }
+}
+.course-title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.002em;
+
+  color: #333333;
+}
+
+.z-index-1 {
+  z-index: 1;
+}
+
+.z-index-0 {
+  z-index: 0;
+}
+
+.z-index-inf {
+  z-index: 9399392932993923;
+}
+/*** Width ************** */
 </style>

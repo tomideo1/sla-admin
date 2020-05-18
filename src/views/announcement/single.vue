@@ -1,6 +1,8 @@
 <template>
   <d-container fluid class="main-content-container px-4">
     <!-- Page Header -->
+    <top :heading="Announcement.title" />
+
     <Toasts
       :show-progress="false"
       :rtl="false"
@@ -9,42 +11,27 @@
       :closeable="false"
     ></Toasts>
     <d-row no-gutters class="page-header py-4">
-      <top :heading="formData.title" />
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
         <d-form>
           <d-input
             size="lg"
             class="mb-3"
             placeholder="Announcement Title"
-            v-model="formData.title"
+            v-if="Announcement !== undefined"
+            v-model="Announcement.title"
           />
-          <editor v-model="formData.rich_details" />
+          <editor v-model="Announcement.normal_details" />
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="formData.list_category"
+            v-model="Announcement.category"
             placeholder="Category"
             :multiple="true"
             :taggable="true"
-            :close-on-select="false"
+            :close-on-select="true"
             :clear-on-select="false"
             :preserve-search="true"
-            :preselect-first="false"
-            :options="categories"
-            @tag="addTag"
-          >
-          </multiselect>
-          <multiselect
-            size="lg"
-            class="mb-3"
-            v-model="formData.list_tags"
-            placeholder="Tags"
-            :multiple="true"
-            :taggable="true"
-            :close-on-select="false"
-            :clear-on-select="false"
-            :preserve-search="true"
-            :preselect-first="false"
+            :preselect-first="true"
             :options="categories"
             @tag="addTag"
           >
@@ -53,7 +40,7 @@
             Recipients
           </p>
           <div class="form-group mt-3 mb-3 ">
-            <d-select v-model="formData.recepients" class="col-md-3">
+            <d-select v-model="Announcement.recepients" class="col-md-3">
               <option selected value="everyone">To Everyone</option>
               <option value="participant">Participant</option>
               <option value="admin">Admins</option>
@@ -65,13 +52,19 @@
 
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
         <vue-dropzone
-          v-model="formData.cover_image"
+          v-model="Announcement.cover_image"
           :options="dropzoneOptions"
           id="dropZone"
           :useCustomSlot="true"
           class="mx-auto"
-          ref="courseImage"
-          style="width: 300px; height: 300px"
+          ref="AnnouncementImage"
+          :style="
+            'width: 300px; height: 300px;' +
+              'backgroundImage:url(' +
+              Announcement.cover_image +
+              '); ' +
+              ' background-size:cover; background-position:center'
+          "
         >
           <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
           <div class="subtitle p-2 mt-3">Click to add cover image</div>
@@ -109,14 +102,6 @@
         </div>
       </d-col>
     </d-row>
-    <footer class="border-top">
-      <sla-button
-        type="outline-danger"
-        class="btn btn-danger m-2 float-right"
-        text="Delete"
-        size="sm"
-      />
-    </footer>
     <d-modal
       v-if="scheduleModal"
       size="sm"
@@ -161,18 +146,17 @@ import axios from "axios";
 import Multiselect from "vue-multiselect";
 import store from "@/store/index";
 import "quill-emoji/dist/quill-emoji.css";
-
+import quill from "quill";
 const token = store.state.auth.token;
-
 export default {
   name: "create",
   data() {
     return {
-      Announcement: null,
       error: {
         status: null,
         message: null
       },
+      Announcement: undefined,
       scheduleModal: false,
       buttons: {
         publish: false,
@@ -198,6 +182,10 @@ export default {
         resizeHeight: 300
         // resize: this.resize,
       },
+      mockFile: {
+        name: "Filename",
+        size: 300
+      },
       formData: {
         title: null,
         rich_details: "",
@@ -215,7 +203,8 @@ export default {
           hour: undefined,
           final_date: null
         }
-      }
+      },
+      CategoryIds: []
     };
   },
   components: {
@@ -229,15 +218,13 @@ export default {
   watch: {
     scheduleDate: {
       handler: "watchSchedule"
-    },
-    publishdDate: {
-      handler: "watchPublish"
     }
   },
   computed: {
     categories: () => {
       const token = store.state.auth.token;
       let tags = [];
+      const self = this;
       let res = axios
         .get(`${process.env.VUE_APP_API}/category/admin/list`, {
           headers: {
@@ -247,6 +234,7 @@ export default {
         .then(res => {
           let categories = res.data.data.categories;
           categories.forEach(category => {
+            // self.CategoryIds.push({category});
             tags.push(category.name);
           });
           return tags;
@@ -270,37 +258,24 @@ export default {
           " " +
           this.time.schedule.hour;
         this.formData.schedule = new Date(
-          this.time.publish.final_date
+          this.time.schedule.final_date
         ).toISOString();
 
         return this.time.schedule.final_date;
       }
     },
-    publishdDate() {
-      if (
-        this.time.publish.days !== undefined &&
-        this.time.publish.year !== undefined &&
-        this.time.publish.month !== undefined &&
-        this.time.publish.hour !== undefined
-      ) {
-        this.time.publish.final_date =
-          this.time.publish.year +
-          "-" +
-          this.time.publish.month +
-          "-" +
-          this.time.publish.days +
-          " " +
-          this.time.publish.hour;
-        this.formData.schedule = new Date(
-          this.time.publish.final_date
-        ).toISOString();
-
-        return this.time.publish.final_date;
-      }
+    years: () => {
+      const year = new Date().getFullYear();
+      return Array.from({ length: year }, (value, index) => year + index);
     }
   },
   methods: {
     async handleSubmit(type) {
+      this.formData.normal_details = this.extractContent(
+        this.formData.rich_details,
+        true
+      );
+      this.formData.category = JSON.stringify(this.formData.list_category);
       const self = this;
       switch (type) {
         case "save":
@@ -317,18 +292,13 @@ export default {
         default:
           break;
       }
-      self.formData.tags = this.formData.list_tags.join();
-      self.formData.category = this.formData.list_category.join();
+
       let res = await axios
-        .post(
-          `${process.env.VUE_APP_API}/annoucement/admin/create`,
-          self.formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token} `
-            }
+        .post(`${process.env.VUE_APP_API}/annoucement/create`, self.formData, {
+          headers: {
+            Authorization: `Bearer ${token} `
           }
-        )
+        })
         .then(res => {
           switch (type) {
             case "save":
@@ -348,7 +318,7 @@ export default {
               : "An error occured")
           );
           setTimeout(function() {
-            self.$router.push({ path: "/announcement/all" });
+            self.$router.push({ path: "/announcements/all" });
           }, 2000);
 
           this.formData = {};
@@ -416,27 +386,23 @@ export default {
         this.buttons.isLoading = false;
       }
     },
-    watchPublish: function() {
-      let currentDate =
-        new Date().getFullYear() +
-        "-" +
-        (new Date().getMonth() + 1) +
-        "-" +
-        new Date().getDate();
-      let value = this.time.publish.final_date;
-
-      if (new Date(value) < new Date(currentDate)) {
-        this.$toast.error(
-          (this.error.message =
-            "You can not  input a go live date in the past!")
-        );
-        this.buttons.isLoading = true;
-      } else {
-        this.buttons.isLoading = false;
+    extractContent: (s, space) => {
+      let span = document.createElement("span");
+      span.innerHTML = s;
+      if (space) {
+        let children = span.querySelectorAll("*");
+        for (let i = 0; i < children.length; i++) {
+          if (children[i].textContent) children[i].textContent += " ";
+          else children[i].innerText += " ";
+        }
       }
+      return [span.textContent || span.innerText]
+        .toString()
+        .replace(/ +/g, " ");
     }
   },
   mounted() {
+    this.Announcement = this.$route.params.single_announcement;
     this.$refs.courseImage.dropzone.on("addedfile", file => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -447,9 +413,9 @@ export default {
           encoded += "=".repeat(4 - (encoded.length % 4));
         }
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
+        self.Announcement.cover_image = null;
       };
     });
-    this.formData = this.$route.params.announcement;
   }
 };
 </script>

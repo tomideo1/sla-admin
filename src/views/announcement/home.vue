@@ -15,7 +15,7 @@
               @click="
                 $router.push({
                   name: 'single-announcement',
-                  params: { announcement: announcement }
+                  params: { single_announcement: announcement }
                 })
               "
               :style="

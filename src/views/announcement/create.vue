@@ -25,7 +25,7 @@
             placeholder="Category"
             :multiple="true"
             :taggable="true"
-            :close-on-select="false"
+            :close-on-select="true"
             :clear-on-select="false"
             :preserve-search="true"
             :preselect-first="false"
@@ -40,7 +40,7 @@
             placeholder="Tags"
             :multiple="true"
             :taggable="true"
-            :close-on-select="false"
+            :close-on-select="true"
             :clear-on-select="false"
             :preserve-search="true"
             :preselect-first="false"
@@ -275,18 +275,7 @@ export default {
         this.formData.rich_details,
         true
       );
-      this.Categories.forEach(category => {
-        const self = this;
-        self.formData.list_category.some(list => {
-          if (category.name === list) {
-            self.formData.category = category._id;
-            return true;
-          }
-          return false;
-        });
-      });
-      alert(this.formData.categories);
-      // self.formData.tags = this.formData.list_tags.join();
+      this.formData.category = JSON.stringify(this.formData.list_category);
       const self = this;
       switch (type) {
         case "save":
@@ -329,7 +318,7 @@ export default {
               : "An error occured")
           );
           setTimeout(function() {
-            self.$router.push({ path: "/announcement/all" });
+            self.$router.push({ path: "/announcements/all" });
           }, 2000);
 
           this.formData = {};
