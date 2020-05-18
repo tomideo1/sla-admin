@@ -98,3 +98,10 @@ export const getAllTickets = async ({ commit }) => {
     commit("setTickets", res.data);
   } else return res;
 };
+
+export const getAllResources = async ({ commit }) => {
+  let res = await Api.get(`resource/admin/getAll`, true);
+  if (res.status === 200) {
+    commit("setResources", res.data);
+  } else return res;
+};

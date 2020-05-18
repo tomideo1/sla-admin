@@ -117,9 +117,6 @@ export default {
               ? ex.response.data.message
               : "An error occured")
           );
-          setTimeout(function() {
-            self.$router.push({ path: "/users/all" });
-          }, 2000);
         });
     }
   }

@@ -318,7 +318,7 @@ export default {
         title: null,
         description: "",
         question: "",
-        recipients: "everyone",
+        recepients: "everyone",
         cover_image: "",
         questions: []
       },

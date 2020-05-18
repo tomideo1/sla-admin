@@ -20,6 +20,10 @@ export const setSurveys = (state, data) => {
 export const setTickets = (state, data) => {
   state.Tickets = data.data.help;
 };
+
+export const setResources = (state, data) => {
+  state.Resources = data.data.resources;
+};
 export const setCategories = (state, data) => {
   state.Categories = data.categories;
 };

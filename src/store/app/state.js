@@ -3,6 +3,7 @@ export default {
   engagedCourses: null,
   Categories: null,
   Announcements: null,
+  Resources: null,
   Polls: null,
   Surveys: null,
   Tickets: null,

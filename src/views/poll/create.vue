@@ -382,7 +382,7 @@ export default {
           this.time.schedule.days +
           " " +
           this.time.schedule.hour;
-        this.formData.scheduled_at = new Date(
+        this.formData.schedule = new Date(
           this.time.schedule.final_date
         ).toISOString();
 
@@ -434,11 +434,11 @@ export default {
         case "save":
           this.buttons.isLoading = true;
           this.buttons.text1 = "Loading.....";
-          this.formData.status = "publish";
+          this.formData.status = "save";
           break;
         case "publish":
           this.buttons.isLoading = true;
-          this.formData.status = "save";
+          this.formData.status = "publish";
           this.buttons.text = "Loading.....";
           break;
         default:

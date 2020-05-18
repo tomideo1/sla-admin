@@ -33,6 +33,10 @@ export const getGroups = state => {
 export const getTickets = state => {
   return state.Tickets;
 };
+
+export const getResources = state => {
+  return state.Resources;
+};
 export const getLeaderboard = state => {
   return state.Leaders;
 };

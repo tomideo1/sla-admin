@@ -70,7 +70,7 @@
               Recipients
             </p>
             <div class="form-group mt-3 mb-3 ">
-              <d-select v-model="formData.recipients" class="col-md-3">
+              <d-select v-model="formData.recepients" class="col-md-3">
                 <option selected value="everyone">To Everyone</option>
                 <option value="participant">Participant</option>
                 <option value="admin">Admins</option>
@@ -80,24 +80,63 @@
           </d-col>
         </d-form-row>
       </d-col>
+      <d-modal
+        v-if="scheduleModal"
+        size="sm"
+        @close="scheduleModal = false"
+        :size="'md'"
+      >
+        <d-modal-header class="text-center">
+          <d-modal-title class="font-poppings text-black">
+            What time and Date do you want to Schedule?
+          </d-modal-title>
+        </d-modal-header>
+        <d-modal-body>
+          <d-input-group class="justify-content-center m-2 ">
+            <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+              <option :value="undefined">Day:</option>
+              <option :value="i" v-for="i in 31">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+              <option :value="undefined">Month:</option>
+              <option :value="i" v-for="i in 12">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+              <option :value="undefined">Year:</option>
+              <option v-for="year in years" :value="year">{{ year }}</option>
+            </d-select>
+            <input
+              class="col-md-3 form-control"
+              type="time"
+              v-model="time.schedule.hour"
+            />
+            <input type="hidden" v-model="scheduleDate" />
+          </d-input-group>
+        </d-modal-body>
+      </d-modal>
     </d-row>
     <footer class="border-top ">
       <sla-button
         class="btn  m-3  text-uppercase float-right"
-        text="Publish"
+        :text="buttons.text"
         type="filled"
         size="sm"
+        :disabled="buttons.isLoading"
+        @click="handleSubmit('publish')"
       />
       <sla-button
         class="btn  m-3  text-uppercase float-right"
-        text="save"
+        :text="buttons.text1"
         type="outline"
         size="sm"
+        :disabled="buttons.isLoading"
+        @click="handleSubmit('save')"
       />
       <sla-button
         class="btn  m-3  text-uppercase float-right"
         text="Schedule"
         type="outline"
+        @click="scheduleModal = true"
         size="sm"
       />
     </footer>
@@ -118,17 +157,44 @@ export default {
         status: null,
         message: null
       },
+      scheduleModal: false,
       buttons: {
+        publish: false,
         published: false,
+        save: false,
         isLoading: false,
-        text: "Create Group"
+        text: "PUBLISH",
+        text1: "SAVE"
       },
       formData: {
         question: null,
         answer: "",
         list_category: [],
         list_tags: [],
-        recipients: "everyone"
+        recepients: "everyone"
+      },
+      time: {
+        reminder: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        },
+        publish: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        },
+        schedule: {
+          days: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          final_date: null
+        }
       }
     };
   },
@@ -156,6 +222,97 @@ export default {
               : "An error occured")
           );
         });
+    },
+    watchSchedule: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.schedule.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not  input a  schedule date in the past!")
+        );
+        this.buttons.isLoading = true;
+      } else {
+        this.buttons.isLoading = false;
+      }
+    },
+    async handleSubmit(type) {
+      switch (type) {
+        case "save":
+          this.buttons.isLoading = true;
+          this.buttons.text1 = "Loading.....";
+          this.formData.status = "save";
+          break;
+        case "publish":
+          this.buttons.isLoading = true;
+          this.formData.status = "publish";
+          this.buttons.text = "Loading.....";
+          break;
+        default:
+          break;
+      }
+      const self = this;
+      const token = store.state.auth.token;
+      let res = await axios
+        .post(`${process.env.VUE_APP_API}/resource/create`, this.formData, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          switch (type) {
+            case "save":
+              self.buttons.isLoading = false;
+              self.buttons.text1 = "Save";
+              self.quiz = [];
+              self.$toast.success((self.error.message = res.data.message));
+              setTimeout(function() {
+                self.$router.push({ path: "/resources/all" });
+              }, 2000);
+              break;
+            case "publish":
+              self.buttons.isLoading = false;
+              self.buttons.text = "Publish";
+              self.quiz = [];
+              self.$toast.success((self.error.message = res.data.message));
+              setTimeout(function() {
+                self.$router.push({ path: "/resources/all" });
+              }, 2000);
+              break;
+            default:
+              break;
+          }
+        })
+        .catch(ex => {
+          switch (type) {
+            case "save":
+              self.buttons.isLoading = false;
+              self.buttons.text1 = "Save";
+              self.$toast.error(
+                (self.error.message = ex.response.data
+                  ? ex.response.data.message
+                  : "An error occured")
+              );
+              break;
+            case "publish":
+              self.buttons.isLoading = false;
+              self.buttons.text = "Publish";
+              self.$toast.error(
+                (self.error.message = ex.response.data
+                  ? ex.response.data.message.message
+                  : "An error occured")
+              );
+              break;
+            default:
+              break;
+          }
+        });
     }
   },
   components: {
@@ -166,6 +323,14 @@ export default {
     SlaButton: () => import("@/components/SlaButton")
   },
   computed: {
+    years: () => {
+      const year = new Date().getFullYear();
+      return Array.from({ length: year }, (value, index) => year + index);
+    },
+    days: () => {
+      const day = new Date().getDay();
+      return Array.from({ length: day + 31 }, (value, index) => day + index);
+    },
     categories: () => {
       const token = store.state.auth.token;
       let tags = [];
@@ -185,15 +350,32 @@ export default {
         .catch(ex => {});
       return tags;
     },
-    pageCount() {
-      let l = this.listData.length,
-        s = this.size;
-      return Math.ceil(l / s);
-    },
-    paginatedData() {
-      const start = this.pageNumber * this.size,
-        end = start + this.size;
-      return this.listData.slice(start, end);
+    scheduleDate() {
+      if (
+        this.time.schedule.days !== undefined &&
+        this.time.schedule.year !== undefined &&
+        this.time.schedule.month !== undefined &&
+        this.time.schedule.hour !== undefined
+      ) {
+        this.time.schedule.final_date =
+          this.time.schedule.year +
+          "-" +
+          this.time.schedule.month +
+          "-" +
+          this.time.schedule.days +
+          " " +
+          this.time.schedule.hour;
+        this.formData.schedule = new Date(
+          this.time.schedule.final_date
+        ).toISOString();
+
+        return this.time.schedule.final_date;
+      }
+    }
+  },
+  watch: {
+    scheduleDate: {
+      handler: "watchSchedule"
     }
   }
 };
