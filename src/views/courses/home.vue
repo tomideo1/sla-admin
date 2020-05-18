@@ -18,7 +18,7 @@
             >
             </d-card>
             <p
-              class="titl truncate truncate-2  text-capitalize mt-2 text-bold "
+              class="title truncate truncate-2  text-capitalize mt-2 text-bold "
             >
               {{ course.title }}
             </p>
@@ -42,11 +42,16 @@
               :style="
                 'width:200px!important;height: 120px!important;' +
                   'backgroundImage:url(' +
-                  'https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png' +
+                  categoryImages[
+                    Math.floor(Math.random() * categoryImages.length)
+                  ] +
                   ');' +
                   ' background-size:cover; background-position:center'
               "
             >
+              <p class="category-text text-uppercase mx-auto my-auto">
+                {{ category.name }}
+              </p>
             </d-card>
           </div>
         </carousel>
@@ -156,12 +161,18 @@
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
+
 export default {
   name: "course-home",
   data() {
     return {
       ref_data: "content",
-      courseProgram: []
+      courseProgram: [],
+      categoryImages: [
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808813/Rectangle_529_apeq0b.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808832/Rectangle_530_iw8pgd.png"
+      ]
     };
   },
   computed: {
@@ -209,4 +220,14 @@ export default {
 };
 </script>
 
-<style scoped lang="css"></style>
+<style scoped lang="css">
+.category-text {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.15px;
+  color: #ffffff;
+}
+</style>

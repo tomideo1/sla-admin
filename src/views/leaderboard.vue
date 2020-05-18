@@ -163,7 +163,8 @@ const token = store.state.auth.token;
 export default {
   name: "LeaderBoard",
   components: {
-    Icon: () => import("@/components/SlaIcon")
+    Icon: () => import("@/components/SlaIcon"),
+    SlaVatar: () => import("@/components/SlaIcon")
   },
   data() {
     return {
