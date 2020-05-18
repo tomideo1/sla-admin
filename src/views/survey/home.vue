@@ -17,7 +17,7 @@
               :style="
                 'width:200px!important;height: 120px!important;' +
                   'backgroundImage:url(' +
-                  survey.cover_image +
+                  survey.survey_image +
                   ');' +
                   ' background-size:cover; background-position:center'
               "

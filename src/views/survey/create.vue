@@ -145,8 +145,7 @@
           </div>
         </vue-dropzone>
         <p class="text-center m-3 ">
-          <span class="text-black">Create Reminder </span
-          ><span>(DD/MM/YY)</span>
+          <span class="text-black">Expiry </span><span>(DD/MM/YY)</span>
         </p>
         <d-input-group class="justify-content-center m-2 ">
           <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
@@ -177,7 +176,8 @@
           />
         </d-input-group>
         <p class="text-center m-3 ">
-          <span class="text-black text-bold">Go Live Date </span
+          <span class="text-black text-bold"
+            >Remind Users About Expiry Date on: </span
           ><span>(DD/MM/YY)</span>
         </p>
         <d-input-group class="justify-content-center m-2 ">
@@ -374,8 +374,6 @@ export default {
       }
       const self = this;
       const token = store.state.auth.token;
-      self.formData.survey_image = self.formData.cover_image;
-      self.formData.survey_image = self.formData.cover_image;
       self.formData.survey_image = self.formData.cover_image;
       let res = await axios
         .post(`${process.env.VUE_APP_API}/survey/create`, self.formData, {
