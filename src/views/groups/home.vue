@@ -1,7 +1,7 @@
 <template>
   <d-container fluid>
     <d-row class=" mt-5">
-      <div class="col-lg-12">
+      <div class="col-lg-12 mt-3">
         <h6 class="text-dark title text-capitalize m-1">
           Alphabetical Order (A -Z)
         </h6>
@@ -33,7 +33,7 @@
           </div>
         </carousel>
       </div>
-      <div class="col-lg-12">
+      <div class="col-lg-12 mt-3">
         <h6 class="text-dark title text-capitalize m-1">
           Categories
         </h6>
@@ -47,18 +47,23 @@
               :style="
                 'width:200px!important;height: 120px!important;' +
                   'backgroundImage:url(' +
-                  'https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png' +
+                  categoryImages[
+                    Math.floor(Math.random() * categoryImages.length)
+                  ] +
                   ');' +
                   ' background-size:cover; background-position:center'
               "
             >
+              <p class="category-text text-uppercase mx-auto my-auto">
+                {{ category.name }}
+              </p>
             </d-card>
           </div>
         </carousel>
       </div>
-      <div class="col-lg-12">
+      <div class="col-lg-12 mt-3 ">
         <h6 class="text-dark title text-capitalize m-1">
-          Alphabetical Order (A -Z)
+          Most Recent
         </h6>
         <carousel refs="content">
           <div class="scroll m-2" v-for="(group, idx) in Groups" :key="idx">
@@ -102,7 +107,12 @@ export default {
   name: "polls-home",
   data() {
     return {
-      ref_data: "content"
+      ref_data: "content",
+      categoryImages: [
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808813/Rectangle_529_apeq0b.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808832/Rectangle_530_iw8pgd.png"
+      ]
     };
   },
   computed: {
@@ -136,5 +146,14 @@ export default {
   letter-spacing: 0.15px;
 
   color: #333333;
+}
+.category-text {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.15px;
+  color: #ffffff;
 }
 </style>
