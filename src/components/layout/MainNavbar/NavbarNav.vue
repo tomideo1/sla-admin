@@ -32,7 +32,10 @@
       </a>
     </li>
     <li class="nav-item mr-2 dropdown border-left">
-      <a class="nav-link  text-nowrap px-3 mt-2">
+      <router-link
+        class="nav-link  text-nowrap px-3 mt-2"
+        :to="{ path: '/profile' }"
+      >
         <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
         <img
           class="user-avatar rounded-circle  "
@@ -40,7 +43,7 @@
           src="@/assets/images/avatars/user.png"
           alt="User Avatar"
         />
-      </a>
+      </router-link>
     </li>
   </d-navbar-nav>
 </template>
