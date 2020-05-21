@@ -27,14 +27,14 @@
       </d-collapse>
     </li>
     <li class="nav-item  ">
-      <a class="nav-link mt-2 text-center">
+      <router-link :to="{ name: 'settings' }" class="nav-link mt-2 text-center">
         <icon size="xs" name="setting" />
-      </a>
+      </router-link>
     </li>
     <li class="nav-item mr-2 dropdown border-left">
       <router-link
         class="nav-link  text-nowrap px-3 mt-2"
-        :to="{ path: '/profile' }"
+        :to="{ name: 'profile', params: { admin: Admin } }"
       >
         <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
         <img

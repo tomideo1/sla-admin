@@ -245,8 +245,8 @@ const router = new Router({
           }
         },
         {
-          path: "edit",
-          name: "edit-polls",
+          path: "single",
+          name: "single-poll",
           component: () => import("@/views/poll/single.vue"),
           meta: {
             middleware: [auth]
@@ -498,6 +498,12 @@ const router = new Router({
     {
       path: "/admin/password-reset",
       name: "password-reset",
+      meta: { layout: "no-sidebar" },
+      component: PasswordReset
+    },
+    {
+      path: "/admin/settings/password-reset",
+      name: "settings-password-resetsettings-password-reset",
       meta: { layout: "no-sidebar" },
       component: PasswordReset
     },

@@ -142,7 +142,8 @@ export default {
     },
     deleteOption(index, index2) {
       this.formData.questions[index].possible_options.splice(index2, 1);
-    }
+    },
+    handleSubmit() {}
   },
   components: {
     Icon: () => import("@/components/SlaIcon"),

@@ -201,7 +201,8 @@ export default {
         //route to dashboard
         setTimeout(() => {
           this.$router.replace({
-            name: "dashboard"
+            name: "settings",
+            params: { success: "password change successful" }
           });
         }, 2000);
       } catch (e) {

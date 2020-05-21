@@ -1,5 +1,12 @@
 <template>
   <d-container fluid class="main-content-container px-4 py-4 mt-4">
+    <Toasts
+      :show-progress="false"
+      :rtl="false"
+      :max-messages="5"
+      :time-out="3000"
+      :closeable="false"
+    ></Toasts>
     <h5 class="text-black font-poppings font-weight-bold">Settings</h5>
     <d-row>
       <div class="col-md-6 col-lg-6 col-12">
@@ -16,7 +23,11 @@
             <span class="float-right"> <input type="checkbox"/></span>
           </p>
           <p class="text-bold m-2  font-open-sans" style="font-size: 14px">
-            <router-link to="/admin/password-create">
+            <router-link
+              :to="{
+                path: '/admin/settings/password-reset?token=' + this.token
+              }"
+            >
               Reset Password</router-link
             >
           </p>
@@ -45,9 +56,17 @@
   </d-container>
 </template>
 <script>
+import store from "@/store/index";
+const token = store.state.auth.token;
 export default {
   data() {
-    return {};
+    return {
+      error: {
+        status: null,
+        message: null
+      },
+      token: token
+    };
   },
   components: {
     SlaButton: () => import("@/components/SlaButton"),
@@ -57,6 +76,12 @@ export default {
     goBack() {
       this.$router.go(-1);
     }
+  },
+  mounted() {
+    this.error.message = this.$route.params.success;
+    self.$toast.success(
+      (this.error.message = res.data ? res.data.message : "An error occured")
+    );
   }
 };
 </script>

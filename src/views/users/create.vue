@@ -24,7 +24,7 @@
               <label for="feFirstName"> Last Name</label>
               <d-form-input
                 type="text"
-                placeholder="First Name"
+                placeholder="Last Name"
                 v-model="formData.last_name"
               />
             </d-col>
@@ -33,7 +33,7 @@
               <d-form-input
                 type="text"
                 id="feFirstName"
-                placeholder="First Name"
+                placeholder="Phone Number"
                 v-model="formData.phone_number"
               />
             </d-col>
