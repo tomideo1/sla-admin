@@ -79,9 +79,7 @@ export default {
   },
   mounted() {
     this.error.message = this.$route.params.success;
-    self.$toast.success(
-      (this.error.message = res.data ? res.data.message : "An error occured")
-    );
+    this.$toast.success(this.error.message);
   }
 };
 </script>

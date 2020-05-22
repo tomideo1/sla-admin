@@ -17,6 +17,7 @@ import Login from "../views/auth/login";
 import Logout from "../views/auth/logout";
 import PasswordCreate from "../views/auth/password-create";
 import PasswordReset from "../views/auth/password-reset";
+import SettingsPasswordReset from "../views/auth/settings-password-reset";
 import forgotPassword from "../views/auth/forgotPassword";
 import Dashboard from "@/views/Dashboard.vue";
 import LeaderBoard from "@/views/leaderboard.vue";
@@ -505,7 +506,7 @@ const router = new Router({
       path: "/admin/settings/password-reset",
       name: "settings-password-resetsettings-password-reset",
       meta: { layout: "no-sidebar" },
-      component: PasswordReset
+      component: SettingsPasswordReset
     },
     {
       path: "/forgot-password",

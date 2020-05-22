@@ -25,6 +25,11 @@ import HeaderNavigation from "@/layouts/HeaderNavigation.vue";
 import IconSidebar from "@/layouts/IconSidebar.vue";
 import VueMasonry from "vue-masonry-css";
 
+Vue.use(require("vue-chartist"), {
+  messageNoData: "You have not enough data",
+  classNoData: "empty"
+});
+
 Vue.use(VueMasonry);
 const isProd = process.env.NODE_ENV === "production";
 
