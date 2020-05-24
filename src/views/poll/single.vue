@@ -1,34 +1,83 @@
 <template>
   <d-container fluid class="main-content-container px-4">
-    <top heading="AUDIO VS VIDEO " />
-    <d-card>
-      <d-card-title>
-        Did you enjoy week zero (0) lesson?
-      </d-card-title>
+    <top :heading="Polls.title" />
+    <h4 class="m-3 text-bold font-poppings text-black">
+      {{ Polls.responses }} responses
+    </h4>
+    <d-card class=" col-md-6 col-12 col-lg-6 ">
+      <d-card-header class="text-black font-open-sans border-bottom">
+        {{ Polls.question }}
+      </d-card-header>
       <d-card-body>
-        <chartist ratio="ct-chart" type="Pie" :data="chartData.series">
-        </chartist>
+        <GChart type="PieChart" :data="chartData" :options="chartOptions" />
       </d-card-body>
     </d-card>
+    <footer class="border-top m-5 ">
+      <sla-button
+        class="btn  m-3  text-uppercase float-right"
+        :text="'EXPORT'"
+        type="filled"
+        size="sm"
+      />
+      <sla-button
+        class="btn  m-3  text-uppercase float-right"
+        :text="'CLOSE POLL'"
+        type="outline"
+        size="sm"
+      />
+      <p
+        class="font-open-sans float-right m-4"
+        style="color:#0087DB; cursor: pointer; font-size: 14px;"
+        @click="deleteModal = true"
+      >
+        EDIT POLL
+      </p>
+      <p
+        class="font-open-sans float-right m-4"
+        style="color: #FF4133; cursor: pointer; font-size: 14px;"
+        @click="deleteModal = true"
+      >
+        DELETE POLL
+      </p>
+    </footer>
   </d-container>
 </template>
 
 <script>
+import { GChart } from "vue-google-charts";
 export default {
-  name: "edit",
+  name: "single-poll",
   data() {
     return {
-      chartData: {
-        series: [5, 3, 4]
-      },
+      deleteModal: false,
+      chartData: [["value", "count"]],
       chartOptions: {
-        lineSmooth: false
-      }
+        chart: {
+          width: 800,
+          height: 800,
+          legend: { position: "top", maxLines: 3 },
+          bar: { groupWidth: "75%" }
+        }
+      },
+      Polls: undefined
     };
   },
   components: {
     Icon: () => import("@/components/SlaIcon"),
-    Top: () => import("@/components/top")
+    Top: () => import("@/components/top"),
+    SlaButton: () => import("@/components/SlaButton"),
+    GChart
+  },
+  mounted() {
+    const self = this;
+    self.Polls = self.$route.params.Poll;
+    self.Polls.options.forEach(data => {
+      self.chartData.push([data.value, data.count]);
+    });
+    self.Polls.responses = self.Polls.options.reduce(
+      (accum, item) => accum + item.count,
+      0
+    );
   }
 };
 </script>

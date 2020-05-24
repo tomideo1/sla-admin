@@ -95,6 +95,11 @@ export default {
     width: 3rem !important;
     font-size: 2rem;
   }
+  &.avatar-lg-2 {
+    height: 5rem !important;
+    width: 5rem !important;
+    font-size: 2rem;
+  }
   &.avatar-xl {
     height: 6.5rem !important;
     width: 6.5rem !important;

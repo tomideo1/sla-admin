@@ -126,17 +126,6 @@
           <d-input class="col-md-3" type="time" v-model="time.reminder.hour" />
           <input type="hidden" v-model="reminderDate" />
         </d-input-group>
-
-        <p class="text-center m-3  text-dark">
-          Estimated Time to Complete Course
-        </p>
-        <d-input-group class="justify-content-center">
-          <d-input
-            class="col-md-8 "
-            v-model="formData.estimate"
-            placeholder=" e.g 50 hours at 3 hours per week "
-          />
-        </d-input-group>
         <p class="text-center m-3 ">
           <span class="text-black text-bold"
             >Remind Users About Expiry Date on: </span
@@ -280,7 +269,7 @@ export default {
         title: null,
         description: "",
         question: "",
-        recipients: "everyone",
+        recepients: "everyone",
         cover_image: "",
         options: []
       },

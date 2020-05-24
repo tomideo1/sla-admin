@@ -16,7 +16,10 @@
                   ' background-size:cover; background-position:center'
               "
               @click="
-                $router.push({ name: 'single-poll', path: { Poll: poll } })
+                $router.push({
+                  name: 'single-poll',
+                  params: { Poll: poll }
+                })
               "
             >
             </d-card>

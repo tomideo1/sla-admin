@@ -40,19 +40,19 @@ export default function() {
           }
         },
         {
-          title: "users",
+          title: "Users",
           htmlBefore: "group",
           to: {
             name: "all-users"
           }
         },
-        {
-          title: "Activity",
-          htmlBefore: "activity",
-          to: {
-            name: "all-coaches"
-          }
-        },
+        // {
+        //   title: "Activity",
+        //   htmlBefore: "activity",
+        //   to: {
+        //     name: "all-coaches"
+        //   }
+        // },
 
         {
           title: "Courses",
@@ -90,14 +90,14 @@ export default function() {
           }
         },
         {
-          title: "survey",
+          title: "Surveys",
           htmlBefore: "survey",
           to: {
             name: "all-surveys"
           }
         },
         {
-          title: "polls",
+          title: "Polls",
           htmlBefore: "poll",
           to: {
             name: "all-polls"

@@ -148,6 +148,32 @@
           <span class="text-black">Expiry </span><span>(DD/MM/YY)</span>
         </p>
         <d-input-group class="justify-content-center m-2 ">
+          <d-select v-model="time.expiry.days" class="col-md-2 mr-2">
+            <option :value="undefined">Day:</option>
+            <option :value="i" v-for="i in 31">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2" v-model="time.expiry.month">
+            <option :value="undefined">Month:</option>
+            <option :value="i" v-for="i in 12">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2 " v-model="time.expiry.year">
+            <option :value="undefined">Year:</option>
+            <option v-for="year in years" :value="year">{{ year }}</option>
+          </d-select>
+          <input
+            class="col-md-3 form-control"
+            type="time"
+            v-model="time.expiry.hour"
+          />
+          <input type="hidden" v-model="expiryDate" />
+        </d-input-group>
+
+        <p class="text-center m-3 ">
+          <span class="text-black text-bold"
+            >Remind Users About Expiry Date on: </span
+          ><span>(DD/MM/YY)</span>
+        </p>
+        <d-input-group class="justify-content-center m-2 ">
           <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
             <option :value="undefined">Day:</option>
             <option v-for="i in 31">{{ i }}</option>
@@ -164,43 +190,6 @@
           <d-input class="col-md-3" type="time" v-model="time.reminder.hour" />
           <input type="hidden" v-model="reminderDate" />
         </d-input-group>
-
-        <p class="text-center m-3  text-dark">
-          Estimated Time to Complete Course
-        </p>
-        <d-input-group class="justify-content-center">
-          <d-input
-            class="col-md-8 "
-            v-model="formData.estimate"
-            placeholder=" e.g 50 hours at 3 hours per week "
-          />
-        </d-input-group>
-        <p class="text-center m-3 ">
-          <span class="text-black text-bold"
-            >Remind Users About Expiry Date on: </span
-          ><span>(DD/MM/YY)</span>
-        </p>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.publish.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option :value="i" v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.publish.month">
-            <option :value="undefined">Month:</option>
-            <option :value="i" v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.publish.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <input
-            class="col-md-3 form-control"
-            type="time"
-            v-model="time.publish.hour"
-          />
-          <input type="hidden" v-model="publishdDate" />
-        </d-input-group>
-
         <div class="text-center">
           <br />
           <p
@@ -318,7 +307,7 @@ export default {
         title: null,
         description: "",
         question: "",
-        recepients: "everyone",
+        recipients: "everyone",
         cover_image: "",
         questions: []
       },
@@ -330,7 +319,7 @@ export default {
           hour: undefined,
           final_date: null
         },
-        publish: {
+        expiry: {
           days: undefined,
           month: undefined,
           year: undefined,
@@ -455,25 +444,6 @@ export default {
           );
         });
     },
-    watchPublish: function() {
-      let currentDate =
-        new Date().getFullYear() +
-        "-" +
-        (new Date().getMonth() + 1) +
-        "-" +
-        new Date().getDate();
-      let value = this.time.publish.final_date;
-
-      if (new Date(value) < new Date(currentDate)) {
-        this.$toast.error(
-          (this.error.message =
-            "You can not  input a go live date in the past!")
-        );
-        this.buttons.isLoading = true;
-      } else {
-        this.buttons.isLoading = false;
-      }
-    },
     watchReminder: function() {
       let currentDate =
         new Date().getFullYear() +
@@ -485,8 +455,25 @@ export default {
 
       if (new Date(value) < new Date(currentDate)) {
         this.$toast.error(
-          (this.error.message =
-            "You can not input a reminder date in the past!")
+          (this.error.message = "You can not  input a reminder in the past!")
+        );
+        this.buttons.isLoading = true;
+      } else {
+        this.buttons.isLoading = false;
+      }
+    },
+    watchExpiry: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.expiry.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message = "You can not input a expiry date in the past!")
         );
       }
     },
@@ -532,14 +519,14 @@ export default {
     editorContent: {
       handler: "updateEditorContent"
     },
-    publishdDate: {
-      handler: "watchPublish"
+    reminderDate: {
+      handler: "watchReminder"
     },
     scheduleDate: {
       handler: "watchSchedule"
     },
-    reminderDate: {
-      handler: "watchReminder"
+    expiryDate: {
+      handler: "watchExpiry"
     }
   },
   mounted() {
@@ -584,26 +571,48 @@ export default {
         .catch(ex => {});
       return tags;
     },
-    publishdDate() {
+    reminderDate() {
       if (
-        this.time.publish.days !== undefined &&
-        this.time.publish.year !== undefined &&
-        this.time.publish.month !== undefined &&
-        this.time.publish.hour !== undefined
+        this.time.reminder.days !== undefined &&
+        this.time.reminder.year !== undefined &&
+        this.time.reminder.month !== undefined &&
+        this.time.reminder.hour !== undefined
       ) {
-        this.time.publish.final_date =
-          this.time.publish.year +
+        this.time.reminder.final_date =
+          this.time.reminder.year +
           "-" +
-          this.time.publish.month +
+          this.time.reminder.month +
           "-" +
-          this.time.publish.days +
+          this.time.reminder.days +
           " " +
-          this.time.publish.hour;
+          this.time.reminder.hour;
         this.formData.reminder = new Date(
-          this.time.publish.final_date
+          this.time.reminder.final_date
         ).toISOString();
 
-        return this.time.publish.final_date;
+        return this.time.reminder.final_date;
+      }
+    },
+    expiryDate() {
+      if (
+        this.time.expiry.days !== undefined &&
+        this.time.expiry.year !== undefined &&
+        this.time.expiry.month !== undefined &&
+        this.time.expiry.hour !== undefined
+      ) {
+        this.time.expiry.final_date =
+          this.time.expiry.year +
+          "-" +
+          this.time.expiry.month +
+          "-" +
+          this.time.expiry.days +
+          " " +
+          this.time.expiry.hour;
+        this.formData.expiry = new Date(
+          this.time.expiry.final_date
+        ).toISOString();
+
+        return this.time.expiry.final_date;
       }
     },
     scheduleDate() {
@@ -626,30 +635,6 @@ export default {
         ).toISOString();
 
         return this.time.schedule.final_date;
-      }
-    },
-    reminderDate() {
-      if (
-        this.time.reminder.days !== undefined &&
-        this.time.reminder.year !== undefined &&
-        this.time.reminder.month !== undefined &&
-        this.time.reminder.hour !== undefined
-      ) {
-        this.time.reminder.final_date =
-          this.time.reminder.year +
-          "-" +
-          this.time.reminder.month +
-          "-" +
-          this.time.reminder.days;
-        this.formData.reminder = (
-          this.time.reminder.final_date +
-          " " +
-          this.time.reminder.hour
-        ).toString();
-        this.formData.expiry = new Date(
-          this.time.reminder.final_date
-        ).toISOString();
-        return this.time.reminder.final_date;
       }
     }
   }
