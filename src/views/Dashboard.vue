@@ -16,33 +16,41 @@
           <hr class="style1 col-md-4" />
         </div>
         <div class="row mt-3">
-          <div class="col-md-2 m-3">
-            <d-card style="border-left:7px solid #0087DB; border-radius: 0">
+          <div class="col-md-2 m-3 m-md-2 m-lg-3">
+            <d-card
+              style="border-left:7px solid #0087DB; max-height:100px;border-radius: 0"
+            >
               <p class="font-poppings text-dark m-2">Users</p>
               <p class="card-number  text-center">
                 100
               </p>
             </d-card>
           </div>
-          <div class="col-md-2 m-3">
-            <d-card style="border-left:7px solid #DAAA55; border-radius: 0">
+          <div class="col-md-2 m-3 m-md-2 m-lg-3">
+            <d-card
+              style="border-left:7px solid #DAAA55; max-height:100px;border-radius: 0"
+            >
               <p class="font-poppings text-dark m-2">Engagements</p>
               <p class="card-number  text-center">
                 23.6K
               </p>
             </d-card>
           </div>
-          <div class="col-md-2 m-3">
-            <d-card style="border-left:7px solid #F77253; border-radius: 0">
+          <div class="col-md-2 m-3 m-md-2 m-lg-3">
+            <d-card
+              style="border-left:7px solid #F77253; max-height:100px;border-radius: 0"
+            >
               <p class="font-poppings text-dark m-2">Messages Sent</p>
               <p class="card-number  text-center">
                 30K
               </p>
             </d-card>
           </div>
-          <div class="col-md-2 m-3">
-            <d-card style="border-left:7px solid  #1F497D; border-radius: 0">
-              <p class="font-poppings text-dark m-2">
+          <div class="col-md-2 m-3 m-md-2 m-lg-3">
+            <d-card
+              style="border-left:7px solid  #1F497D;max-height:100px; border-radius: 0"
+            >
+              <p class="font-poppings truncate-2 text-dark m-2">
                 Courses Completed
               </p>
               <p class="card-number  text-center">
@@ -50,8 +58,10 @@
               </p>
             </d-card>
           </div>
-          <div class="col-md-2 m-3">
-            <d-card style="border-left:7px solid   #8D5524;  border-radius: 0">
+          <div class="col-md-2 m-3 m-md-1  m-lg-3">
+            <d-card
+              style="border-left:7px solid   #8D5524;max-height:100px;  border-radius: 0"
+            >
               <p class="font-poppings text-dark m-2">
                 Courses in Progress
               </p>
@@ -63,15 +73,19 @@
         </div>
       </d-col>
     </d-row>
-    <d-row>
+    <d-row no-gutters>
       <d-card
-        class=" col-md-5 col-12  col-lg-5 "
+        class=" col-md-6 col-12  col-lg-6 "
         style="border-radius:0!important;"
       >
         <p class="text-black font-poppings  m-3">
           Login Activities
         </p>
-        <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
+        <GChart
+          type="ColumnChart"
+          :data="loginChartData"
+          :options="loginChartOptions"
+        />
         <div class="d-flex flex-row mx-auto">
           <div class="legend_block m-1">
             <span>
@@ -93,35 +107,15 @@
           </div>
         </div>
       </d-card>
-      <d-card
-        class=" col-md-5 col-12  col-lg-5 "
-        style="border-radius:0!important;"
-      >
-        <p class="text-black font-poppings  m-3">
-          Login Activities
-        </p>
-        <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
-        <div class="d-flex flex-row mx-auto">
-          <div class="legend_block m-1">
-            <span>
-              <div
-                class="legend_circle mr-1 "
-                style="background-color: #DAAA55;"
-              ></div>
-            </span>
-            <p>Coaches</p>
-          </div>
-          <div class="legend_block m-1">
-            <span>
-              <div
-                class="legend_circle mr-1 "
-                style="background-color: #0087DB;"
-              ></div>
-            </span>
-            <p>Users</p>
-          </div>
-        </div>
-      </d-card>
+      <!--        <d-card-->
+      <!--          class=" col-md-6 col-12 m-4 col-lg-5 "-->
+      <!--          style="border-radius:0!important;"-->
+      <!--        >-->
+      <!--          <p class="text-black font-poppings  m-3">-->
+      <!--            Heat Map of Popular Times-->
+      <!--          </p>-->
+      <!--          <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />-->
+      <!--        </d-card>-->
     </d-row>
   </d-container>
 </template>
@@ -135,7 +129,7 @@ export default {
   },
   data() {
     return {
-      chartData: [
+      loginChartData: [
         ["Year", "Coaches", "Users"],
         ["Dec", 20, 20],
         ["Nov", 10, 10],
@@ -144,7 +138,7 @@ export default {
         ["Aug", 50, 22],
         ["Jul", 60, 40]
       ],
-      chartOptions: {
+      loginChartOptions: {
         legend: {
           position: "none",
           maxLines: 3,
@@ -156,7 +150,8 @@ export default {
         isStacked: true,
         colors: ["#0087DB", "#DAAA55"],
         fontName: "open-sans",
-        fontSize: 12
+        fontSize: 12,
+        chartArea: { width: "80%", height: "80%" }
       }
     };
   },
@@ -171,7 +166,7 @@ hr.style1 {
 }
 .card-number {
   font-weight: 300;
-  font-size: 36px;
+  font-size: 30px;
 }
 .legend_circle {
   width: 10px;
