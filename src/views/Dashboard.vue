@@ -107,25 +107,31 @@
           </div>
         </div>
       </d-card>
-      <!--        <d-card-->
-      <!--          class=" col-md-6 col-12 m-4 col-lg-5 "-->
-      <!--          style="border-radius:0!important;"-->
-      <!--        >-->
-      <!--          <p class="text-black font-poppings  m-3">-->
-      <!--            Heat Map of Popular Times-->
-      <!--          </p>-->
-      <!--          <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />-->
-      <!--        </d-card>-->
+      <d-card
+        class=" col-md-5 col-12 mt-3 mt-lg-0 mt-md-0 ml-lg-3 ml-md-3  col-lg-5 "
+        style="border-radius:0!important;"
+      >
+        <p class="text-black font-poppings  m-3">
+          Heat Map of Popular Times
+        </p>
+        <apexchart
+          type="heatmap"
+          :options="options"
+          :series="series"
+        ></apexchart>
+      </d-card>
     </d-row>
   </d-container>
 </template>
 
 <script>
 import { GChart } from "vue-google-charts";
+import VueApexCharts from "vue-apexcharts";
 export default {
   name: "Dashboard",
   components: {
-    GChart
+    GChart,
+    apexchart: VueApexCharts
   },
   data() {
     return {
@@ -152,7 +158,615 @@ export default {
         fontName: "open-sans",
         fontSize: 12,
         chartArea: { width: "80%", height: "80%" }
-      }
+      },
+      options: {
+        chart: {
+          height: 350,
+          type: "heatmap",
+          id: "vue-heat-map"
+        },
+        dataLabels: {
+          enabled: false
+        },
+        colors: ["#008FFB"]
+      },
+      series: [
+        {
+          name: "Series 1",
+          data: [
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            }
+          ]
+        },
+        {
+          name: "Series 2",
+          data: [
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            }
+          ]
+        },
+        {
+          name: "Series 1",
+          data: [
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            }
+          ]
+        },
+        {
+          name: "Series 1",
+          data: [
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            }
+          ]
+        },
+        {
+          name: "Series 1",
+          data: [
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            }
+          ]
+        },
+        {
+          name: "Series 1",
+          data: [
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            }
+          ]
+        },
+        {
+          name: "Series 1",
+          data: [
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            },
+            {
+              x: "W1",
+              y: 22
+            },
+            {
+              x: "W2",
+              y: 29
+            },
+            {
+              x: "W3",
+              y: 13
+            },
+            {
+              x: "W4",
+              y: 32
+            }
+          ]
+        }
+      ]
     };
   },
   methods: {},
