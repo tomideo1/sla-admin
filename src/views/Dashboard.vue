@@ -76,7 +76,7 @@
     <d-row no-gutters>
       <d-card
         class=" col-md-6 col-12  col-lg-6 "
-        style="border-radius:0!important;"
+        style="border-radius:0!important; max-height: 300px!important;"
       >
         <p class="text-black font-poppings  m-3">
           Login Activities
@@ -86,24 +86,15 @@
           :data="loginChartData"
           :options="loginChartOptions"
         />
-        <div class="d-flex flex-row mx-auto">
-          <div class="legend_block m-1">
+        <div class="d-flex flex-row mx-auto ">
+          <div class="legend_block m-1" v-for="legend in loginChartLegends">
             <span>
               <div
                 class="legend_circle mr-1 "
-                style="background-color: #DAAA55;"
+                :style="'background-color:' + legend.color + ';'"
               ></div>
             </span>
-            <p>Coaches</p>
-          </div>
-          <div class="legend_block m-1">
-            <span>
-              <div
-                class="legend_circle mr-1 "
-                style="background-color: #0087DB;"
-              ></div>
-            </span>
-            <p>Users</p>
+            <p>{{ legend.name }}</p>
           </div>
         </div>
       </d-card>
@@ -118,8 +109,75 @@
           type="heatmap"
           :options="options"
           :series="series"
+          style="max-height: 300px!important;"
         ></apexchart>
       </d-card>
+    </d-row>
+    <d-row class="m-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <p class="text-black font-poppings  m-3">
+            Time Spent on App
+          </p>
+          <h4 class="text-dark font-poppings ">5h 40m</h4>
+          <div class="row">
+            <div class="col-md-8 col-lg-8 col-12 ">
+              <GChart
+                type="ColumnChart"
+                :data="timeChartData"
+                :options="timeChartOptions"
+              />
+              <div class="d-flex flex-row flex-grow-1 float-lg-right p-3 w-75 ">
+                <div
+                  class="legend_block m-1"
+                  v-for="legend in timeChartLegends"
+                >
+                  <span>
+                    <div
+                      class="legend_circle mr-1 "
+                      :style="'background-color:' + legend.color + ';'"
+                    ></div>
+                  </span>
+                  <p>{{ legend.name }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="border-right m-4 mt-n5"></div>
+            <div class="col-md-3 col-lg-3 col-12">
+              <d-tabs card pills class="mt-n5 ml-lg-n4">
+                <d-tab
+                  title="Users"
+                  active
+                  style="max-height: 250px!important; overflow-y: auto"
+                >
+                  <div
+                    class="d-flex mt-n4 ml-lg-n4 mb-3 flex-row flex-grow-1"
+                    v-for="i in 10"
+                  >
+                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
+                    <span
+                      style="font-size: 14px;"
+                      class="m-1 font-open-sans text-dark"
+                    >
+                      Tomide Aina
+                      <br />
+                      <small class="font-open-sans text-grey">300XP</small>
+                    </span>
+                  </div>
+                </d-tab>
+                <d-tab title="Coaches">
+                  Sed at lacus efficitur, imperdiet purus et, pretium arcu.
+                  Mauris vulputate, libero in dignissim auctor, nunc tortor
+                  interdum elit, ac dignissim ex enim vitae diam.
+                </d-tab>
+              </d-tabs>
+            </div>
+          </div>
+        </d-card>
+      </div>
     </d-row>
   </d-container>
 </template>
@@ -131,7 +189,8 @@ export default {
   name: "Dashboard",
   components: {
     GChart,
-    apexchart: VueApexCharts
+    apexchart: VueApexCharts,
+    SlaAvatar: () => import("@/components/avatar")
   },
   data() {
     return {
@@ -159,9 +218,18 @@ export default {
         fontSize: 12,
         chartArea: { width: "80%", height: "80%" }
       },
+      loginChartLegends: [
+        {
+          name: "Users",
+          color: "#0087DB"
+        },
+        {
+          name: "Coaches",
+          color: "#DAAA55"
+        }
+      ],
       options: {
         chart: {
-          height: 350,
           type: "heatmap",
           id: "vue-heat-map"
         },
@@ -172,604 +240,131 @@ export default {
       },
       series: [
         {
-          name: "Series 1",
-          data: [
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            }
-          ]
+          name: "Metric1",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
         },
         {
-          name: "Series 2",
-          data: [
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            }
-          ]
+          name: "Metric2",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
         },
         {
-          name: "Series 1",
-          data: [
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            }
-          ]
+          name: "Metric3",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
         },
         {
-          name: "Series 1",
-          data: [
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            }
-          ]
+          name: "Metric4",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
         },
         {
-          name: "Series 1",
-          data: [
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            }
-          ]
+          name: "Metric5",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
         },
         {
-          name: "Series 1",
-          data: [
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            }
-          ]
+          name: "Metric6",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
         },
         {
-          name: "Series 1",
-          data: [
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            },
-            {
-              x: "W1",
-              y: 22
-            },
-            {
-              x: "W2",
-              y: 29
-            },
-            {
-              x: "W3",
-              y: 13
-            },
-            {
-              x: "W4",
-              y: 32
-            }
-          ]
+          name: "Metric7",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
+        },
+        {
+          name: "Metric8",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
+        },
+        {
+          name: "Metric9",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
+        }
+      ],
+
+      timeChartData: [
+        ["Day", "Announcement", "Polls", "surveys", "Courses"],
+        ["Sun", 20, 20, 20, 33],
+        ["Mon", 10, 10, 45, 56],
+        ["Tue", 30, 40, 22, 47],
+        ["Wed", 40, 45, 39, 99],
+        ["Thur", 50, 22, 15, 25],
+        ["Fri", 60, 40, 11, 28],
+        ["Sat", 87, 23, 19, 49]
+      ],
+      timeChartOptions: {
+        legend: {
+          position: "none",
+          maxLines: 3,
+          fontName: "open-sans",
+          fontSize: 10
+        },
+        bar: { groupWidth: "40%" },
+        height: 200,
+        isStacked: true,
+        colors: ["#0087DB", "#DAAA55", "#F77253", "#1F497D"],
+        fontName: "open-sans",
+        fontSize: 12,
+        chartArea: { width: "100%", height: "100%" }
+      },
+      timeChartLegends: [
+        {
+          name: "Announcement",
+          color: "#1F497D"
+        },
+        {
+          name: "Polls",
+          color: "#F77253"
+        },
+        {
+          name: "Surveys",
+          color: "#DAAA55"
+        },
+        {
+          name: "Courses",
+          color: "#0087DB"
         }
       ]
     };
   },
-  methods: {},
+  methods: {
+    generateData(n, floor) {
+      var data = [],
+        p = Math.random() * 11 + 1,
+        i;
+
+      floor = !floor && floor !== 0 ? 20 : floor;
+      for (i = 0; i < (n || 12); i++) {
+        data.push({
+          x: i % 12,
+          y: Math.floor(Math.max(Math.random() * 100, 20))
+        });
+      }
+      return data;
+    }
+  },
   computed: {}
 };
 </script>
