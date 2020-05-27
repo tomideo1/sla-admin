@@ -6,7 +6,7 @@
         <h3 class="page-title font-poppings text-dark">Dashboard</h3>
       </d-col>
     </d-row>
-    <d-row>
+    <d-row no-gutters>
       <d-col class="mt-3">
         <div class="row ">
           <hr class="style1 col-md-4" />
@@ -168,10 +168,24 @@
                     </span>
                   </div>
                 </d-tab>
-                <d-tab title="Coaches">
-                  Sed at lacus efficitur, imperdiet purus et, pretium arcu.
-                  Mauris vulputate, libero in dignissim auctor, nunc tortor
-                  interdum elit, ac dignissim ex enim vitae diam.
+                <d-tab
+                  title="Coaches"
+                  style="max-height: 250px!important; overflow-y: auto"
+                >
+                  <div
+                    class="d-flex mt-n4 ml-lg-n4 mb-3 flex-row flex-grow-1"
+                    v-for="i in 10"
+                  >
+                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
+                    <span
+                      style="font-size: 14px;"
+                      class="m-1 font-open-sans text-dark"
+                    >
+                      Tomide Aina
+                      <br />
+                      <small class="font-open-sans text-grey">300XP</small>
+                    </span>
+                  </div>
                 </d-tab>
               </d-tabs>
             </div>
