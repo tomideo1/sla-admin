@@ -79,24 +79,27 @@
          background: linear-gradient(133.56deg, #0087DB -33.88%, #1F497D 95.84%);
          box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.03); border-radius: 0"
         >
-          <div class="row  ">
+          <div class="row">
             <sla-avatar
-              class="avatar col-12"
+              :class="'avatar col-12'"
               size="xl"
-              :user="{ name: 'AINA' }"
+              v-if="top_1 !== null"
+              :user="{ name: top_1.user.first_name }"
             />
             <div class="col-md-6 col-lg-6 col-6 ">
               <sla-avatar
                 class="avatar float-right col-lg-6   mt-lg-n5 "
                 size="lg-2"
-                :user="{ name: 'PETER' }"
+                v-if="top_2 !== null"
+                :user="{ name: top_2.user.first_name }"
               />
             </div>
             <div class="col-md-6 col-lg-6 col-6 ">
               <sla-avatar
                 class="avatar mr-lg-5 col-lg-6 mt-lg-n5 "
                 size="lg-2"
-                :user="{ name: 'DAMOLA' }"
+                v-if="top_3 !== null"
+                :user="{ name: top_3.user.first_name }"
               />
             </div>
           </div>
@@ -117,16 +120,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="i in 10">
-              <td>{{ i++ }}</td>
-              <td>{{ "Tomide" }}</td>
-              <td>{{ "300" }}</td>
-              <td>{{ "300" }}</td>
-              <td>{{ "400" }}</td>
-              <td>{{ "500" }}</td>
-              <td>{{ "500" }}</td>
-              <td>{{ "10000" }}</td>
-            </tr>
             <tr v-for="(item, index) in leaders" :key="index">
               <td>{{ item.position }}</td>
               <td>{{ item.user.first_name }}</td>
@@ -136,9 +129,6 @@
               <td>{{ item.lesson }}</td>
               <td>{{ item.courses }}</td>
               <td>{{ item.total }}</td>
-              <td>
-                <icon size="sm" name="share" />
-              </td>
             </tr>
           </tbody>
         </table>
@@ -150,6 +140,7 @@
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
+import helper from "../helpers/helper";
 const token = store.state.auth.token;
 export default {
   name: "LeaderBoard",
@@ -159,20 +150,38 @@ export default {
   },
   data() {
     return {
-      leaders: null
+      top_1: null,
+      top_2: null,
+      top_3: null
     };
+  },
+  computed: {
+    ...mapGetters({
+      leaders: "app/getLeaderboard"
+      // maps courses to current computed resource
+    })
+  },
+  methods: {
+    ...mapActions("app/", ["getAllLeaderboard"])
+
+    //vuex call to get all courses
   },
 
   async mounted() {
-    let res = await axios
-      .get(`${process.env.VUE_APP_API}/admin/leaderboard/getAll`, {
-        headers: {
-          Authorization: `Bearer ${token} `
-        }
-      })
-      .then(res => {
-        this.leaders = res.data.data.leaderboard;
-      });
+    this.getAllLeaderboard();
+    this.leaders.forEach(leader => {
+      switch (leader.position) {
+        case 1:
+          this.top_1 = leader;
+          break;
+        case 2:
+          this.top_2 = leader;
+          break;
+        case 3:
+          this.top_3 = leader;
+          break;
+      }
+    });
   }
 };
 </script>

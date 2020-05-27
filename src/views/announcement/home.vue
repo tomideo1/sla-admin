@@ -8,7 +8,7 @@
         <carousel refs="content">
           <div
             class="scroll m-2"
-            v-for="(announcement, idx) in announcements"
+            v-for="(announcement, idx) in getAnnouncements"
             :key="idx"
           >
             <d-card
@@ -53,6 +53,7 @@
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
+import helper from "../../helpers/helper";
 export default {
   name: "course-home",
   data() {
@@ -64,7 +65,10 @@ export default {
     ...mapGetters({
       announcements: "app/getAnnouncements"
       // maps courses to current computed resource
-    })
+    }),
+    getAnnouncements() {
+      return this.announcements.sort(helper.GetSortOrder("title"));
+    }
   },
   methods: {
     ...mapActions("app/", ["getAllAnnouncements"])

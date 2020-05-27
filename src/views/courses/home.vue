@@ -6,7 +6,11 @@
           Alphabetical Order (A -Z)
         </h6>
         <carousel refs="content">
-          <div class="scroll m-2" v-for="(course, idx) in courses" :key="idx">
+          <div
+            class="scroll m-2"
+            v-for="(course, idx) in getCourses"
+            :key="idx"
+          >
             <d-card
               :style="
                 'width:200px!important;height: 120px!important;' +
@@ -161,7 +165,7 @@
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
-
+import helper from "../../helpers/helper";
 export default {
   name: "course-home",
   data() {
@@ -180,8 +184,12 @@ export default {
       courses: "app/getCourses",
       engagedCourses: "app/getEngagedCourses",
       Categories: "app/getCategories"
+
       // maps courses to current computed resource
-    })
+    }),
+    getCourses() {
+      return this.courses.sort(helper.GetSortOrder("title"));
+    }
   },
   methods: {
     ...mapActions("app/", [

@@ -1,11 +1,11 @@
 <template>
   <d-container fluid>
     <d-row>
-      <div class="col-lg-6 col-md-6 col-12">
+      <div class="col-lg-12 col-md-12 col-12">
         <h6 class="font-poppings text-grey font-weight-bold"></h6>
         <d-row>
           <div
-            class="col-md-10 m-3"
+            class="col-md-3 col-lg-3 col-6 m-3"
             v-for="(resource, idx) in Resources"
             :key="idx"
           >

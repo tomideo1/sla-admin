@@ -6,7 +6,11 @@
           Alphabetical Order (A -Z)
         </h6>
         <carousel refs="content">
-          <div class="scroll m-2" v-for="(survey, idx) in surveys" :key="idx">
+          <div
+            class="scroll m-2"
+            v-for="(survey, idx) in getSurveys"
+            :key="idx"
+          >
             <d-card
               @click="
                 $router.push({
@@ -49,6 +53,7 @@
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
+import helper from "../../helpers/helper";
 export default {
   name: "course-home",
   data() {
@@ -60,7 +65,10 @@ export default {
     ...mapGetters({
       surveys: "app/getSurveys"
       // maps courses to current computed resource
-    })
+    }),
+    getSurveys() {
+      return this.surveys.sort(helper.GetSortOrder("title"));
+    }
   },
   methods: {
     ...mapActions("app/", ["getAllSurveys"])

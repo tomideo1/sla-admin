@@ -193,6 +193,17 @@
         </d-card>
       </div>
     </d-row>
+    <d-row no-gutters>
+      <d-col class="mt-5">
+        <div class="row ">
+          <hr class="style1 col-md-4" />
+          <h5 class="font-poppings text-bold mx-auto title text-dark">
+            Engagement Rate
+          </h5>
+          <hr class="style1 col-md-4" />
+        </div>
+      </d-col>
+    </d-row>
   </d-container>
 </template>
 
@@ -245,7 +256,10 @@ export default {
       options: {
         chart: {
           type: "heatmap",
-          id: "vue-heat-map"
+          id: "vue-heat-map",
+          toolbar: {
+            show: false
+          }
         },
         dataLabels: {
           enabled: false
@@ -290,27 +304,6 @@ export default {
         },
         {
           name: "Metric6",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric7",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric8",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric9",
           data: this.generateData(18, {
             min: 0,
             max: 90

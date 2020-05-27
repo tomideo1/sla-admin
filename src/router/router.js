@@ -211,8 +211,8 @@ const router = new Router({
           }
         },
         {
-          path: "edit",
-          name: "edit-survey",
+          path: "single",
+          name: "single-survey",
           component: () => import("@/views/survey/single.vue"),
           meta: {
             middleware: [auth]

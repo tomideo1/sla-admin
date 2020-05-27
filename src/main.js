@@ -4,7 +4,7 @@ import ShardsVue from "shards-vue";
 import "vue-trix";
 import VueAnalytics from "vue-analytics";
 import store from "@/store/";
-
+import helper from "./helpers/helper";
 import "bootstrap/dist/css/bootstrap.css";
 import "shards-ui/dist/css/shards.css";
 import "@/assets/shards-dashboard-pro/shards-dashboards.scss";
@@ -41,5 +41,6 @@ Vue.prototype.$eventHub = new Vue();
 new Vue({
   router,
   store,
+  helper,
   render: h => h(App)
 }).$mount("#app");

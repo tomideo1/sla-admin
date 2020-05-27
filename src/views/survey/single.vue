@@ -1,41 +1,79 @@
 <template>
   <d-container fluid class="main-content-container px-4">
-    <!-- Page Header -->
-    <d-row no-gutters class="page-header py-4">
-      <d-col col sm="4" class="text-center text-sm-left mb-4 mb-sm-0">
-        <h3 class="page-title text-dark">
-          <span style="position:relative; left: -10px">
-            <icon size="lg" name="left" />
-          </span>
-          Edit Announcement
-        </h3>
-      </d-col>
-    </d-row>
-    <d-row no-gutters class="py-4">
-      <d-form class="col-md-6">
-        <d-input size="lg" class="mb-3" placeholder=" Title" />
-        <div class="form-group">
-          <d-select :value="null" class="col-md-3">
-            <option :value="null">To Everyone</option>
-            <option>Participant</option>
-            <option>Admins</option>
-            <option>Coaches</option>
-          </d-select>
-        </div>
-        <d-button class=" btn-outline-primary col-md-5 m-2" outline
-          >SCHEDULE</d-button
-        >
-        <d-button class="btn-primary col-md-5 m-2">SAVE CHANGES</d-button>
-      </d-form>
-    </d-row>
+    <top :heading="Surveys.title" />
+    <h4 class="m-3 text-bold font-poppings text-black">
+      {{ Surveys.responses }} responses
+    </h4>
+    <d-card class=" col-md-6 col-12 col-lg-6 ">
+      <d-card-header class="text-black font-open-sans border-bottom">
+        <!--        {{ Surveys.question }}-->
+      </d-card-header>
+      <d-card-body>
+        <GChart type="PieChart" :data="chartData" :options="chartOptions" />
+      </d-card-body>
+    </d-card>
+    <footer class="border-top m-5 ">
+      <sla-button
+        class="btn  m-3  text-uppercase float-right"
+        :text="'EXPORT'"
+        type="filled"
+        size="sm"
+      />
+      <sla-button
+        class="btn  m-3  text-uppercase float-right"
+        :text="'CLOSE POLL'"
+        type="outline"
+        size="sm"
+      />
+      <p
+        class="font-open-sans float-right m-4"
+        style="color:#0087DB; cursor: pointer; font-size: 14px;"
+        @click="deleteModal = true"
+      >
+        EDIT POLL
+      </p>
+      <p
+        class="font-open-sans float-right m-4"
+        style="color: #FF4133; cursor: pointer; font-size: 14px;"
+        @click="deleteModal = true"
+      >
+        DELETE POLL
+      </p>
+    </footer>
   </d-container>
 </template>
 
 <script>
+import { GChart } from "vue-google-charts";
 export default {
-  name: "edit",
+  name: "single-poll",
+  data() {
+    return {
+      deleteModal: false,
+      chartData: [["value", "count"]],
+      chartOptions: {
+        chart: {
+          width: 800,
+          height: 800,
+          legend: { position: "top", maxLines: 3 },
+          bar: { groupWidth: "75%" }
+        }
+      },
+      Surveys: undefined
+    };
+  },
   components: {
-    Icon: () => import("@/components/SlaIcon")
+    Icon: () => import("@/components/SlaIcon"),
+    Top: () => import("@/components/top"),
+    SlaButton: () => import("@/components/SlaButton"),
+    GChart
+  },
+  mounted() {
+    const self = this;
+    self.Surveys = self.$route.params.single_survey;
+    // self.Surveys.options.forEach(data => {
+    //   self.chartData.push([data.value, data.count]);
+    // });
   }
 };
 </script>

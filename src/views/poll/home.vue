@@ -6,7 +6,7 @@
           Alphabetical Order (A -Z)
         </h6>
         <carousel refs="content">
-          <div class="scroll m-2" v-for="(poll, idx) in Polls" :key="idx">
+          <div class="scroll m-2" v-for="(poll, idx) in getPolls" :key="idx">
             <d-card
               :style="
                 'width:200px!important;height: 120px!important;' +
@@ -49,6 +49,7 @@
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
+import helper from "../../helpers/helper";
 export default {
   name: "polls-home",
   data() {
@@ -60,7 +61,10 @@ export default {
     ...mapGetters({
       Polls: "app/getPolls"
       // maps courses to current computed resource
-    })
+    }),
+    getPolls() {
+      return this.Polls.sort(helper.GetSortOrder("title"));
+    }
   },
   methods: {
     ...mapActions("app/", ["getAllPolls"])
