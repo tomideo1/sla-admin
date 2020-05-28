@@ -376,6 +376,517 @@
         </div>
       </d-col>
     </d-row>
+    <d-row no-gutters class="p-3 mb-3">
+      <d-card
+        class=" col-md-6 col-12  col-lg-6 "
+        style="border-radius:0!important; max-height: 300px!important;"
+      >
+        <p class="text-black font-poppings  m-3">
+          Post Activity
+        </p>
+        <GChart
+          type="LineChart"
+          :data="postActivityChartData"
+          :options="postActivityChartOptions"
+        />
+        <div class="d-flex flex-row mx-auto ">
+          <div
+            class="legend_block m-1"
+            v-for="legend in postActivityChartLegends"
+          >
+            <span>
+              <div
+                class="legend_circle mr-1 "
+                :style="'background-color:' + legend.color + ';'"
+              ></div>
+            </span>
+            <p>{{ legend.name }}</p>
+          </div>
+        </div>
+      </d-card>
+      <d-card
+        class=" col-md-6 col-12  col-lg-5  ml-lg-5 mt-3 mt-lg-0 mt-md-0"
+        style="border-radius:0!important;"
+      >
+        <p class="text-black font-poppings  m-3">
+          Post Interactions
+        </p>
+        <GChart
+          type="LineChart"
+          :data="postInteractionsChartData"
+          :options="postActivityChartOptions"
+        />
+        <div class="d-flex flex-row mx-auto ">
+          <div
+            class="legend_block m-1"
+            v-for="legend in postInteractionsChartLegends"
+          >
+            <span>
+              <div
+                class="legend_circle mr-1 "
+                :style="'background-color:' + legend.color + ';'"
+              ></div>
+            </span>
+            <p>{{ legend.name }}</p>
+          </div>
+        </div>
+      </d-card>
+    </d-row>
+    <d-row class="p-3 mb-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-select class="col-md-3 mb-4">
+          <option selected :value="undefined">All</option>
+        </d-select>
+        <div class="col-md-4 float-right">
+          <div class="d-flex flex-row mx-auto ">
+            <div
+              class="legend_block m-1"
+              v-for="legend in postActivityChartLegends"
+            >
+              <span>
+                <div
+                  class="legend_circle mr-1 "
+                  :style="'background-color:' + legend.color + ';'"
+                ></div>
+              </span>
+              <p>{{ legend.name }}</p>
+            </div>
+          </div>
+        </div>
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-12">
+              <div class="row">
+                <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
+                  <p class="text-black font-poppings  m-3">
+                    Posts
+                  </p>
+                </div>
+                <div class="col-md-1 text-center  col-12 col-lg-1">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Type
+                  </p>
+                </div>
+                <div class="col-md-1 text-center  col-12 col-lg-1">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Author
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black w-100 mx-auto font-poppings  m-3">
+                    Impressions
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black mx-auto w-100 font-poppings  m-3">
+                    Engagements
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black w-100 mx-auto font-poppings  m-3">
+                    Engagement Ratio
+                  </p>
+                </div>
+              </div>
+              <div
+                :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
+                v-for="legend in postInteractionsChartLegends"
+                :key="legend"
+              >
+                <div class="col-md-7 border-right col-12 col-lg-7">
+                  <span
+                    style="font-size: 16px;letter-spacing: 0.15px;"
+                    class="font-open-sans text-dark
+                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
+                  >
+                    <d-card
+                      :style="
+                        'width:87px!important;height: 63px!important;' +
+                          'backgroundImage:url(' +
+                          'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +
+                          ');' +
+                          ' background-size:cover; background-position:center'
+                      "
+                    >
+                    </d-card>
+                    <span class="m-1 ml-4">
+                      Business Analytics for future investment
+                    </span>
+                  </span>
+                </div>
+                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                  <div
+                    class="legend_circle mt-lg-4  mx-auto "
+                    :style="'background-color:' + legend.color + ';'"
+                  ></div>
+                </div>
+                <div
+                  class="col-md-1    border-right text-center col-12 col-lg-1"
+                >
+                  <p class="text-black  w-100 mx-auto font-open-sanst  m-3">
+                    SLA
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    253
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    642
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    1.12
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </d-card>
+      </div>
+    </d-row>
+    <d-row class="p-3 mb-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-select class="col-md-3 mb-4">
+          <option selected :value="undefined">All</option>
+        </d-select>
+        <div class="col-md-4 float-right">
+          <div class="d-flex flex-row mx-auto ">
+            <div
+              class="legend_block m-1"
+              v-for="legend in postActivityChartLegends"
+            >
+              <span>
+                <div
+                  class="legend_circle mr-1 "
+                  :style="'background-color:' + legend.color + ';'"
+                ></div>
+              </span>
+              <p>{{ legend.name }}</p>
+            </div>
+          </div>
+        </div>
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-12">
+              <div class="row">
+                <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
+                  <p class="text-black font-poppings  m-3">
+                    Top Posts
+                  </p>
+                </div>
+                <div class="col-md-1 text-center  col-12 col-lg-1">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Type
+                  </p>
+                </div>
+                <div class="col-md-1 text-center  col-12 col-lg-1">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Author
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black w-100 mx-auto font-poppings  m-3">
+                    Impressions
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black mx-auto w-100 font-poppings  m-3">
+                    Engagements
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black w-100 mx-auto font-poppings  m-3">
+                    Engagement Ratio
+                  </p>
+                </div>
+              </div>
+              <div
+                :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
+                v-for="legend in postInteractionsChartLegends"
+                :key="legend"
+              >
+                <div class="col-md-7 border-right col-12 col-lg-7">
+                  <span
+                    style="font-size: 16px;letter-spacing: 0.15px;"
+                    class="font-open-sans text-dark
+                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
+                  >
+                    <d-card
+                      :style="
+                        'width:87px!important;height: 63px!important;' +
+                          'backgroundImage:url(' +
+                          'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +
+                          ');' +
+                          ' background-size:cover; background-position:center'
+                      "
+                    >
+                    </d-card>
+                    <span class="m-1 ml-4">
+                      Business Analytics for future investment
+                    </span>
+                  </span>
+                </div>
+                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                  <div
+                    class="legend_circle mt-lg-4  mx-auto "
+                    :style="'background-color:' + legend.color + ';'"
+                  ></div>
+                </div>
+                <div
+                  class="col-md-1    border-right text-center col-12 col-lg-1"
+                >
+                  <p class="text-black  w-100 mx-auto font-open-sanst  m-3">
+                    SLA
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    253
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    642
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    1.12
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </d-card>
+      </div>
+    </d-row>
+    <d-row class="p-3 mb-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <p class="text-black font-poppings  m-3">
+            Posts By Day
+          </p>
+          <GChart
+            type="ColumnChart"
+            :data="postByDayChartData"
+            :options="postByDayChartOptions"
+          />
+          <div class="d-flex flex-row mx-auto ">
+            <div
+              class="legend_block m-1"
+              v-for="legend in postByDayChartLegends"
+            >
+              <span>
+                <div
+                  class="legend_circle mr-1 "
+                  :style="'background-color:' + legend.color + ';'"
+                ></div>
+              </span>
+              <p>{{ legend.name }}</p>
+            </div>
+          </div>
+        </d-card>
+      </div>
+    </d-row>
+    <d-row no-gutters>
+      <d-col class="mt-5">
+        <div class="row ">
+          <hr class="style1 col-md-4" />
+          <h5 class="font-poppings text-bold mx-auto title text-dark">
+            Users
+          </h5>
+          <hr class="style1 col-md-4" />
+        </div>
+      </d-col>
+    </d-row>
+    <d-row no-gutters class="p-3 mb-3">
+      <d-card
+        class=" col-md-6 col-12  col-lg-6 "
+        style="border-radius:0!important; max-height: 300px!important;"
+      >
+        <p class="text-black font-poppings  m-3">
+          Active users
+        </p>
+        <GChart
+          type="LineChart"
+          :data="userActivityChartData"
+          :options="userActivityChartOptions"
+        />
+        <div class="d-flex flex-row mx-auto ">
+          <div
+            class="legend_block m-1"
+            v-for="legend in userActivityChartLegends"
+          >
+            <span>
+              <div
+                class="legend_circle mr-1 "
+                :style="'background-color:' + legend.color + ';'"
+              ></div>
+            </span>
+            <p>{{ legend.name }}</p>
+          </div>
+        </div>
+      </d-card>
+      <d-card
+        class=" col-md-6 col-12  col-lg-5  ml-lg-5 mt-3 mt-lg-0 mt-md-0"
+        style="border-radius:0!important;"
+      >
+        <p class="text-black font-poppings  m-3">
+          User Interactions
+        </p>
+        <GChart
+          type="LineChart"
+          :data="userInteractionsChartData"
+          :options="userActivityChartOptions"
+        />
+        <div class="d-flex flex-row mx-auto ">
+          <div
+            class="legend_block m-1"
+            v-for="legend in userInteractionsChartLegends"
+          >
+            <span>
+              <div
+                class="legend_circle mr-1 "
+                :style="'background-color:' + legend.color + ';'"
+              ></div>
+            </span>
+            <p>{{ legend.name }}</p>
+          </div>
+        </div>
+      </d-card>
+    </d-row>
+    <d-row class="p-3 mb-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-select class="col-md-3 mb-4">
+          <option selected :value="undefined">All</option>
+        </d-select>
+        <div class="col-md-4 float-right">
+          <div class="d-flex flex-row mx-auto ">
+            <div
+              class="legend_block m-1"
+              v-for="legend in postActivityChartLegends"
+            >
+              <span>
+                <div
+                  class="legend_circle mr-1 "
+                  :style="'background-color:' + legend.color + ';'"
+                ></div>
+              </span>
+              <p>{{ legend.name }}</p>
+            </div>
+          </div>
+        </div>
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-12">
+              <div class="row">
+                <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
+                  <p class="text-black font-poppings  m-3">
+                    Top Posts
+                  </p>
+                </div>
+                <div class="col-md-1 text-center  col-12 col-lg-1">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Type
+                  </p>
+                </div>
+                <div class="col-md-1 text-center  col-12 col-lg-1">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Author
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black w-100 mx-auto font-poppings  m-3">
+                    Impressions
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black mx-auto w-100 font-poppings  m-3">
+                    Engagements
+                  </p>
+                </div>
+                <div class="col-md-1 text-center col-12 col-lg-1">
+                  <p class="text-black w-100 mx-auto font-poppings  m-3">
+                    Engagement Ratio
+                  </p>
+                </div>
+              </div>
+              <div
+                :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
+                v-for="legend in postInteractionsChartLegends"
+                :key="legend"
+              >
+                <div class="col-md-7 border-right col-12 col-lg-7">
+                  <span
+                    style="font-size: 16px;letter-spacing: 0.15px;"
+                    class="font-open-sans text-dark
+                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
+                  >
+                    <d-card
+                      :style="
+                        'width:87px!important;height: 63px!important;' +
+                          'backgroundImage:url(' +
+                          'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +
+                          ');' +
+                          ' background-size:cover; background-position:center'
+                      "
+                    >
+                    </d-card>
+                    <span class="m-1 ml-4">
+                      Business Analytics for future investment
+                    </span>
+                  </span>
+                </div>
+                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                  <div
+                    class="legend_circle mt-lg-4  mx-auto "
+                    :style="'background-color:' + legend.color + ';'"
+                  ></div>
+                </div>
+                <div
+                  class="col-md-1    border-right text-center col-12 col-lg-1"
+                >
+                  <p class="text-black  w-100 mx-auto font-open-sanst  m-3">
+                    SLA
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    253
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    642
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black  font-open-sanst  m-3">
+                    1.12
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </d-card>
+      </div>
+    </d-row>
   </d-container>
 </template>
 
@@ -553,6 +1064,221 @@ export default {
           name: "Posts",
           color: "#0087DB"
         }
+      ],
+
+      postActivityChartData: [
+        ["Day", "Announcement", "Polls", "surveys", "Courses"],
+        ["Sun", 20, 20, 20, 33],
+        ["Mon", 10, 10, 45, 56],
+        ["Tue", 30, 40, 22, 47],
+        ["Wed", 40, 45, 39, 99],
+        ["Thur", 50, 22, 15, 25],
+        ["Fri", 60, 40, 11, 28],
+        ["Sat", 87, 23, 19, 49]
+      ],
+      postActivityChartOptions: {
+        legend: {
+          position: "none",
+          maxLines: 3,
+          fontName: "open-sans",
+          fontSize: 10
+        },
+        bar: { groupWidth: "40%" },
+        height: 200,
+        isStacked: true,
+        colors: ["#0087DB", "#DAAA55", "#F77253", "#1F497D"],
+        fontName: "open-sans",
+        fontSize: 12,
+        chartArea: { width: "80%", height: "80%" }
+      },
+      postActivityChartLegends: [
+        {
+          name: "Announcement",
+          color: "#1F497D"
+        },
+        {
+          name: "Polls",
+          color: "#F77253"
+        },
+        {
+          name: "Surveys",
+          color: "#DAAA55"
+        },
+        {
+          name: "Courses",
+          color: "#0087DB"
+        }
+      ],
+
+      postInteractionsChartData: [
+        ["Day", "Announcement", "Polls", "surveys", "Courses"],
+        ["Sun", 20, 20, 20, 33],
+        ["Mon", 10, 10, 45, 56],
+        ["Tue", 30, 40, 22, 47],
+        ["Wed", 40, 45, 39, 99],
+        ["Thur", 50, 22, 15, 25],
+        ["Fri", 60, 40, 11, 28],
+        ["Sat", 87, 23, 19, 49]
+      ],
+      postInteractionsChartOptions: {
+        legend: {
+          position: "none",
+          maxLines: 3,
+          fontName: "open-sans",
+          fontSize: 10
+        },
+        bar: { groupWidth: "40%" },
+        height: 200,
+        isStacked: true,
+        colors: ["#0087DB", "#DAAA55", "#F77253", "#1F497D"],
+        fontName: "open-sans",
+        fontSize: 12,
+        chartArea: { width: "80%", height: "80%" }
+      },
+      postInteractionsChartLegends: [
+        {
+          name: "Clicks",
+          color: "#1F497D"
+        },
+        {
+          name: "Rections",
+          color: "#F77253"
+        },
+        {
+          name: "Comments",
+          color: "#DAAA55"
+        },
+        {
+          name: "Share",
+          color: "#0087DB"
+        }
+      ],
+
+      postByDayChartData: [
+        ["Days", "Engagements", "Impressions"],
+        ["1", 30, 80],
+        ["2", 30, 40],
+        ["3", 60, 40],
+        ["4", 70, 50],
+        ["5", 40, 50],
+        ["6", 45, 30],
+        ["7", 10, 20],
+        ["8", 10, 20],
+        ["9", 10, 20],
+        ["10", 20, 53],
+        ["11", 10, 57],
+        ["12", 76, 89],
+        ["13", 42, 50],
+        ["14", 39, 60],
+        ["15", 30, 59],
+        ["16", 40, 58],
+        ["17", 50, 20],
+        ["18", 10, 60],
+        ["19", 70, 20],
+        ["20", 10, 40]
+      ],
+      postByDayChartOptions: {
+        legend: {
+          position: "none",
+          maxLines: 3,
+          fontName: "open-sans",
+          fontSize: 10
+        },
+        bar: { groupWidth: "20%" },
+        height: 200,
+        isStacked: false,
+        colors: ["#0087DB", "#DAAA55", "#F77253", "#1F497D"],
+        fontName: "open-sans",
+        fontSize: 12,
+        chartArea: { width: "80%", height: "80%" }
+      },
+      postByDayChartLegends: [
+        {
+          name: "Engagement",
+          color: "#DAAA55"
+        },
+        {
+          name: "Impressions",
+          color: "#0087DB"
+        }
+      ],
+
+      userActivityChartData: [
+        ["Day", "Monthly", "weekly", "Daily"],
+        ["Sun", 20, 20, 20],
+        ["Mon", 10, 10, 45],
+        ["Tue", 30, 40, 22],
+        ["Wed", 40, 45, 39],
+        ["Thur", 50, 22, 15],
+        ["Fri", 60, 40, 11],
+        ["Sat", 87, 23, 19]
+      ],
+      userActivityChartOptions: {
+        legend: {
+          position: "none",
+          maxLines: 3,
+          fontName: "open-sans",
+          fontSize: 10
+        },
+        bar: { groupWidth: "40%" },
+        height: 200,
+        isStacked: true,
+        colors: ["#0087DB", "#DAAA55", "#F77253", "#1F497D"],
+        fontName: "open-sans",
+        fontSize: 12,
+        chartArea: { width: "80%", height: "80%" }
+      },
+      userActivityChartLegends: [
+        {
+          name: "Monthly",
+          color: "#F77253"
+        },
+        {
+          name: "Weekly",
+          color: "#DAAA55"
+        },
+        {
+          name: "Daily",
+          color: "#0087DB"
+        }
+      ],
+
+      userInteractionsChartData: [
+        ["Time", "With Other Members", "With Posts"],
+        ["Time", 20, 20],
+        ["Time", 40, 20],
+        ["Time", 100, 20],
+        ["Time", 60, 202],
+        ["Time", 40, 3],
+        ["Time", 102, 34],
+        ["Time", 40, 303],
+        ["Time", 40, 2],
+        ["Time", 120, 101]
+      ],
+      userInteractionsChartOptions: {
+        legend: {
+          position: "none",
+          maxLines: 3,
+          fontName: "open-sans",
+          fontSize: 10
+        },
+        bar: { groupWidth: "40%" },
+        height: 200,
+        isStacked: true,
+        colors: ["#0087DB", "#DAAA55", "#F77253", "#1F497D"],
+        fontName: "open-sans",
+        fontSize: 12,
+        chartArea: { width: "80%", height: "80%" }
+      },
+      userInteractionsChartLegends: [
+        {
+          name: "With Other Members ",
+          color: "#DAAA55"
+        },
+        {
+          name: "With Posts",
+          color: "#0087DB"
+        }
       ]
     };
   },
@@ -607,6 +1333,7 @@ hr.style1 {
 
 .scorecard-selected {
   background: #e7e6e6;
+  opacity: 0.7;
 }
 .btn-primary {
   background: rgba(0, 135, 219, 0.16) !important;
