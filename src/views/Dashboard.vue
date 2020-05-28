@@ -123,8 +123,8 @@
             Time Spent on App
           </p>
           <h4 class="text-dark font-poppings ">5h 40m</h4>
-          <div class="row">
-            <div class="col-md-8 col-lg-8 col-12 ">
+          <div class="row ">
+            <div class="col-md-8  col-lg-8 col-12 ">
               <GChart
                 type="ColumnChart"
                 :data="timeChartData"
@@ -132,7 +132,7 @@
               />
               <div class="d-flex flex-row flex-grow-1 float-lg-right p-3 w-75 ">
                 <div
-                  class="legend_block m-1 w-100 mx-auto"
+                  class="legend_block m-1  text-center"
                   v-for="legend in timeChartLegends"
                 >
                   <span>
@@ -141,15 +141,17 @@
                       :style="'background-color:' + legend.color + ';'"
                     ></div>
                   </span>
-                  <p style="overflow-wrap: break-word!important;">
+                  <p class="d-flex flex-column font-open-sans">
                     {{ legend.name }}
+                    <span class="text-dark font-poppings">
+                      {{ legend.times }}
+                    </span>
                   </p>
                 </div>
               </div>
             </div>
-            <div class="border-right m-lg-4 mt-lg-n5"></div>
-            <div class="col-md-3 col-lg-3 col-12">
-              <div class="row m-2 mt-lg-n5 ml-lg-n4">
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="row m-2 mt-lg-n5 ">
                 <sla-button
                   text="Users"
                   size="sm"
@@ -164,11 +166,17 @@
                 />
               </div>
               <div
-                class="row mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12 selected m-3 m-lg-0 m-md-0"
+                class="row mt-3 "
+                style="max-height: 300px!important;overflow-y: auto"
               >
                 <span
+                  v-for="i in 10"
+                  :key="i"
                   style="font-size: 16px;letter-spacing: 0.15px;"
-                  class=" font-open-sans text-dark ml-2 mt-n1 d-flex flex-row"
+                  :class="[
+                    ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
+                      '  m-3 m-lg-0 m-md-0 d-flex flex-row '
+                  ]"
                 >
                   <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
                   <span class="ml-2">
@@ -196,6 +204,173 @@
           <hr class="style1 col-md-4" />
           <h5 class="font-poppings text-bold mx-auto title text-dark">
             Engagement Rate
+          </h5>
+          <hr class="style1 col-md-4" />
+        </div>
+      </d-col>
+    </d-row>
+    <d-row class="m-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <p class="text-black font-poppings  m-3">
+            Engagement (Select user to view engagement)
+          </p>
+          <div class="row ">
+            <div class="col-md-8  col-lg-8 col-12 ">
+              <GChart
+                type="LineChart"
+                :data="engagementChartData"
+                :options="engagementChartOptions"
+              />
+              <div class="d-flex flex-row flex-grow-1 float-lg-right p-3 w-75 ">
+                <div
+                  class="legend_block m-1  text-center"
+                  v-for="legend in engagementChartLegends"
+                >
+                  <span>
+                    <div
+                      class="legend_circle mr-1 "
+                      :style="'background-color:' + legend.color + ';'"
+                    ></div>
+                  </span>
+                  <p>
+                    {{ legend.name }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="row m-2 mt-lg-n4 ">
+                <sla-button
+                  text="Users"
+                  size="sm"
+                  type="outline"
+                  class="btn shadow-effect"
+                />
+                <sla-button
+                  text="Coaches"
+                  size="sm"
+                  type="filled"
+                  class="btn ml-3 ml-md-3   shadow-effect"
+                />
+              </div>
+              <div
+                class="row mt-3 mb-3 "
+                style="max-height: 300px!important;overflow-y: auto"
+              >
+                <span
+                  v-for="i in 10"
+                  :key="i"
+                  style="font-size: 16px;letter-spacing: 0.15px;"
+                  :class="[
+                    ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
+                      '  m-3 m-lg-0 m-md-0 d-flex flex-row '
+                  ]"
+                >
+                  <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
+                  <span class="ml-2">
+                    Tomide Aina
+                    <small
+                      class="font-open-sans ml-5  text-dark"
+                      style="
+                             line-height: 19px;
+                             letter-spacing: 0.15px;"
+                    >
+                      300XP
+                    </small>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </d-card>
+      </div>
+    </d-row>
+    <d-row no-gutters>
+      <d-col class="mt-5">
+        <div class="row ">
+          <hr class="style1 col-md-4" />
+          <h5 class="font-poppings text-bold mx-auto title text-dark">
+            Scorecard
+          </h5>
+          <hr class="style1 col-md-4" />
+        </div>
+      </d-col>
+    </d-row>
+    <d-row class="m-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-12">
+              <div class="row">
+                <div
+                  class="col-md-8 border-right text-center text-lg-left col-12 col-lg-8"
+                >
+                  <p class="text-black font-poppings  m-3">
+                    Scorecard
+                  </p>
+                </div>
+                <div class="col-md-2 text-center border-right col-12 col-lg-2">
+                  <p class="text-black font-poppings  m-3">
+                    Status
+                  </p>
+                </div>
+                <div class="col-md-2 text-center col-12 col-lg-2">
+                  <p class="text-black font-poppings  m-3">
+                    Due Dates
+                  </p>
+                </div>
+              </div>
+              <div
+                :class="['row', i % 2 === 0 ? 'scorecard-selected' : '']"
+                v-for="i in 5"
+                :key="i"
+              >
+                <div class="col-md-8 border-right col-12 col-lg-8">
+                  <span
+                    style="font-size: 16px;letter-spacing: 0.15px;"
+                    class="font-open-sans text-dark
+                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
+                  >
+                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
+                    <span class="m-1 ml-4">
+                      Tomide Aina
+                    </span>
+                  </span>
+                </div>
+                <div class="col-md-2 border-right text-center col-12 col-lg-2">
+                  <d-btn
+                    :class="[
+                      'btn  mt-3  btn-pill',
+                      i % 2 === 0 ? 'btn-primary' : 'btn-warning'
+                    ]"
+                  >
+                    {{ i % 2 === 0 ? "Uploaded" : "Pending" }}
+                  </d-btn>
+                </div>
+                <div class="col-md-2 text-center col-12 col-lg-2">
+                  <p class="text-black  font-poppings  m-3">
+                    07-May-2020
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </d-card>
+      </div>
+    </d-row>
+    <d-row no-gutters>
+      <d-col class="mt-5">
+        <div class="row ">
+          <hr class="style1 col-md-4" />
+          <h5 class="font-poppings text-bold mx-auto title text-dark">
+            Posts
           </h5>
           <hr class="style1 col-md-4" />
         </div>
@@ -311,23 +486,71 @@ export default {
         colors: ["#0087DB", "#DAAA55", "#F77253", "#1F497D"],
         fontName: "open-sans",
         fontSize: 12,
-        chartArea: { width: "100%", height: "100%" }
+        chartArea: { width: "80%", height: "80%" }
       },
       timeChartLegends: [
         {
           name: "Announcement",
+          times: "1h 45m",
           color: "#1F497D"
         },
         {
           name: "Polls",
+          times: "1h 45m",
           color: "#F77253"
         },
         {
           name: "Surveys",
+          times: "1h 45m",
           color: "#DAAA55"
         },
         {
           name: "Courses",
+          times: "1h 45m",
+          color: "#0087DB"
+        }
+      ],
+
+      engagementChartData: [
+        ["Day", "Announcement", "Polls", "surveys", "Courses"],
+        ["Sun", 20, 20, 20, 33],
+        ["Mon", 10, 10, 45, 56],
+        ["Tue", 30, 40, 22, 47],
+        ["Wed", 40, 45, 39, 99],
+        ["Thur", 50, 22, 15, 25],
+        ["Fri", 60, 40, 11, 28],
+        ["Sat", 87, 23, 19, 49]
+      ],
+      engagementChartOptions: {
+        legend: {
+          position: "none",
+          maxLines: 3,
+          fontName: "open-sans",
+          fontSize: 10
+        },
+        bar: { groupWidth: "40%" },
+        height: 200,
+        isStacked: true,
+        colors: ["#0087DB", "#DAAA55", "#F77253", "#1F497D"],
+        fontName: "open-sans",
+        fontSize: 12,
+        chartArea: { width: "80%", height: "80%" }
+      },
+      engagementChartLegends: [
+        {
+          name: "Clicks",
+          color: "#1F497D"
+        },
+        {
+          name: "Rections",
+          color: "#F77253"
+        },
+        {
+          name: "Comments",
+          color: "#DAAA55"
+        },
+        {
+          name: "Posts",
           color: "#0087DB"
         }
       ]
@@ -379,5 +602,17 @@ hr.style1 {
   background: rgba(0, 135, 219, 0.04);
   border-radius: 0px 50px 50px 0px;
   width: 100%;
+  padding: 2px;
+}
+
+.scorecard-selected {
+  background: #e7e6e6;
+}
+.btn-primary {
+  background: rgba(0, 135, 219, 0.16) !important;
+  border: none;
+}
+.btn-warning {
+  background: #ffdea3 !important;
 }
 </style>
