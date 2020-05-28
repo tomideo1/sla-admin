@@ -4,36 +4,35 @@
       <top :heading="user.user.first_name" />
       <d-row>
         <div class="col-md-2 col-lg-2 col-12">
-          <d-row class="m-3">
-            <div class="mb-3 col-md-12 col-lg-12 col-12  text-center   ">
-              <div class="mb-3    ">
-                <sla-avatar
-                  class="mx-auto"
-                  v-if="user.user.image === null"
-                  size="xl"
-                  :user="{ name: user.user.first_name }"
-                />
-                <sla-avatar
-                  v-else
-                  size="xl"
-                  :user="{ image: user.user.image }"
-                />
-              </div>
-              <h6
-                class="font-weight-bold text-black text-center  font-open-sans "
-              >
+          <d-row class="m-3 text-center">
+            <div
+              class="mb-3 col-md-12 col-lg-12 col-12  align-items-center justify-content-center d-flex flex-column   "
+            >
+              <sla-avatar
+                v-if="user.user.image === null"
+                size="xl"
+                class="mb-3"
+                :user="{ name: user.user.first_name }"
+              />
+              <sla-avatar
+                v-else
+                size="xl"
+                :user="{ image: user.user.image }"
+                class="mb-3"
+              />
+              <h6 class="font-weight-bold text-black   font-open-sans ">
                 {{ user.user.first_name + " " + user.user.last_name }}
               </h6>
-              <p class="text-black text-center font-open-sans">
-                <!--               {{JSON.parse(user.user.intrests).toString()}}-->
+              <p class="text-black  font-open-sans">
+                {{ JSON.parse(user.user.intrests).toString() }}
               </p>
               <p class="text-grey font-open-sans">
                 <span><icon size="sm" name="location"/></span>
-                Lagos, Nigeria
+                {{ user.user.location }}
               </p>
               <div class="">
                 <span
-                  class="font-poppins text-bold text-center text-dark mb-3 text-bold"
+                  class="font-poppins text-bold  text-dark mb-3 text-bold"
                   style="font-size: 12px "
                   >Leaderboard Position</span
                 >
@@ -41,7 +40,7 @@
                   <div
                     class="rank  text-dark bg-white d-flex justify-content-center align-items-center text-align-center"
                   >
-                    {{ getUserPosition(user.leaderboard[0].last_position) }}
+                    {{ getUserPosition(user.leaderboard[0].position) }}
                   </div>
                   <div
                     class="rank flip d-flex justify-content-center align-items-center text-align-center"
@@ -94,16 +93,16 @@ export default {
   methods: {
     getUserPosition(value) {
       switch (value) {
-        case (value = 0):
+        case 0:
           value = "Last";
           break;
-        case (value = 1):
+        case 1:
           value = value + "st";
           break;
-        case (value = 2):
+        case 2:
           value = value + "nd";
           break;
-        case (value = 3):
+        case 3:
           value = value + "rd";
           break;
         default:

@@ -73,7 +73,7 @@
         </div>
       </d-col>
     </d-row>
-    <d-row no-gutters>
+    <d-row no-gutters class="p-3">
       <d-card
         class=" col-md-6 col-12  col-lg-6 "
         style="border-radius:0!important; max-height: 300px!important;"
@@ -99,18 +99,18 @@
         </div>
       </d-card>
       <d-card
-        class=" col-md-5 col-12 mt-3 mt-lg-0 mt-md-0 ml-lg-3 ml-md-3  col-lg-5 "
+        class=" col-md-6 col-12  col-lg-5  ml-lg-5 mt-3 mt-lg-0 mt-md-0"
         style="border-radius:0!important;"
       >
         <p class="text-black font-poppings  m-3">
           Heat Map of Popular Times
         </p>
-        <apexchart
-          type="heatmap"
-          :options="options"
-          :series="series"
-          style="max-height: 300px!important;"
-        ></apexchart>
+        <!--        <apexchart-->
+        <!--          type="heatmap"-->
+        <!--          :options="options"-->
+        <!--          :series="series"-->
+        <!--          style="max-height: 300px!important;"-->
+        <!--        ></apexchart>-->
       </d-card>
     </d-row>
     <d-row class="m-3" no-gutters>
@@ -132,7 +132,7 @@
               />
               <div class="d-flex flex-row flex-grow-1 float-lg-right p-3 w-75 ">
                 <div
-                  class="legend_block m-1"
+                  class="legend_block m-1 w-100 mx-auto"
                   v-for="legend in timeChartLegends"
                 >
                   <span>
@@ -141,53 +141,50 @@
                       :style="'background-color:' + legend.color + ';'"
                     ></div>
                   </span>
-                  <p>{{ legend.name }}</p>
+                  <p style="overflow-wrap: break-word!important;">
+                    {{ legend.name }}
+                  </p>
                 </div>
               </div>
             </div>
-            <div class="border-right m-4 mt-n5"></div>
+            <div class="border-right m-lg-4 mt-lg-n5"></div>
             <div class="col-md-3 col-lg-3 col-12">
-              <d-tabs card pills class="mt-n5 ml-lg-n4">
-                <d-tab
-                  title="Users"
-                  active
-                  style="max-height: 250px!important; overflow-y: auto"
+              <div class="row m-2 mt-lg-n5 ml-lg-n4">
+                <sla-button
+                  text="Users"
+                  size="sm"
+                  type="outline"
+                  class="btn shadow-effect"
+                />
+                <sla-button
+                  text="Coaches"
+                  size="sm"
+                  type="filled"
+                  class="btn ml-3 ml-md-3   shadow-effect"
+                />
+              </div>
+              <div
+                class="row mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12 selected m-3 m-lg-0 m-md-0"
+              >
+                <span
+                  style="font-size: 16px;letter-spacing: 0.15px;"
+                  class=" font-open-sans text-dark ml-2 mt-n1 d-flex flex-row"
                 >
-                  <div
-                    class="d-flex mt-n4 ml-lg-n4 mb-3 flex-row flex-grow-1"
-                    v-for="i in 10"
-                  >
-                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
-                    <span
-                      style="font-size: 14px;"
-                      class="m-1 font-open-sans text-dark"
+                  <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
+                  <span class="ml-2">
+                    Tomide Aina
+                    <br />
+                    <small
+                      class="font-open-sans ml-1"
+                      style="color: #999999;
+                             line-height: 19px;
+                             letter-spacing: 0.15px;"
                     >
-                      Tomide Aina
-                      <br />
-                      <small class="font-open-sans text-grey">300XP</small>
-                    </span>
-                  </div>
-                </d-tab>
-                <d-tab
-                  title="Coaches"
-                  style="max-height: 250px!important; overflow-y: auto"
-                >
-                  <div
-                    class="d-flex mt-n4 ml-lg-n4 mb-3 flex-row flex-grow-1"
-                    v-for="i in 10"
-                  >
-                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
-                    <span
-                      style="font-size: 14px;"
-                      class="m-1 font-open-sans text-dark"
-                    >
-                      Tomide Aina
-                      <br />
-                      <small class="font-open-sans text-grey">300XP</small>
-                    </span>
-                  </div>
-                </d-tab>
-              </d-tabs>
+                      300XP
+                    </small>
+                  </span>
+                </span>
+              </div>
             </div>
           </div>
         </d-card>
@@ -215,7 +212,8 @@ export default {
   components: {
     GChart,
     apexchart: VueApexCharts,
-    SlaAvatar: () => import("@/components/avatar")
+    SlaAvatar: () => import("@/components/avatar"),
+    SlaButton: () => import("@/components/SlaButton")
   },
   data() {
     return {
@@ -253,63 +251,42 @@ export default {
           color: "#DAAA55"
         }
       ],
-      options: {
-        chart: {
-          type: "heatmap",
-          id: "vue-heat-map",
-          toolbar: {
-            show: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        colors: ["#008FFB"]
-      },
-      series: [
-        {
-          name: "Metric1",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric2",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric3",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric4",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric5",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric6",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        }
-      ],
+      // options: {
+      //   chart: {
+      //     type: "heatmap",
+      //     id: "vue-heat-map",
+      //     toolbar: {
+      //       show: false
+      //     }
+      //   },
+      //   dataLabels: {
+      //     enabled: false
+      //   },
+      //   colors: ["#008FFB"]
+      // },
+      // series: [
+      //   {
+      //     data: this.generateData(18, {
+      //       min: 0,
+      //       max: 90
+      //     }),
+      //     name: "Metric1",
+      //   },
+      //   {
+      //     name: "Metric2",
+      //     data: this.generateData(18, {
+      //       min: 0,
+      //       max: 90
+      //     })
+      //   },
+      //   {
+      //     name: "Metric3",
+      //     data: this.generateData(18, {
+      //       min: 0,
+      //       max: 90
+      //     })
+      //   },
+      // ],
 
       timeChartData: [
         ["Day", "Announcement", "Polls", "surveys", "Courses"],
@@ -392,5 +369,15 @@ hr.style1 {
 .legend_block > span,
 .legend_block > p {
   display: inline-block;
+}
+.shadow-effect {
+  box-shadow: 0px 1px 13px rgba(0, 135, 219, 0.62);
+  border-radius: 5px;
+}
+
+.selected {
+  background: rgba(0, 135, 219, 0.04);
+  border-radius: 0px 50px 50px 0px;
+  width: 100%;
 }
 </style>

@@ -55,7 +55,6 @@
             :preserve-search="true"
             :preselect-first="false"
             :options="categories"
-            @tag="addTag"
           >
           </multiselect>
           <multiselect
@@ -69,7 +68,8 @@
             :clear-on-select="false"
             :preserve-search="true"
             :preselect-first="false"
-            :options="categories"
+            :options="getTags"
+            @tag="addTag"
           >
           </multiselect>
           <d-textarea
@@ -507,6 +507,7 @@ export default {
         details: null,
         requirements: null,
         category: [],
+        tag_list: [],
         cover_image: "",
         estimate: null,
         publish: null,
@@ -619,7 +620,7 @@ export default {
       let token = store.state.auth.token;
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/category/admin/create`,
+          `${process.env.VUE_APP_API}/tag/admin/create`,
           { name: newTag },
           {
             headers: {
@@ -628,7 +629,7 @@ export default {
           }
         )
         .then(res => {
-          this.formData.category.push(newTag);
+          this.formData.tag_list.push(newTag);
         })
         .catch(ex => {
           this.$toast.error(
@@ -913,6 +914,25 @@ export default {
         })
         .then(res => {
           let categories = res.data.data.categories;
+          categories.forEach(category => {
+            tags.push(category.name);
+          });
+          return tags;
+        })
+        .catch(ex => {});
+      return tags;
+    },
+    getTags: () => {
+      const token = store.state.auth.token;
+      let tags = [];
+      let res = axios
+        .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          let tags = res.data.data.tags;
           categories.forEach(category => {
             tags.push(category.name);
           });
