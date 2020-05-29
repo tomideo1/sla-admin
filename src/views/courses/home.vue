@@ -53,7 +53,9 @@
                   ' background-size:cover; background-position:center'
               "
             >
-              <p class="category-text text-uppercase mx-auto my-auto">
+              <p
+                class="category-text text-uppercase  truncate-3 mx-auto my-auto"
+              >
                 {{ category.name }}
               </p>
             </d-card>

@@ -1,5 +1,5 @@
 <template>
-  <d-container fluid class="main-content-container px-4">
+  <d-container fluid class="main-content-container ">
     <!-- Page Header -->
     <d-row no-gutters class="page-header py-4 my-4">
       <d-col col sm="4" class="text-center text-sm-left mb-4 mb-sm-0">
@@ -773,22 +773,6 @@
         <d-select class="col-md-3 mb-4">
           <option selected :value="undefined">All</option>
         </d-select>
-        <div class="col-md-4 float-right">
-          <div class="d-flex flex-row mx-auto ">
-            <div
-              class="legend_block m-1"
-              v-for="legend in postActivityChartLegends"
-            >
-              <span>
-                <div
-                  class="legend_circle mr-1 "
-                  :style="'background-color:' + legend.color + ';'"
-                ></div>
-              </span>
-              <p>{{ legend.name }}</p>
-            </div>
-          </div>
-        </div>
         <d-card
           class="  col-md-12  col-lg-12 "
           style="border-radius:0!important;"
@@ -798,85 +782,65 @@
               <div class="row">
                 <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
                   <p class="text-black font-poppings  m-3">
-                    Top Posts
+                    User
                   </p>
                 </div>
                 <div class="col-md-1 text-center  col-12 col-lg-1">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
-                    Type
+                    Visits
                   </p>
                 </div>
                 <div class="col-md-1 text-center  col-12 col-lg-1">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
-                    Author
-                  </p>
-                </div>
-                <div class="col-md-1 text-center col-12 col-lg-1">
-                  <p class="text-black w-100 mx-auto font-poppings  m-3">
-                    Impressions
-                  </p>
-                </div>
-                <div class="col-md-1 text-center col-12 col-lg-1">
-                  <p class="text-black mx-auto w-100 font-poppings  m-3">
                     Engagements
                   </p>
                 </div>
                 <div class="col-md-1 text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto font-poppings  m-3">
-                    Engagement Ratio
+                    Posts
+                  </p>
+                </div>
+                <div class="col-md-2 text-center col-12 col-lg-2">
+                  <p class="text-black mx-auto w-100 font-poppings  m-3">
+                    Messages Sent
                   </p>
                 </div>
               </div>
               <div
                 :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="legend in postInteractionsChartLegends"
-                :key="legend"
+                v-for="i in 5"
+                :key="i"
               >
                 <div class="col-md-7 border-right col-12 col-lg-7">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
-                    class="font-open-sans text-dark
-                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
+                    :class="[
+                      ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
+                        '  m-3 m-lg-0 m-md-0 d-flex flex-row '
+                    ]"
                   >
-                    <d-card
-                      :style="
-                        'width:87px!important;height: 63px!important;' +
-                          'backgroundImage:url(' +
-                          'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +
-                          ');' +
-                          ' background-size:cover; background-position:center'
-                      "
-                    >
-                    </d-card>
-                    <span class="m-1 ml-4">
-                      Business Analytics for future investment
+                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
+                    <span class="ml-2">
+                      Tomide Aina
                     </span>
                   </span>
                 </div>
                 <div class="col-md-1 border-right  text-center col-12 col-lg-1">
-                  <div
-                    class="legend_circle mt-lg-4  mx-auto "
-                    :style="'background-color:' + legend.color + ';'"
-                  ></div>
-                </div>
-                <div
-                  class="col-md-1    border-right text-center col-12 col-lg-1"
-                >
-                  <p class="text-black  w-100 mx-auto font-open-sanst  m-3">
-                    SLA
+                  <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
+                    352
                   </p>
                 </div>
                 <div class="col-md-1  border-right text-center col-12 col-lg-1">
-                  <p class="text-black  font-open-sanst  m-3">
+                  <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     253
                   </p>
                 </div>
                 <div class="col-md-1  border-right text-center col-12 col-lg-1">
-                  <p class="text-black  font-open-sanst  m-3">
+                  <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     642
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                <div class="col-md-2  border-right text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     1.12
                   </p>
@@ -887,6 +851,42 @@
         </d-card>
       </div>
     </d-row>
+    <!--    <d-row no-gutters class="p-3 mb-3">-->
+    <!--      <d-card-->
+    <!--        class=" col-md-6 col-12  col-lg-6 "-->
+    <!--        style="border-radius:0!important; max-height: 300px!important;"-->
+    <!--      >-->
+    <!--        <p class="text-black text-center  font-poppings  m-3">-->
+    <!--          All Users vs Active Users-->
+    <!--        </p>-->
+    <!--        <div class="d-flex flex-row flex-grow-1">-->
+
+    <!--          <GChart-->
+    <!--            type="PieChart"-->
+    <!--            :data="compareChartData"-->
+    <!--            :options="compareChartOptions"-->
+    <!--          />-->
+    <!--          <div class=" d-flex flex-column">-->
+    <!--            <h4 class="font-poppings text-dark">109</h4>-->
+    <!--          </div>-->
+    <!--        </div>-->
+
+    <!--      </d-card>-->
+    <!--      <d-card-->
+    <!--        class=" col-md-6 col-12  col-lg-5  ml-lg-5 mt-3 mt-lg-0 mt-md-0"-->
+    <!--        style="border-radius:0!important;"-->
+    <!--      >-->
+    <!--        <p class="text-black text-center font-poppings  m-3">-->
+    <!--          New Users vs Returning Users-->
+    <!--        </p>-->
+    <!--        <GChart-->
+    <!--          type="LineChart"-->
+    <!--          :data="postInteractionsChartData"-->
+    <!--          :options="postActivityChartOptions"-->
+    <!--        />-->
+
+    <!--      </d-card>-->
+    <!--    </d-row>-->
   </d-container>
 </template>
 
@@ -1279,7 +1279,24 @@ export default {
           name: "With Posts",
           color: "#0087DB"
         }
-      ]
+      ],
+
+      compareChartData: [
+        ["Users", "Count"],
+        ["active", 50],
+        ["total", 20]
+      ],
+      compareChartOptions: {
+        pieHole: 0.5,
+        pieSliceTextStyle: {
+          color: "black"
+        },
+        colors: ["#0087DB", "#E7E6E6"],
+        legend: {
+          position: "none"
+        },
+        chartArea: { right: 300, top: 0, width: "100%", height: "100%" }
+      }
     };
   },
   methods: {

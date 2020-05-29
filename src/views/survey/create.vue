@@ -350,7 +350,7 @@ export default {
         case "save":
           this.buttons.isLoading = true;
           this.buttons.text1 = "Loading.....";
-          this.formData.save_type = "Save";
+          this.formData.save_type = "saved";
           break;
         case "publish":
           this.buttons.isLoading = true;

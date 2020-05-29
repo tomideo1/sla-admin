@@ -45,7 +45,6 @@
               :preserve-search="true"
               :preselect-first="false"
               :options="categories"
-              @tag="addTag"
             >
             </multiselect>
           </d-col>
@@ -62,7 +61,7 @@
               :clear-on-select="false"
               :preserve-search="true"
               :preselect-first="false"
-              :options="categories"
+              :options="options"
               @tag="addTag"
             >
             </multiselect>
@@ -148,7 +147,7 @@ import vue2Dropzone from "vue2-dropzone";
 import Multiselect from "vue-multiselect";
 import axios from "axios";
 import store from "@/store/index";
-
+const token = store.state.auth.token;
 export default {
   name: "create",
   data() {
@@ -166,6 +165,7 @@ export default {
         text: "PUBLISH",
         text1: "SAVE"
       },
+      options: [],
       formData: {
         question: null,
         answer: "",
@@ -200,10 +200,10 @@ export default {
   },
   methods: {
     async addTag(newTag) {
-      // this.options.push(newTag);
+      this.options.push(newTag);
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/category/admin/create`,
+          `${process.env.VUE_APP_API}/tag/admin/create`,
           { name: newTag },
           {
             headers: {
@@ -212,8 +212,7 @@ export default {
           }
         )
         .then(res => {
-          this.formData.list_category.push(newTag);
-          this.formData.list_rags.push(newTag);
+          this.options.push(newTag);
         })
         .catch(ex => {
           this.$toast.error(
@@ -372,6 +371,22 @@ export default {
         return this.time.schedule.final_date;
       }
     }
+  },
+  mounted() {
+    const self = this;
+    axios
+      .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
+        headers: {
+          Authorization: `Bearer ${token} `
+        }
+      })
+      .then(res => {
+        let tags_list = res.data.data.tags;
+        tags_list.forEach(tag => {
+          self.options.push(tag.name);
+        });
+      })
+      .catch(ex => {});
   },
   watch: {
     scheduleDate: {

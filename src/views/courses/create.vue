@@ -46,7 +46,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="formData.category"
+            v-model="formData.category_lists"
             placeholder="Search or add a Category"
             :multiple="true"
             :taggable="true"
@@ -60,7 +60,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="formData.tags"
+            v-model="formData.tag_lists"
             placeholder="Search for  course tag"
             :multiple="true"
             :taggable="true"
@@ -68,7 +68,7 @@
             :clear-on-select="false"
             :preserve-search="true"
             :preselect-first="false"
-            :options="getTags"
+            :options="options"
             @tag="addTag"
           >
           </multiselect>
@@ -507,7 +507,7 @@ export default {
         details: null,
         requirements: null,
         category: [],
-        tag_list: [],
+        tags: [],
         cover_image: "",
         estimate: null,
         publish: null,
@@ -629,7 +629,7 @@ export default {
           }
         )
         .then(res => {
-          this.formData.tag_list.push(newTag);
+          this.formData.tags.push(newTag);
         })
         .catch(ex => {
           this.$toast.error(
@@ -805,7 +805,8 @@ export default {
           break;
       }
       const self = this;
-      self.formData.tags = self.formData.category.join();
+      self.formData.tags = self.formData.tag_lists.join();
+      self.formData.category = self.formData.category_lists.join();
       self.formData.lessons = self.lesson.fields;
       self.formData.quizzes = self.quiz;
       const token = store.state.auth.token;
@@ -881,6 +882,7 @@ export default {
     }
   },
   mounted() {
+    const token = store.state.auth.token;
     this.$refs.courseImage.dropzone.on("addedfile", file => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -893,6 +895,20 @@ export default {
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
       };
     });
+    const self = this;
+    axios
+      .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
+        headers: {
+          Authorization: `Bearer ${token} `
+        }
+      })
+      .then(res => {
+        let tags_list = res.data.data.tags;
+        tags_list.forEach(tag => {
+          self.options.push(tag.name);
+        });
+      })
+      .catch(ex => {});
   },
   computed: {
     years: () => {
@@ -914,25 +930,6 @@ export default {
         })
         .then(res => {
           let categories = res.data.data.categories;
-          categories.forEach(category => {
-            tags.push(category.name);
-          });
-          return tags;
-        })
-        .catch(ex => {});
-      return tags;
-    },
-    getTags: () => {
-      const token = store.state.auth.token;
-      let tags = [];
-      let res = axios
-        .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
-          headers: {
-            Authorization: `Bearer ${token} `
-          }
-        })
-        .then(res => {
-          let tags = res.data.data.tags;
           categories.forEach(category => {
             tags.push(category.name);
           });

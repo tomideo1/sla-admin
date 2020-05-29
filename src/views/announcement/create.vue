@@ -30,7 +30,6 @@
             :preserve-search="true"
             :preselect-first="false"
             :options="categories"
-            @tag="addTag"
           >
           </multiselect>
           <multiselect
@@ -44,7 +43,7 @@
             :clear-on-select="false"
             :preserve-search="true"
             :preselect-first="false"
-            :options="categories"
+            :options="options"
             @tag="addTag"
           >
           </multiselect>
@@ -276,6 +275,7 @@ export default {
         true
       );
       this.formData.category = JSON.stringify(this.formData.list_category);
+      this.formData.tags = JSON.stringify(this.formData.list_tags);
       const self = this;
       switch (type) {
         case "save":
@@ -344,10 +344,11 @@ export default {
         });
     },
     async addTag(newTag) {
-      // this.options.push(newTag);
+      this.options.push(newTag);
+      let token = store.state.auth.token;
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/category/admin/create`,
+          `${process.env.VUE_APP_API}/tag/admin/create`,
           { name: newTag },
           {
             headers: {
@@ -356,8 +357,7 @@ export default {
           }
         )
         .then(res => {
-          this.formData.list_category.push(newTag);
-          this.formData.list_rags.push(newTag);
+          this.options.push(newTag);
         })
         .catch(ex => {
           this.$toast.error(
@@ -414,6 +414,20 @@ export default {
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
       };
     });
+    const self = this;
+    axios
+      .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
+        headers: {
+          Authorization: `Bearer ${token} `
+        }
+      })
+      .then(res => {
+        let tags_list = res.data.data.tags;
+        tags_list.forEach(tag => {
+          self.options.push(tag.name);
+        });
+      })
+      .catch(ex => {});
   }
 };
 </script>

@@ -134,6 +134,7 @@ export default {
     width: 40px;
     height: 40px;
     z-index: 100 !important;
+    opacity: 0.7;
   }
 }
 </style>
