@@ -145,7 +145,7 @@
               >
               </d-card>
               <p
-                class="title  text-capitalize mt-3 text-bold "
+                class="title  text-capitalize text-truncate mt-3 text-bold "
                 style="max-width: 50%!important;"
               >
                 {{ tags.title }}

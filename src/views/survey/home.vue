@@ -31,7 +31,7 @@
               style=" max-width: 200px;!important; word-wrap: break-word!important;"
             >
               <p
-                class="title-card  text-capitalize mt-2  text-bold font-open-sans "
+                class="title-card  text-capitalize mt-2 text-truncate  text-bold font-open-sans "
               >
                 {{ survey.title }}
               </p>
