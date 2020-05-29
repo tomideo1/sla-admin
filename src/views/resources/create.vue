@@ -242,6 +242,8 @@ export default {
       }
     },
     async handleSubmit(type) {
+      this.formData.category = JSON.stringify(this.formData.list_category);
+      this.formData.tags = JSON.stringify(this.formData.list_tags);
       switch (type) {
         case "save":
           this.buttons.isLoading = true;
