@@ -1,32 +1,19 @@
 <template>
   <component :is="tag" v-bind="$attrs" v-on="$listeners" :class="[classes]">
     <div class="notifications__item">
-      <div class="notifications__item__avatar" v-if="ImageCount !== 'multiple'">
-        <img :src="avatar" />
-      </div>
-      <div class="container-multiple" v-else>
-        <div class=" notifications__item__avatar__multiple">
-          <div class="notifications__item__avatar__multiple">
-            <img :src="Images[0]" />
-            <div class="notifications__item__avatar__multiple">
-              <img :src="Images[1]" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <sla-avatar
+        v-if="ImageCount !== 'multiple'"
+        class="avatar mt-n5"
+        size="lg"
+        :user="{ name: 'Tomide' }"
+      />
 
       <div class="notifications__item__content">
         <span class="notifications__item__title font-poppins">
           <slot />
-        </span>
-        <span class="notifications__item__message">
-          <icon size="xs" :name="icon" />
-          <span class="ml-2  notifications__item__message__icon_text">{{
-            actions
-          }}</span>
-          <span class="float-right notifications__item__message__icon_text">{{
-            time
-          }}</span>
+          <span class="float-right notifications__item__message__icon_text">
+            {{ time }}
+          </span>
         </span>
       </div>
 
@@ -82,7 +69,8 @@ export default {
     }
   },
   components: {
-    Icon: () => import("@/components/SlaIcon")
+    Icon: () => import("@/components/SlaIcon"),
+    SlaAvatar: () => import("@/components/avatar")
   }
 };
 </script>
@@ -104,15 +92,15 @@ export default {
 }
 
 .notifications__item__avatar {
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
-  margin-right: 0;
-  margin-top: -50px;
+  /*width: 50px;*/
+  /*height: 50px;*/
+  /*overflow: hidden;*/
+  /*margin-right: 0;*/
+  /*margin-top: -50px;*/
 }
 
 .notifications__item__avatar img {
-  border-radius: 50%;
+  /*border-radius: 50%;*/
   object-fit: cover;
   width: 100%;
 }

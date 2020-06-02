@@ -1,7 +1,7 @@
 <template>
   <d-container fluid>
     <div class="row">
-      <div class="col">
+      <div v-if="Tickets.length > 0" class="col">
         <table class="table mb-0 table-bordered table-responsive-xl ">
           <thead
             class="bg-white font-poppings"
@@ -57,6 +57,14 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div v-else class="col">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any ticket</span
+        >
       </div>
     </div>
   </d-container>

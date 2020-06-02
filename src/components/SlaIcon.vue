@@ -38,6 +38,7 @@
     <resource v-if="name === 'resource'"></resource>
     <location v-if="name === 'location'"></location>
     <video v-if="name === 'video'"></video>
+    <empty v-if="name === 'empty'"></empty>
   </span>
 </template>
 <script>
@@ -48,6 +49,9 @@ export default {
       type: String
     },
     size: {
+      type: String
+    },
+    text: {
       type: String
     }
   },
@@ -90,7 +94,8 @@ export default {
     resource: () => import("@/components/__private__/media/resource.vue"),
     arrowUp: () => import("@/components/__private__/media/arrow-up.vue"),
     arrowBack: () => import("@/components/__private__/media/arrow-back.vue"),
-    Location: () => import("@/components/__private__/media/location.vue")
+    Location: () => import("@/components/__private__/media/location.vue"),
+    Empty: () => import("@/components/__private__/media/empty.vue")
   }
 };
 </script>
@@ -109,6 +114,10 @@ export default {
     display: block;
     max-height: 100%;
     max-width: 100%;
+  }
+  &-retain {
+    width: 100%;
+    height: 100%;
   }
   &-lg {
     width: 2.5rem;

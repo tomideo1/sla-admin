@@ -138,12 +138,7 @@
                 />
               </div>
               <div class="m-2" v-show="item.lesson_type === 'article'">
-                <VueTrix
-                  v-model="item.content"
-                  placeholder="enter your content..."
-                  @trix-attachment-add="handleAttachmentChanges"
-                  :localStorage="false"
-                />
+                <editor v-model="item.content" />
 
                 <!--                <d-textarea style="min-height: 100px; border: none;" class="form-control
                 border-bottom " placeholder="Note in Details"/>-->
@@ -568,6 +563,7 @@ export default {
     vueDropzone: vue2Dropzone,
     VueTrix,
     Multiselect,
+    Editor: () => import("@/components/add-new-post/Editor"),
     SlaButton: () => import("@/components/SlaButton")
   },
 

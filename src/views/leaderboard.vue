@@ -120,7 +120,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in leaders" :key="index">
+            <tr
+              v-for="(item, index) in leaders"
+              :key="index"
+              v-if="item.user !== null"
+            >
               <td>{{ item.position }}</td>
               <td>{{ item.user.first_name }}</td>
               <td>{{ item.score_card }}</td>
@@ -170,16 +174,18 @@ export default {
   async mounted() {
     this.getAllLeaderboard();
     this.leaders.forEach(leader => {
-      switch (leader.position) {
-        case 1:
-          this.top_1 = leader;
-          break;
-        case 2:
-          this.top_2 = leader;
-          break;
-        case 3:
-          this.top_3 = leader;
-          break;
+      if (leader.user !== null) {
+        switch (leader.position) {
+          case 1:
+            this.top_1 = leader;
+            break;
+          case 2:
+            this.top_2 = leader;
+            break;
+          case 3:
+            this.top_3 = leader;
+            break;
+        }
       }
     });
   }

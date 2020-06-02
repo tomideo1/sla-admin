@@ -55,7 +55,6 @@
         <div class="col-md-10 col-lg-10 col-12">
           <div class="row">
             <course
-              completed
               class=" p-2 mb-3 courses x-flow mt-2 ml-2 py-2 d-flex overflow-x-auto"
               v-for="(iter, idx) in user.courses"
               :key="idx"

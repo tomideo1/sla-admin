@@ -8,39 +8,9 @@
       :time-out="4000"
       :closeable="false"
     ></Toasts>
-    <d-container fluid class="mt-5 mb-3 d-none d-md-block d-lg-block">
-      <div class=" d-lg-flex d-md-flex flex-row  flex-grow-1 ">
-        <div class="border-right  ">
-          <h5 class="text-black mr-lg-5 mr-1 " v-if="$route.path === '/assets'">
-            Assets Library
-          </h5>
-        </div>
-        <div class=" ml-3 mr-4">
-          <button
-            @click="$router.push('/courses/create')"
-            :class="
-              $route.path === '/assets'
-                ? 'btn btn-sm btn-primary'
-                : 'btn btn-sm btn-light'
-            "
-            style="border-radius: 10px;"
-          >
-            GIFs
-          </button>
-        </div>
-        <div class="mr-1">
-          <button
-            :class="
-              $route.path === '/assets/gifs'
-                ? 'btn btn-sm btn-primary'
-                : 'btn btn-sm btn-light'
-            "
-            style="border-radius: 10px;"
-          >
-            Images
-          </button>
-        </div>
-      </div>
+    <nav-menu :navs="navigation" />
+
+    <d-row no-gutters class="container-fluid">
       <input
         type="file"
         ref="file"
@@ -48,7 +18,7 @@
         v-on:change="handleUpload"
       />
       <d-button
-        class=" mt-5 col-md-2 p-3"
+        class="  col-md-2 p-3 mb-3"
         style="
                 background: #DAAA55;
                 border-radius: 5px;
@@ -59,8 +29,6 @@
       >
         {{ buttons.text }}</d-button
       >
-    </d-container>
-    <d-row no-gutters class="container-fluid">
       <masonry
         :cols="{ default: 4, 1000: 3, 700: 2, 400: 1 }"
         :gutter="{ default: '20px', 700: '5px' }"
@@ -85,7 +53,8 @@ import carousel from "vue-owl-carousel";
 export default {
   name: "Dashboard",
   components: {
-    Icon: () => import("@/components/SlaIcon")
+    Icon: () => import("@/components/SlaIcon"),
+    NavMenu: () => import("@/components/NavMenu")
   },
   data() {
     return {
@@ -97,7 +66,14 @@ export default {
         status: null,
         message: null
       },
-      image: null
+      image: null,
+      navigation: {
+        title: [{ name: "View All Assets", path: "/assets" }],
+        actions: [
+          { name: "images", path: "/assets" },
+          { name: "Gifs", path: "/assets" }
+        ]
+      }
     };
   },
   computed: {
