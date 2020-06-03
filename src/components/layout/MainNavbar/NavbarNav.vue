@@ -8,9 +8,11 @@
         <d-dropdown-item>
           Notifications
         </d-dropdown-item>
-        <d-dropdown-item class="notification__all text-center"
-          >View all Notifications</d-dropdown-item
-        >
+        <d-dropdown-item class="notification__all text-center">
+          <router-link to="/notification">
+            View all Notifications
+          </router-link>
+        </d-dropdown-item>
       </d-collapse>
     </li>
     <li class="nav-item   dropdown messages">

@@ -2,18 +2,16 @@
   <component :is="tag" v-bind="$attrs" v-on="$listeners" :class="[classes]">
     <div class="notifications__item">
       <sla-avatar
-        v-if="ImageCount !== 'multiple'"
-        class="avatar mt-n5"
+        v-if="avatar === undefined || avatar === null"
+        class="avatar mt-n3 "
         size="lg"
-        :user="{ name: 'Tomide' }"
+        :user="{ name: userName }"
       />
+      <sla-avatar class="avatar" v-else size="lg" :user="{ image: avatar }" />
 
       <div class="notifications__item__content">
-        <span class="notifications__item__title font-poppins">
+        <span class="notifications__item__title  font-poppins">
           <slot />
-          <span class="float-right notifications__item__message__icon_text">
-            {{ time }}
-          </span>
         </span>
       </div>
 
@@ -31,6 +29,9 @@ export default {
       default: "div"
     },
     avatar: {
+      type: String
+    },
+    userName: {
       type: String
     },
     ImageCount: {
