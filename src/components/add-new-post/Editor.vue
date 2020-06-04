@@ -1,11 +1,7 @@
 <template>
-  <d-card class="card-small mb-3">
-    <d-card-body>
-      <d-form class="add-new-post">
-        <div ref="editor" class="add-new-post__editor mb-1"></div>
-      </d-form>
-    </d-card-body>
-  </d-card>
+  <d-form class="add-new-post">
+    <div ref="editor" class="add-new-post__editor mb-1"></div>
+  </d-form>
 </template>
 
 <script>
@@ -45,8 +41,9 @@ export default {
         [{ script: "sub" }, { script: "super" }],
         [{ indent: "-1" }, { indent: "+1" }],
         ["emoji"],
-        ["link", "file"]
+        ["link"]
       ],
+      theme: "snow",
       handlers: {
         emoji: function() {},
         link: function(value) {
@@ -136,9 +133,7 @@ export default {
       placeholder: "SheLeads Africa...",
       theme: "snow"
     });
-
     this.editor.root.innerHTML = this.value;
-    this.editor.root.innerHTML = this.normal_value;
 
     this.editor.on("text-change", () => this.update());
   },

@@ -10,7 +10,12 @@
       ></Toasts>
       <div class="col-lg-12">
         <carousel refs="content">
-          <div class="scroll m-2" v-for="(course, idx) in courses" :key="idx">
+          <div
+            class="scroll m-2"
+            v-for="(course, idx) in courses"
+            :key="idx"
+            v-if="course.saved === false"
+          >
             <d-card
               @click="
                 scheduleModal = true;
@@ -64,34 +69,9 @@
         {{ courseObj.tags }}
       </span>
       <d-modal-body>
-        <p class=" m-1 ">
-          <span class="text-black text-bold ml-5" style="color: #999999;"
-            >Scheduled Date
-          </span>
-        </p>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option :value="i" v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
-            <option :value="undefined">Month:</option>
-            <option :value="i" v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <input
-            class="col-md-3 form-control"
-            type="time"
-            v-model="time.schedule.hour"
-          />
-          <input type="hidden" v-model="scheduleDate" />
-        </d-input-group>
         <p class=" m-3 ">
           <span class="text-black text-bold ml-4" style="color: #999999;"
-            >Go Live Date
+            >Schedule Date
           </span>
         </p>
         <d-input-group class="justify-content-center m-2 ">
@@ -284,7 +264,7 @@ export default {
       const token = store.state.auth.token;
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/course/1` + this.courseObj._id + `update`,
+          `${process.env.VUE_APP_API}/course/` + this.courseObj._id + `/update`,
           this.formData,
           {
             headers: {

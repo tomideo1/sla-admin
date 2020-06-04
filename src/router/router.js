@@ -124,6 +124,14 @@ const router = new Router({
           meta: {
             middleware: [auth]
           }
+        },
+        {
+          path: "single",
+          name: "single-course",
+          component: () => import("@/views/courses/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },

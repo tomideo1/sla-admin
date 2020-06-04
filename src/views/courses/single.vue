@@ -7,6 +7,7 @@
       :time-out="4000"
       :closeable="false"
     ></Toasts>
+    <top :heading="course.title" />
     <div class="d-flex flex-row m-4">
       <a
         href="javascript:void(0)"
@@ -22,16 +23,17 @@
         :class="['mr-2  ', pages.lessons ? 'text-dark' : '']"
         @click="step('lesson')"
         >Add Lesson
-        <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span
-      ></a>
-      <a
-        href="javascript:void(0)"
-        style="color: inherit;text-decoration: none;"
-        :class="['mr-2  ', pages.quiz ? 'text-dark' : '']"
-        @click="step('quiz')"
-      >
-        Add Quiz</a
-      >
+        <!--        <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span-->
+        <!--        >-->
+      </a>
+      <!--      <a-->
+      <!--        href="javascript:void(0)"-->
+      <!--        style="color: inherit;text-decoration: none;"-->
+      <!--        :class="['mr-2  ', pages.quiz ? 'text-dark' : '']"-->
+      <!--        @click="step('quiz')"-->
+      <!--      >-->
+      <!--        Add Quiz</a-->
+      <!--      >-->
     </div>
 
     <d-row no-gutters class="page-header py-4">
@@ -40,13 +42,13 @@
           <d-input
             size="lg"
             class="mb-3"
-            v-model="formData.title"
+            v-model="course.title"
             placeholder=" Title"
           />
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="formData.category_lists"
+            v-model="course.category.split(',')"
             placeholder="Search or add a Category"
             :multiple="true"
             :taggable="true"
@@ -60,7 +62,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="formData.tag_lists"
+            v-model="course.tags.split(',')"
             placeholder="Search for  course tag"
             :multiple="true"
             :taggable="true"
@@ -72,18 +74,19 @@
             @tag="addTag"
           >
           </multiselect>
-          <d-textarea
+          <textarea
             style="min-height: 140px;"
-            v-model="formData.details"
+            v-model="course.details"
             class="form-control mb-3"
-            placeholder="Description"
-          />
-          <d-textarea
+          >
+          </textarea>
+          <textarea
             style="min-height: 140px;"
-            v-model="formData.requirements"
+            v-model="course.requirements"
             class="form-control"
             placeholder="Requirements"
-          />
+          >
+          </textarea>
           <div class="text-center">
             <d-button
               class="btn btn-outline-light  mt-4  p-3 col-md-8  text-uppercase"
@@ -130,36 +133,19 @@
                   <option value="video">Video</option>
                   <option value="audio">Audio</option>
                 </d-select>
-                <d-textarea
+                <textarea
                   class="col-md-12 col-12 col-lg-12 border-bottom m-2"
                   style="border: none;"
                   placeholder="Details"
                   v-model="item.details"
-                />
+                >
+                </textarea>
               </div>
-              <div class="m-2" v-show="item.lesson_type === 'article'">
-                <editor v-model="item.content" />
-
-                <!--                <d-textarea style="min-height: 100px; border: none;" class="form-control
-                border-bottom " placeholder="Note in Details"/>-->
+              <div class="m-2" v-if="item.lesson_type === 'article'">
+                <editor v-model="item.article_content" />
               </div>
               <div class="m-2 text-center " v-if="item.lesson_type === 'video'">
-                <!--          <iframe
-                  style="width: 100%;"
-                  v-bind:src="item.value"
-                  frameborder="0"
-                  v-if="
-                                    item.value !== undefined &&
-                                      item.value !== '' &&
-                                      item.value !== null &&
-                                      urlValidator(item.value) === true
-                                  "
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope;picture-in-picture"
-                  allowfullscreen
-                ></iframe>-->
-
                 <div v-html="item.content"></div>
-                <!--               -->
                 <d-input-group seamless>
                   <d-input
                     class="border-bottom p-3"
@@ -167,12 +153,6 @@
                     v-model="item.content"
                     placeholder="Post an embedded video script of your video file "
                   />
-                  <!--                    <div class="input-group-text" style="border: none">-->
-                  <!--                      <i-->
-                  <!--                        class="fa fa-eye"-->
-                  <!--                        @click="replaceYoutubeEmbed(item.value, index)"-->
-                  <!--                      ></i>-->
-                  <!--                    </div>-->
                 </d-input-group>
               </div>
               <div class="m-2" v-if="item.lesson_type === 'audio'">
@@ -316,16 +296,16 @@
       </d-col>
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
         <vue-dropzone
-          v-model="formData.cover_image"
+          v-model="course.cover_image"
           :options="dropzoneOptions"
-          id="dropZone"
+          id="singledropZone"
           :useCustomSlot="true"
           class="mx-auto"
           ref="courseImage"
           :style="
             'width: 300px; height: 300px;' +
               'backgroundImage:url(' +
-              formData.cover_image +
+              course.cover_image +
               '); ' +
               ' background-size:cover; background-position:center'
           "
@@ -364,9 +344,33 @@
         <d-input-group class="justify-content-center">
           <d-input
             class="col-md-8 "
-            v-model="formData.estimate"
+            v-model="course.estimate"
             placeholder=" e.g 50 hours at 3 hours per week "
           />
+        </d-input-group>
+        <p class="text-center m-3 ">
+          <span class="text-black text-bold">Go Live Date </span
+          ><span>(DD/MM/YY)</span>
+        </p>
+        <d-input-group class="justify-content-center m-2 ">
+          <d-select v-model="time.publish.days" class="col-md-2 mr-2">
+            <option :value="undefined">Day:</option>
+            <option :value="i" v-for="i in 31">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2" v-model="time.publish.month">
+            <option :value="undefined">Month:</option>
+            <option :value="i" v-for="i in 12">{{ i }}</option>
+          </d-select>
+          <d-select class="col-md-2 mr-2 " v-model="time.publish.year">
+            <option :value="undefined">Year:</option>
+            <option v-for="year in years" :value="year">{{ year }}</option>
+          </d-select>
+          <input
+            class="col-md-3 form-control"
+            type="time"
+            v-model="time.publish.hour"
+          />
+          <input type="hidden" v-model="publishdDate" />
         </d-input-group>
 
         <div class="text-center">
@@ -537,11 +541,13 @@ export default {
       ],
       questions_type: {
         value: "quiz"
-      }
+      },
+      course: null
     };
   },
   components: {
     Icon: () => import("@/components/SlaIcon"),
+    Top: () => import("@/components/top"),
     vueDropzone: vue2Dropzone,
     VueTrix,
     Multiselect,
@@ -657,9 +663,6 @@ export default {
 
       this.lesson.fields[index].content = string.replace("watch?v=", "embed/");
     },
-    updateEditorContent(value) {
-      // Update new content into the database via state mutations.
-    },
     async handleAttachmentChanges(event) {
       // 1. get file object
       let file = event.attachment.file;
@@ -713,6 +716,25 @@ export default {
         };
         reader.onerror = error => reject(error);
       });
+    },
+    watchPublish: function() {
+      let currentDate =
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() + 1) +
+        "-" +
+        new Date().getDate();
+      let value = this.time.publish.final_date;
+
+      if (new Date(value) < new Date(currentDate)) {
+        this.$toast.error(
+          (this.error.message =
+            "You can not  input a go live date in the past!")
+        );
+        this.buttons.isLoading = true;
+      } else {
+        this.buttons.isLoading = false;
+      }
     },
     watchReminder: function() {
       let currentDate =
@@ -824,11 +846,20 @@ export default {
               break;
           }
         });
+    },
+
+    splitDateString(dateString) {
+      let res = dateString.split("T");
+      let res2 = res[0].split("-");
+      // this.formData
     }
   },
   watch: {
     editorContent: {
       handler: "updateEditorContent"
+    },
+    publishdDate: {
+      handler: "watchPublish"
     },
     scheduleDate: {
       handler: "watchSchedule"
@@ -837,21 +868,31 @@ export default {
       handler: "watchReminder"
     }
   },
-  mounted() {
+  created() {
     const token = store.state.auth.token;
-    this.$refs.courseImage.dropzone.on("addedfile", file => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      const self = this;
-      reader.onload = () => {
-        let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
-        if (encoded.length % 4 > 0) {
-          encoded += "=".repeat(4 - (encoded.length % 4));
-        }
-        self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
-      };
-    });
     const self = this;
+    axios
+      .get(
+        `${process.env.VUE_APP_API}/course/` +
+          self.$route.params.courseObj._id +
+          `/lessons/list`,
+        {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        }
+      )
+      .then(res => {
+        res.data.data.lessons.forEach(lesson => {
+          if (lesson.lesson_type == "article") {
+            lesson.article_content = lesson.content;
+            delete lesson.content;
+          }
+        });
+        self.lesson.fields = res.data.data.lessons;
+      })
+      .catch(ex => {});
+    self.course = self.$route.params.courseObj;
     axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
         headers: {
@@ -865,6 +906,21 @@ export default {
         });
       })
       .catch(ex => {});
+  },
+  mounted() {
+    this.$refs.courseImage.dropzone.on("addedfile", file => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const self = this;
+        let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
+        if (encoded.length % 4 > 0) {
+          encoded += "=".repeat(4 - (encoded.length % 4));
+        }
+        self.course.cover_image = "data:image/jpg/png;base64," + encoded;
+        alert(self.course.cover_image);
+      };
+    });
   },
   computed: {
     years: () => {
@@ -893,6 +949,28 @@ export default {
         })
         .catch(ex => {});
       return tags;
+    },
+    publishdDate() {
+      if (
+        this.time.publish.days !== undefined &&
+        this.time.publish.year !== undefined &&
+        this.time.publish.month !== undefined &&
+        this.time.publish.hour !== undefined
+      ) {
+        this.time.publish.final_date =
+          this.time.publish.year +
+          "-" +
+          this.time.publish.month +
+          "-" +
+          this.time.publish.days +
+          " " +
+          this.time.publish.hour;
+        this.formData.schedule = new Date(
+          this.time.publish.final_date
+        ).toISOString();
+
+        return this.time.publish.final_date;
+      }
     },
     scheduleDate() {
       if (

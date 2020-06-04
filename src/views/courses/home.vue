@@ -19,6 +19,12 @@
                   ');' +
                   ' background-size:cover; background-position:center'
               "
+              @click="
+                $router.push({
+                  name: 'single-course',
+                  params: { courseObj: course }
+                })
+              "
             >
             </d-card>
             <p
@@ -99,6 +105,7 @@
             class="scroll m-2"
             v-for="(course, idx) in engagedCourses"
             :key="idx"
+            v-if="course.course !== null"
           >
             <d-card
               :style="
@@ -128,34 +135,34 @@
         class="col-lg-12"
         v-if="course.courses.course.length > 0"
       >
-        <div>
-          <h6 class="text-dark title text-capitalize m-1">
-            {{ course.courses.tag }}
-          </h6>
-          <carousel refs="content">
-            <div class="scroll m-2" v-for="tags in course.courses.course">
-              <d-card
-                :style="
-                  'width:200px!important;height: 120px!important;' +
-                    'backgroundImage:url(' +
-                    tags.cover_image +
-                    ');' +
-                    ' background-size:cover; background-position:center'
-                "
-              >
-              </d-card>
-              <p
-                class="title  text-capitalize text-truncate mt-3 text-bold "
-                style="max-width: 50%!important;"
-              >
-                {{ tags.title }}
-              </p>
-              <p class=" text-capitalize mt-1 " style="color: #999999;">
-                {{ tags.tags }}
-              </p>
-            </div>
-          </carousel>
-        </div>
+        <!--        <div>-->
+        <!--          <h6 class="text-dark title text-capitalize m-1">-->
+        <!--            {{ course.courses.tag }}-->
+        <!--          </h6>-->
+        <!--          <carousel refs="content">-->
+        <!--            <div class="scroll m-2" v-for="tags in course.courses.course">-->
+        <!--              <d-card-->
+        <!--                :style="-->
+        <!--                  'width:200px!important;height: 120px!important;' +-->
+        <!--                    'backgroundImage:url(' +-->
+        <!--                    tags.cover_image +-->
+        <!--                    ');' +-->
+        <!--                    ' background-size:cover; background-position:center'-->
+        <!--                "-->
+        <!--              >-->
+        <!--              </d-card>-->
+        <!--              <p-->
+        <!--                class="title  text-capitalize text-truncate mt-3 text-bold "-->
+        <!--                style="max-width: 50%!important;"-->
+        <!--              >-->
+        <!--                {{ tags.title }}-->
+        <!--              </p>-->
+        <!--              <p class=" text-capitalize mt-1 " style="color: #999999;">-->
+        <!--                {{ tags.tags }}-->
+        <!--              </p>-->
+        <!--            </div>-->
+        <!--          </carousel>-->
+        <!--        </div>-->
       </div>
     </d-row>
     <!-- Page Header -->

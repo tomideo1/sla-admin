@@ -24,7 +24,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="Announcement.category"
+            v-model="Announcement.category.split(',')"
             placeholder="Category"
             :multiple="true"
             :taggable="true"
