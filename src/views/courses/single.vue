@@ -48,7 +48,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="course.category.split(',')"
+            v-model="course.category"
             placeholder="Search or add a Category"
             :multiple="true"
             :taggable="true"
@@ -62,7 +62,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="course.tags.split(',')"
+            v-model="course.tags"
             placeholder="Search for  course tag"
             :multiple="true"
             :taggable="true"
@@ -348,31 +348,6 @@
             placeholder=" e.g 50 hours at 3 hours per week "
           />
         </d-input-group>
-        <p class="text-center m-3 ">
-          <span class="text-black text-bold">Go Live Date </span
-          ><span>(DD/MM/YY)</span>
-        </p>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.publish.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option :value="i" v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.publish.month">
-            <option :value="undefined">Month:</option>
-            <option :value="i" v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.publish.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <input
-            class="col-md-3 form-control"
-            type="time"
-            v-model="time.publish.hour"
-          />
-          <input type="hidden" v-model="publishdDate" />
-        </d-input-group>
-
         <div class="text-center">
           <br />
           <p
@@ -401,12 +376,7 @@
           </sla-button>
         </div>
       </d-col>
-      <d-modal
-        v-if="scheduleModal"
-        size="sm"
-        @close="scheduleModal = false"
-        :size="'md'"
-      >
+      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="md">
         <d-modal-header class="text-center">
           <d-modal-title class="font-poppings text-black">
             What time and Date do you want to Schedule?
@@ -459,7 +429,7 @@ export default {
         publish: false,
         published: false,
         save: false,
-        isLoading: true,
+        isLoading: false,
         text: "PUBLISH",
         text1: "SAVE"
       },
@@ -786,17 +756,22 @@ export default {
           break;
       }
       const self = this;
-      self.formData.tags = self.formData.tag_lists.join();
-      self.formData.category = self.formData.category_lists.join();
-      self.formData.lessons = self.lesson.fields;
-      self.formData.quizzes = self.quiz;
+      self.course.tags = self.course.tags.join();
+      self.formData.category = self.course.category.join();
+      self.course.lessons = self.lesson.fields;
+      self.course.schedule = self.formData.schedule;
+      self.course.remainder = self.formData.remainder;
       const token = store.state.auth.token;
       let res = await axios
-        .post(`${process.env.VUE_APP_API}/course/create`, self.formData, {
-          headers: {
-            Authorization: `Bearer ${token} `
+        .post(
+          `${process.env.VUE_APP_API}/course/` + self.course._id + `/update`,
+          self.course,
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
           }
-        })
+        )
         .then(res => {
           self.formData = {};
           switch (type) {
@@ -815,7 +790,7 @@ export default {
               self.quiz = [];
               self.$toast.success((self.error.message = res.data.message));
               setTimeout(function() {
-                self.$router.push({ path: "/courses/all" });
+                self.$router.go(-1);
               }, 2000);
               break;
             default:
@@ -848,18 +823,24 @@ export default {
         });
     },
 
-    splitDateString(dateString) {
+    splitDateString(dateString, Obj, Obj2) {
       let res = dateString.split("T");
       let res2 = res[0].split("-");
-      // this.formData
+      let hr = res[1].split(":");
+      let final_hr = hr[0] + ":" + hr[1];
+      Obj.year = res2[0];
+      Obj.month = parseInt(res2[1]);
+      Obj.days = parseInt(res2[2]);
+      Obj.hour = final_hr;
+
+      Obj.final_date =
+        Obj.year + "-" + Obj.month + "-" + Obj.days + " " + Obj.hour;
+      Obj2 = new Date(Obj.final_date).toISOString();
     }
   },
   watch: {
     editorContent: {
       handler: "updateEditorContent"
-    },
-    publishdDate: {
-      handler: "watchPublish"
     },
     scheduleDate: {
       handler: "watchSchedule"
@@ -893,6 +874,8 @@ export default {
       })
       .catch(ex => {});
     self.course = self.$route.params.courseObj;
+    self.course.category = self.course.category.split(",");
+    self.course.tags = self.course.tags.split(",");
     axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
         headers: {
@@ -906,6 +889,20 @@ export default {
         });
       })
       .catch(ex => {});
+    if (self.course.schedule !== null) {
+      self.splitDateString(
+        self.course.schedule,
+        self.time.schedule,
+        self.formData.schedule
+      );
+    }
+    if (self.course.remainder !== null) {
+      self.splitDateString(
+        self.course.remainder,
+        self.time.reminder,
+        self.formData.remainder
+      );
+    }
   },
   mounted() {
     this.$refs.courseImage.dropzone.on("addedfile", file => {
@@ -949,28 +946,6 @@ export default {
         })
         .catch(ex => {});
       return tags;
-    },
-    publishdDate() {
-      if (
-        this.time.publish.days !== undefined &&
-        this.time.publish.year !== undefined &&
-        this.time.publish.month !== undefined &&
-        this.time.publish.hour !== undefined
-      ) {
-        this.time.publish.final_date =
-          this.time.publish.year +
-          "-" +
-          this.time.publish.month +
-          "-" +
-          this.time.publish.days +
-          " " +
-          this.time.publish.hour;
-        this.formData.schedule = new Date(
-          this.time.publish.final_date
-        ).toISOString();
-
-        return this.time.publish.final_date;
-      }
     },
     scheduleDate() {
       if (

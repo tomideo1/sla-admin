@@ -43,12 +43,7 @@
         </carousel>
       </div>
     </d-row>
-    <d-modal
-      v-if="scheduleModal"
-      size="sm"
-      @close="scheduleModal = false"
-      :size="'md'"
-    >
+    <d-modal v-if="scheduleModal" @close="scheduleModal = false" :size="'md'">
       <div
         class="modal-header"
         :style="

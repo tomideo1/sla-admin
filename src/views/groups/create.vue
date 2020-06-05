@@ -114,7 +114,6 @@
 
     <d-modal
       v-if="showParticipant"
-      size="sm"
       @close="showParticipant = false"
       :size="modalSize"
     >

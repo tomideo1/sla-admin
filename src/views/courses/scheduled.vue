@@ -14,7 +14,7 @@
             class="scroll m-2"
             v-for="(course, idx) in courses"
             :key="idx"
-            v-if="course.saved === false"
+            v-if="course.saved === false && course.schedule !== null"
           >
             <d-card
               @click="
@@ -43,12 +43,7 @@
         </carousel>
       </div>
     </d-row>
-    <d-modal
-      v-if="scheduleModal"
-      size="sm"
-      @close="scheduleModal = false"
-      :size="'md'"
-    >
+    <d-modal v-if="scheduleModal" @close="scheduleModal = false" :size="'md'">
       <div
         class="modal-header"
         :style="

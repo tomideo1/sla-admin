@@ -397,12 +397,7 @@
           </sla-button>
         </div>
       </d-col>
-      <d-modal
-        v-if="scheduleModal"
-        size="sm"
-        @close="scheduleModal = false"
-        :size="'md'"
-      >
+      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="md">
         <d-modal-header class="text-center">
           <d-modal-title class="font-poppings text-black">
             What time and Date do you want to Schedule?
@@ -455,7 +450,7 @@ export default {
         publish: false,
         published: false,
         save: false,
-        isLoading: true,
+        isLoading: false,
         text: "PUBLISH",
         text1: "SAVE"
       },
@@ -759,11 +754,14 @@ export default {
         case "publish":
           this.buttons.isLoading = true;
           this.buttons.text = "Loading.....";
+          this.formData.saved = false;
+
           break;
         default:
           break;
       }
       const self = this;
+
       self.formData.tags = self.formData.tag_lists.join();
       self.formData.category = self.formData.category_lists.join();
       self.formData.lessons = self.lesson.fields;
