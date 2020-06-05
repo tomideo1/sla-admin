@@ -3,7 +3,7 @@
     <h5 class="text-black font-poppings font-weight-bold">Notifications</h5>
     <d-row no-gutters>
       <div class="col-md-8">
-        <div v-show="false">
+        <div v-show="true">
           <p class="heading text-bold font-poppings text-dark ">New</p>
           <noty userName="Tomide">
             <span class="d-flex flex-row flex-grow-1 justify-content-lg-start">
@@ -30,7 +30,7 @@
 
           <p class="heading text-bold font-poppings text-dark ">Earlier</p>
         </div>
-        <div v-show="true" class="col">
+        <div v-show="false" class="col">
           <icon name="empty" class="m-3" size="retain" />
           <span
             class="font-poppings text-dark justify-content-center d-flex"

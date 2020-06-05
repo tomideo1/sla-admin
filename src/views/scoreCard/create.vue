@@ -67,6 +67,13 @@
                 />
               </div>
             </div>
+            <div v-show="formData.weekly_course_completion.type === 'direct'">
+              <d-input
+                v-model="formData.weekly_course_completion.score"
+                class="col-lg-4 col-md-4 col-6 m-3 "
+                placeholder="Enter Score"
+              />
+            </div>
           </d-card>
 
           <d-card class="m-3">
@@ -130,6 +137,15 @@
                 />
               </div>
             </div>
+            <div
+              v-show="formData.weekly_worksheet_completion.type === 'direct'"
+            >
+              <d-input
+                v-model="formData.weekly_worksheet_completion.score"
+                class="col-lg-4 col-md-4 col-6 m-3 "
+                placeholder="Enter Score"
+              />
+            </div>
           </d-card>
 
           <d-card class="m-3">
@@ -188,6 +204,13 @@
                 />
               </div>
             </div>
+            <div v-show="formData.agreed_goals.type === 'direct'">
+              <d-input
+                v-model="formData.agreed_goals.score"
+                class="col-lg-4 col-md-4 col-6 m-3 "
+                placeholder="Enter Score"
+              />
+            </div>
           </d-card>
 
           <d-card class="m-3">
@@ -245,6 +268,13 @@
                   v-show="formData.perceived_challenges.type === 'optional'"
                 />
               </div>
+            </div>
+            <div v-show="formData.perceived_challenges.type === 'direct'">
+              <d-input
+                v-model="formData.perceived_challenges.score"
+                class="col-lg-4 col-md-4 col-6 m-3 "
+                placeholder="Enter Score"
+              />
             </div>
           </d-card>
 
@@ -305,6 +335,13 @@
                 />
               </div>
             </div>
+            <div v-show="formData.progress_on_weekly_goals.type === 'direct'">
+              <d-input
+                v-model="formData.progress_on_weekly_goals.score"
+                class="col-lg-4 col-md-4 col-6 m-3 "
+                placeholder="Enter Score"
+              />
+            </div>
           </d-card>
 
           <d-card class="m-3">
@@ -362,6 +399,13 @@
                   v-show="formData.coach_comment.type === 'optional'"
                 />
               </div>
+            </div>
+            <div v-show="formData.coach_comment.type === 'direct'">
+              <d-input
+                v-model="formData.coach_comment.score"
+                class="col-lg-4 col-md-4 col-6 m-3 "
+                placeholder="Enter Score"
+              />
             </div>
           </d-card>
           <sla-button
