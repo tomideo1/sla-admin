@@ -78,7 +78,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-user",
-          component: () => import("@/views/users/single.vue"),
+          component: () => import("@/views/users/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -128,7 +128,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-course",
-          component: () => import("@/views/courses/single.vue"),
+          component: () => import("@/views/courses/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -186,9 +186,25 @@ const router = new Router({
           }
         },
         {
+          path: "save",
+          name: "saved-announcement",
+          component: () => import("@/views/announcement/save.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "schedule",
+          name: "scheduled-announcement",
+          component: () => import("@/views/announcement/schedule.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
           path: "single",
           name: "single-announcement",
-          component: () => import("@/views/announcement/single.vue"),
+          component: () => import("@/views/announcement/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -222,7 +238,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-survey",
-          component: () => import("@/views/survey/single.vue"),
+          component: () => import("@/views/survey/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -257,7 +273,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-poll",
-          component: () => import("@/views/poll/single.vue"),
+          component: () => import("@/views/poll/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -292,7 +308,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-scorecard",
-          component: () => import("@/views/scoreCard/single.vue"),
+          component: () => import("@/views/scoreCard/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -343,7 +359,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-resources",
-          component: () => import("@/views/resources/single.vue"),
+          component: () => import("@/views/resources/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -369,7 +385,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-ticket",
-          component: () => import("@/views/support/single.vue"),
+          component: () => import("@/views/support/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -533,8 +549,6 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(to);
-
   if (!to.meta.middleware) {
     return next();
   }

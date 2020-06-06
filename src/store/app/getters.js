@@ -44,3 +44,7 @@ export const getLeaderboard = state => {
 export const getUsers = state => {
   return state.Users;
 };
+
+export const getAnalytics = state => {
+  return state.Analytics;
+};

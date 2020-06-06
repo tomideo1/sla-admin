@@ -1,6 +1,8 @@
 <template>
   <d-container fluid class="main-content-container px-4">
     <!-- Page Header -->
+    <top :heading="Announcement.title" />
+
     <Toasts
       :show-progress="false"
       :rtl="false"
@@ -15,35 +17,22 @@
             size="lg"
             class="mb-3"
             placeholder="Announcement Title"
-            v-model="formData.title"
+            v-if="Announcement !== undefined"
+            v-model="Announcement.title"
           />
-          <editor v-model="formData.rich_details" />
+          <editor v-model="Announcement.normal_details" />
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="formData.list_category"
+            v-model="Announcement.category.split(',')"
             placeholder="Category"
             :multiple="true"
             :taggable="true"
             :close-on-select="true"
             :clear-on-select="false"
             :preserve-search="true"
-            :preselect-first="false"
+            :preselect-first="true"
             :options="categories"
-          >
-          </multiselect>
-          <multiselect
-            size="lg"
-            class="mb-3"
-            v-model="formData.list_tags"
-            placeholder="Tags"
-            :multiple="true"
-            :taggable="true"
-            :close-on-select="true"
-            :clear-on-select="false"
-            :preserve-search="true"
-            :preselect-first="false"
-            :options="options"
             @tag="addTag"
           >
           </multiselect>
@@ -51,7 +40,7 @@
             Recipients
           </p>
           <div class="form-group mt-3 mb-3 ">
-            <d-select v-model="formData.recepients" class="col-md-3">
+            <d-select v-model="Announcement.recepients" class="col-md-3">
               <option selected value="everyone">To Everyone</option>
               <option value="participant">Participant</option>
               <option value="admin">Admins</option>
@@ -63,16 +52,16 @@
 
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
         <vue-dropzone
-          v-model="formData.cover_image"
+          v-model="Announcement.cover_image"
           :options="dropzoneOptions"
           id="dropZone"
           :useCustomSlot="true"
           class="mx-auto"
-          ref="courseImage"
+          ref="AnnouncementImage"
           :style="
             'width: 300px; height: 300px;' +
               'backgroundImage:url(' +
-              formData.cover_image +
+              Announcement.cover_image +
               '); ' +
               ' background-size:cover; background-position:center'
           "
@@ -113,7 +102,7 @@
         </div>
       </d-col>
     </d-row>
-    <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="md">
+    <d-modal v-if="scheduleModal" @close="scheduleModal = false" :size="'md'">
       <d-modal-header class="text-center">
         <d-modal-title class="font-poppings text-black">
           What time and Date do you want to Schedule?
@@ -162,6 +151,7 @@ export default {
         status: null,
         message: null
       },
+      Announcement: undefined,
       scheduleModal: false,
       buttons: {
         publish: false,
@@ -186,6 +176,10 @@ export default {
         resizeWidth: 300,
         resizeHeight: 300
         // resize: this.resize,
+      },
+      mockFile: {
+        name: "Filename",
+        size: 300
       },
       formData: {
         title: null,
@@ -213,7 +207,8 @@ export default {
     vueDropzone: vue2Dropzone,
     Multiselect,
     Editor: () => import("@/components/add-new-post/Editor"),
-    SlaButton: () => import("@/components/SlaButton")
+    SlaButton: () => import("@/components/SlaButton"),
+    Top: () => import("@/components/top")
   },
   watch: {
     scheduleDate: {
@@ -275,8 +270,7 @@ export default {
         this.formData.rich_details,
         true
       );
-      this.formData.category = this.formData.list_category.join();
-      this.formData.tags = this.formData.list_tags.join();
+      this.formData.category = JSON.stringify(this.formData.list_category);
       const self = this;
       switch (type) {
         case "save":
@@ -345,11 +339,10 @@ export default {
         });
     },
     async addTag(newTag) {
-      this.options.push(newTag);
-      let token = store.state.auth.token;
+      // this.options.push(newTag);
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/tag/admin/create`,
+          `${process.env.VUE_APP_API}/category/admin/create`,
           { name: newTag },
           {
             headers: {
@@ -358,7 +351,8 @@ export default {
           }
         )
         .then(res => {
-          this.options.push(newTag);
+          this.formData.list_category.push(newTag);
+          this.formData.list_rags.push(newTag);
         })
         .catch(ex => {
           this.$toast.error(
@@ -403,6 +397,7 @@ export default {
     }
   },
   mounted() {
+    this.Announcement = this.$route.params.single_announcement;
     this.$refs.courseImage.dropzone.on("addedfile", file => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -413,22 +408,9 @@ export default {
           encoded += "=".repeat(4 - (encoded.length % 4));
         }
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
+        self.Announcement.cover_image = null;
       };
     });
-    const self = this;
-    axios
-      .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
-        headers: {
-          Authorization: `Bearer ${token} `
-        }
-      })
-      .then(res => {
-        let tags_list = res.data.data.tags;
-        tags_list.forEach(tag => {
-          self.options.push(tag.name);
-        });
-      })
-      .catch(ex => {});
   }
 };
 </script>

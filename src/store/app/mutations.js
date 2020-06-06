@@ -44,3 +44,7 @@ export const setLeaderboard = (state, data) => {
 export const setUsers = (state, data) => {
   state.Users = data.data.user;
 };
+
+export const setAnalytics = (state, data) => {
+  state.Analytics = data.data;
+};

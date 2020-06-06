@@ -11,7 +11,7 @@
                 <b>
                   Lorem ipsum dolor sit amet,
                 </b>
-                <small class="ml-3 ">3W</small>
+                <small class="  ml-3 ">3W</small>
               </p>
               <d-card
                 class="ml-auto"

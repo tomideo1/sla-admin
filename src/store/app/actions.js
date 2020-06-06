@@ -105,3 +105,10 @@ export const getAllResources = async ({ commit }) => {
     commit("setResources", res.data);
   } else return res;
 };
+
+export const getAllAnalysis = async ({ commit }) => {
+  let res = await Api.get(`admin/dashboard`, true);
+  if (res.status === 200) {
+    commit("setAnalytics", res.data);
+  } else return res;
+};
