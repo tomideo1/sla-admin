@@ -1,7 +1,7 @@
 <template>
   <d-container fluid>
     <d-row class=" mt-5">
-      <div class="col-lg-12">
+      <div v-if="coursesclass.lenght > 0" class="col-lg-12">
         <h6 class="text-dark title text-capitalize m-1">
           Alphabetical Order (A -Z)
         </h6>
@@ -38,7 +38,15 @@
           </div>
         </carousel>
       </div>
-      <div class="col-lg-12">
+      <div v-else class="col">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any Courses</span
+        >
+      </div>
+      <div v-if="Categories.length > 0" class="col-lg-12">
         <h6 class="text-dark title text-capitalize m-1">
           Categories
         </h6>
@@ -68,7 +76,15 @@
           </div>
         </carousel>
       </div>
-      <div class="col-lg-12">
+      <div v-else class="col">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any Categories</span
+        >
+      </div>
+      <div v-if="courses.length > 0" class="col-lg-12">
         <h6 class="text-dark title text-capitalize m-1">
           Most Recent
         </h6>
@@ -96,7 +112,15 @@
           </div>
         </carousel>
       </div>
-      <div class="col-lg-12">
+      <div v-else class="col">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any Courses</span
+        >
+      </div>
+      <div v-if="courses.length > 0" class="col-lg-12">
         <h6 class="text-dark title text-capitalize m-1">
           Most Engaged
         </h6>
@@ -128,6 +152,14 @@
             </p>
           </div>
         </carousel>
+      </div>
+      <div v-else class="col">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any Courses</span
+        >
       </div>
       <div
         v-for="(course, idx) in courseProgram"

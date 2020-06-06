@@ -9,12 +9,15 @@
         <h6 class="font-poppings text-dark font-weight-bold">
           {{ category.name }}
         </h6>
-        <d-row>
+        <d-row v-if="Resources.length > 0">
           <div
             class="col-md-3 col-lg-3 col-6 m-3"
             v-for="(resource, idx) in Resources"
             :key="idx"
-            v-if="JSON.parse(resource.category).includes(category.name)"
+            v-if="
+              resource.category !== null &&
+                JSON.parse(resource.category).includes(category.name)
+            "
           >
             <resource :header="resource.question" color="#0087DB;">
               <p>{{ resource.answer }}</p>
@@ -23,6 +26,14 @@
             </resource>
           </div>
         </d-row>
+        <div v-else class="col">
+          <icon name="empty" class="m-3" size="retain" />
+          <span
+            class="font-poppings text-dark justify-content-center d-flex"
+            style="font-size: 16px;"
+            >You don’t have any Resources</span
+          >
+        </div>
       </div>
     </d-row>
   </d-container>

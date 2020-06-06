@@ -39,6 +39,9 @@
     <location v-if="name === 'location'"></location>
     <video v-if="name === 'video'"></video>
     <empty v-if="name === 'empty'"></empty>
+    <fb-like v-if="name === 'fb-like'"></fb-like>
+    <comment v-if="name === 'comment'"></comment>
+    <smile v-if="name === 'smile'"></smile>
   </span>
 </template>
 <script>
@@ -95,7 +98,10 @@ export default {
     arrowUp: () => import("@/components/__private__/media/arrow-up.vue"),
     arrowBack: () => import("@/components/__private__/media/arrow-back.vue"),
     Location: () => import("@/components/__private__/media/location.vue"),
-    Empty: () => import("@/components/__private__/media/empty.vue")
+    Empty: () => import("@/components/__private__/media/empty.vue"),
+    FbLike: () => import("@/components/__private__/media/fb-like.vue"),
+    comment: () => import("@/components/__private__/media/comment.vue"),
+    smile: () => import("@/components/__private__/media/smile.vue")
   }
 };
 </script>

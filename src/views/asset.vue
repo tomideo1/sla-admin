@@ -30,6 +30,7 @@
         {{ buttons.text }}</d-button
       >
       <masonry
+        v-if="assets.length > 0"
         :cols="{ default: 4, 1000: 3, 700: 2, 400: 1 }"
         :gutter="{ default: '20px', 700: '5px' }"
         style="max-width: 100%;"
@@ -42,6 +43,14 @@
           <br />
         </div>
       </masonry>
+      <div v-else class="col">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any Assets</span
+        >
+      </div>
     </d-row>
   </d-container>
 </template>

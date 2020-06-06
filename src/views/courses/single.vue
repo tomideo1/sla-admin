@@ -764,7 +764,9 @@ export default {
       const token = store.state.auth.token;
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/course/` + self.course._id + `/update`,
+          `${process.env.VUE_APP_API}/course/` +
+            self.course._id.trim() +
+            `/update`,
           self.course,
           {
             headers: {
