@@ -78,7 +78,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-user",
-          component: () => import("@/views/users/edit.vue"),
+          component: () => import("@/views/users/single.vue"),
           meta: {
             middleware: [auth]
           }
@@ -128,7 +128,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-course",
-          component: () => import("@/views/courses/edit.vue"),
+          component: () => import("@/views/courses/single.vue"),
           meta: {
             middleware: [auth]
           }
@@ -204,6 +204,14 @@ const router = new Router({
         {
           path: "single",
           name: "single-announcement",
+          component: () => import("@/views/announcement/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "edit",
+          name: "edit-announcement",
           component: () => import("@/views/announcement/edit.vue"),
           meta: {
             middleware: [auth]
@@ -238,7 +246,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-survey",
-          component: () => import("@/views/survey/edit.vue"),
+          component: () => import("@/views/survey/single.vue"),
           meta: {
             middleware: [auth]
           }
@@ -273,7 +281,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-poll",
-          component: () => import("@/views/poll/edit.vue"),
+          component: () => import("@/views/poll/single.vue"),
           meta: {
             middleware: [auth]
           }
@@ -308,7 +316,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-scorecard",
-          component: () => import("@/views/scoreCard/edit.vue"),
+          component: () => import("@/views/scoreCard/single.vue"),
           meta: {
             middleware: [auth]
           }
@@ -359,7 +367,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-resources",
-          component: () => import("@/views/resources/edit.vue"),
+          component: () => import("@/views/resources/single.vue"),
           meta: {
             middleware: [auth]
           }
@@ -385,7 +393,7 @@ const router = new Router({
         {
           path: "single",
           name: "single-ticket",
-          component: () => import("@/views/support/edit.vue"),
+          component: () => import("@/views/support/single.vue"),
           meta: {
             middleware: [auth]
           }

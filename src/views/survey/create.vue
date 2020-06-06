@@ -136,7 +136,13 @@
           :useCustomSlot="true"
           class="mx-auto mb-3"
           ref="courseImage"
-          style="width: 300px; height: 300px"
+          :style="
+            'width: 300px; height: 300px;' +
+              'backgroundImage:url(' +
+              formData.cover_image +
+              '); ' +
+              ' background-size:cover; background-position:center'
+          "
         >
           <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
           <div class="subtitle p-2 mt-3">Click to add cover image</div>

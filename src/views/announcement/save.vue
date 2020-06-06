@@ -7,9 +7,6 @@
         "
         class="col-lg-12"
       >
-        <h6 class="text-dark title text-capitalize m-1">
-          Alphabetical Order (A -Z)
-        </h6>
         <carousel refs="content">
           <div
             class="scroll m-2"
@@ -102,6 +99,7 @@ export default {
     }),
     getSavedAnnouncements() {
       return this.announcements.filter(announcement => {
+        // let stuff =  announcement.status.toLowerCase() === "save";
         return announcement.status.toLowerCase() === "save";
       });
     }

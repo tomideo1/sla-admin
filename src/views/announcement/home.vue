@@ -57,12 +57,16 @@
             <!--            <p class=" text-capitalize mt-n2 d-flex flex-row text-underline" style="color: #999999;" v-for="announcement_tag in announcement.tags.split(',')">-->
             <!--            {{ announcement_tag }}-->
             <!--            </p>-->
-            <p
-              class=" text-capitalize mt-n2 d-flex flex-row text-underline"
-              style="color: #999999;"
-            >
-              {{ announcement.tags }}
-            </p>
+            <div class="d-flex flex-row  mt-3 ">
+              <small
+                class="ml-2 "
+                style="text-decoration: underline"
+                v-if="announcement.tags.length > 0"
+                v-for="tag in announcement.tags.split(',')"
+                >{{ tag }}</small
+              >
+              <small class="ml-2" v-else>{{ announcement.tags }}</small>
+            </div>
           </div>
         </carousel>
       </div>
@@ -121,12 +125,16 @@
             <!--            <p class=" text-capitalize mt-n2 d-flex flex-row text-underline" style="color: #999999;" v-for="announcement_tag in announcement.tags.split(',')">-->
             <!--            {{ announcement_tag }}-->
             <!--            </p>-->
-            <p
-              class=" text-capitalize mt-n2 d-flex flex-row text-underline"
-              style="color: #999999;"
-            >
-              {{ announcement.tags }}
-            </p>
+            <div class="d-flex flex-row  mt-3 ">
+              <small
+                class="ml-2 "
+                style="text-decoration: underline"
+                v-if="announcement.tags.length > 0"
+                v-for="tag in announcement.tags.split(',')"
+                >{{ tag }}</small
+              >
+              <small class="ml-2" v-else>{{ announcement.tags }}</small>
+            </div>
           </div>
         </carousel>
       </div>
@@ -135,7 +143,7 @@
         class="col-lg-12"
       >
         <h6 class="text-dark title text-capitalize m-1">
-          Most Recent
+          Most Engaged
         </h6>
         <carousel refs="content">
           <div
@@ -185,12 +193,16 @@
             <!--            <p class=" text-capitalize mt-n2 d-flex flex-row text-underline" style="color: #999999;" v-for="announcement_tag in announcement.tags.split(',')">-->
             <!--            {{ announcement_tag }}-->
             <!--            </p>-->
-            <p
-              class=" text-capitalize mt-n2 d-flex flex-row text-underline"
-              style="color: #999999;"
-            >
-              {{ announcement.tags }}
-            </p>
+            <div class="d-flex flex-row  mt-3 ">
+              <small
+                class="ml-2 "
+                style="text-decoration: underline"
+                v-if="announcement.tags.length > 0"
+                v-for="tag in announcement.tags.split(',')"
+                >{{ tag }}</small
+              >
+              <small class="ml-2" v-else>{{ announcement.tags }}</small>
+            </div>
           </div>
         </carousel>
       </div>
