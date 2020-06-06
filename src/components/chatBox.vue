@@ -1,13 +1,14 @@
 <template>
   <div class="send d-flex justify-content-between align-items-center px-8">
-    <div class="d-flex align-items-center chatbox mr-12 position-relative">
+    <div class="d-flex comment flex-row align-items-center chatbox m-3 mr-2  ">
       <span
         @click.exact="pickEmoji($event)"
         ref="emojiPicker"
-        class="position-fixed text-grey-500 smile"
+        class=" text-grey-500 "
       >
         <icon class="" size="lg" name="smile" />
       </span>
+
       <textarea
         :value="value"
         ref="chatArea"
@@ -18,17 +19,18 @@
         "
         @keydown.enter.exact="emitEnter"
         placeholder="Type your comment"
-        class="text-bolder text-grey-500 width-100 px-12"
+        class="text-bold text-grey-500 w-100 m-2"
         type="text"
-      ></textarea>
-    </div>
-    <div>
-      <button
-        @click="$emit('send', $event)"
-        class="d-flex justify-content-center send position-sticky"
       >
-        <icon size="sm" name="send" />
-      </button>
+      </textarea>
+      <div class="comment">
+        <button
+          @click="$emit('send', $event)"
+          class="d-flex justify-content-center send position-sticky"
+        >
+          <icon size="sm" class="mt-2 ml-1 " name="send" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -108,16 +110,12 @@ export default {
 <style lang="scss" scoped>
 .send {
   .chatbox {
-    width: 100%;
+    width: 80%;
     border-radius: 30px;
     background-color: #f4f4f4;
 
-    .smile {
-      bottom: 21px;
-    }
-
     textarea {
-      min-height: 48px;
+      max-height: 28px;
       border-radius: 30px;
       resize: none;
       font-size: 14px;
@@ -132,11 +130,24 @@ export default {
       }
     }
   }
+
   button {
     background-color: color(bv-primary);
     border-radius: 50%;
     height: 48px;
     width: 48px;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+.comment {
+  button {
+    background-color: #0087db;
+    border-radius: 50%;
+    border: none;
+    height: 43px;
+    width: 43px;
     &:focus {
       outline: none;
     }

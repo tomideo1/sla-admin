@@ -1,7 +1,7 @@
 <template>
   <d-container fluid>
     <d-row class=" mt-5">
-      <div v-if="coursesclass.lenght > 0" class="col-lg-12">
+      <div v-if="courses.length > 0" class="col-lg-12">
         <h6 class="text-dark title text-capitalize m-1">
           Alphabetical Order (A -Z)
         </h6>

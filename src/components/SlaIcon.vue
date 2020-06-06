@@ -42,6 +42,7 @@
     <fb-like v-if="name === 'fb-like'"></fb-like>
     <comment v-if="name === 'comment'"></comment>
     <smile v-if="name === 'smile'"></smile>
+    <send v-if="name === 'send'"></send>
   </span>
 </template>
 <script>
@@ -101,7 +102,8 @@ export default {
     Empty: () => import("@/components/__private__/media/empty.vue"),
     FbLike: () => import("@/components/__private__/media/fb-like.vue"),
     comment: () => import("@/components/__private__/media/comment.vue"),
-    smile: () => import("@/components/__private__/media/smile.vue")
+    smile: () => import("@/components/__private__/media/smile.vue"),
+    send: () => import("@/components/__private__/media/send.vue")
   }
 };
 </script>

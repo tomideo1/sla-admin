@@ -144,7 +144,7 @@ export default {
     }
   }
   button {
-    background-color: color(bv-primary);
+    background-color: #0087db;
     border-radius: 50%;
     height: 48px;
     width: 48px;

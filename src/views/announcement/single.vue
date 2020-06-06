@@ -93,30 +93,7 @@
             </div>
           </div>
         </div>
-        <div class="d-flex flex-row align-items-center chatbox m-3 mr-2  ">
-          <span
-            @click.exact="pickEmoji($event)"
-            ref="emojiPicker"
-            class=" text-grey-500 "
-          >
-            <icon class="" size="lg" name="smile" />
-          </span>
-
-          <textarea
-            :value="value"
-            ref="chatArea"
-            @change="emitValue($event)"
-            @input="
-              emitValue($event);
-              resize();
-            "
-            @keydown.enter.exact="emitEnter"
-            placeholder="Type your comment"
-            class="text-bold text-grey-500 w-100 m-2"
-            type="text"
-          >
-          </textarea>
-        </div>
+        <chat-box @keyup="handleChat" @send="handleChat" v-model="content" />
       </div>
     </d-row>
     <footer class="border-top m-5 ">
@@ -131,6 +108,12 @@
         :text="'EDIT'"
         type="outline"
         size="sm"
+        @click="
+          $router.push({
+            name: 'edit-announcement',
+            params: { single_announcement: Announcement }
+          })
+        "
       />
       <p
         class="font-open-sans float-right m-4"
@@ -213,7 +196,7 @@ export default {
       },
       CategoryIds: [],
       picker: "",
-      value: ""
+      content: ""
     };
   },
   components: {
@@ -223,7 +206,8 @@ export default {
     Multiselect,
     Editor: () => import("@/components/add-new-post/Editor"),
     SlaButton: () => import("@/components/SlaButton"),
-    Top: () => import("@/components/top")
+    Top: () => import("@/components/top"),
+    ChatBox: () => import("@/components/chatBox")
   },
   watch: {
     scheduleDate: {
@@ -415,53 +399,31 @@ export default {
         .toString()
         .replace(/ +/g, " ");
     },
-    emitEnter(e) {
-      e.preventDefault();
-      this.$emit("keyup");
-    },
-    pickEmoji(e) {
-      this.picker.togglePicker(this.$refs.emojiPicker);
-    },
-    emitValue(e) {
-      this.$emit("input", e.target.value);
-    },
-    resize() {
-      if (this.$refs.chatArea.value == "") {
-        this.$refs.chatArea.style.height = `55px`;
-      }
-      let h = parseInt(this.$refs.chatArea.scrollHeight, 10);
-      if (h < 150) {
-        this.$refs.chatArea.style.height = `auto`;
-        this.$refs.chatArea.style.height = `${this.$refs.chatArea.scrollHeight}px`;
+    handleChat() {
+      if (this.chat == "") {
         return;
-      } else if (h > 150) {
-        this.$refs.chatArea.style.height = `150px`;
       }
+      this.processChat();
+    },
+    processChat() {
+      // let chatObject = {
+      //   username: this.$store.state.user.data.first_name,
+      //   id: this.$store.state.user.data._id,
+      //   message: this.chat,
+      //   groupId: this.group._id,
+      //   createdAt: Date.now(),
+      //   groupSlug: this.group.slug
+      // };
+      //
+      // this.sendChat(chatObject);
+      //
+      // this.chats.push(chatObject);
+      // this.chat = "";
+      alert(this.content);
     }
   },
   mounted() {
     this.Announcement = this.$route.params.single_announcement;
-    this.picker.on("emoji", emoji => {
-      let chatArea = this.$refs.chatArea;
-      let cursorPosition = chatArea.selectionEnd;
-      let currentChat = chatArea.value;
-      let start = currentChat.substring(0, chatArea.selectionStart);
-      let end = currentChat.substring(chatArea.selectionStart);
-      chatArea.value = `${start}${emoji}${end}`;
-      chatArea.focus();
-      this.$nextTick(() => {
-        chatArea.selectionEnd = cursorPosition + emoji.length;
-      });
-      this.$emit("input", chatArea.value);
-    });
-  },
-  created() {
-    this.picker = new EmojiButton({
-      autoHide: false,
-      position: "top-start",
-      showVariants: false,
-      rootElement: this.$refs.emojiPicker
-    });
   }
 };
 </script>
@@ -476,26 +438,5 @@ export default {
 .dropzone {
   width: 330px;
   height: 330px;
-}
-.chatbox {
-  width: 80%;
-  border-radius: 30px;
-  background-color: #f4f4f4;
-
-  textarea {
-    max-height: 28px;
-    border-radius: 30px;
-    resize: none;
-    font-size: 14px;
-    background-color: #f4f4f4;
-    border: none;
-    padding-top: 1rem;
-    font-family: "Open sans";
-    margin-left: 1.8rem;
-
-    &:focus {
-      outline: none;
-    }
-  }
 }
 </style>
