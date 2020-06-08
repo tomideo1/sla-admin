@@ -76,7 +76,7 @@ const router = new Router({
           }
         },
         {
-          path: "single",
+          path: "single/:id",
           name: "single-user",
           component: () => import("@/views/users/single.vue"),
           meta: {
@@ -126,7 +126,7 @@ const router = new Router({
           }
         },
         {
-          path: "single",
+          path: "single/:id",
           name: "single-course",
           component: () => import("@/views/courses/single.vue"),
           meta: {

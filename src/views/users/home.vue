@@ -36,8 +36,7 @@
               class="mb-2 text-primary font-weight-bold"
               @click="
                 $router.push({
-                  name: 'single-user',
-                  params: { userId: user._id }
+                  path: 'single/' + user._id
                 })
               "
             >

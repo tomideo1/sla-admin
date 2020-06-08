@@ -1,5 +1,5 @@
 <template>
-  <d-container fluid class="main-content-container px-4">
+  <d-container v-if="isLoaded" fluid class="main-content-container px-4">
     <Toasts
       :show-progress="false"
       :rtl="false"
@@ -419,6 +419,7 @@ export default {
   name: "course-create",
   data: () => {
     return {
+      isLoaded: false,
       pages: {
         courseInfo: true,
         lessons: false,
@@ -512,7 +513,7 @@ export default {
       questions_type: {
         value: "quiz"
       },
-      course: null
+      course: {}
     };
   },
   components: {
@@ -757,7 +758,7 @@ export default {
       }
       const self = this;
       self.course.tags = self.course.tags.join();
-      self.formData.category = self.course.category.join();
+      self.course.category = self.course.category.join();
       self.course.lessons = self.lesson.fields;
       self.course.schedule = self.formData.schedule;
       self.course.remainder = self.formData.remainder;
@@ -852,12 +853,27 @@ export default {
     }
   },
   created() {
+    if (this.isLoaded)
+      this.$refs.courseImage.dropzone.on("addedfile", file => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const self = this;
+          let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
+          if (encoded.length % 4 > 0) {
+            encoded += "=".repeat(4 - (encoded.length % 4));
+          }
+          self.course.cover_image = "data:image/jpg/png;base64," + encoded;
+        };
+      });
+  },
+  mounted() {
     const token = store.state.auth.token;
     const self = this;
     axios
       .get(
         `${process.env.VUE_APP_API}/course/` +
-          self.$route.params.courseObj._id +
+          self.$route.params.id +
           `/lessons/list`,
         {
           headers: {
@@ -866,6 +882,24 @@ export default {
         }
       )
       .then(res => {
+        self.course = res.data.data.course;
+        self.course.category = self.course.category.split(",");
+        self.course.tags = self.course.tags.split(",");
+        if (self.course.schedule !== null) {
+          self.splitDateString(
+            self.course.schedule,
+            self.time.schedule,
+            self.formData.schedule
+          );
+        }
+        if (self.course.remainder !== null) {
+          self.splitDateString(
+            self.course.remainder,
+            self.time.reminder,
+            self.formData.remainder
+          );
+        }
+        self.isLoaded = true;
         res.data.data.lessons.forEach(lesson => {
           if (lesson.lesson_type == "article") {
             lesson.article_content = lesson.content;
@@ -875,9 +909,7 @@ export default {
         self.lesson.fields = res.data.data.lessons;
       })
       .catch(ex => {});
-    self.course = self.$route.params.courseObj;
-    self.course.category = self.course.category.split(",");
-    self.course.tags = self.course.tags.split(",");
+
     axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
         headers: {
@@ -891,35 +923,6 @@ export default {
         });
       })
       .catch(ex => {});
-    if (self.course.schedule !== null) {
-      self.splitDateString(
-        self.course.schedule,
-        self.time.schedule,
-        self.formData.schedule
-      );
-    }
-    if (self.course.remainder !== null) {
-      self.splitDateString(
-        self.course.remainder,
-        self.time.reminder,
-        self.formData.remainder
-      );
-    }
-  },
-  mounted() {
-    this.$refs.courseImage.dropzone.on("addedfile", file => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const self = this;
-        let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
-        if (encoded.length % 4 > 0) {
-          encoded += "=".repeat(4 - (encoded.length % 4));
-        }
-        self.course.cover_image = "data:image/jpg/png;base64," + encoded;
-        alert(self.course.cover_image);
-      };
-    });
   },
   computed: {
     years: () => {

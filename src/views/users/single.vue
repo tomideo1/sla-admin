@@ -1,6 +1,6 @@
 <template>
   <div>
-    <d-container fluid class="main-content-container   ">
+    <d-container fluid class="main-content-container" v-if="isLoaded">
       <top :heading="user.user.first_name" />
       <d-row>
         <div class="col-md-2 col-lg-2 col-12">
@@ -78,6 +78,7 @@ export default {
   name: "single",
   data() {
     return {
+      isLoaded: false,
       user: null
     };
   },
@@ -112,7 +113,8 @@ export default {
     }
   },
   async mounted() {
-    const userId = this.$route.params.userId;
+    const userId = this.$route.params.id;
+    const self = this;
     let res = axios
       .get(`${process.env.VUE_APP_API}/admin/user/details/` + userId, {
         headers: {
@@ -120,7 +122,8 @@ export default {
         }
       })
       .then(res => {
-        this.user = res.data.data;
+        self.user = res.data.data;
+        self.isLoaded = true;
       })
       .catch();
   }

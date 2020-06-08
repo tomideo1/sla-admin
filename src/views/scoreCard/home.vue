@@ -6,11 +6,8 @@
           <d-card-header class="border-bottom text-center">
             <!-- User Avatar -->
             <div class="mb-3 mx-auto">
-              <avatar
-                size="100"
-                :url="
-                  'https://res.cloudinary.com/dwpu7jpku/image/upload/v1558709245/samples/ecommerce/leather-bag-gray.jpg'
-                "
+              <avatar size="lg"
+              :user={image:"https://res.cloudinary.com/dwpu7jpku/image/upload/v1558709245/samples/ecommerce/leather-bag-gray.jpg"}
               />
             </div>
 

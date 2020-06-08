@@ -4,29 +4,29 @@
       <a class="nav-link mt-2 text-center" v-d-toggle.notifications>
         <icon size="xs" name="bell" />
       </a>
-      <d-collapse id="notifications" class="dropdown-menu dropdown-menu-small">
-        <d-dropdown-item>
-          Notifications
-        </d-dropdown-item>
-        <d-dropdown-item class="notification__all text-center">
-          <router-link to="/notification">
-            View all Notifications
-          </router-link>
-        </d-dropdown-item>
-      </d-collapse>
+      <!--      <d-collapse id="notifications" class="dropdown-menu dropdown-menu-small">-->
+      <!--        <d-dropdown-item>-->
+      <!--          Notifications-->
+      <!--        </d-dropdown-item>-->
+      <!--        <d-dropdown-item class="notification__all text-center">-->
+      <!--          <router-link to="/notification">-->
+      <!--            View all Notifications-->
+      <!--          </router-link>-->
+      <!--        </d-dropdown-item>-->
+      <!--      </d-collapse>-->
     </li>
     <li class="nav-item   dropdown messages">
       <a class="nav-link mt-2 text-center" v-d-toggle.messages>
         <icon size="xs" name="message" />
       </a>
-      <d-collapse id="messages" class="dropdown-menu dropdown-menu-small">
-        <d-dropdown-item>
-          Messages
-        </d-dropdown-item>
-        <d-dropdown-item class="notification__all text-center"
-          >View all Messages</d-dropdown-item
-        >
-      </d-collapse>
+      <!--      <d-collapse id="messages" class="dropdown-menu dropdown-menu-small">-->
+      <!--        <d-dropdown-item>-->
+      <!--          Messages-->
+      <!--        </d-dropdown-item>-->
+      <!--        <d-dropdown-item class="notification__all text-center"-->
+      <!--          >View all Messages</d-dropdown-item-->
+      <!--        >-->
+      <!--      </d-collapse>-->
     </li>
     <li class="nav-item  ">
       <router-link :to="{ name: 'settings' }" class="nav-link mt-2 text-center">

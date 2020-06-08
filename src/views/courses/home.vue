@@ -21,8 +21,7 @@
               "
               @click="
                 $router.push({
-                  name: 'single-course',
-                  params: { courseObj: course }
+                  path: 'single/' + course._id
                 })
               "
             >

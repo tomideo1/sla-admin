@@ -48,3 +48,7 @@ export const setUsers = (state, data) => {
 export const setAnalytics = (state, data) => {
   state.Analytics = data.data;
 };
+
+export const setResourceCategories = (state, data) => {
+  state.ResourceCategories = data.categories;
+};

@@ -4,7 +4,9 @@
       <div class="row">
         <ul class="nav">
           <li v-for="(item, idx) in menuItems" :key="idx" class="nav-item">
-            <d-link class="nav-link" :to="item.to">{{ item.title }}</d-link>
+            <router-link class="nav-link" :to="item.to">{{
+              item.title
+            }}</router-link>
           </li>
         </ul>
         <span class="copyright ml-auto my-auto mr-2 mt-4">{{ copyright }}</span>

@@ -1,5 +1,5 @@
 <template>
-  <d-container fluid class="main-content-container px-4">
+  <d-container fluid class="main-content-container px-4" v-if="isLoaded">
     <top :heading="Polls.title" />
     <h4 class="m-3 text-bold font-poppings text-black">
       {{ Polls.responses }} responses
@@ -49,6 +49,7 @@ export default {
   name: "single-poll",
   data() {
     return {
+      isLoaded: false,
       deleteModal: false,
       chartData: [["value", "count"]],
       chartOptions: {
@@ -71,6 +72,7 @@ export default {
   mounted() {
     const self = this;
     self.Polls = self.$route.params.Poll;
+    self.isLoaded = true;
     self.Polls.options.forEach(data => {
       self.chartData.push([data.value, data.count]);
     });

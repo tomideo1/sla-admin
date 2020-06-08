@@ -1,5 +1,5 @@
 <template>
-  <d-container fluid class="main-content-container px-4">
+  <d-container fluid class="main-content-container px-4" v-if="isLoaded">
     <!-- Page Header -->
     <top :heading="Announcement.title" />
     <small class="text-uppercase text-grey-500 font-open-sans ml-4">{{
@@ -93,8 +93,17 @@
             </div>
           </div>
         </div>
-        <chat-box @keyup="handleChat" @send="handleChat" v-model="content" />
+        <div class="d-flex  flex-row flex-grow-1 w-100">
+          <sla-avatar size="md" :user="{ name: 'Tomide' }" class=" mt-4 ml-5" />
+          <chat-box
+            @keyup="handleChat"
+            class=""
+            @send="handleChat"
+            v-model="content"
+          />
+        </div>
       </div>
+      <div class="col-md-4 col-lg-4 col-12"></div>
     </d-row>
     <footer class="border-top m-5 ">
       <sla-button
@@ -141,6 +150,7 @@ export default {
   name: "create",
   data() {
     return {
+      isLoaded: false,
       error: {
         status: null,
         message: null
@@ -202,203 +212,12 @@ export default {
   components: {
     SlaAvatar: () => import("@/components/avatar"),
     Icon: () => import("@/components/SlaIcon"),
-    vueDropzone: vue2Dropzone,
-    Multiselect,
-    Editor: () => import("@/components/add-new-post/Editor"),
     SlaButton: () => import("@/components/SlaButton"),
     Top: () => import("@/components/top"),
     ChatBox: () => import("@/components/chatBox")
   },
-  watch: {
-    scheduleDate: {
-      handler: "watchSchedule"
-    },
-    value: function(newVal, oldVal) {
-      if (newVal == "") {
-        this.$refs.chatArea.style.height = `55px`;
-      }
-    }
-  },
-  computed: {
-    categories: () => {
-      const token = store.state.auth.token;
-      let tags = [];
-      const self = this;
-      let res = axios
-        .get(`${process.env.VUE_APP_API}/category/admin/list`, {
-          headers: {
-            Authorization: `Bearer ${token} `
-          }
-        })
-        .then(res => {
-          let categories = res.data.data.categories;
-          categories.forEach(category => {
-            // self.CategoryIds.push({category});
-            tags.push(category.name);
-          });
-          return tags;
-        })
-        .catch(ex => {});
-      return tags;
-    },
-    scheduleDate() {
-      if (
-        this.time.schedule.days !== undefined &&
-        this.time.schedule.year !== undefined &&
-        this.time.schedule.month !== undefined &&
-        this.time.schedule.hour !== undefined
-      ) {
-        this.time.schedule.final_date =
-          this.time.schedule.year +
-          "-" +
-          this.time.schedule.month +
-          "-" +
-          this.time.schedule.days +
-          " " +
-          this.time.schedule.hour;
-        this.formData.schedule = new Date(
-          this.time.schedule.final_date
-        ).toISOString();
 
-        return this.time.schedule.final_date;
-      }
-    },
-    years: () => {
-      const year = new Date().getFullYear();
-      return Array.from({ length: year }, (value, index) => year + index);
-    }
-  },
   methods: {
-    async handleSubmit(type) {
-      this.formData.normal_details = this.extractContent(
-        this.formData.rich_details,
-        true
-      );
-      this.formData.category = JSON.stringify(this.formData.list_category);
-      const self = this;
-      switch (type) {
-        case "save":
-          self.buttons.isLoading = true;
-          self.buttons.text1 = "Loading.....";
-          self.formData.status = "save";
-          break;
-        case "publish":
-          self.formData.status = "publish";
-
-          self.buttons.isLoading = true;
-          self.buttons.text = "Loading.....";
-          break;
-        default:
-          break;
-      }
-
-      let res = await axios
-        .post(`${process.env.VUE_APP_API}/annoucement/create`, self.formData, {
-          headers: {
-            Authorization: `Bearer ${token} `
-          }
-        })
-        .then(res => {
-          switch (type) {
-            case "save":
-              self.buttons.isLoading = false;
-              self.buttons.text1 = "SAVE";
-              break;
-            case "publish":
-              self.buttons.isLoading = false;
-              self.buttons.text = "PUBLISH";
-              break;
-            default:
-              break;
-          }
-          self.$toast.success(
-            (self.error.message = res.data
-              ? res.data.message
-              : "An error occured")
-          );
-          setTimeout(function() {
-            self.$router.push({ path: "/announcements/all" });
-          }, 2000);
-
-          this.formData = {};
-        })
-        .catch(ex => {
-          switch (type) {
-            case "save":
-              self.buttons.isLoading = false;
-              self.buttons.text1 = "SAVE";
-              break;
-            case "publish":
-              self.buttons.isLoading = false;
-              self.buttons.text = "PUBLISH";
-              break;
-            default:
-              break;
-          }
-          self.$toast.error(
-            (self.error.message = ex.response.data
-              ? ex.response.data.message
-              : "An error occured")
-          );
-        });
-    },
-    async addTag(newTag) {
-      // this.options.push(newTag);
-      let res = await axios
-        .post(
-          `${process.env.VUE_APP_API}/category/admin/create`,
-          { name: newTag },
-          {
-            headers: {
-              Authorization: `Bearer ${token} `
-            }
-          }
-        )
-        .then(res => {
-          this.formData.list_category.push(newTag);
-          this.formData.list_rags.push(newTag);
-        })
-        .catch(ex => {
-          this.$toast.error(
-            (this.error.message = ex.response.data
-              ? ex.response.data.message.message
-              : "An error occured")
-          );
-        });
-    },
-    watchSchedule: function() {
-      let currentDate =
-        new Date().getFullYear() +
-        "-" +
-        (new Date().getMonth() + 1) +
-        "-" +
-        new Date().getDate();
-      let value = this.time.schedule.final_date;
-
-      if (new Date(value) < new Date(currentDate)) {
-        this.$toast.error(
-          (this.error.message =
-            "You can not  input a  schedule date in the past!")
-        );
-        this.buttons.isLoading = true;
-      } else {
-        this.buttons.isLoading = false;
-      }
-    },
-    extractContent: (s, space) => {
-      let span = document.createElement("span");
-      span.innerHTML = s;
-      if (space) {
-        let children = span.querySelectorAll("*");
-        for (let i = 0; i < children.length; i++) {
-          if (children[i].textContent) children[i].textContent += " ";
-          else children[i].innerText += " ";
-        }
-      }
-      return [span.textContent || span.innerText]
-        .toString()
-        .replace(/ +/g, " ");
-    },
     handleChat() {
       if (this.chat == "") {
         return;
@@ -424,6 +243,7 @@ export default {
   },
   mounted() {
     this.Announcement = this.$route.params.single_announcement;
+    this.isLoaded = true;
   }
 };
 </script>

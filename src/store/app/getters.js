@@ -48,3 +48,7 @@ export const getUsers = state => {
 export const getAnalytics = state => {
   return state.Analytics;
 };
+
+export const getResourceCategories = state => {
+  return state.ResourceCategories;
+};

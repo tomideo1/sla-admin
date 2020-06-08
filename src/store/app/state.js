@@ -12,5 +12,6 @@ export default {
   Assets: null,
   Leaders: null,
   Users: null,
-  Analytics: null
+  Analytics: null,
+  ResourceCategories: null
 };

@@ -65,7 +65,7 @@
             :key="navItemIdx"
             class="nav-item dropdown"
           >
-            <d-link
+            <router-link
               :class="[
                 'nav-link',
                 item.items && item.items.length ? 'dropdown-toggle' : ''
@@ -95,7 +95,7 @@
                   :name="item.htmlAfter"
                 />
               </div>
-            </d-link>
+            </router-link>
             <d-collapse
               v-if="item.items && item.items.length"
               :id="`snc-${navIdx}-${navItemIdx}`"

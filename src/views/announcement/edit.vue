@@ -1,5 +1,5 @@
 <template>
-  <d-container fluid class="main-content-container px-4">
+  <d-container fluid class="main-content-container px-4" v-if="isLoaded">
     <!-- Page Header -->
     <top :heading="Announcement.title" />
 
@@ -147,6 +147,7 @@ export default {
   name: "create",
   data() {
     return {
+      isLoaded: false,
       error: {
         status: null,
         message: null
@@ -398,6 +399,7 @@ export default {
   },
   mounted() {
     this.Announcement = this.$route.params.single_announcement;
+    this.isLoaded = true;
     this.$refs.courseImage.dropzone.on("addedfile", file => {
       const reader = new FileReader();
       reader.readAsDataURL(file);

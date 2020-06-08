@@ -31,7 +31,7 @@ export default {
       type: String,
       default: "sm",
       validator: value => {
-        return ["xs", "sm", "md", "lg", "xl"].indexOf(value) !== -1;
+        return ["xs", "sm", "md", "lg", "xl", "lg-2"].indexOf(value) !== -1;
       }
     }
   },

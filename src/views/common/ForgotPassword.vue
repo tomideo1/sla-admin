@@ -5,7 +5,11 @@
         <d-card>
           <d-card-body>
             <!-- Logo -->
-            <img class="auth-form__logo d-table mx-auto mb-3" src="@/assets/images/shards-dashboards-logo.svg" alt="Shards Dashboards - Forgot Password Template">
+            <img
+              class="auth-form__logo d-table mx-auto mb-3"
+              src="@/assets/images/shards-dashboards-logo.svg"
+              alt="Shards Dashboards - Forgot Password Template"
+            />
 
             <!-- Title -->
             <h5 class="auth-form__title text-center mb-4">Reset Password</h5>
@@ -14,20 +18,32 @@
             <d-form>
               <div class="form-group mb-4">
                 <label for="exampleInputEmail1">Email address</label>
-                <d-input type="email" id="exampleInputEmail1" placeholder="Enter email" />
-                <d-form-text class="text-muted text-center">You will receive an email with a unique token.</d-form-text>
+                <d-input
+                  type="email"
+                  id="exampleInputEmail1"
+                  placeholder="Enter email"
+                />
+                <d-form-text class="text-muted text-center"
+                  >You will receive an email with a unique token.</d-form-text
+                >
               </div>
-              <button type="submit" class="btn btn-pill btn-accent d-table mx-auto">Reset Password</button>
+              <button
+                type="submit"
+                class="btn btn-pill btn-accent d-table mx-auto"
+              >
+                Reset Password
+              </button>
             </d-form>
           </d-card-body>
         </d-card>
 
         <!-- Meta -->
         <div class="auth-form__meta d-flex mt-4">
-          <d-link tag="a" to="login" class="mx-auto">Take me back to login.</d-link>
+          <router-link tag="a" to="login" class="mx-auto"
+            >Take me back to login.</router-link
+          >
         </div>
       </d-col>
     </d-row>
   </div>
 </template>
-

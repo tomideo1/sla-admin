@@ -45,6 +45,7 @@
               :preserve-search="true"
               :preselect-first="false"
               :options="categories"
+              @tag="addCategory"
             >
             </multiselect>
           </d-col>
@@ -161,6 +162,7 @@ export default {
         text1: "SAVE"
       },
       options: [],
+      category_options: [],
       formData: {
         question: null,
         answer: "",
@@ -208,6 +210,29 @@ export default {
         )
         .then(res => {
           this.options.push(newTag);
+        })
+        .catch(ex => {
+          this.$toast.error(
+            (this.error.message = ex.response.data
+              ? ex.response.data.message.message
+              : "An error occured")
+          );
+        });
+    },
+    async addCategory(newTag) {
+      this.options.push(newTag);
+      let res = await axios
+        .post(
+          `${process.env.VUE_APP_API}/resource-category/admin/create`,
+          { name: newTag },
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
+          }
+        )
+        .then(res => {
+          this.category_options.push(newTag);
         })
         .catch(ex => {
           this.$toast.error(
@@ -331,7 +356,7 @@ export default {
       const token = store.state.auth.token;
       let tags = [];
       let res = axios
-        .get(`${process.env.VUE_APP_API}/category/admin/list`, {
+        .get(`${process.env.VUE_APP_API}/resource-category/admin/list`, {
           headers: {
             Authorization: `Bearer ${token} `
           }

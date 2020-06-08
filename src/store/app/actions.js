@@ -112,3 +112,13 @@ export const getAllAnalysis = async ({ commit }) => {
     commit("setAnalytics", res.data);
   } else return res;
 };
+
+export const getAllResourceCategories = async ({ commit }) => {
+  let res = await Api.get(`/resource-category/admin/list`, true);
+
+  if (res.status == 200) {
+    commit("setResourceCategories", res.data.data);
+  } else {
+    return res;
+  }
+};

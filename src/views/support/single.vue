@@ -1,5 +1,5 @@
 <template>
-  <d-container fluid class="main-content-container px-4">
+  <d-container fluid class="main-content-container px-4" v-if="isLoaded">
     <top :heading="Ticket.indicator_num" />
     <Toasts
       :show-progress="false"
@@ -80,6 +80,7 @@ export default {
   },
   data() {
     return {
+      isLoaded: false,
       Ticket: null,
       error: {
         status: null,
@@ -133,6 +134,7 @@ export default {
   },
   mounted() {
     this.Ticket = this.$route.params.singleTicket;
+    this.isLoaded = true;
   }
 };
 </script>
