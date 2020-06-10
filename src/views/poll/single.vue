@@ -28,9 +28,9 @@
       <p
         class="font-open-sans float-right m-4"
         style="color:#0087DB; cursor: pointer; font-size: 14px;"
-        @click="deleteModal = true"
+        @click="$router.push('/poll/edit/' + Polls._id)"
       >
-        EDIT POLL
+        EDIT <POLL></POLL>
       </p>
       <p
         class="font-open-sans float-right m-4"
@@ -45,6 +45,8 @@
 
 <script>
 import { GChart } from "vue-google-charts";
+import axios from "axios";
+import store from "@/store/index";
 export default {
   name: "single-poll",
   data() {
@@ -71,8 +73,18 @@ export default {
   },
   mounted() {
     const self = this;
-    self.Polls = self.$route.params.Poll;
-    self.isLoaded = true;
+    const token = store.state.auth.token;
+    axios
+      .get(`${process.env.VUE_APP_API}/poll/get/` + self.$route.params.id, {
+        headers: {
+          Authorization: `Bearer ${token} `
+        }
+      })
+      .then(res => {
+        self.Polls = res.data.data.poll;
+        self.isLoaded = true;
+      })
+      .catch(ex => {});
     self.Polls.options.forEach(data => {
       self.chartData.push([data.value, data.count]);
     });

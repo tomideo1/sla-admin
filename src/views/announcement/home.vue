@@ -17,7 +17,7 @@
             <d-card
               @click="
                 $router.push({
-                  name: 'single-announcement',
+                  path: 'single/' + announcement._id,
                   params: { single_announcement: announcement }
                 })
               "
@@ -86,7 +86,7 @@
             <d-card
               @click="
                 $router.push({
-                  name: 'single-announcement',
+                  path: 'single/' + announcement._id,
                   params: { single_announcement: announcement }
                 })
               "
@@ -154,7 +154,7 @@
             <d-card
               @click="
                 $router.push({
-                  name: 'single-announcement',
+                  path: 'single/' + announcement._id,
                   params: { single_announcement: announcement }
                 })
               "

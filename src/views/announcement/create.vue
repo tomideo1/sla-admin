@@ -113,7 +113,7 @@
         </div>
       </d-col>
     </d-row>
-    <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="md">
+    <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
       <d-modal-header class="text-center">
         <d-modal-title class="font-poppings text-black">
           What time and Date do you want to Schedule?

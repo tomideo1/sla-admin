@@ -17,8 +17,7 @@
               "
               @click="
                 $router.push({
-                  name: 'single-poll',
-                  params: { Poll: poll }
+                  path: 'single/' + poll._id
                 })
               "
             >

@@ -171,7 +171,6 @@
               >
                 <span
                   v-for="i in 10"
-                  :key="i"
                   style="font-size: 16px;letter-spacing: 0.15px;"
                   :class="[
                     ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
@@ -263,7 +262,6 @@
               >
                 <span
                   v-for="i in 10"
-                  :key="i"
                   style="font-size: 16px;letter-spacing: 0.15px;"
                   :class="[
                     ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
@@ -330,7 +328,6 @@
               <div
                 :class="['row', i % 2 === 0 ? 'scorecard-selected' : '']"
                 v-for="i in 5"
-                :key="i"
               >
                 <div class="col-md-8 border-right col-12 col-lg-8">
                   <span
@@ -612,8 +609,8 @@
               </div>
               <div
                 :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="legend in postInteractionsChartLegends"
-                :key="legend"
+                v-for="(legend, idx) in postInteractionsChartLegends"
+                :key="idx"
               >
                 <div class="col-md-7 border-right col-12 col-lg-7">
                   <span
@@ -809,7 +806,6 @@
               <div
                 :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
                 v-for="i in 5"
-                :key="i"
               >
                 <div class="col-md-7 border-right col-12 col-lg-7">
                   <span

@@ -568,10 +568,8 @@ export default {
       } else {
         this.buttons.isLoading = false;
       }
-    }
-  },
-  mounted() {
-    this.$refs.courseImage.dropzone.on("addedfile", file => {
+    },
+    processImage(file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       const self = this;
@@ -582,7 +580,29 @@ export default {
         }
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
       };
+    }
+  },
+  mounted() {
+    const self = this;
+    const token = store.state.auth.token;
+    axios
+      .get(`${process.env.VUE_APP_API}/poll/get/` + self.$route.params.id, {
+        headers: {
+          Authorization: `Bearer ${token} `
+        }
+      })
+      .then(res => {
+        self.Polls = res.data.data.poll;
+        self.isLoaded = true;
+      })
+      .catch(ex => {});
+    self.Polls.options.forEach(data => {
+      self.chartData.push([data.value, data.count]);
     });
+    self.Polls.responses = self.Polls.options.reduce(
+      (accum, item) => accum + item.count,
+      0
+    );
   },
   watch: {
     editorContent: {

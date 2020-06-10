@@ -38,13 +38,13 @@
               class="mb-3"
               v-model="formData.list_category"
               placeholder="Category"
-              :multiple="true"
+              :multiple="false"
               :taggable="true"
               :close-on-select="true"
               :clear-on-select="false"
               :preserve-search="true"
               :preselect-first="false"
-              :options="categories"
+              :options="category_options"
               @tag="addCategory"
             >
             </multiselect>
@@ -80,7 +80,7 @@
           </d-col>
         </d-form-row>
       </d-col>
-      <d-modal v-if="scheduleModal" @close="scheduleModal = false" :size="'md'">
+      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
         <d-modal-header class="text-center">
           <d-modal-title class="font-poppings text-black">
             What time and Date do you want to Schedule?
@@ -220,7 +220,7 @@ export default {
         });
     },
     async addCategory(newTag) {
-      this.options.push(newTag);
+      this.category_options.push(newTag);
       let res = await axios
         .post(
           `${process.env.VUE_APP_API}/resource-category/admin/create`,
@@ -262,8 +262,8 @@ export default {
       }
     },
     async handleSubmit(type) {
-      this.formData.category = JSON.stringify(this.formData.list_category);
-      this.formData.tags = JSON.stringify(this.formData.list_tags);
+      this.formData.category = this.formData.list_category;
+      this.formData.tags = this.formData.list_tags.join();
       switch (type) {
         case "save":
           this.buttons.isLoading = true;
@@ -352,25 +352,6 @@ export default {
       const day = new Date().getDay();
       return Array.from({ length: day + 31 }, (value, index) => day + index);
     },
-    categories: () => {
-      const token = store.state.auth.token;
-      let tags = [];
-      let res = axios
-        .get(`${process.env.VUE_APP_API}/resource-category/admin/list`, {
-          headers: {
-            Authorization: `Bearer ${token} `
-          }
-        })
-        .then(res => {
-          let categories = res.data.data.categories;
-          categories.forEach(category => {
-            tags.push(category.name);
-          });
-          return tags;
-        })
-        .catch(ex => {});
-      return tags;
-    },
     scheduleDate() {
       if (
         this.time.schedule.days !== undefined &&
@@ -406,6 +387,19 @@ export default {
         let tags_list = res.data.data.tags;
         tags_list.forEach(tag => {
           self.options.push(tag.name);
+        });
+      })
+      .catch(ex => {});
+    axios
+      .get(`${process.env.VUE_APP_API}/resource-category/admin/list`, {
+        headers: {
+          Authorization: `Bearer ${token} `
+        }
+      })
+      .then(res => {
+        let category_lists = res.data.data.categories;
+        category_lists.forEach(tag => {
+          self.category_options.push(tag.name);
         });
       })
       .catch(ex => {});

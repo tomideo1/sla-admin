@@ -1,13 +1,13 @@
 <template>
-  <div class=" card message" :class="accordionClasses">
+  <div class=" card message" :class="accordionClasses" v-on="$listeners">
     <div
       class="message-header card-header "
       :style="` border-left: 10px solid` + color"
-      @click="toggleAccordion"
     >
       {{ header }}
       <span>
         <icon
+          @click="toggleAccordion"
           name="arrow-up"
           :style="arrpwPos === false ? '' : 'transform: rotate(180deg);'"
           size="sm"

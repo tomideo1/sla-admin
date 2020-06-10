@@ -202,7 +202,7 @@ const router = new Router({
           }
         },
         {
-          path: "single",
+          path: "single/:id",
           name: "single-announcement",
           component: () => import("@/views/announcement/single.vue"),
           meta: {
@@ -210,7 +210,7 @@ const router = new Router({
           }
         },
         {
-          path: "edit",
+          path: "edit/:id",
           name: "edit-announcement",
           component: () => import("@/views/announcement/edit.vue"),
           meta: {
@@ -244,9 +244,17 @@ const router = new Router({
           }
         },
         {
-          path: "single",
+          path: "single/:id",
           name: "single-survey",
           component: () => import("@/views/survey/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "edit/:id",
+          name: "edit-survey",
+          component: () => import("@/views/survey/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -279,9 +287,17 @@ const router = new Router({
           }
         },
         {
-          path: "single",
+          path: "single/:id",
           name: "single-poll",
           component: () => import("@/views/poll/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "edit/:id",
+          name: "edit-poll",
+          component: () => import("@/views/poll/edit.vue"),
           meta: {
             middleware: [auth]
           }
@@ -365,7 +381,7 @@ const router = new Router({
           }
         },
         {
-          path: "single",
+          path: "single/:id",
           name: "single-resources",
           component: () => import("@/views/resources/single.vue"),
           meta: {

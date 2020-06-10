@@ -43,7 +43,7 @@
         </carousel>
       </div>
     </d-row>
-    <d-modal v-if="scheduleModal" @close="scheduleModal = false" :size="'md'">
+    <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
       <div
         class="modal-header"
         :style="
@@ -257,9 +257,12 @@ export default {
       this.buttons.isLoading = true;
       this.buttons.text = "Loading.....";
       const token = store.state.auth.token;
+      const self = this;
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/course/` + this.courseObj._id + `/update`,
+          `${process.env.VUE_APP_API}/course/` +
+            this.courseObj._id +
+            `/schedule`,
           this.formData,
           {
             headers: {
@@ -267,11 +270,37 @@ export default {
             }
           }
         )
-        .then()
-        .catch(res => {
-          this.buttons.isLoading = false;
-          this.buttons.text = "SAVE";
+        .then(res => {
+          self.buttons.isLoading = false;
+          self.buttons.text = "SAVE";
+          self.$toast.success((self.error.message = res.data.message));
+          setTimeout(function() {
+            self.$router.push({ path: "/courses/save" });
+          }, 2000);
+        })
+        .catch(ex => {
+          self.buttons.isLoading = false;
+          self.buttons.text = "SAVE";
+          self.$toast.error(
+            (self.error.message = ex.response.data
+              ? ex.response.data.message
+              : "An error occured")
+          );
         });
+    },
+    splitDateString(dateString, Obj, Obj2) {
+      let res = dateString.split("T");
+      let res2 = res[0].split("-");
+      let hr = res[1].split(":");
+      let final_hr = hr[0] + ":" + hr[1];
+      Obj.year = res2[0];
+      Obj.month = parseInt(res2[1]);
+      Obj.days = parseInt(res2[2]);
+      Obj.hour = final_hr;
+
+      Obj.final_date =
+        Obj.year + "-" + Obj.month + "-" + Obj.days + " " + Obj.hour;
+      Obj2 = new Date(Obj.final_date).toISOString();
     }
     //vuex call to get all courses
   },
@@ -290,9 +319,7 @@ export default {
   async mounted() {
     this.getAllCourses();
     this.courses.filter(course => {
-      if (course.saved === false) {
-        return course;
-      }
+      return course;
     });
   },
   components: {

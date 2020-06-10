@@ -296,10 +296,11 @@
       </d-col>
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
         <vue-dropzone
-          v-model="course.cover_image"
+          v-model="formData.cover_image"
           :options="dropzoneOptions"
           id="singledropZone"
           :useCustomSlot="true"
+          @vdropzone-file-added="processImage"
           class="mx-auto"
           ref="courseImage"
           :style="
@@ -374,9 +375,16 @@
             :disabled="buttons.isLoading"
           >
           </sla-button>
+          <p
+            class="font-open-sans mt-3"
+            style="color: #FF4133; cursor: pointer; font-size: 14px;"
+            @click="modalStatus = true"
+          >
+            DELETE COURSE
+          </p>
         </div>
       </d-col>
-      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="md">
+      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
         <d-modal-header class="text-center">
           <d-modal-title class="font-poppings text-black">
             What time and Date do you want to Schedule?
@@ -405,6 +413,30 @@
           </d-input-group>
         </d-modal-body>
       </d-modal>
+      <d-modal v-if="modalStatus" @close="modalStatus = false" size="lg">
+        <div style="border-top: 4px solid #0087DB;" class="modal-header"></div>
+        <h6 class="text-center m-2 text-bold text-dark font-poppings">
+          Are you sure you want to delete this resource?
+        </h6>
+        <d-modal-body>
+          <div class="text-center">
+            <sla-button
+              class="m-2 col-md-12"
+              type="filled"
+              size="md"
+              text="YES, DELETE"
+              @click="deleteResource(resource._id, 'courses/admin/delete/')"
+            />
+            <sla-button
+              class="m-2 col-md-12"
+              type="outline"
+              size="md"
+              :text="'CANCEL'"
+              @click="modalStatus = false"
+            />
+          </div>
+        </d-modal-body>
+      </d-modal>
     </d-row>
   </d-container>
 </template>
@@ -415,11 +447,13 @@ import VueTrix from "vue-trix";
 import axios from "axios";
 import Multiselect from "vue-multiselect";
 import store from "@/store/index";
+import helper from "../../helpers/helper";
 export default {
   name: "course-create",
   data: () => {
     return {
       isLoaded: false,
+      modalStatus: false,
       pages: {
         courseInfo: true,
         lessons: false,
@@ -440,15 +474,16 @@ export default {
         message: null
       },
       dropzoneOptions: {
+        acceptedFiles: "image/*",
         // url:'localhost:8080',
         url: `${process.env.VUE_APP_API}`,
         // acceptedFiles: "images/*",
         // thumbnailMethod:'contain',
         addRemoveLinks: true,
+        maxFiles: 1,
         thumbnailWidth: 300,
         thumbnailHeight: 300,
         maxFileSizeInMB: 2, // MB
-        maxNumberOfFiles: 1,
         preventDuplicates: true,
         resizeWidth: 300,
         resizeHeight: 300
@@ -460,7 +495,7 @@ export default {
         requirements: null,
         category: [],
         tags: [],
-        cover_image: "",
+        cover_image: undefined,
         estimate: null,
         publish: null,
         saved: false,
@@ -543,6 +578,9 @@ export default {
     },
     deleteValue(index) {
       this.lesson.fields.splice(index, 1);
+    },
+    deleteResource(id, Url) {
+      return helper.handleDelete(id, Url, "/courses/all");
     },
     addValue() {
       this.lesson.fields.push({});
@@ -747,7 +785,7 @@ export default {
         case "save":
           this.buttons.isLoading = true;
           this.buttons.text1 = "Loading.....";
-          this.formData.saved = true;
+          this.course.saved = true;
           break;
         case "publish":
           this.buttons.isLoading = true;
@@ -757,6 +795,11 @@ export default {
           break;
       }
       const self = this;
+      if (self.formData.cover_image !== undefined) {
+        self.course.cover_image = self.formData.cover_image;
+      } else {
+        delete self.course.cover_image;
+      }
       self.course.tags = self.course.tags.join();
       self.course.category = self.course.category.join();
       self.course.lessons = self.lesson.fields;
@@ -792,15 +835,18 @@ export default {
               self.buttons.text = "Publish";
               self.quiz = [];
               self.$toast.success((self.error.message = res.data.message));
-              setTimeout(function() {
-                self.$router.go(-1);
-              }, 2000);
+              // setTimeout(function() {
+              //   self.$router.go(-1);
+              // }, 2000);
               break;
             default:
               break;
           }
         })
         .catch(ex => {
+          self.course.cover_image = self.formData.cover_image;
+          self.course.tags = self.course.tags.split(",");
+          self.course.category = self.course.category.split(",");
           switch (type) {
             case "save":
               self.buttons.isLoading = false;
@@ -839,6 +885,19 @@ export default {
       Obj.final_date =
         Obj.year + "-" + Obj.month + "-" + Obj.days + " " + Obj.hour;
       Obj2 = new Date(Obj.final_date).toISOString();
+    },
+
+    processImage(file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const self = this;
+        let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
+        if (encoded.length % 4 > 0) {
+          encoded += "=".repeat(4 - (encoded.length % 4));
+        }
+        self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
+      };
     }
   },
   watch: {
@@ -853,21 +912,6 @@ export default {
     }
   },
   created() {
-    if (this.isLoaded)
-      this.$refs.courseImage.dropzone.on("addedfile", file => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          const self = this;
-          let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
-          if (encoded.length % 4 > 0) {
-            encoded += "=".repeat(4 - (encoded.length % 4));
-          }
-          self.course.cover_image = "data:image/jpg/png;base64," + encoded;
-        };
-      });
-  },
-  mounted() {
     const token = store.state.auth.token;
     const self = this;
     axios

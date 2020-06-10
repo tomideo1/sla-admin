@@ -69,38 +69,42 @@
           class="m-3"
           v-show="comments"
           style="border:1px solid #E7E6E6;  box-sizing: border-box; border-top: none;max-height: 300px;!important;"
-        ></div>
-        <div
-          class="col-md-12  "
-          style="max-height: 300px!important; overflow-y: auto"
         >
-          <!--          <div class="col-md-12 " v-for="comment in Announcement.comments">-->
-          <div class="d-flex flex-column" v-for="i in 10">
-            <span class="ml-2 d-flex m-2 flex-row">
-              <sla-avatar size="md" class="m-1" :user="{ name: 'TOMIDE' }" />
-              <span class="m-2 mb-4">Tomide Aina</span>
-            </span>
-            <span class="ml-5 mt-n4 mb-3"
-              >Donec sollicitudin molestie malesuada. Donec rutrum congue leo
-              eget malesuada. Vestibulum ac diam sit amet quam vehicula
-              elementum sed sit amet dui. Donec rutrum congue leo eget
-              malesuada.
-            </span>
-            <div class="d-flex flex-row">
-              <small class="text-grey-500 ml-5 mt-n2">7h</small>
-              <small class="text-grey-500 ml-5 mt-n2">Like</small>
-              <small class="text-grey-500 ml-5 mt-n2">Reply</small>
+          <div
+            class="col-md-12  "
+            style="max-height: 300px!important; overflow-y: auto"
+          >
+            <!--          <div class="col-md-12 " v-for="comment in Announcement.comments">-->
+            <div class="d-flex flex-column" v-for="comment in AllComments">
+              <span class="ml-2 d-flex m-2 flex-row">
+                <sla-avatar size="md" class="m-1" :user="{ name: 'TOMIDE' }" />
+                <span class="m-2 mb-4">Tomide Aina</span>
+              </span>
+              <span class="ml-5 mt-n4 mb-3">
+                {{ comment.content }}
+              </span>
+              <div class="d-flex flex-row">
+                <small class="text-grey-500 ml-5 mt-n2">{{
+                  $moment(comment.createdAt).diff($moment(), "hours")
+                }}</small>
+                <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
+                <!--                <small class="text-grey-500 ml-5 mt-n2">Reply</small>-->
+              </div>
             </div>
           </div>
-        </div>
-        <div class="d-flex  flex-row flex-grow-1 w-100">
-          <sla-avatar size="md" :user="{ name: 'Tomide' }" class=" mt-4 ml-5" />
-          <chat-box
-            @keyup="handleChat"
-            class=""
-            @send="handleChat"
-            v-model="content"
-          />
+          <div class="d-flex flex-lg-row w-100 mt-3">
+            <sla-avatar
+              size="md"
+              :user="{ name: 'Tomide' }"
+              class="ml-5  mt-4  "
+            />
+            <chat-box
+              @keyup="handleChat"
+              class="col-md-10 col-lg-10 col-10"
+              @send="handleChat"
+              v-model="content"
+            />
+          </div>
         </div>
       </div>
       <div class="col-md-4 col-lg-4 col-12"></div>
@@ -119,8 +123,7 @@
         size="sm"
         @click="
           $router.push({
-            name: 'edit-announcement',
-            params: { single_announcement: Announcement }
+            path: 'edit/' + Announcement._id
           })
         "
       />
@@ -157,6 +160,7 @@ export default {
       },
       Announcement: undefined,
       comments: false,
+      AllComments: undefined,
       scheduleModal: false,
       buttons: {
         publish: false,
@@ -242,8 +246,24 @@ export default {
     }
   },
   mounted() {
-    this.Announcement = this.$route.params.single_announcement;
-    this.isLoaded = true;
+    const token = store.state.auth.token;
+    const self = this;
+    axios
+      .get(
+        `${process.env.VUE_APP_API}/annoucement/admin/get/` +
+          self.$route.params.id,
+        {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        }
+      )
+      .then(res => {
+        self.Announcement = res.data.data.annoucement;
+        self.AllComments = res.data.data.comments;
+        self.isLoaded = true;
+      })
+      .catch(ex => {});
   }
 };
 </script>

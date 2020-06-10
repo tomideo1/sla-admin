@@ -204,7 +204,7 @@
         </div>
       </d-modal-footer>
     </d-modal>
-    <d-modal v-if="showCoach" size="sm" @close="showCoach = false" :size="'md'">
+    <d-modal v-if="showCoach" @close="showCoach = false" size="lg">
       <d-modal-header>
         <d-modal-title>Assign Coach</d-modal-title>
       </d-modal-header>

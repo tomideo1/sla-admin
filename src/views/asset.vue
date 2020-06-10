@@ -11,24 +11,26 @@
     <nav-menu :navs="navigation" />
 
     <d-row no-gutters class="container-fluid">
-      <input
-        type="file"
-        ref="file"
-        style="display: none"
-        v-on:change="handleUpload"
-      />
-      <d-button
-        class="  col-md-2 p-3 mb-3"
-        style="
+      <div>
+        <input
+          type="file"
+          ref="file"
+          style="display: none"
+          v-on:change="handleUpload"
+        />
+        <d-button
+          class="  col-md-12 col-lg-12 col-12  p-3 mb-3"
+          style="
                 background: #DAAA55;
                 border-radius: 5px;
                 border: none;
                 "
-        :disabled="buttons.isLoading"
-        @click="$refs.file.click()"
-      >
-        {{ buttons.text }}</d-button
-      >
+          :disabled="buttons.isLoading"
+          @click="$refs.file.click()"
+        >
+          {{ buttons.text }}</d-button
+        >
+      </div>
       <masonry
         v-if="assets.length > 0"
         :cols="{ default: 4, 1000: 3, 700: 2, 400: 1 }"
