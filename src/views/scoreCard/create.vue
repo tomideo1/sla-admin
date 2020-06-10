@@ -10,12 +10,12 @@
       ></Toasts>
       <div class="col-12 col-lg-6 col-md-6">
         <div class="p-4">
-          <d-card class="m-3">
+          <d-card class="m-3" v-for="(sample, idx) in formData.template">
             <div class="row m-2">
               <d-input
+                v-model="sample.field_name"
                 class="col-md-8 col-8 text-dark col-lg-8 font-open-sans  m-2"
-                placeholder="Weekly Course Completion"
-                disabled
+                placeholder="Enter The Field Name"
               />
 
               <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
@@ -23,7 +23,7 @@
               <d-select
                 class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
                 style="border: none;"
-                v-model="formData.weekly_course_completion.type"
+                v-model="sample.type"
               >
                 <option disabled selected :value="undefined"
                   >Select Scorecard Type</option
@@ -32,11 +32,10 @@
                 <option value="direct">Short Text</option>
               </d-select>
             </div>
-            <div v-show="formData.weekly_course_completion.type === 'optional'">
+            <div v-show="sample.type === 'optional'">
               <div
                 class="m-2 d-flex flex-row  "
-                v-for="(item, index) in formData.weekly_course_completion
-                  .options"
+                v-for="(item, index) in sample.options"
               >
                 <icon class="m-2 " size="lg" name="eclipse" />
                 <d-input
@@ -52,7 +51,7 @@
                 <icon
                   size="lg"
                   class="ml-auto"
-                  @click="deleteOption('weekly_course_completion', index)"
+                  @click="deleteOption(idx, index)"
                   name="cancel"
                 />
               </div>
@@ -61,353 +60,38 @@
                 <icon
                   size="lg"
                   class=" "
-                  @click="addOption('weekly_course_completion')"
+                  @click="addOption(idx)"
                   name="add"
-                  v-show="formData.weekly_course_completion.type === 'optional'"
+                  v-show="sample.type === 'optional'"
                 />
               </div>
             </div>
-            <div v-show="formData.weekly_course_completion.type === 'direct'">
+            <div v-show="sample.type === 'direct'">
               <d-input
-                v-model="formData.weekly_course_completion.score"
+                v-model="sample.score"
                 class="col-lg-4 col-md-4 col-6 m-3 "
                 placeholder="Enter Score"
               />
             </div>
-          </d-card>
-
-          <d-card class="m-3">
-            <div class="row m-2">
-              <d-input
-                class="col-md-8 col-8 text-dark col-lg-8 font-open-sans  m-2"
-                placeholder="weekly_worksheet_completion"
-                disabled
+            <div class="ml-auto m-2">
+              <icon
+                size="lg"
+                class="ml-auto border-right"
+                @click="deleteSample(idx, index)"
+                name="bin"
               />
-
-              <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
-
-              <d-select
-                class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
-                style="border: none;"
-                v-model="formData.weekly_worksheet_completion.type"
-              >
-                <option disabled selected :value="undefined"
-                  >Select Scorecard Type</option
-                >
-                <option value="optional">DropDown</option>
-                <option value="direct">Short Text</option>
-              </d-select>
             </div>
-            <div
-              v-show="formData.weekly_worksheet_completion.type === 'optional'"
+          </d-card>
+          <div class="text-center">
+            <d-button
+              class="btn btn-outline-light  mt-4  p-3 col-md-8 "
+              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+              @click="addSample()"
             >
-              <div
-                class="m-2 d-flex flex-row  "
-                v-for="(item, index) in formData.weekly_worksheet_completion
-                  .options"
-              >
-                <icon class="m-2 " size="lg" name="eclipse" />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.option"
-                  placeholder="Option Value"
-                />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.score"
-                  placeholder="Score Value"
-                />
-                <icon
-                  size="lg"
-                  class="ml-auto"
-                  @click="deleteOption('weekly_worksheet_completion', index)"
-                  name="cancel"
-                />
-              </div>
-              <hr class="border-top mx-auto" />
-              <div class="d-flex flex-row m-2">
-                <icon
-                  size="lg"
-                  class=" "
-                  @click="addOption('weekly_worksheet_completion')"
-                  name="add"
-                  v-show="
-                    formData.weekly_worksheet_completion.type === 'optional'
-                  "
-                />
-              </div>
-            </div>
-            <div
-              v-show="formData.weekly_worksheet_completion.type === 'direct'"
-            >
-              <d-input
-                v-model="formData.weekly_worksheet_completion.score"
-                class="col-lg-4 col-md-4 col-6 m-3 "
-                placeholder="Enter Score"
-              />
-            </div>
-          </d-card>
-
-          <d-card class="m-3">
-            <div class="row m-2">
-              <d-input
-                class="col-md-8 col-8 text-dark col-lg-8 font-open-sans  m-2"
-                placeholder="Agreed Goals"
-                disabled
-              />
-
-              <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
-
-              <d-select
-                class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
-                style="border: none;"
-                v-model="formData.agreed_goals.type"
-              >
-                <option disabled selected :value="undefined"
-                  >Select Scorecard Type</option
-                >
-                <option value="optional">DropDown</option>
-                <option value="direct">Short Text</option>
-              </d-select>
-            </div>
-            <div v-show="formData.agreed_goals.type === 'optional'">
-              <div
-                class="m-2 d-flex flex-row  "
-                v-for="(item, index) in formData.agreed_goals.options"
-              >
-                <icon class="m-2 " size="lg" name="eclipse" />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.option"
-                  placeholder="Option Value"
-                />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.score"
-                  placeholder="Score Value"
-                />
-                <icon
-                  size="lg"
-                  class="ml-auto"
-                  @click="deleteOption('agreed_goals', index)"
-                  name="cancel"
-                />
-              </div>
-              <hr class="border-top mx-auto" />
-              <div class="d-flex flex-row m-2">
-                <icon
-                  size="lg"
-                  class=" "
-                  @click="addOption('agreed_goals')"
-                  name="add"
-                  v-show="formData.agreed_goals.type === 'optional'"
-                />
-              </div>
-            </div>
-            <div v-show="formData.agreed_goals.type === 'direct'">
-              <d-input
-                v-model="formData.agreed_goals.score"
-                class="col-lg-4 col-md-4 col-6 m-3 "
-                placeholder="Enter Score"
-              />
-            </div>
-          </d-card>
-
-          <d-card class="m-3">
-            <div class="row m-2">
-              <d-input
-                class="col-md-8 col-8 text-dark col-lg-8 font-open-sans  m-2"
-                placeholder="Percieved Challenges"
-                disabled
-              />
-
-              <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
-
-              <d-select
-                class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
-                style="border: none;"
-                v-model="formData.perceived_challenges.type"
-              >
-                <option disabled selected :value="undefined"
-                  >Select Scorecard Type</option
-                >
-                <option value="optional">DropDown</option>
-                <option value="direct">Short Text</option>
-              </d-select>
-            </div>
-            <div v-show="formData.perceived_challenges.type === 'optional'">
-              <div
-                class="m-2 d-flex flex-row  "
-                v-for="(item, index) in formData.perceived_challenges.options"
-              >
-                <icon class="m-2 " size="lg" name="eclipse" />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.option"
-                  placeholder="Option Value"
-                />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.score"
-                  placeholder="Score Value"
-                />
-                <icon
-                  size="lg"
-                  class="ml-auto"
-                  @click="deleteOption('perceived_challenges', index)"
-                  name="cancel"
-                />
-              </div>
-              <hr class="border-top mx-auto" />
-              <div class="d-flex flex-row m-2">
-                <icon
-                  size="lg"
-                  class=" "
-                  @click="addOption('perceived_challenges')"
-                  name="add"
-                  v-show="formData.perceived_challenges.type === 'optional'"
-                />
-              </div>
-            </div>
-            <div v-show="formData.perceived_challenges.type === 'direct'">
-              <d-input
-                v-model="formData.perceived_challenges.score"
-                class="col-lg-4 col-md-4 col-6 m-3 "
-                placeholder="Enter Score"
-              />
-            </div>
-          </d-card>
-
-          <d-card class="m-3">
-            <div class="row m-2">
-              <d-input
-                class="col-md-8 col-8 text-dark col-lg-8 font-open-sans  m-2"
-                placeholder="Progress on Weekly Goals"
-                disabled
-              />
-
-              <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
-
-              <d-select
-                class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
-                style="border: none;"
-                v-model="formData.progress_on_weekly_goals.type"
-              >
-                <option disabled selected :value="undefined"
-                  >Select Scorecard Type</option
-                >
-                <option value="optional">DropDown</option>
-                <option value="direct">Short Text</option>
-              </d-select>
-            </div>
-            <div v-show="formData.progress_on_weekly_goals.type === 'optional'">
-              <div
-                class="m-2 d-flex flex-row  "
-                v-for="(item, index) in formData.progress_on_weekly_goals
-                  .options"
-              >
-                <icon class="m-2 " size="lg" name="eclipse" />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.option"
-                  placeholder="Option Value"
-                />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.score"
-                  placeholder="Score Value"
-                />
-                <icon
-                  size="lg"
-                  class="ml-auto"
-                  @click="deleteOption('progress_on_weekly_goals', index)"
-                  name="cancel"
-                />
-              </div>
-              <hr class="border-top mx-auto" />
-              <div class="d-flex flex-row m-2">
-                <icon
-                  size="lg"
-                  class=" "
-                  @click="addOption('progress_on_weekly_goals')"
-                  name="add"
-                  v-show="formData.progress_on_weekly_goals.type === 'optional'"
-                />
-              </div>
-            </div>
-            <div v-show="formData.progress_on_weekly_goals.type === 'direct'">
-              <d-input
-                v-model="formData.progress_on_weekly_goals.score"
-                class="col-lg-4 col-md-4 col-6 m-3 "
-                placeholder="Enter Score"
-              />
-            </div>
-          </d-card>
-
-          <d-card class="m-3">
-            <div class="row m-2">
-              <d-input
-                class="col-md-8 col-8 text-dark col-lg-8 font-open-sans  m-2"
-                placeholder="Coach Comments"
-                disabled
-              />
-
-              <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
-
-              <d-select
-                class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
-                style="border: none;"
-                v-model="formData.coach_comment.type"
-              >
-                <option disabled selected :value="undefined"
-                  >Select Scorecard Type</option
-                >
-                <option value="optional">DropDown</option>
-                <option value="direct">Short Text</option>
-              </d-select>
-            </div>
-            <div v-show="formData.coach_comment.type === 'optional'">
-              <div
-                class="m-2 d-flex flex-row  "
-                v-for="(item, index) in formData.coach_comment.options"
-              >
-                <icon class="m-2 " size="lg" name="eclipse" />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.option"
-                  placeholder="Option Value"
-                />
-                <d-input
-                  class="col-md-4 m-2"
-                  v-model="item.score"
-                  placeholder="Score Value"
-                />
-                <icon
-                  size="lg"
-                  class="ml-auto"
-                  @click="deleteOption('coach_comment', index)"
-                  name="cancel"
-                />
-              </div>
-              <hr class="border-top mx-auto" />
-              <div class="d-flex flex-row m-2">
-                <icon
-                  size="lg"
-                  class=" "
-                  @click="addOption('coach_comment')"
-                  name="add"
-                  v-show="formData.coach_comment.type === 'optional'"
-                />
-              </div>
-            </div>
-            <div v-show="formData.coach_comment.type === 'direct'">
-              <d-input
-                v-model="formData.coach_comment.score"
-                class="col-lg-4 col-md-4 col-6 m-3 "
-                placeholder="Enter Score"
-              />
-            </div>
-          </d-card>
+              <icon name="add" /> <span> Add Sample</span>
+            </d-button>
+            <!--Add Quiz-->
+          </div>
           <sla-button
             class="btn  m-3  text-uppercase "
             :text="buttons.text"
@@ -442,36 +126,32 @@ export default {
         text: "PUBLISH"
       },
       formData: {
-        weekly_course_completion: {
-          options: []
-        },
-        weekly_worksheet_completion: {
-          options: []
-        },
-        agreed_goals: {
-          options: []
-        },
-        perceived_challenges: {
-          options: []
-        },
-        progress_on_weekly_goals: {
-          options: []
-        },
-        coach_comment: {
-          options: []
-        }
+        template: [
+          {
+            field_name: "",
+            type: "direct",
+            options: []
+          }
+        ]
       }
     };
   },
   methods: {
-    deleteQuiz(index) {
-      this.formData.questions.splice(index, 1);
+    addSample() {
+      this.formData.template.push({
+        field_name: "",
+        type: "direct",
+        options: []
+      });
     },
-    addOption(formDataObject, index) {
-      this.formData[formDataObject].options.push({ option: "", score: "" });
+    deleteSample(index) {
+      this.formData.template.splice(index, 1);
     },
-    deleteOption(formDataObject, index2) {
-      this.formData[formDataObject].options.splice(index2, 1);
+    addOption(index) {
+      this.formData.template[index].options.push({ option: "", score: "" });
+    },
+    deleteOption(index, index2) {
+      this.formData.template[index].options.splice(index2, 1);
     },
     async handleSubmit() {
       this.buttons.isLoading = true;
@@ -494,7 +174,7 @@ export default {
           self.quiz = [];
           self.$toast.success((self.error.message = res.data.message));
           setTimeout(function() {
-            self.$router.push({ path: "/scorecard/all" });
+            self.$router.push({ path: "/scorecards/all" });
           }, 2000);
         })
         .catch(ex => {

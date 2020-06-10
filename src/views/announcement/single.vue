@@ -77,15 +77,43 @@
             <!--          <div class="col-md-12 " v-for="comment in Announcement.comments">-->
             <div class="d-flex flex-column" v-for="comment in AllComments">
               <span class="ml-2 d-flex m-2 flex-row">
-                <sla-avatar size="md" class="m-1" :user="{ name: 'TOMIDE' }" />
-                <span class="m-2 mb-4">Tomide Aina</span>
+                <div v-if="comment.user !== null">
+                  <sla-avatar
+                    class="avatar m-1 "
+                    v-if="comment.user.image === null"
+                    size="md"
+                    :user="{ name: comment.first_name }"
+                  />
+                  <sla-avatar
+                    class="avatar m-1"
+                    v-else
+                    size="md"
+                    :user="{ image: comment.user.image }"
+                  />
+                  <span class="m-2 mb-4">{{ comment.user.first_name }}</span>
+                </div>
+                <div v-else>
+                  <sla-avatar
+                    class="avatar m-1"
+                    size="md"
+                    v-if="comment.admin.image === null"
+                    :user="{ name: comment.admin.first_name }"
+                  />
+                  <sla-avatar
+                    class="avatar m-1"
+                    v-else
+                    size="md"
+                    :user="{ image: comment.admin.image }"
+                  />
+                  <span class="m-2 mb-4">{{ comment.admin.first_name }}</span>
+                </div>
               </span>
               <span class="ml-5 mt-n4 mb-3">
                 {{ comment.content }}
               </span>
               <div class="d-flex flex-row">
                 <small class="text-grey-500 ml-5 mt-n2">{{
-                  $moment(comment.createdAt).diff($moment(), "hours")
+                  getTimeDiff(comment.createdAt) + " h"
                 }}</small>
                 <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
                 <!--                <small class="text-grey-500 ml-5 mt-n2">Reply</small>-->
@@ -95,7 +123,14 @@
           <div class="d-flex flex-lg-row w-100 mt-3">
             <sla-avatar
               size="md"
-              :user="{ name: 'Tomide' }"
+              v-if="Admin.image === null"
+              :user="{ name: Admin.first_name }"
+              class="ml-5  mt-4  "
+            />
+            <sla-avatar
+              size="md"
+              v-else
+              :user="{ image: Admin.image }"
               class="ml-5  mt-4  "
             />
             <chat-box
@@ -139,15 +174,10 @@
 </template>
 
 <script>
-import vue2Dropzone from "vue2-dropzone";
-import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import axios from "axios";
-import Multiselect from "vue-multiselect";
 import store from "@/store/index";
-import "quill-emoji/dist/quill-emoji.css";
-import EmojiButton from "@joeattardi/emoji-button";
-import quill from "quill";
-import Avatar from "../../components/avatar";
+import moment from "moment";
+import { mapActions, mapGetters } from "vuex";
 const token = store.state.auth.token;
 export default {
   name: "create",
@@ -161,6 +191,7 @@ export default {
       Announcement: undefined,
       comments: false,
       AllComments: undefined,
+      Admin: null,
       scheduleModal: false,
       buttons: {
         publish: false,
@@ -171,44 +202,7 @@ export default {
         text1: "SAVE"
       },
       options: [],
-      dropzoneOptions: {
-        // url:'localhost:8080',
-        url: `${process.env.VUE_APP_API}`,
-        // acceptedFiles: "images/*",
-        // thumbnailMethod:'contain',
-        addRemoveLinks: true,
-        thumbnailWidth: 300,
-        thumbnailHeight: 300,
-        maxFileSizeInMB: 2, // MB
-        maxNumberOfFiles: 1,
-        preventDuplicates: true,
-        resizeWidth: 300,
-        resizeHeight: 300
-        // resize: this.resize,
-      },
-      mockFile: {
-        name: "Filename",
-        size: 300
-      },
-      formData: {
-        title: null,
-        rich_details: "",
-        normal_details: "",
-        list_category: [],
-        list_tags: [],
-        recepients: "everyone",
-        cover_image: ""
-      },
-      time: {
-        schedule: {
-          days: undefined,
-          month: undefined,
-          year: undefined,
-          hour: undefined,
-          final_date: null
-        }
-      },
-      CategoryIds: [],
+
       picker: "",
       content: ""
     };
@@ -243,6 +237,13 @@ export default {
       // this.chats.push(chatObject);
       // this.chat = "";
       alert(this.content);
+    },
+    getTimeDiff(date) {
+      let now = moment(new Date()); //todays date
+      let end = moment(date); // another date
+      let duration = moment.duration(now.diff(end));
+      let hours = duration.asHours();
+      return parseInt(hours);
     }
   },
   mounted() {
@@ -264,6 +265,11 @@ export default {
         self.isLoaded = true;
       })
       .catch(ex => {});
+  },
+  computed: {
+    ...mapGetters({
+      Admin: "auth/getAdmin"
+    })
   }
 };
 </script>
