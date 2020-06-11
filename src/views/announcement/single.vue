@@ -76,48 +76,61 @@
           >
             <!--          <div class="col-md-12 " v-for="comment in Announcement.comments">-->
             <div class="d-flex flex-column" v-for="comment in AllComments">
-              <span class="ml-2 d-flex m-2 flex-row">
-                <div v-if="comment.user !== null">
-                  <sla-avatar
-                    class="avatar m-1 "
-                    v-if="comment.user.image === null"
-                    size="md"
-                    :user="{ name: comment.first_name }"
-                  />
-                  <sla-avatar
-                    class="avatar m-1"
-                    v-else
-                    size="md"
-                    :user="{ image: comment.user.image }"
-                  />
-                  <span class="m-2 mb-4">{{ comment.user.first_name }}</span>
-                </div>
-                <div v-else>
-                  <sla-avatar
-                    class="avatar m-1"
-                    size="md"
-                    v-if="comment.admin.image === null"
-                    :user="{ name: comment.admin.first_name }"
-                  />
-                  <sla-avatar
-                    class="avatar m-1"
-                    v-else
-                    size="md"
-                    :user="{ image: comment.admin.image }"
-                  />
-                  <span class="m-2 mb-4">{{ comment.admin.first_name }}</span>
+              <span
+                v-if="comment.user !== null"
+                class="ml-2 d-flex m-2 flex-row"
+              >
+                <sla-avatar
+                  class="avatar m-1 "
+                  v-if="comment.user.image === null"
+                  size="md"
+                  :user="{ name: comment.first_name }"
+                />
+                <sla-avatar
+                  class="avatar m-1"
+                  v-else
+                  size="md"
+                  :user="{ image: comment.user.image }"
+                />
+                <span class="m-2 mb-4">{{ comment.user.first_name }}</span>
+                <span class="ml-5 mt-n4 mb-3">
+                  {{ comment.content }}
+                </span>
+                <div class="d-flex flex-row">
+                  <small class="text-grey-500 ml-5 mt-n2">{{
+                    getTimeDiff(comment.createdAt) + " h"
+                  }}</small>
+                  <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
+                  <!--                <small class="text-grey-500 ml-5 mt-n2">Reply</small>-->
                 </div>
               </span>
-              <span class="ml-5 mt-n4 mb-3">
-                {{ comment.content }}
-              </span>
-              <div class="d-flex flex-row">
-                <small class="text-grey-500 ml-5 mt-n2">{{
-                  getTimeDiff(comment.createdAt) + " h"
-                }}</small>
+              <span v-else class="ml-2 d-flex m-2 flex-row">
+                <sla-avatar
+                  class="avatar m-1"
+                  size="md"
+                  v-if="comment.admin.image === null"
+                  :user="{ name: comment.admin.first_name }"
+                />
+                <sla-avatar
+                  class="avatar m-1"
+                  v-else
+                  size="md"
+                  :user="{ image: comment.admin.image }"
+                />
+                <p class="  m-2 d-flex flex-column ">
+                  <span class="mt-2 mb-2">
+                    {{ comment.admin.first_name }}
+                  </span>
+                  <span class=" mb-3">
+                    {{ comment.content }}
+                  </span>
+                  <small class="text-grey-500  mt-n2">{{
+                    getTimeDiff(comment.createdAt) + " h"
+                  }}</small>
+                </p>
                 <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
                 <!--                <small class="text-grey-500 ml-5 mt-n2">Reply</small>-->
-              </div>
+              </span>
             </div>
           </div>
           <div class="d-flex flex-lg-row w-100 mt-3">
@@ -134,16 +147,58 @@
               class="ml-5  mt-4  "
             />
             <chat-box
-              @keyup="handleChat"
-              class="col-md-10 col-lg-10 col-10"
-              @send="handleChat"
+              @keyup="handleComment"
+              class="col-md-112 col-lg-12 col-12"
+              @send="handleComment"
               v-model="content"
             />
           </div>
         </div>
       </div>
-      <div class="col-md-4 col-lg-4 col-12"></div>
+      <div class="col-md-4 col-lg-4 col-12">
+        <glow-card class="col-md-8 col-lg-6 col-6 ">
+          <div class="d-flex flex-row ">
+            <h4 class="text-white">
+              {{
+                Announcement.comments +
+                  Announcement.likes +
+                  Announcement.engagements
+              }}
+            </h4>
+            <span class="ml-3 mt-n1 "
+              ><icon name="arrow-up-white" size="xs" />
+            </span>
+          </div>
+          <span class="text-white">Total Responses</span>
+        </glow-card>
+      </div>
     </d-row>
+    <d-modal v-if="modalStatus" @close="modalStatus = false" size="lg">
+      <div style="border-top: 4px solid #0087DB;" class="modal-header"></div>
+      <h6 class="text-center m-2 text-bold text-dark font-poppings">
+        Are you sure you want to delete this announcement?
+      </h6>
+      <d-modal-body>
+        <div class="text-center">
+          <sla-button
+            class="m-2 col-md-12"
+            type="filled"
+            size="md"
+            text="YES, DELETE"
+            @click="
+              deleteAnnouncement(Announcement._id, 'annoucement/admin/delete/')
+            "
+          />
+          <sla-button
+            class="m-2 col-md-12"
+            type="outline"
+            size="md"
+            :text="'CANCEL'"
+            @click="modalStatus = false"
+          />
+        </div>
+      </d-modal-body>
+    </d-modal>
     <footer class="border-top m-5 ">
       <sla-button
         class="btn  m-3  text-uppercase float-right"
@@ -158,14 +213,14 @@
         size="sm"
         @click="
           $router.push({
-            path: 'edit/' + Announcement._id
+            path: '/announcements/edit/' + Announcement._id
           })
         "
       />
       <p
         class="font-open-sans float-right m-4"
         style="color: #FF4133; cursor: pointer; font-size: 14px;"
-        @click="deleteModal = true"
+        @click="modalStatus = true"
       >
         DELETE
       </p>
@@ -178,12 +233,14 @@ import axios from "axios";
 import store from "@/store/index";
 import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
+import helper from "../../helpers/helper";
 const token = store.state.auth.token;
 export default {
   name: "create",
   data() {
     return {
       isLoaded: false,
+      modalStatus: false,
       error: {
         status: null,
         message: null
@@ -191,7 +248,6 @@ export default {
       Announcement: undefined,
       comments: false,
       AllComments: undefined,
-      Admin: null,
       scheduleModal: false,
       buttons: {
         publish: false,
@@ -212,31 +268,37 @@ export default {
     Icon: () => import("@/components/SlaIcon"),
     SlaButton: () => import("@/components/SlaButton"),
     Top: () => import("@/components/top"),
-    ChatBox: () => import("@/components/chatBox")
+    ChatBox: () => import("@/components/chatBox"),
+    glowCard: () => import("@/components/glowCard")
   },
 
   methods: {
-    handleChat() {
-      if (this.chat == "") {
+    handleComment() {
+      if (this.content == "") {
         return;
       }
-      this.processChat();
+      this.processComment();
     },
-    processChat() {
-      // let chatObject = {
-      //   username: this.$store.state.user.data.first_name,
-      //   id: this.$store.state.user.data._id,
-      //   message: this.chat,
-      //   groupId: this.group._id,
-      //   createdAt: Date.now(),
-      //   groupSlug: this.group.slug
-      // };
-      //
-      // this.sendChat(chatObject);
-      //
-      // this.chats.push(chatObject);
-      // this.chat = "";
-      alert(this.content);
+    processComment() {
+      let comment = {
+        admin: this.Admin,
+        user: null,
+        // id: this.$store.state.user.data._id,
+        annoucement: this.Announcement._id,
+        content: this.content,
+        // groupId: this.group._id,
+        createdAt: new Date()
+        // groupSlug: this.group.slug
+      };
+
+      let send = this.sendComment(comment);
+      if (send) {
+        this.AllComments.push(comment);
+        this.Announcement.comments++;
+      } else {
+        return;
+      }
+      this.content = "";
     },
     getTimeDiff(date) {
       let now = moment(new Date()); //todays date
@@ -244,6 +306,50 @@ export default {
       let duration = moment.duration(now.diff(end));
       let hours = duration.asHours();
       return parseInt(hours);
+    },
+    deleteAnnouncement(id, Url) {
+      return this.handleDelete(id, Url, "/announcements/all");
+    },
+
+    async handleDelete(id, deleteUrl, redirect) {
+      const self = this;
+      const token = store.state.auth.token;
+      let res = await axios
+        .delete(`${process.env.VUE_APP_API}/` + deleteUrl + id, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          setTimeout(function() {
+            self.$router.push({ path: "/announcements/all" });
+          }, 2000);
+        })
+        .catch(ex => {
+          alert(ex.response.data.message);
+        });
+    },
+
+    async sendComment(commentObj) {
+      const self = this;
+      let res = await axios
+        .post(`${process.env.VUE_APP_API}/comment/admin/create/`, commentObj, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          self.$toast.success((self.error.message = res.data.message));
+          return true;
+        })
+        .catch(ex => {
+          self.$toast.error(
+            (self.error.message = ex.response.data
+              ? ex.response.data.message
+              : "An error occured")
+          );
+          return false;
+        });
     }
   },
   mounted() {

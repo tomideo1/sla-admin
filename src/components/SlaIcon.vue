@@ -29,6 +29,7 @@
     <arrow-right v-if="name === 'arrow-right'"></arrow-right>
     <arrow-left v-if="name === 'arrow-left'"></arrow-left>
     <arrow-up v-if="name === 'arrow-up'"></arrow-up>
+    <arrow-up-white v-if="name === 'arrow-up-white'"></arrow-up-white>
     <arrow-back v-if="name === 'arrow-back'"></arrow-back>
     <cancel v-if="name === 'cancel'"></cancel>
     <poll v-if="name === 'poll'"></poll>
@@ -97,6 +98,8 @@ export default {
     copy: () => import("@/components/__private__/media/copy.vue"),
     resource: () => import("@/components/__private__/media/resource.vue"),
     arrowUp: () => import("@/components/__private__/media/arrow-up.vue"),
+    arrowUpWhite: () =>
+      import("@/components/__private__/media/arrow-up-white.vue"),
     arrowBack: () => import("@/components/__private__/media/arrow-back.vue"),
     Location: () => import("@/components/__private__/media/location.vue"),
     Empty: () => import("@/components/__private__/media/empty.vue"),

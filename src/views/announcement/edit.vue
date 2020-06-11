@@ -24,7 +24,7 @@
           <multiselect
             size="lg"
             class="mb-3"
-            v-model="Announcement.category.split(',')"
+            v-model="Announcement.category"
             placeholder="Category"
             :multiple="true"
             :taggable="true"
@@ -33,6 +33,20 @@
             :preserve-search="true"
             :preselect-first="true"
             :options="categories"
+          >
+          </multiselect>
+          <multiselect
+            size="lg"
+            class="mb-3"
+            v-model="Announcement.tags"
+            placeholder="Category"
+            :multiple="true"
+            :taggable="true"
+            :close-on-select="true"
+            :clear-on-select="false"
+            :preserve-search="true"
+            :preselect-first="true"
+            :options="options"
             @tag="addTag"
           >
           </multiselect>
@@ -57,6 +71,7 @@
           id="dropZone"
           :useCustomSlot="true"
           class="mx-auto"
+          @vdropzone-file-added="processImage"
           ref="AnnouncementImage"
           :style="
             'width: 300px; height: 300px;' +
@@ -267,20 +282,24 @@ export default {
   },
   methods: {
     async handleSubmit(type) {
-      this.formData.normal_details = this.extractContent(
-        this.formData.rich_details,
+      this.Announcement.normal_details = this.extractContent(
+        this.Announcement.rich_details,
         true
       );
-      this.formData.category = JSON.stringify(this.formData.list_category);
       const self = this;
+      if (self.formData.cover_image !== undefined) {
+        self.Announcement.cover_image = self.formData.cover_image;
+      } else {
+        delete self.Announcement.cover_image;
+      }
       switch (type) {
         case "save":
           self.buttons.isLoading = true;
           self.buttons.text1 = "Loading.....";
-          self.formData.status = "save";
+          self.Announcement.status = "save";
           break;
         case "publish":
-          self.formData.status = "publish";
+          self.Announcement.status = "publish";
 
           self.buttons.isLoading = true;
           self.buttons.text = "Loading.....";
@@ -290,11 +309,16 @@ export default {
       }
 
       let res = await axios
-        .post(`${process.env.VUE_APP_API}/annoucement/create`, self.formData, {
-          headers: {
-            Authorization: `Bearer ${token} `
+        .put(
+          `${process.env.VUE_APP_API}/annoucement/edit/` +
+            self.Announcement._id,
+          self.Announcement,
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
           }
-        })
+        )
         .then(res => {
           switch (type) {
             case "save":
@@ -320,6 +344,9 @@ export default {
           this.formData = {};
         })
         .catch(ex => {
+          self.Announcement.cover_image = self.formData.cover_image;
+          self.Announcement.category = self.Announcement.category.split(",");
+          self.Announcement.tags = self.Announcement.tags.split(",");
           switch (type) {
             case "save":
               self.buttons.isLoading = false;
@@ -340,10 +367,11 @@ export default {
         });
     },
     async addTag(newTag) {
-      // this.options.push(newTag);
+      this.options.push(newTag);
+      let token = store.state.auth.token;
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/category/admin/create`,
+          `${process.env.VUE_APP_API}/tag/admin/create`,
           { name: newTag },
           {
             headers: {
@@ -352,8 +380,7 @@ export default {
           }
         )
         .then(res => {
-          this.formData.list_category.push(newTag);
-          this.formData.list_rags.push(newTag);
+          this.formData.tags.push(newTag);
         })
         .catch(ex => {
           this.$toast.error(
@@ -395,24 +422,83 @@ export default {
       return [span.textContent || span.innerText]
         .toString()
         .replace(/ +/g, " ");
-    }
-  },
-  mounted() {
-    this.Announcement = this.$route.params.single_announcement;
-    this.isLoaded = true;
-    this.$refs.courseImage.dropzone.on("addedfile", file => {
+    },
+    splitDateString(dateString, Obj, Obj2) {
+      let res = dateString.split("T");
+      let res2 = res[0].split("-");
+      let hr = res[1].split(":");
+      let final_hr = hr[0] + ":" + hr[1];
+      Obj.year = res2[0];
+      Obj.month = parseInt(res2[1]);
+      Obj.days = parseInt(res2[2]);
+      Obj.hour = final_hr;
+
+      Obj.final_date =
+        Obj.year + "-" + Obj.month + "-" + Obj.days + " " + Obj.hour;
+      Obj2 = new Date(Obj.final_date).toISOString();
+    },
+
+    processImage(file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      const self = this;
       reader.onload = () => {
+        const self = this;
         let encoded = reader.result.toString().replace(/^data:(.*,)?/, "");
         if (encoded.length % 4 > 0) {
           encoded += "=".repeat(4 - (encoded.length % 4));
         }
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
-        self.Announcement.cover_image = null;
       };
-    });
+    }
+  },
+  mounted() {
+    const token = store.state.auth.token;
+    const self = this;
+    axios
+      .get(
+        `${process.env.VUE_APP_API}/annoucement/admin/get/` +
+          self.$route.params.id,
+        {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        }
+      )
+      .then(res => {
+        self.Announcement = res.data.data.annoucement;
+        this.isLoaded = true;
+
+        self.Announcement.category = self.Announcement.category.split(",");
+        self.Announcement.tags = self.Announcement.tags.split(",");
+        if (self.Announcement.schedule !== null) {
+          self.splitDateString(
+            self.Announcement.schedule,
+            self.time.schedule,
+            self.formData.schedule
+          );
+        }
+        if (self.Announcement.remainder !== null) {
+          self.splitDateString(
+            self.Announcement.remainder,
+            self.time.reminder,
+            self.formData.remainder
+          );
+        }
+      })
+      .catch(ex => {});
+    axios
+      .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
+        headers: {
+          Authorization: `Bearer ${token} `
+        }
+      })
+      .then(res => {
+        let tags_list = res.data.data.tags;
+        tags_list.forEach(tag => {
+          self.options.push(tag.name);
+        });
+      })
+      .catch(ex => {});
   }
 };
 </script>

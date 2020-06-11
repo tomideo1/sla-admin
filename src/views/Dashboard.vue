@@ -16,57 +16,57 @@
           <hr class="style1 col-md-4" />
         </div>
         <div class="row mt-3">
-          <div class="col-md-2 m-3 m-md-2 m-lg-3">
+          <div class="col-md-2 m-1 m-md-2 m-lg-3">
             <d-card
               style="border-left:7px solid #0087DB; max-height:100px;border-radius: 0"
             >
               <p class="font-poppings text-dark m-2">Users</p>
               <p class="card-number  text-center">
-                100
+                {{ Dashboard.userCount }}
               </p>
             </d-card>
           </div>
-          <div class="col-md-2 m-3 m-md-2 m-lg-3">
+          <div class="col-md-2 m-1 m-md-2 m-lg-3">
             <d-card
               style="border-left:7px solid #DAAA55; max-height:100px;border-radius: 0"
             >
               <p class="font-poppings text-dark m-2">Engagements</p>
               <p class="card-number  text-center">
-                23.6K
+                {{ Dashboard.totalEngagements }}
               </p>
             </d-card>
           </div>
-          <div class="col-md-2 m-3 m-md-2 m-lg-3">
+          <div class="col-md-2 m-1 m-md-2 m-lg-3">
             <d-card
               style="border-left:7px solid #F77253; max-height:100px;border-radius: 0"
             >
               <p class="font-poppings text-dark m-2">Messages Sent</p>
               <p class="card-number  text-center">
-                30K
+                {{ Dashboard.totalMessages }}
               </p>
             </d-card>
           </div>
-          <div class="col-md-2 m-3 m-md-2 m-lg-3">
+          <div class="col-md-2 m-1 m-md-2 m-lg-3">
             <d-card
               style="border-left:7px solid  #1F497D;max-height:100px; border-radius: 0"
             >
-              <p class="font-poppings truncate-2 text-dark m-2">
+              <p class="font-poppings truncate-2 text-dark m-1">
                 Courses Completed
               </p>
               <p class="card-number  text-center">
-                22
+                {{ Dashboard.completedCourseCount }}
               </p>
             </d-card>
           </div>
-          <div class="col-md-2 m-3 m-md-1  m-lg-3">
+          <div class="col-md-2 m-1 m-md-1  m-lg-3">
             <d-card
               style="border-left:7px solid   #8D5524;max-height:100px;  border-radius: 0"
             >
-              <p class="font-poppings text-dark m-2">
+              <p class="font-poppings text-dark m-1">
                 Courses in Progress
               </p>
               <p class="card-number  text-center">
-                5
+                {{ Dashboard.courseInprogressCount }}
               </p>
             </d-card>
           </div>
@@ -889,6 +889,9 @@
 <script>
 import { GChart } from "vue-google-charts";
 import VueApexCharts from "vue-apexcharts";
+import { mapActions, mapGetters } from "vuex";
+import axios from "axios";
+import store from "@/store/index";
 export default {
   name: "Dashboard",
   components: {
@@ -1309,9 +1312,18 @@ export default {
         });
       }
       return data;
-    }
+    },
+    ...mapActions("app/", ["getAllAnalysis"])
   },
-  computed: {}
+  computed: {
+    ...mapGetters({
+      Dashboard: "app/getAnalytics"
+      // maps courses to current computed resource
+    })
+  },
+  mounted() {
+    this.getAllAnalysis();
+  }
 };
 </script>
 

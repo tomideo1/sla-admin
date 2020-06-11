@@ -425,7 +425,7 @@
               type="filled"
               size="md"
               text="YES, DELETE"
-              @click="deleteResource(resource._id, 'courses/admin/delete/')"
+              @click="deleteCourse(resource._id, 'courses/admin/delete/')"
             />
             <sla-button
               class="m-2 col-md-12"
@@ -579,7 +579,7 @@ export default {
     deleteValue(index) {
       this.lesson.fields.splice(index, 1);
     },
-    deleteResource(id, Url) {
+    deleteCourse(id, Url) {
       return helper.handleDelete(id, Url, "/courses/all");
     },
     addValue() {

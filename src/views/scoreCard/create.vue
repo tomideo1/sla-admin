@@ -10,7 +10,11 @@
       ></Toasts>
       <div class="col-12 col-lg-6 col-md-6">
         <div class="p-4">
-          <d-card class="m-3" v-for="(sample, idx) in formData.template">
+          <d-card
+            class="m-3"
+            v-for="(sample, idx) in formData.template"
+            :key="idx"
+          >
             <div class="row m-2">
               <d-input
                 v-model="sample.field_name"
