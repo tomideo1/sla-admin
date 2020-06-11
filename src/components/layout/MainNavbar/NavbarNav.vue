@@ -16,9 +16,14 @@
       <!--      </d-collapse>-->
     </li>
     <li class="nav-item   dropdown messages">
-      <a class="nav-link mt-2 text-center" v-d-toggle.messages>
+      <router-link
+        to="/notification"
+        class="nav-link mt-2 text-center notification-icon"
+        v-d-toggle.messages
+      >
+        <span class="notification-count">{{ Admin.notificationCounter }}</span>
         <icon size="xs" name="message" />
-      </a>
+      </router-link>
       <!--      <d-collapse id="messages" class="dropdown-menu dropdown-menu-small">-->
       <!--        <d-dropdown-item>-->
       <!--          Messages-->
@@ -85,5 +90,21 @@ export default {
 }
 .main-navbar .navbar .nav-link {
   min-width: 2.45rem;
+}
+
+.notification-icon {
+  position: relative;
+}
+.notification-count {
+  position: absolute;
+  left: 55.02%;
+  bottom: 45.04%;
+  border-radius: 50% 50%;
+  color: white;
+  background: #fe4437;
+  font-size: 10px;
+  text-align: center;
+  width: 15px;
+  height: 15px;
 }
 </style>
