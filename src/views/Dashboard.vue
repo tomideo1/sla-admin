@@ -83,7 +83,7 @@
         </p>
         <GChart
           type="ColumnChart"
-          :data="loginChartData"
+          :data="fetchLoginSessionData"
           :options="loginChartOptions"
         />
         <div class="d-flex flex-row mx-auto ">
@@ -105,98 +105,98 @@
         <p class="text-black font-poppings  m-3">
           Heat Map of Popular Times
         </p>
-        <!--        <apexchart-->
-        <!--          type="heatmap"-->
-        <!--          :options="options"-->
-        <!--          :series="series"-->
-        <!--          style="max-height: 300px!important;"-->
-        <!--        ></apexchart>-->
+        <apexchart
+          type="heatmap"
+          :options="options"
+          :series="series"
+          style="max-height: 300px!important;"
+        ></apexchart>
       </d-card>
     </d-row>
-    <d-row class="m-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
-        <d-card
-          class="  col-md-12  col-lg-12 "
-          style="border-radius:0!important;"
-        >
-          <p class="text-black font-poppings  m-3">
-            Time Spent on App
-          </p>
-          <h4 class="text-dark font-poppings ">5h 40m</h4>
-          <div class="row ">
-            <div class="col-md-8  col-lg-8 col-12 ">
-              <GChart
-                type="ColumnChart"
-                :data="timeChartData"
-                :options="timeChartOptions"
-              />
-              <div class="d-flex flex-row flex-grow-1 float-lg-right p-3 w-75 ">
-                <div
-                  class="legend_block m-1  text-center"
-                  v-for="legend in timeChartLegends"
-                >
-                  <span>
-                    <div
-                      class="legend_circle mr-1 "
-                      :style="'background-color:' + legend.color + ';'"
-                    ></div>
-                  </span>
-                  <p class="d-flex flex-column font-open-sans">
-                    {{ legend.name }}
-                    <span class="text-dark font-poppings">
-                      {{ legend.times }}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-lg-4 col-12">
-              <div class="row m-2 mt-lg-n5 ">
-                <sla-button
-                  text="Users"
-                  size="sm"
-                  type="outline"
-                  class="btn shadow-effect"
-                />
-                <sla-button
-                  text="Coaches"
-                  size="sm"
-                  type="filled"
-                  class="btn ml-3 ml-md-3   shadow-effect"
-                />
-              </div>
-              <div
-                class="row mt-3 "
-                style="max-height: 300px!important;overflow-y: auto"
-              >
-                <span
-                  v-for="i in 10"
-                  style="font-size: 16px;letter-spacing: 0.15px;"
-                  :class="[
-                    ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
-                      '  m-3 m-lg-0 m-md-0 d-flex flex-row '
-                  ]"
-                >
-                  <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
-                  <span class="ml-2">
-                    Tomide Aina
-                    <br />
-                    <small
-                      class="font-open-sans ml-1"
-                      style="color: #999999;
-                             line-height: 19px;
-                             letter-spacing: 0.15px;"
-                    >
-                      300XP
-                    </small>
-                  </span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </d-card>
-      </div>
-    </d-row>
+    <!--    <d-row class="m-3" no-gutters>-->
+    <!--      <div class="col-lg-10 mx-auto ">-->
+    <!--        <d-card-->
+    <!--          class="  col-md-12  col-lg-12 "-->
+    <!--          style="border-radius:0!important;"-->
+    <!--        >-->
+    <!--          <p class="text-black font-poppings  m-3">-->
+    <!--            Time Spent on App-->
+    <!--          </p>-->
+    <!--          <h4 class="text-dark font-poppings ">5h 40m</h4>-->
+    <!--          <div class="row ">-->
+    <!--            <div class="col-md-8  col-lg-8 col-12 ">-->
+    <!--              <GChart-->
+    <!--                type="ColumnChart"-->
+    <!--                :data="timeChartData"-->
+    <!--                :options="timeChartOptions"-->
+    <!--              />-->
+    <!--              <div class="d-flex flex-row flex-grow-1 float-lg-right p-3 w-75 ">-->
+    <!--                <div-->
+    <!--                  class="legend_block m-1  text-center"-->
+    <!--                  v-for="legend in timeChartLegends"-->
+    <!--                >-->
+    <!--                  <span>-->
+    <!--                    <div-->
+    <!--                      class="legend_circle mr-1 "-->
+    <!--                      :style="'background-color:' + legend.color + ';'"-->
+    <!--                    ></div>-->
+    <!--                  </span>-->
+    <!--                  <p class="d-flex flex-column font-open-sans">-->
+    <!--                    {{ legend.name }}-->
+    <!--                    <span class="text-dark font-poppings">-->
+    <!--                      {{ legend.times }}-->
+    <!--                    </span>-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-md-4 col-lg-4 col-12">-->
+    <!--              <div class="row m-2 mt-lg-n5 ">-->
+    <!--                <sla-button-->
+    <!--                  text="Users"-->
+    <!--                  size="sm"-->
+    <!--                  type="outline"-->
+    <!--                  class="btn shadow-effect"-->
+    <!--                />-->
+    <!--                <sla-button-->
+    <!--                  text="Coaches"-->
+    <!--                  size="sm"-->
+    <!--                  type="filled"-->
+    <!--                  class="btn ml-3 ml-md-3   shadow-effect"-->
+    <!--                />-->
+    <!--              </div>-->
+    <!--              <div-->
+    <!--                class="row mt-3 "-->
+    <!--                style="max-height: 300px!important;overflow-y: auto"-->
+    <!--              >-->
+    <!--                <span-->
+    <!--                  v-for="i in 10"-->
+    <!--                  style="font-size: 16px;letter-spacing: 0.15px;"-->
+    <!--                  :class="[-->
+    <!--                    ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +-->
+    <!--                      '  m-3 m-lg-0 m-md-0 d-flex flex-row '-->
+    <!--                  ]"-->
+    <!--                >-->
+    <!--                  <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />-->
+    <!--                  <span class="ml-2">-->
+    <!--                    Tomide Aina-->
+    <!--                    <br />-->
+    <!--                    <small-->
+    <!--                      class="font-open-sans ml-1"-->
+    <!--                      style="color: #999999;-->
+    <!--                             line-height: 19px;-->
+    <!--                             letter-spacing: 0.15px;"-->
+    <!--                    >-->
+    <!--                      300XP-->
+    <!--                    </small>-->
+    <!--                  </span>-->
+    <!--                </span>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </d-card>-->
+    <!--      </div>-->
+    <!--    </d-row>-->
     <d-row no-gutters>
       <d-col class="mt-5">
         <div class="row ">
@@ -892,6 +892,7 @@ import VueApexCharts from "vue-apexcharts";
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
+import moment from "moment";
 export default {
   name: "Dashboard",
   components: {
@@ -902,15 +903,7 @@ export default {
   },
   data() {
     return {
-      loginChartData: [
-        ["Year", "Coaches", "Users"],
-        ["Dec", 20, 20],
-        ["Nov", 10, 10],
-        ["Oct", 30, 40],
-        ["Sept", 40, 45],
-        ["Aug", 50, 22],
-        ["Jul", 60, 40]
-      ],
+      loginChartData: [["Year", "Users", "Coaches"]],
       loginChartOptions: {
         legend: {
           position: "none",
@@ -936,42 +929,42 @@ export default {
           color: "#DAAA55"
         }
       ],
-      // options: {
-      //   chart: {
-      //     type: "heatmap",
-      //     id: "vue-heat-map",
-      //     toolbar: {
-      //       show: false
-      //     }
-      //   },
-      //   dataLabels: {
-      //     enabled: false
-      //   },
-      //   colors: ["#008FFB"]
-      // },
-      // series: [
-      //   {
-      //     data: this.generateData(18, {
-      //       min: 0,
-      //       max: 90
-      //     }),
-      //     name: "Metric1",
-      //   },
-      //   {
-      //     name: "Metric2",
-      //     data: this.generateData(18, {
-      //       min: 0,
-      //       max: 90
-      //     })
-      //   },
-      //   {
-      //     name: "Metric3",
-      //     data: this.generateData(18, {
-      //       min: 0,
-      //       max: 90
-      //     })
-      //   },
-      // ],
+      options: {
+        chart: {
+          type: "heatmap",
+          id: "vue-heat-map",
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        colors: ["#008FFB"]
+      },
+      series: [
+        {
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          }),
+          name: "Metric1"
+        },
+        {
+          name: "Metric2",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
+        },
+        {
+          name: "Metric3",
+          data: this.generateData(18, {
+            min: 0,
+            max: 90
+          })
+        }
+      ],
 
       timeChartData: [
         ["Day", "Announcement", "Polls", "surveys", "Courses"],
@@ -1319,7 +1312,19 @@ export default {
     ...mapGetters({
       Dashboard: "app/getAnalytics"
       // maps courses to current computed resource
-    })
+    }),
+
+    fetchLoginSessionData() {
+      const self = this;
+      for (let i = 0; i < self.Dashboard.monthlySessions.length; i++) {
+        self.loginChartData.push([
+          self.Dashboard.monthlySessions[i].month,
+          self.Dashboard.monthlySessions[i].count,
+          0
+        ]);
+      }
+      return self.loginChartData;
+    }
   },
   mounted() {
     this.getAllAnalysis();
