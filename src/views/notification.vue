@@ -24,7 +24,7 @@
                 :style="
                   'width:56px!important;height: 56px!important;' +
                     'backgroundImage:url(' +
-                    'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +
+                    notification.image +
                     ');' +
                     ' background-size:cover; background-position:center'
                 "
