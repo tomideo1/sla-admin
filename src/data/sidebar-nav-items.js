@@ -3,28 +3,33 @@ import store from "@/store/index";
 export default function() {
   let superAdminRoutes = [
     {
-      title: "Admin",
+      title: "Admins",
       htmlBefore: "group",
-      items: [
-        {
-          title: "All Admins",
-          to: {
-            name: "all-admins"
-          }
-        },
-        {
-          title: "Add New",
-          to: {
-            name: "create-admin"
-          }
-        },
-        {
-          title: " Admin Profile",
-          to: {
-            name: "edit-profile"
-          }
-        }
-      ]
+      to: {
+        name: "all-admins"
+      }
+      // title: "Admin",
+      // htmlBefore: "group",
+      // items: [
+      //   {
+      //     title: "All Admins",
+      //     to: {
+      //       name: "all-admins"
+      //     }
+      //   },
+      //   {
+      //     title: "Add New",
+      //     to: {
+      //       name: "create-admin"
+      //     }
+      //   },
+      //   {
+      //     title: " Admin Profile",
+      //     to: {
+      //       name: "edit-profile"
+      //     }
+      //   }
+      // ]
     }
   ];
 

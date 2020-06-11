@@ -142,7 +142,7 @@
                 </textarea>
               </div>
               <div class="m-2" v-if="item.lesson_type === 'article'">
-                <editor v-model="item.article_content" />
+                <editor v-model="item.content" />
               </div>
               <div class="m-2 text-center " v-if="item.lesson_type === 'video'">
                 <div v-html="item.content"></div>
@@ -945,10 +945,10 @@ export default {
         }
         self.isLoaded = true;
         res.data.data.lessons.forEach(lesson => {
-          if (lesson.lesson_type == "article") {
-            lesson.article_content = lesson.content;
-            delete lesson.content;
-          }
+          // if (lesson.lesson_type == "article") {
+          //   lesson.article_content = lesson.content;
+          //   delete lesson.content;
+          // }
         });
         self.lesson.fields = res.data.data.lessons;
       })

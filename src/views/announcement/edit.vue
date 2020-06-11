@@ -204,7 +204,7 @@ export default {
         list_category: [],
         list_tags: [],
         recepients: "everyone",
-        cover_image: ""
+        cover_image: undefined
       },
       time: {
         schedule: {
@@ -308,6 +308,13 @@ export default {
           break;
       }
 
+      self.Announcement.tags = self.Announcement.tags.join();
+      self.Announcement.category = self.Announcement.category.join();
+      if (self.formData.cover_image !== undefined) {
+        self.Announcement.cover_image = self.formData.cover_image;
+      } else {
+        delete self.Announcement.cover_image;
+      }
       let res = await axios
         .put(
           `${process.env.VUE_APP_API}/annoucement/edit/` +

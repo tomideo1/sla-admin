@@ -9,16 +9,6 @@
 
       <!-- Page Header - Datepicker -->
     </d-row>
-    <d-row v-if="isLoading">
-      <d-col sm="12" class="text-center">
-        <div class="lds-ellipsis">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </d-col>
-    </d-row>
     <v-client-table
       class="dataTables_wrapper"
       :data="tableData"
@@ -99,9 +89,8 @@ export default {
     },
     ...mapActions("app/", ["getAllAdmins"])
   },
-  async mounted() {
-    const self = this;
-    setTimeout(function() {}, 3);
+
+  mounted() {
     this.getAllAdmins();
   }
 };

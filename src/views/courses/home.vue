@@ -27,7 +27,7 @@
             >
             </d-card>
             <p
-              class="title truncate truncate-2  text-capitalize mt-2 text-bold "
+              class="title truncate text-truncate  text-capitalize mt-2 text-bold "
             >
               {{ course.title }}
             </p>
@@ -67,7 +67,7 @@
               "
             >
               <p
-                class="category-text text-uppercase  truncate-3 mx-auto my-auto"
+                class="category-text text-uppercase text-truncate  truncate-3 mx-auto my-auto"
               >
                 {{ category.name }}
               </p>
@@ -100,7 +100,7 @@
             >
             </d-card>
             <p
-              class="title  text-capitalize  text-bold "
+              class="title text-truncate  text-capitalize  text-bold "
               style="max-width: 50%!important;"
             >
               {{ course.title }}
@@ -141,7 +141,7 @@
             >
             </d-card>
             <p
-              class="title  text-capitalize  text-bold "
+              class="title text-truncate  text-capitalize  text-bold "
               style="max-width: 50%!important;"
             >
               {{ course.course.title }}

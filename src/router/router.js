@@ -476,18 +476,14 @@ const router = new Router({
     },
     {
       path: "/admin",
+      meta: {
+        middleware: [auth]
+      },
+      name: "admin",
       component: () => import("@/views/admin/index.vue"),
       children: [
         {
-          path: "/",
-          name: "admin",
-          component: () => import("@/views/admin/index.vue"),
-          meta: {
-            middleware: [auth]
-          }
-        },
-        {
-          path: "/all-admins",
+          path: "all",
           name: "all-admins",
           component: () => import("@/views/admin/all-admins.vue"),
           meta: {
@@ -495,7 +491,7 @@ const router = new Router({
           }
         },
         {
-          path: "/create-admin",
+          path: "create",
           name: "create-admin",
           component: () => import("@/views/admin/createAdmin.vue"),
           meta: {

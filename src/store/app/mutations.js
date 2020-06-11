@@ -28,7 +28,7 @@ export const setCategories = (state, data) => {
   state.Categories = data.categories;
 };
 export const setAdmins = (state, data) => {
-  state.Admins = data.admin;
+  state.Admins = data.data.admin;
 };
 
 export const setAssets = (state, data) => {
