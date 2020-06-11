@@ -87,15 +87,15 @@
           :options="loginChartOptions"
         />
         <div class="d-flex flex-row mx-auto ">
-          <div class="legend_block m-1" v-for="legend in loginChartLegends">
-            <span>
-              <div
-                class="legend_circle mr-1 "
-                :style="'background-color:' + legend.color + ';'"
-              ></div>
-            </span>
-            <p>{{ legend.name }}</p>
-          </div>
+          <!--          <div class="legend_block m-1" v-for="legend in loginChartLegends">-->
+          <!--            <span>-->
+          <!--              <div-->
+          <!--                class="legend_circle mr-1 "-->
+          <!--                :style="'background-color:' + legend.color + ';'"-->
+          <!--              ></div>-->
+          <!--            </span>-->
+          <!--            <p>{{ legend.name }}</p>-->
+          <!--          </div>-->
         </div>
       </d-card>
       <d-card
@@ -197,238 +197,238 @@
     <!--        </d-card>-->
     <!--      </div>-->
     <!--    </d-row>-->
-    <d-row no-gutters>
-      <d-col class="mt-5">
-        <div class="row ">
-          <hr class="style1 col-md-4" />
-          <h5 class="font-poppings text-bold mx-auto title text-dark">
-            Engagement Rate
-          </h5>
-          <hr class="style1 col-md-4" />
-        </div>
-      </d-col>
-    </d-row>
-    <d-row class="m-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
-        <d-card
-          class="  col-md-12  col-lg-12 "
-          style="border-radius:0!important;"
-        >
-          <p class="text-black font-poppings  m-3">
-            Engagement (Select user to view engagement)
-          </p>
-          <div class="row ">
-            <div class="col-md-8  col-lg-8 col-12 ">
-              <GChart
-                type="LineChart"
-                :data="engagementChartData"
-                :options="engagementChartOptions"
-              />
-              <div class="d-flex flex-row flex-grow-1 float-lg-right p-3 w-75 ">
-                <div
-                  class="legend_block m-1  text-center"
-                  v-for="legend in engagementChartLegends"
-                >
-                  <span>
-                    <div
-                      class="legend_circle mr-1 "
-                      :style="'background-color:' + legend.color + ';'"
-                    ></div>
-                  </span>
-                  <p>
-                    {{ legend.name }}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-lg-4 col-12">
-              <div class="row m-2 mt-lg-n4 ">
-                <sla-button
-                  text="Users"
-                  size="sm"
-                  type="outline"
-                  class="btn shadow-effect"
-                />
-                <sla-button
-                  text="Coaches"
-                  size="sm"
-                  type="filled"
-                  class="btn ml-3 ml-md-3   shadow-effect"
-                />
-              </div>
-              <div
-                class="row mt-3 mb-3 "
-                style="max-height: 300px!important;overflow-y: auto"
-              >
-                <span
-                  v-for="i in 10"
-                  style="font-size: 16px;letter-spacing: 0.15px;"
-                  :class="[
-                    ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
-                      '  m-3 m-lg-0 m-md-0 d-flex flex-row '
-                  ]"
-                >
-                  <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
-                  <span class="ml-2">
-                    Tomide Aina
-                    <small
-                      class="font-open-sans ml-5  text-dark"
-                      style="
-                             line-height: 19px;
-                             letter-spacing: 0.15px;"
-                    >
-                      300XP
-                    </small>
-                  </span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </d-card>
-      </div>
-    </d-row>
-    <d-row no-gutters>
-      <d-col class="mt-5">
-        <div class="row ">
-          <hr class="style1 col-md-4" />
-          <h5 class="font-poppings text-bold mx-auto title text-dark">
-            Scorecard
-          </h5>
-          <hr class="style1 col-md-4" />
-        </div>
-      </d-col>
-    </d-row>
-    <d-row class="m-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
-        <d-card
-          class="  col-md-12  col-lg-12 "
-          style="border-radius:0!important;"
-        >
-          <div class="row">
-            <div class="col-md-12 col-lg-12 col-12">
-              <div class="row">
-                <div
-                  class="col-md-8 border-right text-center text-lg-left col-12 col-lg-8"
-                >
-                  <p class="text-black font-poppings  m-3">
-                    Scorecard
-                  </p>
-                </div>
-                <div class="col-md-2 text-center border-right col-12 col-lg-2">
-                  <p class="text-black font-poppings  m-3">
-                    Status
-                  </p>
-                </div>
-                <div class="col-md-2 text-center col-12 col-lg-2">
-                  <p class="text-black font-poppings  m-3">
-                    Due Dates
-                  </p>
-                </div>
-              </div>
-              <div
-                :class="['row', i % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="i in 5"
-              >
-                <div class="col-md-8 border-right col-12 col-lg-8">
-                  <span
-                    style="font-size: 16px;letter-spacing: 0.15px;"
-                    class="font-open-sans text-dark
-                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
-                  >
-                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
-                    <span class="m-1 ml-4">
-                      Tomide Aina
-                    </span>
-                  </span>
-                </div>
-                <div class="col-md-2 border-right text-center col-12 col-lg-2">
-                  <d-btn
-                    :class="[
-                      'btn  mt-3  btn-pill',
-                      i % 2 === 0 ? 'btn-primary' : 'btn-warning'
-                    ]"
-                  >
-                    {{ i % 2 === 0 ? "Uploaded" : "Pending" }}
-                  </d-btn>
-                </div>
-                <div class="col-md-2 text-center col-12 col-lg-2">
-                  <p class="text-black  font-poppings  m-3">
-                    07-May-2020
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </d-card>
-      </div>
-    </d-row>
-    <d-row no-gutters>
-      <d-col class="mt-5">
-        <div class="row ">
-          <hr class="style1 col-md-4" />
-          <h5 class="font-poppings text-bold mx-auto title text-dark">
-            Posts
-          </h5>
-          <hr class="style1 col-md-4" />
-        </div>
-      </d-col>
-    </d-row>
-    <d-row no-gutters class="p-3 mb-3">
-      <d-card
-        class=" col-md-6 col-12  col-lg-6 "
-        style="border-radius:0!important; max-height: 300px!important;"
-      >
-        <p class="text-black font-poppings  m-3">
-          Post Activity
-        </p>
-        <GChart
-          type="LineChart"
-          :data="postActivityChartData"
-          :options="postActivityChartOptions"
-        />
-        <div class="d-flex flex-row mx-auto ">
-          <div
-            class="legend_block m-1"
-            v-for="legend in postActivityChartLegends"
-          >
-            <span>
-              <div
-                class="legend_circle mr-1 "
-                :style="'background-color:' + legend.color + ';'"
-              ></div>
-            </span>
-            <p>{{ legend.name }}</p>
-          </div>
-        </div>
-      </d-card>
-      <d-card
-        class=" col-md-6 col-12  col-lg-5  ml-lg-5 mt-3 mt-lg-0 mt-md-0"
-        style="border-radius:0!important;"
-      >
-        <p class="text-black font-poppings  m-3">
-          Post Interactions
-        </p>
-        <GChart
-          type="LineChart"
-          :data="postInteractionsChartData"
-          :options="postActivityChartOptions"
-        />
-        <div class="d-flex flex-row mx-auto ">
-          <div
-            class="legend_block m-1"
-            v-for="legend in postInteractionsChartLegends"
-          >
-            <span>
-              <div
-                class="legend_circle mr-1 "
-                :style="'background-color:' + legend.color + ';'"
-              ></div>
-            </span>
-            <p>{{ legend.name }}</p>
-          </div>
-        </div>
-      </d-card>
-    </d-row>
+    <!--    <d-row no-gutters>-->
+    <!--      <d-col class="mt-5">-->
+    <!--        <div class="row ">-->
+    <!--          <hr class="style1 col-md-4" />-->
+    <!--          <h5 class="font-poppings text-bold mx-auto title text-dark">-->
+    <!--            Engagement Rate-->
+    <!--          </h5>-->
+    <!--          <hr class="style1 col-md-4" />-->
+    <!--        </div>-->
+    <!--      </d-col>-->
+    <!--    </d-row>-->
+    <!--    <d-row class="m-3" no-gutters>-->
+    <!--      <div class="col-lg-10 mx-auto ">-->
+    <!--        <d-card-->
+    <!--          class="  col-md-12  col-lg-12 "-->
+    <!--          style="border-radius:0!important;"-->
+    <!--        >-->
+    <!--          <p class="text-black font-poppings  m-3">-->
+    <!--            Engagement (Select user to view engagement)-->
+    <!--          </p>-->
+    <!--          <div class="row ">-->
+    <!--            <div class="col-md-8  col-lg-8 col-12 ">-->
+    <!--              <GChart-->
+    <!--                type="LineChart"-->
+    <!--                :data="engagementChartData"-->
+    <!--                :options="engagementChartOptions"-->
+    <!--              />-->
+    <!--              <div class="d-flex flex-row flex-grow-1 float-lg-right p-3 w-75 ">-->
+    <!--                <div-->
+    <!--                  class="legend_block m-1  text-center"-->
+    <!--                  v-for="legend in engagementChartLegends"-->
+    <!--                >-->
+    <!--                  <span>-->
+    <!--                    <div-->
+    <!--                      class="legend_circle mr-1 "-->
+    <!--                      :style="'background-color:' + legend.color + ';'"-->
+    <!--                    ></div>-->
+    <!--                  </span>-->
+    <!--                  <p>-->
+    <!--                    {{ legend.name }}-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-md-4 col-lg-4 col-12">-->
+    <!--              <div class="row m-2 mt-lg-n4 ">-->
+    <!--                <sla-button-->
+    <!--                  text="Users"-->
+    <!--                  size="sm"-->
+    <!--                  type="outline"-->
+    <!--                  class="btn shadow-effect"-->
+    <!--                />-->
+    <!--                <sla-button-->
+    <!--                  text="Coaches"-->
+    <!--                  size="sm"-->
+    <!--                  type="filled"-->
+    <!--                  class="btn ml-3 ml-md-3   shadow-effect"-->
+    <!--                />-->
+    <!--              </div>-->
+    <!--              <div-->
+    <!--                class="row mt-3 mb-3 "-->
+    <!--                style="max-height: 300px!important;overflow-y: auto"-->
+    <!--              >-->
+    <!--                <span-->
+    <!--                  v-for="i in 10"-->
+    <!--                  style="font-size: 16px;letter-spacing: 0.15px;"-->
+    <!--                  :class="[-->
+    <!--                    ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +-->
+    <!--                      '  m-3 m-lg-0 m-md-0 d-flex flex-row '-->
+    <!--                  ]"-->
+    <!--                >-->
+    <!--                  <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />-->
+    <!--                  <span class="ml-2">-->
+    <!--                    Tomide Aina-->
+    <!--                    <small-->
+    <!--                      class="font-open-sans ml-5  text-dark"-->
+    <!--                      style="-->
+    <!--                             line-height: 19px;-->
+    <!--                             letter-spacing: 0.15px;"-->
+    <!--                    >-->
+    <!--                      300XP-->
+    <!--                    </small>-->
+    <!--                  </span>-->
+    <!--                </span>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </d-card>-->
+    <!--      </div>-->
+    <!--    </d-row>-->
+    <!--    <d-row no-gutters>-->
+    <!--      <d-col class="mt-5">-->
+    <!--        <div class="row ">-->
+    <!--          <hr class="style1 col-md-4" />-->
+    <!--          <h5 class="font-poppings text-bold mx-auto title text-dark">-->
+    <!--            Scorecard-->
+    <!--          </h5>-->
+    <!--          <hr class="style1 col-md-4" />-->
+    <!--        </div>-->
+    <!--      </d-col>-->
+    <!--    </d-row>-->
+    <!--    <d-row class="m-3" no-gutters>-->
+    <!--      <div class="col-lg-10 mx-auto ">-->
+    <!--        <d-card-->
+    <!--          class="  col-md-12  col-lg-12 "-->
+    <!--          style="border-radius:0!important;"-->
+    <!--        >-->
+    <!--          <div class="row">-->
+    <!--            <div class="col-md-12 col-lg-12 col-12">-->
+    <!--              <div class="row">-->
+    <!--                <div-->
+    <!--                  class="col-md-8 border-right text-center text-lg-left col-12 col-lg-8"-->
+    <!--                >-->
+    <!--                  <p class="text-black font-poppings  m-3">-->
+    <!--                    Scorecard-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-2 text-center border-right col-12 col-lg-2">-->
+    <!--                  <p class="text-black font-poppings  m-3">-->
+    <!--                    Status-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-2 text-center col-12 col-lg-2">-->
+    <!--                  <p class="text-black font-poppings  m-3">-->
+    <!--                    Due Dates-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--              <div-->
+    <!--                :class="['row', i % 2 === 0 ? 'scorecard-selected' : '']"-->
+    <!--                v-for="i in 5"-->
+    <!--              >-->
+    <!--                <div class="col-md-8 border-right col-12 col-lg-8">-->
+    <!--                  <span-->
+    <!--                    style="font-size: 16px;letter-spacing: 0.15px;"-->
+    <!--                    class="font-open-sans text-dark-->
+    <!--                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"-->
+    <!--                  >-->
+    <!--                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />-->
+    <!--                    <span class="m-1 ml-4">-->
+    <!--                      Tomide Aina-->
+    <!--                    </span>-->
+    <!--                  </span>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-2 border-right text-center col-12 col-lg-2">-->
+    <!--                  <d-btn-->
+    <!--                    :class="[-->
+    <!--                      'btn  mt-3  btn-pill',-->
+    <!--                      i % 2 === 0 ? 'btn-primary' : 'btn-warning'-->
+    <!--                    ]"-->
+    <!--                  >-->
+    <!--                    {{ i % 2 === 0 ? "Uploaded" : "Pending" }}-->
+    <!--                  </d-btn>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-2 text-center col-12 col-lg-2">-->
+    <!--                  <p class="text-black  font-poppings  m-3">-->
+    <!--                    07-May-2020-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </d-card>-->
+    <!--      </div>-->
+    <!--    </d-row>-->
+    <!--    <d-row no-gutters>-->
+    <!--      <d-col class="mt-5">-->
+    <!--        <div class="row ">-->
+    <!--          <hr class="style1 col-md-4" />-->
+    <!--          <h5 class="font-poppings text-bold mx-auto title text-dark">-->
+    <!--            Posts-->
+    <!--          </h5>-->
+    <!--          <hr class="style1 col-md-4" />-->
+    <!--        </div>-->
+    <!--      </d-col>-->
+    <!--    </d-row>-->
+    <!--    <d-row no-gutters class="p-3 mb-3">-->
+    <!--      <d-card-->
+    <!--        class=" col-md-6 col-12  col-lg-6 "-->
+    <!--        style="border-radius:0!important; max-height: 300px!important;"-->
+    <!--      >-->
+    <!--        <p class="text-black font-poppings  m-3">-->
+    <!--          Post Activity-->
+    <!--        </p>-->
+    <!--        <GChart-->
+    <!--          type="LineChart"-->
+    <!--          :data="postActivityChartData"-->
+    <!--          :options="postActivityChartOptions"-->
+    <!--        />-->
+    <!--        <div class="d-flex flex-row mx-auto ">-->
+    <!--          <div-->
+    <!--            class="legend_block m-1"-->
+    <!--            v-for="legend in postActivityChartLegends"-->
+    <!--          >-->
+    <!--            <span>-->
+    <!--              <div-->
+    <!--                class="legend_circle mr-1 "-->
+    <!--                :style="'background-color:' + legend.color + ';'"-->
+    <!--              ></div>-->
+    <!--            </span>-->
+    <!--            <p>{{ legend.name }}</p>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </d-card>-->
+    <!--      <d-card-->
+    <!--        class=" col-md-6 col-12  col-lg-5  ml-lg-5 mt-3 mt-lg-0 mt-md-0"-->
+    <!--        style="border-radius:0!important;"-->
+    <!--      >-->
+    <!--        <p class="text-black font-poppings  m-3">-->
+    <!--          Post Interactions-->
+    <!--        </p>-->
+    <!--        <GChart-->
+    <!--          type="LineChart"-->
+    <!--          :data="postInteractionsChartData"-->
+    <!--          :options="postActivityChartOptions"-->
+    <!--        />-->
+    <!--        <div class="d-flex flex-row mx-auto ">-->
+    <!--          <div-->
+    <!--            class="legend_block m-1"-->
+    <!--            v-for="legend in postInteractionsChartLegends"-->
+    <!--          >-->
+    <!--            <span>-->
+    <!--              <div-->
+    <!--                class="legend_circle mr-1 "-->
+    <!--                :style="'background-color:' + legend.color + ';'"-->
+    <!--              ></div>-->
+    <!--            </span>-->
+    <!--            <p>{{ legend.name }}</p>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </d-card>-->
+    <!--    </d-row>-->
     <d-row class="p-3 mb-3" no-gutters>
       <div class="col-lg-10 mx-auto ">
         <d-select class="col-md-3 mb-4">
@@ -454,7 +454,7 @@
           class="  col-md-12  col-lg-12 "
           style="border-radius:0!important;"
         >
-          <div class="row">
+          <div class="row" style="max-height:500px;overflow-y:auto">
             <div class="col-md-12 col-lg-12 col-12">
               <div class="row">
                 <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
@@ -489,127 +489,8 @@
                 </div>
               </div>
               <div
-                :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="legend in postInteractionsChartLegends"
-                :key="legend"
-              >
-                <div class="col-md-7 border-right col-12 col-lg-7">
-                  <span
-                    style="font-size: 16px;letter-spacing: 0.15px;"
-                    class="font-open-sans text-dark
-                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
-                  >
-                    <d-card
-                      :style="
-                        'width:87px!important;height: 63px!important;' +
-                          'backgroundImage:url(' +
-                          'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +
-                          ');' +
-                          ' background-size:cover; background-position:center'
-                      "
-                    >
-                    </d-card>
-                    <span class="m-1 ml-4">
-                      Business Analytics for future investment
-                    </span>
-                  </span>
-                </div>
-                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
-                  <div
-                    class="legend_circle mt-lg-4  mx-auto "
-                    :style="'background-color:' + legend.color + ';'"
-                  ></div>
-                </div>
-                <div
-                  class="col-md-1    border-right text-center col-12 col-lg-1"
-                >
-                  <p class="text-black  w-100 mx-auto font-open-sanst  m-3">
-                    SLA
-                  </p>
-                </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
-                  <p class="text-black  font-open-sanst  m-3">
-                    253
-                  </p>
-                </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
-                  <p class="text-black  font-open-sanst  m-3">
-                    642
-                  </p>
-                </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
-                  <p class="text-black  font-open-sanst  m-3">
-                    1.12
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </d-card>
-      </div>
-    </d-row>
-    <d-row class="p-3 mb-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
-        <d-select class="col-md-3 mb-4">
-          <option selected :value="undefined">All</option>
-        </d-select>
-        <div class="col-md-4 float-right">
-          <div class="d-flex flex-row mx-auto ">
-            <div
-              class="legend_block m-1"
-              v-for="legend in postActivityChartLegends"
-            >
-              <span>
-                <div
-                  class="legend_circle mr-1 "
-                  :style="'background-color:' + legend.color + ';'"
-                ></div>
-              </span>
-              <p>{{ legend.name }}</p>
-            </div>
-          </div>
-        </div>
-        <d-card
-          class="  col-md-12  col-lg-12 "
-          style="border-radius:0!important;"
-        >
-          <div class="row">
-            <div class="col-md-12 col-lg-12 col-12">
-              <div class="row">
-                <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
-                  <p class="text-black font-poppings  m-3">
-                    Top Posts
-                  </p>
-                </div>
-                <div class="col-md-1 text-center  col-12 col-lg-1">
-                  <p class="text-black font-poppings w-100 mx-auto m-3">
-                    Type
-                  </p>
-                </div>
-                <div class="col-md-1 text-center  col-12 col-lg-1">
-                  <p class="text-black font-poppings w-100 mx-auto m-3">
-                    Author
-                  </p>
-                </div>
-                <div class="col-md-1 text-center col-12 col-lg-1">
-                  <p class="text-black w-100 mx-auto font-poppings  m-3">
-                    Impressions
-                  </p>
-                </div>
-                <div class="col-md-1 text-center col-12 col-lg-1">
-                  <p class="text-black mx-auto w-100 font-poppings  m-3">
-                    Engagements
-                  </p>
-                </div>
-                <div class="col-md-1 text-center col-12 col-lg-1">
-                  <p class="text-black w-100 mx-auto font-poppings  m-3">
-                    Engagement Ratio
-                  </p>
-                </div>
-              </div>
-              <div
-                :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="(legend, idx) in postInteractionsChartLegends"
+                :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
+                v-for="(data, idx) in fetchTopAnnouncements"
                 :key="idx"
               >
                 <div class="col-md-7 border-right col-12 col-lg-7">
@@ -622,21 +503,21 @@
                       :style="
                         'width:87px!important;height: 63px!important;' +
                           'backgroundImage:url(' +
-                          'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +
+                          data.cover_image +
                           ');' +
                           ' background-size:cover; background-position:center'
                       "
                     >
                     </d-card>
                     <span class="m-1 ml-4">
-                      Business Analytics for future investment
+                      {{ data.title }}
                     </span>
                   </span>
                 </div>
                 <div class="col-md-1 border-right  text-center col-12 col-lg-1">
                   <div
                     class="legend_circle mt-lg-4  mx-auto "
-                    :style="'background-color:' + legend.color + ';'"
+                    :style="'background-color:' + '#0087DB;' + ';'"
                   ></div>
                 </div>
                 <div
@@ -648,17 +529,17 @@
                 </div>
                 <div class="col-md-1  border-right text-center col-12 col-lg-1">
                   <p class="text-black  font-open-sanst  m-3">
-                    253
+                    {{ data.likes }}
                   </p>
                 </div>
                 <div class="col-md-1  border-right text-center col-12 col-lg-1">
                   <p class="text-black  font-open-sanst  m-3">
-                    642
+                    {{ data.engagements }}
                   </p>
                 </div>
                 <div class="col-md-1  border-right text-center col-12 col-lg-1">
                   <p class="text-black  font-open-sanst  m-3">
-                    1.12
+                    {{ data.engagements * 0.01 }}
                   </p>
                 </div>
               </div>
@@ -667,104 +548,224 @@
         </d-card>
       </div>
     </d-row>
-    <d-row class="p-3 mb-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
-        <d-card
-          class="  col-md-12  col-lg-12 "
-          style="border-radius:0!important;"
-        >
-          <p class="text-black font-poppings  m-3">
-            Posts By Day
-          </p>
-          <GChart
-            type="ColumnChart"
-            :data="postByDayChartData"
-            :options="postByDayChartOptions"
-          />
-          <div class="d-flex flex-row mx-auto ">
-            <div
-              class="legend_block m-1"
-              v-for="legend in postByDayChartLegends"
-            >
-              <span>
-                <div
-                  class="legend_circle mr-1 "
-                  :style="'background-color:' + legend.color + ';'"
-                ></div>
-              </span>
-              <p>{{ legend.name }}</p>
-            </div>
-          </div>
-        </d-card>
-      </div>
-    </d-row>
-    <d-row no-gutters>
-      <d-col class="mt-5">
-        <div class="row ">
-          <hr class="style1 col-md-4" />
-          <h5 class="font-poppings text-bold mx-auto title text-dark">
-            Users
-          </h5>
-          <hr class="style1 col-md-4" />
-        </div>
-      </d-col>
-    </d-row>
-    <d-row no-gutters class="p-3 mb-3">
-      <d-card
-        class=" col-md-6 col-12  col-lg-6 "
-        style="border-radius:0!important; max-height: 300px!important;"
-      >
-        <p class="text-black font-poppings  m-3">
-          Active users
-        </p>
-        <GChart
-          type="LineChart"
-          :data="userActivityChartData"
-          :options="userActivityChartOptions"
-        />
-        <div class="d-flex flex-row mx-auto ">
-          <div
-            class="legend_block m-1"
-            v-for="legend in userActivityChartLegends"
-          >
-            <span>
-              <div
-                class="legend_circle mr-1 "
-                :style="'background-color:' + legend.color + ';'"
-              ></div>
-            </span>
-            <p>{{ legend.name }}</p>
-          </div>
-        </div>
-      </d-card>
-      <d-card
-        class=" col-md-6 col-12  col-lg-5  ml-lg-5 mt-3 mt-lg-0 mt-md-0"
-        style="border-radius:0!important;"
-      >
-        <p class="text-black font-poppings  m-3">
-          User Interactions
-        </p>
-        <GChart
-          type="LineChart"
-          :data="userInteractionsChartData"
-          :options="userActivityChartOptions"
-        />
-        <div class="d-flex flex-row mx-auto ">
-          <div
-            class="legend_block m-1"
-            v-for="legend in userInteractionsChartLegends"
-          >
-            <span>
-              <div
-                class="legend_circle mr-1 "
-                :style="'background-color:' + legend.color + ';'"
-              ></div>
-            </span>
-            <p>{{ legend.name }}</p>
-          </div>
-        </div>
-      </d-card>
-    </d-row>
+
+    <!--    <d-row class="p-3 mb-3" no-gutters>-->
+    <!--      <div class="col-lg-10 mx-auto ">-->
+    <!--        <d-select class="col-md-3 mb-4">-->
+    <!--          <option selected :value="undefined">All</option>-->
+    <!--        </d-select>-->
+    <!--        <div class="col-md-4 float-right">-->
+    <!--          <div class="d-flex flex-row mx-auto ">-->
+    <!--            <div-->
+    <!--              class="legend_block m-1"-->
+    <!--              v-for="legend in postActivityChartLegends"-->
+    <!--            >-->
+    <!--              <span>-->
+    <!--                <div-->
+    <!--                  class="legend_circle mr-1 "-->
+    <!--                  :style="'background-color:' + legend.color + ';'"-->
+    <!--                ></div>-->
+    <!--              </span>-->
+    <!--              <p>{{ legend.name }}</p>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--        <d-card-->
+    <!--          class="  col-md-12  col-lg-12 "-->
+    <!--          style="border-radius:0!important;"-->
+    <!--        >-->
+    <!--          <div class="row">-->
+    <!--            <div class="col-md-12 col-lg-12 col-12">-->
+    <!--              <div class="row">-->
+    <!--                <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">-->
+    <!--                  <p class="text-black font-poppings  m-3">-->
+    <!--                    Top Posts-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1 text-center  col-12 col-lg-1">-->
+    <!--                  <p class="text-black font-poppings w-100 mx-auto m-3">-->
+    <!--                    Type-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1 text-center  col-12 col-lg-1">-->
+    <!--                  <p class="text-black font-poppings w-100 mx-auto m-3">-->
+    <!--                    Author-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1 text-center col-12 col-lg-1">-->
+    <!--                  <p class="text-black w-100 mx-auto font-poppings  m-3">-->
+    <!--                    Impressions-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1 text-center col-12 col-lg-1">-->
+    <!--                  <p class="text-black mx-auto w-100 font-poppings  m-3">-->
+    <!--                    Engagements-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1 text-center col-12 col-lg-1">-->
+    <!--                  <p class="text-black w-100 mx-auto font-poppings  m-3">-->
+    <!--                    Engagement Ratio-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--              <div-->
+    <!--                :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"-->
+    <!--                v-for="(legend, idx) in postInteractionsChartLegends"-->
+    <!--                :key="idx"-->
+    <!--              >-->
+    <!--                <div class="col-md-7 border-right col-12 col-lg-7">-->
+    <!--                  <span-->
+    <!--                    style="font-size: 16px;letter-spacing: 0.15px;"-->
+    <!--                    class="font-open-sans text-dark-->
+    <!--                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"-->
+    <!--                  >-->
+    <!--                    <d-card-->
+    <!--                      :style="-->
+    <!--                        'width:87px!important;height: 63px!important;' +-->
+    <!--                          'backgroundImage:url(' +-->
+    <!--                          'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +-->
+    <!--                          ');' +-->
+    <!--                          ' background-size:cover; background-position:center'-->
+    <!--                      "-->
+    <!--                    >-->
+    <!--                    </d-card>-->
+    <!--                    <span class="m-1 ml-4">-->
+    <!--                      Business Analytics for future investment-->
+    <!--                    </span>-->
+    <!--                  </span>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1 border-right  text-center col-12 col-lg-1">-->
+    <!--                  <div-->
+    <!--                    class="legend_circle mt-lg-4  mx-auto "-->
+    <!--                    :style="'background-color:' + legend.color + ';'"-->
+    <!--                  ></div>-->
+    <!--                </div>-->
+    <!--                <div-->
+    <!--                  class="col-md-1    border-right text-center col-12 col-lg-1"-->
+    <!--                >-->
+    <!--                  <p class="text-black  w-100 mx-auto font-open-sanst  m-3">-->
+    <!--                    SLA-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                  <p class="text-black  font-open-sanst  m-3">-->
+    <!--                    253-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                  <p class="text-black  font-open-sanst  m-3">-->
+    <!--                    642-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                  <p class="text-black  font-open-sanst  m-3">-->
+    <!--                    1.12-->
+    <!--                  </p>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </d-card>-->
+    <!--      </div>-->
+    <!--    </d-row>-->
+    <!--    <d-row class="p-3 mb-3" no-gutters>-->
+    <!--      <div class="col-lg-10 mx-auto ">-->
+    <!--        <d-card-->
+    <!--          class="  col-md-12  col-lg-12 "-->
+    <!--          style="border-radius:0!important;"-->
+    <!--        >-->
+    <!--          <p class="text-black font-poppings  m-3">-->
+    <!--            Posts By Day-->
+    <!--          </p>-->
+    <!--          <GChart-->
+    <!--            type="ColumnChart"-->
+    <!--            :data="postByDayChartData"-->
+    <!--            :options="postByDayChartOptions"-->
+    <!--          />-->
+    <!--          <div class="d-flex flex-row mx-auto ">-->
+    <!--            <div-->
+    <!--              class="legend_block m-1"-->
+    <!--              v-for="legend in postByDayChartLegends"-->
+    <!--            >-->
+    <!--              <span>-->
+    <!--                <div-->
+    <!--                  class="legend_circle mr-1 "-->
+    <!--                  :style="'background-color:' + legend.color + ';'"-->
+    <!--                ></div>-->
+    <!--              </span>-->
+    <!--              <p>{{ legend.name }}</p>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </d-card>-->
+    <!--      </div>-->
+    <!--    </d-row>-->
+    <!--    <d-row no-gutters>-->
+    <!--      <d-col class="mt-5">-->
+    <!--        <div class="row ">-->
+    <!--          <hr class="style1 col-md-4" />-->
+    <!--          <h5 class="font-poppings text-bold mx-auto title text-dark">-->
+    <!--            Users-->
+    <!--          </h5>-->
+    <!--          <hr class="style1 col-md-4" />-->
+    <!--        </div>-->
+    <!--      </d-col>-->
+    <!--    </d-row>-->
+    <!--    <d-row no-gutters class="p-3 mb-3">-->
+    <!--      <d-card-->
+    <!--        class=" col-md-6 col-12  col-lg-6 "-->
+    <!--        style="border-radius:0!important; max-height: 300px!important;"-->
+    <!--      >-->
+    <!--        <p class="text-black font-poppings  m-3">-->
+    <!--          Active users-->
+    <!--        </p>-->
+    <!--        <GChart-->
+    <!--          type="LineChart"-->
+    <!--          :data="userActivityChartData"-->
+    <!--          :options="userActivityChartOptions"-->
+    <!--        />-->
+    <!--        <div class="d-flex flex-row mx-auto ">-->
+    <!--          <div-->
+    <!--            class="legend_block m-1"-->
+    <!--            v-for="legend in userActivityChartLegends"-->
+    <!--          >-->
+    <!--            <span>-->
+    <!--              <div-->
+    <!--                class="legend_circle mr-1 "-->
+    <!--                :style="'background-color:' + legend.color + ';'"-->
+    <!--              ></div>-->
+    <!--            </span>-->
+    <!--            <p>{{ legend.name }}</p>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </d-card>-->
+    <!--&lt;!&ndash;      <d-card&ndash;&gt;-->
+    <!--&lt;!&ndash;        class=" col-md-6 col-12  col-lg-5  ml-lg-5 mt-3 mt-lg-0 mt-md-0"&ndash;&gt;-->
+    <!--&lt;!&ndash;        style="border-radius:0!important;"&ndash;&gt;-->
+    <!--&lt;!&ndash;      >&ndash;&gt;-->
+    <!--&lt;!&ndash;        <p class="text-black font-poppings  m-3">&ndash;&gt;-->
+    <!--&lt;!&ndash;          User Interactions&ndash;&gt;-->
+    <!--&lt;!&ndash;        </p>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <GChart&ndash;&gt;-->
+    <!--&lt;!&ndash;          type="LineChart"&ndash;&gt;-->
+    <!--&lt;!&ndash;          :data="userInteractionsChartData"&ndash;&gt;-->
+    <!--&lt;!&ndash;          :options="userActivityChartOptions"&ndash;&gt;-->
+    <!--&lt;!&ndash;        />&ndash;&gt;-->
+    <!--&lt;!&ndash;        <div class="d-flex flex-row mx-auto ">&ndash;&gt;-->
+    <!--&lt;!&ndash;          <div&ndash;&gt;-->
+    <!--&lt;!&ndash;            class="legend_block m-1"&ndash;&gt;-->
+    <!--&lt;!&ndash;            v-for="legend in userInteractionsChartLegends"&ndash;&gt;-->
+    <!--&lt;!&ndash;          >&ndash;&gt;-->
+    <!--&lt;!&ndash;            <span>&ndash;&gt;-->
+    <!--&lt;!&ndash;              <div&ndash;&gt;-->
+    <!--&lt;!&ndash;                class="legend_circle mr-1 "&ndash;&gt;-->
+    <!--&lt;!&ndash;                :style="'background-color:' + legend.color + ';'"&ndash;&gt;-->
+    <!--&lt;!&ndash;              ></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </span>&ndash;&gt;-->
+    <!--&lt;!&ndash;            <p>{{ legend.name }}</p>&ndash;&gt;-->
+    <!--&lt;!&ndash;          </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;      </d-card>&ndash;&gt;-->
+    <!--    </d-row>-->
     <d-row class="p-3 mb-3" no-gutters>
       <div class="col-lg-10 mx-auto ">
         <d-select class="col-md-3 mb-4">
@@ -774,9 +775,9 @@
           class="  col-md-12  col-lg-12 "
           style="border-radius:0!important;"
         >
-          <div class="row">
+          <div class="row " style="max-height400px;overflow-y:auto">
             <div class="col-md-12 col-lg-12 col-12">
-              <div class="row">
+              <div class="row ">
                 <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
                   <p class="text-black font-poppings  m-3">
                     User
@@ -804,8 +805,9 @@
                 </div>
               </div>
               <div
-                :class="['row ', i % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="i in 5"
+                :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
+                v-for="(user, idx) in fetchTopUsers"
+                :key="idx"
               >
                 <div class="col-md-7 border-right col-12 col-lg-7">
                   <span
@@ -815,7 +817,7 @@
                         '  m-3 m-lg-0 m-md-0 d-flex flex-row '
                     ]"
                   >
-                    <sla-avatar size="md" :user="{ name: 'TOMIDE' }" />
+                    <sla-avatar size="md" :user="{ name: user.fullName }" />
                     <span class="ml-2">
                       Tomide Aina
                     </span>
@@ -823,22 +825,22 @@
                 </div>
                 <div class="col-md-1 border-right  text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
-                    352
+                    0
                   </p>
                 </div>
                 <div class="col-md-1  border-right text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
-                    253
+                    0
                   </p>
                 </div>
                 <div class="col-md-1  border-right text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
-                    642
+                    0
                   </p>
                 </div>
                 <div class="col-md-2  border-right text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
-                    1.12
+                    0
                   </p>
                 </div>
               </div>
@@ -847,6 +849,170 @@
         </d-card>
       </div>
     </d-row>
+
+    <d-row class="p-3 mb-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-select class="col-md-3 mb-4">
+          <option selected :value="undefined">Top Locations</option>
+        </d-select>
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <div class="row " style="max-height400px; overflow-y:auto">
+            <div class="col-md-12 col-lg-12 col-12">
+              <div class="row  ">
+                <div class="col-md-4  text-center text-lg-left col-12 col-lg-4">
+                  <p class="text-black font-poppings  m-3">
+                    Top Locations
+                  </p>
+                </div>
+                <div class="col-md-1 text-center  col-12 col-lg-1">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Users
+                  </p>
+                </div>
+                <div class="col-md-1 text-center  col-12 col-lg-1">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Active Users
+                  </p>
+                </div>
+                <div class="col-md-2 text-center col-12 col-lg-2">
+                  <p class="text-black w-100 mx-auto font-poppings  m-3">
+                    Engagements
+                  </p>
+                </div>
+                <div class="col-md-2 text-center col-12 col-lg-2">
+                  <p class="text-black mx-auto w-100 font-poppings  m-3">
+                    Sessions
+                  </p>
+                </div>
+                <div class="col-md-2 text-center col-12 col-lg-2">
+                  <p class="text-black mx-auto w-100 font-poppings  m-3">
+                    Retention rates
+                  </p>
+                </div>
+              </div>
+              <span class="border-top"></span>
+              <div
+                :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
+                v-for="(location, idx) in fetchTopLocations"
+                :key="idx"
+              >
+                <div class="col-md-4 border-right col-12 col-lg-4">
+                  <span
+                    style="font-size: 16px;letter-spacing: 0.15px;"
+                    :class="[
+                      ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
+                        '  m-3 m-lg-0 m-md-0 d-flex flex-row '
+                    ]"
+                  >
+                    <span class="ml-2">
+                      {{ location._id }}
+                    </span>
+                  </span>
+                </div>
+                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                  <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
+                    0
+                  </p>
+                </div>
+                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                  <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
+                    0
+                  </p>
+                </div>
+                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                  <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
+                    0
+                  </p>
+                </div>
+                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                  <p class="text-black  font-open-sanst  m-3">
+                    0
+                  </p>
+                </div>
+                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                  <p class="text-black  font-open-sanst  m-3">
+                    0
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </d-card>
+      </div>
+    </d-row>
+
+    <d-row class="p-3 mb-3" no-gutters>
+      <div class="col-lg-10 mx-auto ">
+        <d-select class="col-md-3 mb-4">
+          <option selected :value="undefined">Top Courses</option>
+        </d-select>
+        <d-card
+          class="  col-md-12  col-lg-12 "
+          style="border-radius:0!important;"
+        >
+          <div class="row" style="max-height:500px;overflow-y:auto">
+            <div class="col-md-12 col-lg-12 col-12">
+              <div class="row">
+                <div class="col-md-6  text-center text-lg-left col-12 col-lg-6">
+                  <p class="text-black font-poppings  m-3">
+                    Top Courses
+                  </p>
+                </div>
+                <div class="col-md-3 text-center  col-12 col-lg-3">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Number of Enrollees
+                  </p>
+                </div>
+                <div class="col-md-3 text-center  col-12 col-lg-3">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Completion Rate
+                  </p>
+                </div>
+              </div>
+              <div
+                :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
+                v-for="(data, idx) in fetchTopCourses"
+                :key="idx"
+              >
+                <div class="col-md-6 border-right col-12 col-lg-6">
+                  <span
+                    style="font-size: 16px;letter-spacing: 0.15px;"
+                    class="font-open-sans text-dark
+                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
+                  >
+                    <d-card
+                      :style="
+                        'width:87px!important;height: 63px!important;' +
+                          'backgroundImage:url(' +
+                          (data.course ? data.course.cover_image : '') +
+                          ');' +
+                          ' background-size:cover; background-position:center'
+                      "
+                    >
+                    </d-card>
+                    <span class="m-1 ml-4">
+                      {{ data.course ? data.course.title : "" }}
+                    </span>
+                  </span>
+                </div>
+                <div
+                  class="col-md-3 border-right mt-4 text-center col-12 col-lg-3"
+                >
+                  {{ data.count }}
+                </div>
+                <div class="col-md-3 border-right  text-center col-12 col-lg-3">
+                  0
+                </div>
+              </div>
+            </div>
+          </div>
+        </d-card>
+      </div>
+    </d-row>
+
     <!--    <d-row no-gutters class="p-3 mb-3">-->
     <!--      <d-card-->
     <!--        class=" col-md-6 col-12  col-lg-6 "-->
@@ -942,29 +1108,7 @@ export default {
         },
         colors: ["#008FFB"]
       },
-      series: [
-        {
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          }),
-          name: "Metric1"
-        },
-        {
-          name: "Metric2",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        },
-        {
-          name: "Metric3",
-          data: this.generateData(18, {
-            min: 0,
-            max: 90
-          })
-        }
-      ],
+      series: [],
 
       timeChartData: [
         ["Day", "Announcement", "Polls", "surveys", "Courses"],
@@ -1292,21 +1436,19 @@ export default {
     };
   },
   methods: {
-    generateData(n, floor) {
-      var data = [],
-        p = Math.random() * 11 + 1,
-        i;
-
-      floor = !floor && floor !== 0 ? 20 : floor;
-      for (i = 0; i < (n || 12); i++) {
-        data.push({
-          x: i % 12,
-          y: Math.floor(Math.max(Math.random() * 100, 20))
+    ...mapActions("app/", ["getAllAnalysis"]),
+    fetchPopularTimesData() {
+      const self = this;
+      let day = 0;
+      // for (let i = 0; i < self.Dashboard.dailySessions.length; i++) {
+      self.Dashboard.dailySessions.forEach(sessions => {
+        self.series.push({
+          name: day++,
+          data: [{ x: sessions.count, y: sessions._id }]
         });
-      }
-      return data;
-    },
-    ...mapActions("app/", ["getAllAnalysis"])
+      });
+      return self.series;
+    }
   },
   computed: {
     ...mapGetters({
@@ -1317,17 +1459,58 @@ export default {
     fetchLoginSessionData() {
       const self = this;
       for (let i = 0; i < self.Dashboard.monthlySessions.length; i++) {
-        self.loginChartData.push([
+        self.loginChartData[i + 1] = [
           self.Dashboard.monthlySessions[i].month,
           self.Dashboard.monthlySessions[i].count,
           0
-        ]);
+        ];
       }
       return self.loginChartData;
+    },
+
+    fetchTopAnnouncements() {
+      const self = this;
+      let series = [];
+      // for (let i = 0; i < self.Dashboard.dailySessions.length; i++) {
+      self.Dashboard.topAnnoucement.forEach(sessions => {
+        series.push(sessions);
+      });
+      return series;
+    },
+
+    fetchTopLocations() {
+      const self = this;
+      let series = [];
+      // for (let i = 0; i < self.Dashboard.dailySessions.length; i++) {
+      self.Dashboard.topLocations.sort(sessions => {
+        series.push(sessions);
+      });
+      return series;
+    },
+
+    fetchTopCourses() {
+      const self = this;
+      let series = [];
+      // for (let i = 0; i < self.Dashboard.dailySessions.length; i++) {
+      self.Dashboard.topCourses.forEach(sessions => {
+        series.push(sessions);
+      });
+      return series;
+    },
+
+    fetchTopUsers() {
+      const self = this;
+      let series = [];
+      // for (let i = 0; i < self.Dashboard.dailySessions.length; i++) {
+      self.Dashboard.topUsers.forEach(sessions => {
+        series.push(sessions);
+      });
+      return series;
     }
   },
   mounted() {
     this.getAllAnalysis();
+    this.fetchPopularTimesData();
   }
 };
 </script>
@@ -1362,8 +1545,8 @@ hr.style1 {
 }
 
 .scorecard-selected {
-  background: #e7e6e6;
-  opacity: 0.7;
+  background-color: #e7e6e6;
+  opacity: 0.6;
 }
 .btn-primary {
   background: rgba(0, 135, 219, 0.16) !important;
