@@ -1,8 +1,8 @@
 <template>
   <d-navbar-nav class="flex-row ">
     <li class="nav-item   dropdown notifications">
-      <a class="nav-link mt-2 text-center" v-d-toggle.notifications>
-        <icon size="xs" name="bell" />
+      <a class="nav-link mt-2 text-center">
+        <icon size="xs" name="message" />
       </a>
       <!--      <d-collapse id="notifications" class="dropdown-menu dropdown-menu-small">-->
       <!--        <d-dropdown-item>-->
@@ -22,7 +22,7 @@
         v-d-toggle.messages
       >
         <span class="notification-count">{{ Admin.notificationCounter }}</span>
-        <icon size="xs" name="message" />
+        <icon size="xs" name="bell" />
       </router-link>
       <!--      <d-collapse id="messages" class="dropdown-menu dropdown-menu-small">-->
       <!--        <d-dropdown-item>-->
