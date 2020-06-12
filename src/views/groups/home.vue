@@ -15,6 +15,7 @@
                   ');' +
                   ' background-size:cover; background-position:center'
               "
+              @click="$router.push({ path: 'edit/' + group._id })"
             >
             </d-card>
             <div

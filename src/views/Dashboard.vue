@@ -819,7 +819,7 @@
                   >
                     <sla-avatar size="md" :user="{ name: user.fullName }" />
                     <span class="ml-2">
-                      Tomide Aina
+                      {{ user.fullName }}
                     </span>
                   </span>
                 </div>
@@ -1502,10 +1502,9 @@ export default {
       const self = this;
       let series = [];
       // for (let i = 0; i < self.Dashboard.dailySessions.length; i++) {
-      self.Dashboard.topUsers.forEach(sessions => {
-        series.push(sessions);
-      });
-      return series;
+      return self.Dashboard.topUsers.sort((a, b) =>
+        a.count > b.count ? -1 : 1
+      );
     }
   },
   mounted() {

@@ -284,7 +284,7 @@ export default {
         publish: false,
         published: false,
         save: false,
-        isLoading: true,
+        isLoading: false,
         text: "PUBLISH",
         text1: "SAVE"
       },

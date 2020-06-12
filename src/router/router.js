@@ -158,6 +158,14 @@ const router = new Router({
           meta: {
             middleware: [auth]
           }
+        },
+        {
+          path: "edit/:id",
+          name: "edit-group",
+          component: () => import("@/views/groups/edit.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },

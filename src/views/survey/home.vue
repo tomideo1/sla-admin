@@ -14,8 +14,7 @@
             <d-card
               @click="
                 $router.push({
-                  name: 'single-survey',
-                  params: { single_survey: survey }
+                  path: 'single/' + survey._id
                 })
               "
               :style="

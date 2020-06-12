@@ -15,73 +15,144 @@
       :closeable="false"
     ></Toasts>
     <d-row no-gutters class="page-header py-4">
-      <div>
-        <img class="p-3 w-100 h-100 border-bottom" :src="Group.cover_image" />
+      <div class="col-md-8 " style="box-sizing: border-box">
+        <div>
+          <img class="p-3 w-100 h-100 border-bottom" :src="Group.cover_image" />
+        </div>
+        <sla-button
+          class="btn  m-3  text-uppercase float-right"
+          :text="'INVITE MEMBERS'"
+          type="filled"
+          size="sm"
+          @click="showParticipant = true"
+        />
+        <sla-button
+          class="btn  m-3  text-uppercase float-right"
+          :text="'PROCESS INVITATIONS'"
+          type="outline"
+          size="sm"
+          @click="handleInvite()"
+        />
       </div>
       <div class="col-md-4 col-lg-4 col-12">
-        <glow-card class="col-md-8 col-lg-6 col-6 ">
-          <div class="d-flex flex-row ">
-            <h4 class="text-white">
-              {{ Group.comments + Group.likes + Group.engagements }}
-            </h4>
-            <span class="ml-3 mt-n1 "
-              ><icon name="arrow-up-white" size="xs" />
-            </span>
+        <div class="row">
+          <span class="d-flex flex-row col-md-12 ml-4 mt-3 font-open-sans">
+            <small>Created by </small>
+            <small class="ml-auto text-bold"
+              ><b>{{ Admin.first_name }} </b></small
+            >
+          </span>
+          <span class="d-flex flex-row col-md-12 ml-4  mt-3 font-open-sans">
+            <small>Date Created </small>
+            <small class="ml-auto text-bold"
+              ><b>{{ $moment(Group.created_at) }} </b></small
+            >
+          </span>
+          <p class="text-bold font-open-sans text-black ml-5 mt-4">Members</p>
+          <div v-for="p in Users" class="col-md-12 ml-5">
+            <div class="d-flex flex-row">
+              <sla-avatar
+                v-if="p.image === null"
+                size="md"
+                :user="{ name: p.first_name }"
+              />
+              <sla-avatar v-else size="md" :user="{ image: p.image }" />
+              <span class="m-3">
+                {{ p.first_name + " " + p.last_name }}
+              </span>
+            </div>
           </div>
-          <span class="text-white">Total Responses</span>
-        </glow-card>
+        </div>
       </div>
     </d-row>
-    <d-modal v-if="modalStatus" @close="modalStatus = false" size="lg">
-      <div style="border-top: 4px solid #0087DB;" class="modal-header"></div>
-      <h6 class="text-center m-2 text-bold text-dark font-poppings">
-        Are you sure you want to delete this announcement?
-      </h6>
+    <d-modal v-if="showParticipant" @close="showParticipant = false" size="lg">
+      <d-modal-header class="text-center" style="border: none!important;">
+        <d-modal-title
+          class="text-dark text-bold font-poppings w-100"
+          style="margin: 0 30% 0 30% "
+          >Invite Participants</d-modal-title
+        >
+      </d-modal-header>
       <d-modal-body>
-        <div class="text-center">
-          <sla-button
-            class="m-2 col-md-12"
-            type="filled"
-            size="md"
-            text="YES, DELETE"
-            @click="deleteGroup(Group._id, 'annoucement/admin/delete/')"
-          />
-          <sla-button
-            class="m-2 col-md-12"
-            type="outline"
-            size="md"
-            :text="'CANCEL'"
-            @click="modalStatus = false"
-          />
-        </div>
+        <d-row>
+          <div
+            v-for="p in paginatedData"
+            md="6"
+            sm="6"
+            class="col-lg-6 col-md-6 col-6 p-2"
+          >
+            <d-row>
+              <d-col md="8">
+                <div class="d-flex flex-row flex-grow-1">
+                  <sla-avatar
+                    v-if="p.image === null"
+                    size="lg"
+                    :user="{ name: p.first_name }"
+                  />
+                  <sla-avatar v-else size="lg" :user="{ image: p.image }" />
+                  <span class="m-3">
+                    {{ p.first_name + " " + p.last_name }}
+                  </span>
+                </div>
+              </d-col>
+              <d-col md="4">
+                <sla-button
+                  class="btn  "
+                  size="sm "
+                  text="INVITE"
+                  type="filled"
+                  @click="formData.users.push(p._id)"
+                  v-if="!formData.users.includes(p._id)"
+                >
+                </sla-button>
+                <sla-button
+                  class="btn "
+                  size="sm "
+                  style="background: #000000!important;"
+                  text="UNINVITE"
+                  type="filled"
+                  @click="
+                    formData.users.splice(formData.users.indexOf(p._id), 1)
+                  "
+                  v-if="formData.users.includes(p._id)"
+                >
+                </sla-button>
+              </d-col>
+            </d-row>
+          </div>
+        </d-row>
       </d-modal-body>
+      <d-modal-footer style="border: none!important;">
+        <div class="d-flex flex-column flex-grow-1">
+          <div class="mx-auto m-3">
+            {{ pageNumber + 1 }} of {{ pageCount }}
+            <span
+              ><icon
+                size="sm"
+                @click="prevPage"
+                style="transform: rotate(180deg);"
+                name="arrow-right"/>
+              &nbsp; <icon size="sm" name="arrow-right" @click="nextPage"
+            /></span>
+          </div>
+          <button
+            @click="paginatedData.filter(addAll)"
+            v-if="paginatedData.length !== formData.users.length"
+            class="btn p-3 m-1 mx-auto col-md-5  btn-primary "
+          >
+            INVITE ALL
+          </button>
+          <button
+            @click="paginatedData.filter(removeAll)"
+            v-else
+            class="btn p-3 m-1 mx-auto col-md-5  btn-primary "
+            style="background: #000000!important;"
+          >
+            UNINVITE ALL
+          </button>
+        </div>
+      </d-modal-footer>
     </d-modal>
-    <footer class="border-top m-5 ">
-      <sla-button
-        class="btn  m-3  text-uppercase float-right"
-        :text="'EXPORT'"
-        type="filled"
-        size="sm"
-      />
-      <sla-button
-        class="btn  m-3  text-uppercase float-right"
-        :text="'EDIT'"
-        type="outline"
-        size="sm"
-        @click="
-          $router.push({
-            path: '/announcements/edit/' + Group._id
-          })
-        "
-      />
-      <p
-        class="font-open-sans float-right m-4"
-        style="color: #FF4133; cursor: pointer; font-size: 14px;"
-        @click="modalStatus = true"
-      >
-        DELETE
-      </p>
-    </footer>
   </d-container>
 </template>
 
@@ -96,13 +167,19 @@ export default {
   name: "create",
   data() {
     return {
+      showParticipant: false,
+      showCoach: false,
       isLoaded: false,
       modalStatus: false,
+      pageNumber: 0,
+      size: 10,
       error: {
         status: null,
         message: null
       },
       Group: undefined,
+      Admin: undefined,
+      Users: [],
       scheduleModal: false,
       buttons: {
         publish: false,
@@ -113,7 +190,7 @@ export default {
         text1: "SAVE"
       },
       options: [],
-
+      formData: { users: [] },
       picker: "",
       content: ""
     };
@@ -126,59 +203,105 @@ export default {
   },
 
   methods: {
-    getTimeDiff(date) {
-      let now = moment(new Date()); //todays date
-      let end = moment(date); // another date
-      let duration = moment.duration(now.diff(end));
-      let hours = duration.asHours();
-      return parseInt(hours);
-    },
-    deleteGroup(id, Url) {
-      return this.handleDelete(id, Url, "/announcements/all");
-    },
+    ...mapActions("app/", ["getAllGroups", "getAllUsers"]),
 
-    async handleDelete(id, deleteUrl, redirect) {
+    compareUsers: (arr1, arr2) => {
+      let valuesA = arr1.reduce(function(a, c) {
+        a[c._id] = c._id;
+        return a;
+      }, {});
+      let valuesB = arr2.reduce(function(a, c) {
+        a[c._id] = c._id;
+        return a;
+      }, {});
+      let result = arr1
+        .filter(function(c) {
+          return !valuesB[c._id];
+        })
+        .concat(
+          arr2.filter(function(c) {
+            return !valuesA[c._id];
+          })
+        );
+      return result;
+    },
+    nextPage() {
+      if (this.pageNumber + 1 < this.pageCount) {
+        this.pageNumber++;
+      }
+    },
+    prevPage() {
+      if (this.pageNumber !== 0) {
+        this.pageNumber--;
+      }
+    },
+    ...mapActions("app/", ["getAllUsers"]),
+    addAll(user) {
+      if (!this.formData.users.includes(user._id)) {
+        return this.formData.users.push(user._id);
+      }
+    },
+    removeAll(user) {
+      if (this.formData.users.includes(user._id)) {
+        return this.formData.users.splice(
+          this.formData.users.indexOf(user._id),
+          1
+        );
+      }
+    },
+    async handleInvite() {
       const self = this;
-      const token = store.state.auth.token;
+      self.formData.group = self.Group._id;
       let res = await axios
-        .delete(`${process.env.VUE_APP_API}/` + deleteUrl + id, {
+        .post(`${process.env.VUE_APP_API}/group/send-invite`, this.formData, {
           headers: {
             Authorization: `Bearer ${token} `
           }
         })
         .then(res => {
+          self.buttons.isLoading = false;
+          self.buttons.text = "Create Group";
+          self.$toast.success(
+            (self.error.message = res.data
+              ? res.data.message
+              : "An error occured")
+          );
           setTimeout(function() {
-            self.$router.push({ path: "/announcements/all" });
+            location.reload();
           }, 2000);
         })
         .catch(ex => {
-          alert(ex.response.data.message);
-        });
-    },
-
-    async sendComment(commentObj) {
-      const self = this;
-      let res = await axios
-        .post(`${process.env.VUE_APP_API}/comment/admin/create/`, commentObj, {
-          headers: {
-            Authorization: `Bearer ${token} `
-          }
-        })
-        .then(res => {
-          self.$toast.success((self.error.message = res.data.message));
-          return true;
-        })
-        .catch(ex => {
+          self.buttons.isLoading = false;
+          self.buttons.text = "Create Group";
           self.$toast.error(
             (self.error.message = ex.response.data
               ? ex.response.data.message
               : "An error occured")
           );
-          return false;
         });
     }
   },
+  computed: {
+    ...mapGetters({
+      AllUsers: "app/getUsers"
+      // maps courses to current computed resource
+    }),
+    pageCount() {
+      let l = this.Users.length,
+        s = this.size;
+      return Math.ceil(l / s);
+    },
+    paginatedData() {
+      const start = this.pageNumber * this.size,
+        end = start + this.size;
+      let unInvitedUsers = this.compareUsers(this.AllUsers, this.Users);
+
+      return unInvitedUsers.slice(start, end);
+      // return this.Users.slice(start, end);
+    }
+  },
   mounted() {
+    this.getAllUsers();
     const token = store.state.auth.token;
     const self = this;
     axios
@@ -193,12 +316,36 @@ export default {
         }
       )
       .then(res => {
-        self.Group = res.data.data.group;
-        self.isLoaded = true;
+        self.Group = res.data.group;
+        axios
+          .get(`${process.env.VUE_APP_API}/admin/admins/` + self.Group.admin, {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
+          })
+          .then(res => {
+            self.Admin = res.data.data.admin;
+          })
+          .catch(ex => {});
+        axios
+          .get(
+            `${process.env.VUE_APP_API}/group/` +
+              self.Group._id +
+              `/group-users`,
+            {
+              headers: {
+                Authorization: `Bearer ${token} `
+              }
+            }
+          )
+          .then(res => {
+            res.data.data.forEach(res => self.Users.push(res.user));
+            self.isLoaded = true;
+          })
+          .catch(ex => {});
       })
       .catch(ex => {});
-  },
-  computed: {}
+  }
 };
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

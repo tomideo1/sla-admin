@@ -83,15 +83,15 @@ export default {
       .then(res => {
         self.Polls = res.data.data.poll;
         self.isLoaded = true;
+        self.Polls.options.forEach(data => {
+          self.chartData.push([data.value, data.count]);
+        });
+        self.Polls.responses = self.Polls.options.reduce(
+          (accum, item) => accum + item.count,
+          0
+        );
       })
       .catch(ex => {});
-    self.Polls.options.forEach(data => {
-      self.chartData.push([data.value, data.count]);
-    });
-    self.Polls.responses = self.Polls.options.reduce(
-      (accum, item) => accum + item.count,
-      0
-    );
   }
 };
 </script>

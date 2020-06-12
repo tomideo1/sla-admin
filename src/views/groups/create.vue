@@ -397,7 +397,7 @@ export default {
         });
     },
     nextPage() {
-      if (!this.pageNumber < 1) {
+      if (this.pageNumber + 1 < this.pageCount) {
         this.pageNumber++;
       }
     },
