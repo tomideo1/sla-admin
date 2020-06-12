@@ -95,7 +95,11 @@
       <p
         class="font-open-sans float-right m-4"
         style="color:#0087DB; cursor: pointer; font-size: 14px;"
-        @click="$router.push('/survey/edit/' + Survey._id)"
+        @click="
+          $router.push({
+            path: '/surveys/edit/' + Survey._id
+          })
+        "
       >
         EDIT SURVEY
       </p>
