@@ -30,7 +30,7 @@
         style="color:#0087DB; cursor: pointer; font-size: 14px;"
         @click="$router.push('/poll/edit/' + Polls._id)"
       >
-        EDIT <POLL></POLL>
+        EDIT
       </p>
       <p
         class="font-open-sans float-right m-4"

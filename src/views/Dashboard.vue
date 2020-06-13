@@ -825,7 +825,7 @@
                 </div>
                 <div class="col-md-1 border-right  text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
-                    0
+                    {{ user.count }}
                   </p>
                 </div>
                 <div class="col-md-1  border-right text-center col-12 col-lg-1">

@@ -113,13 +113,15 @@ export default {
   async mounted() {
     const self = this;
     let res = axios
-      .get(`${process.env.VUE_APP_API}/notification/admin/getAll?page=2`, {
+      .get(`${process.env.VUE_APP_API}/notification/admin/getAll?page=371`, {
         headers: {
           Authorization: `Bearer ${token} `
         }
       })
       .then(res => {
-        self.notifications = res.data.notifications.splice(0, 20);
+        self.notifications = res.data.notifications.slice(
+          Math.max(res.data.notifications.length - 10, 0)
+        );
         self.this_week_notifications = self.notifications.filter(notif => {
           var this_week = moment(notif.createdAt);
           var last_week = moment().subtract(1, "days");
