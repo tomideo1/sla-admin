@@ -5,7 +5,7 @@
         <h6 class="text-dark title text-capitalize m-1">
           Alphabetical Order (A -Z)
         </h6>
-        <carousel refs="content">
+        <carousel v-if="getPolls.length > 0" refs="content">
           <div class="scroll m-2" v-for="(poll, idx) in getPolls" :key="idx">
             <d-card
               :style="
@@ -37,6 +37,14 @@
             </p>
           </div>
         </carousel>
+        <div v-else class="col">
+          <icon name="empty" class="m-3" size="retain" />
+          <span
+            class="font-poppings text-dark justify-content-center d-flex"
+            style="font-size: 16px;"
+            >You don’t have any Scheduled Polls</span
+          >
+        </div>
       </div>
     </d-row>
     <!-- Page Header -->
@@ -62,7 +70,9 @@ export default {
       // maps courses to current computed resource
     }),
     getPolls() {
-      return this.Polls.filter(res => res.schedule !== null);
+      return this.Polls.filter(
+        res => res.status !== "publish" && res.schedule !== null
+      );
     }
   },
   methods: {

@@ -103,7 +103,8 @@ export default {
       // maps courses to current computed resource
     }),
     getSurveys() {
-      return this.surveys.sort(helper.GetSortOrder("title"));
+      let surveys = this.surveys;
+      return surveys.sort(helper.GetSortOrder("title"));
     }
   },
   methods: {

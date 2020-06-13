@@ -5,8 +5,8 @@
         <h6 class="text-dark title text-capitalize m-1">
           Alphabetical Order (A -Z)
         </h6>
-        <carousel refs="content">
-          <div class="scroll m-2" v-for="(poll, idx) in getPolls" :key="idx">
+        <carousel refs="content" v-if="Polls.length > 0">
+          <div class="scroll m-2" v-for="(poll, idx) in sortedPolls" :key="idx">
             <d-card
               :style="
                 'width:200px!important;height: 120px!important;' +
@@ -37,6 +37,14 @@
             </p>
           </div>
         </carousel>
+        <div v-else class="col">
+          <icon name="empty" class="m-3" size="retain" />
+          <span
+            class="font-poppings text-dark justify-content-center d-flex"
+            style="font-size: 16px;"
+            >You don’t have any Polls</span
+          >
+        </div>
       </div>
       <div class="col-lg-12">
         <h6 class="text-dark title text-capitalize m-1">
@@ -90,17 +98,16 @@ export default {
   name: "polls-home",
   data() {
     return {
-      ref_data: "content"
+      ref_data: "content",
+      sortedPolls: []
     };
   },
   computed: {
     ...mapGetters({
       Polls: "app/getPolls"
+
       // maps courses to current computed resource
-    }),
-    getPolls() {
-      return this.Polls.sort(helper.GetSortOrder("title"));
-    }
+    })
   },
   methods: {
     ...mapActions("app/", ["getAllPolls"])
@@ -109,6 +116,12 @@ export default {
   },
   async mounted() {
     this.getAllPolls();
+    this.Polls.forEach(res => {
+      this.sortedPolls.push(res);
+    });
+    this.sortedPolls.sort(helper.GetSortOrder("title"));
+    this.Polls.sort(helper.GetSortOrder("createdAt"));
+    // this.Polls
   },
   components: {
     Carousel: () => import("@/components/carousel"),
