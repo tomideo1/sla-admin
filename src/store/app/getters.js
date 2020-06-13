@@ -25,6 +25,12 @@ export const getPolls = state => {
 export const getSurveys = state => {
   return state.Surveys;
 };
+export const getScheduledSurvey = state => {
+  return state.scheduledSurveys;
+};
+export const getSavedSurvey = state => {
+  return state.savedSurveys;
+};
 
 export const getGroups = state => {
   return state.Groups;

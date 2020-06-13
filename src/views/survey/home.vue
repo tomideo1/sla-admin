@@ -42,6 +42,43 @@
           </div>
         </carousel>
       </div>
+      <div class="col-lg-12">
+        <h6 class="text-dark title text-capitalize m-1">
+          Most Recent
+        </h6>
+        <carousel refs="content">
+          <div class="scroll m-2" v-for="(survey, idx) in surveys" :key="idx">
+            <d-card
+              @click="
+                $router.push({
+                  path: 'single/' + survey._id
+                })
+              "
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  survey.survey_image +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+            >
+            </d-card>
+            <div
+              style=" max-width: 200px;!important; word-wrap: break-word!important;"
+            >
+              <p
+                class="title-card  text-capitalize mt-2 text-truncate  text-bold font-open-sans "
+              >
+                {{ survey.title }}
+              </p>
+            </div>
+
+            <p class=" text-capitalize mt-n4  " style="color: #999999;">
+              <!--              {{ survey.category.name }}-->
+            </p>
+          </div>
+        </carousel>
+      </div>
     </d-row>
     <!-- Page Header -->
     <!-- Using the slider component -->

@@ -92,6 +92,20 @@ export const getAllSurveys = async ({ commit }) => {
   } else return res;
 };
 
+export const getScheduledSurveys = async ({ commit }) => {
+  let res = await Api.get(`survey/list/scheduled`, true);
+  if (res.status === 200) {
+    commit("setSchduledSurveys", res.data);
+  } else return res;
+};
+
+export const getSavedSurveys = async ({ commit }) => {
+  let res = await Api.get(`survey/list/saved`, true);
+  if (res.status === 200) {
+    commit("setSavedSurveys", res.data);
+  } else return res;
+};
+
 export const getAllTickets = async ({ commit }) => {
   let res = await Api.get(`help/admin/getAll`, true);
   if (res.status === 200) {

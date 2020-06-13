@@ -6,6 +6,8 @@ export default {
   Resources: null,
   Polls: null,
   Surveys: null,
+  savedSurveys: null,
+  scheduledSurveys: null,
   Tickets: null,
   Groups: null,
   Admins: null,

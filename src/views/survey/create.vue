@@ -364,7 +364,10 @@ export default {
       }
       const self = this;
       const token = store.state.auth.token;
-      if (formData.schdule !== null || formData.schedule !== undefined)
+      if (
+        self.formData.schdule !== null ||
+        self.formData.schedule !== undefined
+      )
         formData.save_type = "scheduled";
       self.formData.survey_image = self.formData.cover_image;
       let res = await axios

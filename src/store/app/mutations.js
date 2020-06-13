@@ -16,6 +16,13 @@ export const setGroups = (state, data) => {
 export const setSurveys = (state, data) => {
   state.Surveys = data.data.surveys;
 };
+export const setScheduledSurveys = (state, data) => {
+  state.scheduledSurveys = data.data.surveys;
+};
+
+export const setSavedSurveys = (state, data) => {
+  state.savedSurveys = data.data.surveys;
+};
 
 export const setTickets = (state, data) => {
   state.Tickets = data.data.help;

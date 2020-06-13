@@ -143,7 +143,7 @@
 
         <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
           <vue-dropzone
-            v-model="Survey.cover_image"
+            v-model="Survey.survey_image"
             :options="dropzoneOptions"
             id="dropZone"
             :useCustomSlot="true"
@@ -330,7 +330,7 @@ export default {
         description: "",
         question: "",
         recipients: "everyone",
-        cover_image: "",
+        survey_image: "",
         questions: []
       },
       time: {
@@ -386,15 +386,24 @@ export default {
       }
       const self = this;
       const token = store.state.auth.token;
-      self.formData.survey_image = self.formData.cover_image;
+      if (self.formData.survey_image !== undefined) {
+        self.Survey.survey_image = self.Survey.survey_image;
+      } else {
+        delete self.Survey.survey_image;
+      }
+      if (self.Survey.schdule !== null || self.Survey.schedule !== undefined)
+        self.Survey.save_type = "scheduled";
       let res = await axios
-        .post(`${process.env.VUE_APP_API}/survey/create`, self.formData, {
-          headers: {
-            Authorization: `Bearer ${token} `
+        .post(
+          `${process.env.VUE_APP_API}/survey/` + self.Survey._id + `/update`,
+          self.Survey,
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
           }
-        })
+        )
         .then(res => {
-          self.formData = {};
           switch (type) {
             case "save":
               self.buttons.isLoading = false;
