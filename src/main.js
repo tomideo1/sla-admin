@@ -14,6 +14,7 @@ import "@/assets/scss/date-range.scss";
 import App from "./App.vue";
 import router from "./router/router";
 import VueBootstrapToasts from "vue-bootstrap-toasts";
+import { BeatLoader } from "@saeris/vue-spinners";
 
 Vue.use(VueBootstrapToasts);
 
@@ -34,6 +35,7 @@ Vue.component("default-layout", Default);
 Vue.component("header-navigation-layout", HeaderNavigation);
 Vue.component("icon-sidebar-layout", IconSidebar);
 Vue.component("no-sidebar", noSideBar);
+Vue.component("beat-loader", BeatLoader);
 
 Vue.config.productionTip = false;
 Vue.prototype.$eventHub = new Vue();

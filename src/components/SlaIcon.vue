@@ -44,6 +44,8 @@
     <comment v-if="name === 'comment'"></comment>
     <smile v-if="name === 'smile'"></smile>
     <send v-if="name === 'send'"></send>
+    <wave v-if="name === 'wave'"></wave>
+    <thumbs v-if="name === 'thumbs'"></thumbs>
   </span>
 </template>
 <script>
@@ -106,7 +108,9 @@ export default {
     FbLike: () => import("@/components/__private__/media/fb-like.vue"),
     comment: () => import("@/components/__private__/media/comment.vue"),
     smile: () => import("@/components/__private__/media/smile.vue"),
-    send: () => import("@/components/__private__/media/send.vue")
+    send: () => import("@/components/__private__/media/send.vue"),
+    Wave: () => import("@/components/__private__/media/wave.vue"),
+    Thumbs: () => import("@/components/__private__/media/thumbs.vue")
   }
 };
 </script>

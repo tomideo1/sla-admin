@@ -788,7 +788,7 @@
                     Visits
                   </p>
                 </div>
-                <div class="col-md-1 text-center  col-12 col-lg-1">
+                <!-- <div class="col-md-1 text-center  col-12 col-lg-1">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
                     Engagements
                   </p>
@@ -802,7 +802,7 @@
                   <p class="text-black mx-auto w-100 font-poppings  m-3">
                     Messages Sent
                   </p>
-                </div>
+                </div> -->
               </div>
               <div
                 :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
@@ -813,7 +813,7 @@
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     :class="[
-                      ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
+                      ' font-open-sans text-dark mt-lg-3 p-lg-3' +
                         '  m-3 m-lg-0 m-md-0 d-flex flex-row '
                     ]"
                   >
@@ -823,17 +823,19 @@
                     </span>
                   </span>
                 </div>
-                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                <div
+                  class="col-md-1 border-right  text-center p-lg-3  col-12 col-lg-1"
+                >
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     {{ user.count }}
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                <!-- <div class="col-md-1  border-right text-center p-lg-3  col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                <div class="col-md-1  border-right text-center p-lg-3 col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
@@ -842,7 +844,7 @@
                   <p class="text-black  font-open-sanst  m-3">
                     0
                   </p>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -867,7 +869,7 @@
                     Top Locations
                   </p>
                 </div>
-                <div class="col-md-1 text-center  col-12 col-lg-1">
+                <!-- <div class="col-md-1 text-center  col-12 col-lg-1">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
                     Users
                   </p>
@@ -891,7 +893,7 @@
                   <p class="text-black mx-auto w-100 font-poppings  m-3">
                     Retention rates
                   </p>
-                </div>
+                </div> -->
               </div>
               <span class="border-top"></span>
               <div
@@ -903,7 +905,7 @@
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     :class="[
-                      ' font-open-sans text-dark ml-2 mt-n1 mt-lg-4 mt-4 mt-md-4 col-md-12 col-12 col-lg-12' +
+                      ' font-open-sans text-dark mt-lg-3 p-lg-3' +
                         '  m-3 m-lg-0 m-md-0 d-flex flex-row '
                     ]"
                   >
@@ -912,7 +914,7 @@
                     </span>
                   </span>
                 </div>
-                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                <!-- <div class="col-md-1 border-right  text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
@@ -936,7 +938,7 @@
                   <p class="text-black  font-open-sanst  m-3">
                     0
                   </p>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -966,11 +968,11 @@
                     Number of Enrollees
                   </p>
                 </div>
-                <div class="col-md-3 text-center  col-12 col-lg-3">
+                <!-- <div class="col-md-3 text-center  col-12 col-lg-3">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
                     Completion Rate
                   </p>
-                </div>
+                </div> -->
               </div>
               <div
                 :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
@@ -999,13 +1001,13 @@
                   </span>
                 </div>
                 <div
-                  class="col-md-3 border-right mt-4 text-center col-12 col-lg-3"
+                  class="col-md-3 border-right mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-3"
                 >
                   {{ data.count }}
                 </div>
-                <div class="col-md-3 border-right  text-center col-12 col-lg-3">
+                <!-- <div class="col-md-3 border-right  text-center col-12 col-lg-3">
                   0
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -1079,7 +1081,7 @@ export default {
         },
         bar: { groupWidth: "40%" },
         height: 200,
-        isStacked: true,
+        isStacked: false,
         colors: ["#0087DB", "#DAAA55"],
         fontName: "open-sans",
         fontSize: 12,
