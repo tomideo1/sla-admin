@@ -393,6 +393,7 @@ export default {
         )
         .then(res => {
           self.$toast.success((self.error.message = res.data.message));
+          self.Announcement.likes++;
           return true;
         })
         .catch(ex => {
