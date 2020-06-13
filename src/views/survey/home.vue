@@ -8,7 +8,7 @@
         <carousel refs="content">
           <div
             class="scroll m-2"
-            v-for="(survey, idx) in getSurveys"
+            v-for="(survey, idx) in orderedSurvey"
             :key="idx"
           >
             <d-card
@@ -47,7 +47,11 @@
           Most Recent
         </h6>
         <carousel refs="content">
-          <div class="scroll m-2" v-for="(survey, idx) in surveys" :key="idx">
+          <div
+            class="scroll m-2"
+            v-for="(survey, idx) in recentSurvey"
+            :key="idx"
+          >
             <d-card
               @click="
                 $router.push({
@@ -94,18 +98,16 @@ export default {
   name: "course-home",
   data() {
     return {
-      ref_data: "content"
+      ref_data: "content",
+      recentSurvey: [],
+      orderedSurvey: undefined
     };
   },
   computed: {
     ...mapGetters({
       surveys: "app/getSurveys"
       // maps courses to current computed resource
-    }),
-    getSurveys() {
-      let surveys = this.surveys;
-      return surveys.sort(helper.GetSortOrder("title"));
-    }
+    })
   },
   methods: {
     ...mapActions("app/", ["getAllSurveys"])
@@ -114,6 +116,12 @@ export default {
   },
   async mounted() {
     this.getAllSurveys();
+    this.surveys.forEach(res => {
+      this.recentSurvey.push(res);
+    });
+
+    this.recentSurvey.sort(helper.GetSortOrder("updatedAt"));
+    this.orderedSurvey = this.surveys.sort(helper.GetSortOrder("title"));
   },
   components: {
     Carousel: () => import("@/components/carousel"),

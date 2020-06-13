@@ -2,7 +2,7 @@
   <d-container fluid>
     <d-row class=" mt-5">
       <div
-        v-if="getAnnouncements.length > 0 || getAnnouncements === null"
+        v-if="announcements.length > 0 || announcements === null"
         class="col-lg-12"
       >
         <h6 class="text-dark title text-capitalize m-1">
@@ -11,7 +11,7 @@
         <carousel refs="content">
           <div
             class="scroll m-2"
-            v-for="(announcement, idx) in getAnnouncements"
+            v-for="(announcement, idx) in sortedAnnouncement"
             :key="idx"
           >
             <d-card
@@ -71,7 +71,7 @@
         </carousel>
       </div>
       <div
-        v-if="getAnnouncements.length > 0 || getAnnouncements === null"
+        v-if="announcements.length > 0 || announcements === null"
         class="col-lg-12"
       >
         <h6 class="text-dark title text-capitalize m-1">
@@ -80,7 +80,7 @@
         <carousel refs="content">
           <div
             class="scroll m-2"
-            v-for="(announcement, idx) in announcements"
+            v-for="(announcement, idx) in recentAnnouncement"
             :key="idx"
           >
             <d-card
@@ -139,7 +139,7 @@
         </carousel>
       </div>
       <div
-        v-if="getAnnouncements.length > 0 || getAnnouncements === null"
+        v-if="announcements.length > 0 || announcements === null"
         class="col-lg-12"
       >
         <h6 class="text-dark title text-capitalize m-1">
@@ -229,7 +229,9 @@ export default {
   name: "course-home",
   data() {
     return {
-      ref_data: "content"
+      ref_data: "content",
+      recentAnnouncement: [],
+      sortedAnnouncement: undefined
     };
   },
   computed: {
@@ -237,9 +239,7 @@ export default {
       announcements: "app/getAnnouncements"
       // maps courses to current computed resource
     }),
-    getAnnouncements() {
-      return this.announcements.sort(helper.GetSortOrder("title"));
-    },
+
     getMostEngaged() {
       return this.announcements
         .slice()
@@ -253,6 +253,13 @@ export default {
   },
   async mounted() {
     this.getAllAnnouncements();
+    this.announcements.forEach(res => {
+      this.recentAnnouncement.push(res);
+    });
+    this.recentAnnouncement.sort(helper.GetSortOrder("createdAt")).reverse();
+    this.sortedAnnouncement = this.announcements.sort(
+      helper.GetSortOrder("title")
+    );
   },
   components: {
     Carousel: () => import("@/components/carousel"),

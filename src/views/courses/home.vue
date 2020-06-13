@@ -8,7 +8,7 @@
         <carousel refs="content">
           <div
             class="scroll m-2"
-            v-for="(course, idx) in getCourses"
+            v-for="(course, idx) in sortedCourses"
             :key="idx"
           >
             <d-card
@@ -60,9 +60,7 @@
               :style="
                 'width:200px!important;height: 120px!important;' +
                   'backgroundImage:url(' +
-                  categoryImages[
-                    Math.floor(Math.random() * categoryImages.length)
-                  ] +
+                  getCategoryBackground +
                   ');' +
                   ' background-size:cover; background-position:center'
               "
@@ -90,7 +88,11 @@
           Most Recent
         </h6>
         <carousel refs="content">
-          <div class="scroll m-2" v-for="(course, idx) in courses" :key="idx">
+          <div
+            class="scroll m-2"
+            v-for="(course, idx) in recentCourses"
+            :key="idx"
+          >
             <d-card
               :style="
                 'width:200px!important;height: 120px!important;' +
@@ -214,11 +216,9 @@ export default {
     return {
       ref_data: "content",
       courseProgram: [],
-      categoryImages: [
-        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png",
-        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808813/Rectangle_529_apeq0b.png",
-        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808832/Rectangle_530_iw8pgd.png"
-      ]
+
+      sortedCourses: [],
+      recentCourses: undefined
     };
   },
   computed: {
@@ -229,8 +229,15 @@ export default {
 
       // maps courses to current computed resource
     }),
-    getCourses() {
-      return this.courses.sort(helper.GetSortOrder("title"));
+
+    getCategoryBackground() {
+      let categoryImages = [
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808813/Rectangle_529_apeq0b.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808832/Rectangle_530_iw8pgd.png"
+      ];
+      const num = Math.floor(Math.random() * categoryImages.length);
+      return categoryImages[num];
     }
   },
   methods: {
@@ -259,9 +266,17 @@ export default {
     this.getAllCourses();
     this.getAllEngagedCourses();
     this.getAllCategories();
+    this.courses.forEach(res => {
+      this.sortedCourses.push(res);
+    });
     this.Categories.forEach(category => {
       this.getCoursePrograms(category.name.replace(/%20/g, " "));
     });
+    // this.sortedCourses.sort(helper.GetSortOrder("createdAt"))
+    this.sortedCourses.sort(helper.GetSortOrder("title"));
+    this.recentCourses = this.courses
+      .sort(helper.GetSortOrder("createdAt"))
+      .reverse();
   },
   components: {
     Carousel: () => import("@/components/carousel"),
