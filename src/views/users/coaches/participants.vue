@@ -8,7 +8,7 @@
       :sizeUnit="'px'"
     ></beat-loader>
     <d-container fluid class="main-content-container" v-if="isLoaded">
-      <top :heading="user.coach.first_name" />
+      <top heading="Assign Participants" />
       <d-row>
         <div class="col-md-2 col-lg-2 col-12">
           <d-row class="m-3 text-center">
@@ -16,39 +16,33 @@
               class="mb-3 col-md-12 col-lg-12 col-12  align-items-center justify-content-center d-flex flex-column   "
             >
               <sla-avatar
-                v-if="user.coach.image === null"
+                v-if="user.admin.image === null"
                 size="xl"
                 class="mb-3"
-                :user="{ name: user.coach.first_name }"
+                :user="{ name: user.admin.first_name }"
               />
               <sla-avatar
                 v-else
                 size="xl"
-                :user="{ image: user.coach.image }"
+                :user="{ image: user.admin.image }"
                 class="mb-3"
               />
               <h6 class="font-weight-bold text-black   font-open-sans ">
-                {{ user.coach.first_name + " " + user.coach.last_name }}
+                {{ user.admin.first_name + " " + user.admin.last_name }}
               </h6>
+
               <p class="text-grey font-open-sans">
                 <span><icon size="sm" name="location"/></span>
-                {{ user.coach.location }}
+                {{ user.admin.location }}
               </p>
-              <div class="row">
-                <sla-button
-                  type="filled"
-                  size="md"
-                  text="ASSIGN PARTICIPANTS"
-                  class="btn col-md-12 col-12 col-lg-12 text-center "
-                />
-              </div>
+              <sla-button
+                type="filled"
+                size="md"
+                text="ASSIGN PARTICIPANTS"
+                class="btn  w-100 text-center "
+              />
             </div>
           </d-row>
-        </div>
-        <div class="col-md-10 col-lg-10 col-10">
-          <p class="font-poppins text-black " style="font-size:14px;">
-            Mentees
-          </p>
         </div>
       </d-row>
     </d-container>
@@ -80,7 +74,7 @@ export default {
     const userId = this.$route.params.id;
     const self = this;
     let res = axios
-      .get(`${process.env.VUE_APP_API}/admin/coach/` + userId, {
+      .get(`${process.env.VUE_APP_API}/admin/admins/` + userId, {
         headers: {
           Authorization: `Bearer ${token} `
         }

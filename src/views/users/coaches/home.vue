@@ -36,7 +36,7 @@
               class="mb-2 text-primary font-weight-bold"
               @click="
                 $router.push({
-                  path: 'coach/single/' + user._id
+                  path: 'single/' + user._id
                 })
               "
             >

@@ -210,14 +210,20 @@
       </d-modal-header>
       <d-modal-body>
         <d-row class="text-center">
-          <div v-for="i in 5" class="col-lg-12 col-md-12 col-12 p-2 ">
+          <div
+            v-for="(coach, idx) in fetchCoaches"
+            :key="idx"
+            class="col-lg-12 col-md-12 col-12 p-2 "
+          >
             <d-row class="col-md-12 col-lg-12 col-12 mx-auto">
               <d-col>
-                <img
-                  class="avatar   "
-                  src="@/assets/images/user-profile/leader.png"
+                <sla-avatar
+                  v-if="coach.image === null"
+                  size="lg"
+                  :user="{ name: coach.first_name }"
                 />
-                Jane Ogunsola
+                <sla-avatar v-else size="lg" :user="{ image: coach.image }" />
+                {{ coach.first_name + " " + coach.last_name }}
               </d-col>
               <d-col md="6">
                 <d-btn class="btn btn-primary">
@@ -332,9 +338,14 @@ export default {
       return this.Users.slice(start, end);
     },
     ...mapGetters({
-      Users: "app/getUsers"
+      Users: "app/getUsers",
+      Coaches: "app/getAdmins"
       // maps courses to current computed resource
-    })
+    }),
+
+    fetchCoaches() {
+      return this.Coaches.filter(res => res.type === "coach");
+    }
   },
   methods: {
     async handleSubmit() {
@@ -435,6 +446,7 @@ export default {
       };
     });
     this.getAllUsers();
+    this.getAllAdmins();
     const self = this;
     axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
