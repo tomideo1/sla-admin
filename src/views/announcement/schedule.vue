@@ -14,7 +14,10 @@
         <carousel refs="content">
           <div
             class="scroll m-2"
-            v-if="announcement.schedule !== null"
+            v-if="
+              announcement.schedule !== null &&
+                !announcement.status == 'publish'
+            "
             v-for="(announcement, idx) in getScheduledAnnouncement"
             :key="idx"
           >

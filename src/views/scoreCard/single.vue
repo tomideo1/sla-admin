@@ -129,7 +129,7 @@ export default {
       },
       buttons: {
         isLoading: false,
-        text: "PUBLISH"
+        text: "UPDATE"
       },
       formData: {
         template: []
@@ -160,7 +160,7 @@ export default {
       const token = store.state.auth.token;
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/scorecard/create-template`,
+          `${process.env.VUE_APP_API}/scorecard/update-template`,
           this.formData,
           {
             headers: {
@@ -170,16 +170,16 @@ export default {
         )
         .then(res => {
           self.buttons.isLoading = false;
-          self.buttons.text = "PUBLISH";
+          self.buttons.text = "UPDATE";
           self.quiz = [];
           self.$toast.success((self.error.message = res.data.message));
-          setTimeout(function() {
-            self.$router.push({ path: "/scorecards/all" });
-          }, 2000);
+          // setTimeout(function() {
+          //   self.$router.push({ path: "/scorecards/all" });
+          // }, 2000);
         })
         .catch(ex => {
           self.buttons.isLoading = false;
-          self.buttons.text = "PUBLISH";
+          self.buttons.text = "UPDATE";
           self.$toast.error(
             (self.error.message = ex.response.data
               ? ex.response.data.message
