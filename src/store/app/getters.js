@@ -52,3 +52,7 @@ export const getAnalytics = state => {
 export const getResourceCategories = state => {
   return state.ResourceCategories;
 };
+
+export const getScoreCard = state => {
+  return state.ScoreCard;
+};

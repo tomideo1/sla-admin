@@ -104,6 +104,14 @@
             :disabled="buttons.isLoading"
             @click="handleSubmit"
           />
+
+          <sla-button
+            class="btn  m-3  text-uppercase "
+            text="View Score Card"
+            type="outline"
+            size="md"
+            @click="$router.push({ path: 'single' })"
+          />
           <!--          <Editor />-->
         </div>
       </div>

@@ -52,3 +52,7 @@ export const setAnalytics = (state, data) => {
 export const setResourceCategories = (state, data) => {
   state.ResourceCategories = data.categories;
 };
+
+export const SetScoreCard = (state, data) => {
+  state.ScoreCard = data.template;
+};

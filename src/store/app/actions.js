@@ -122,3 +122,13 @@ export const getAllResourceCategories = async ({ commit }) => {
     return res;
   }
 };
+
+export const showScoreCard = async ({ commit }) => {
+  let res = await Api.get(`/scorecard/show`, true);
+
+  if (res.status == 200) {
+    commit("SetScoreCard", res.data);
+  } else {
+    return res;
+  }
+};
