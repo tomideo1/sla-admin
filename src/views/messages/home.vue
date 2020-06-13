@@ -1,85 +1,33 @@
 <template>
   <d-container fluid class="main-content-container px-4 py-4 mt-4 ">
     <d-row>
-      <div class="col-md-4"></div>
-      <div class="col-md-8">
-        <nav-menu>
-          Group Name
-        </nav-menu>
+      <div class="col-md-4">
+        <h4 class="m-3">Messages</h4>
+      </div>
+      <div class="col-md-8 border-left">
+        <nav class="navbar navbar-light bg-white  ">
+          <h5 class="font-open-sans text-dark text-black">
+            Group Name
+          </h5>
+        </nav>
+        <
       </div>
     </d-row>
   </d-container>
-  <!--  <div class="pass d-flex flex-column justify-content-between ">-->
-  <!--    <top :heading="'Chat Group'" />-->
-  <!--    <div ref="chatsection" style="height: 100px" class="section px-12">-->
-  <!--      <chat-bubble :key="x" v-for="x in chats" :chat="x" />-->
-  <!--      &lt;!&ndash; <chat-bubble-->
-  <!--        v-for="x in 12"-->
-  <!--        :chat="chatObj"-->
-  <!--      /> &ndash;&gt;-->
-  <!--    </div>-->
-  <!--    <div-->
-  <!--      class="position-fixed width-100 bottom-0 z-index-1 bg-white py-12 shadow-3"-->
-  <!--    >-->
-  <!--      <chat-box @keyup="handleChat" @send="handleChat" v-model="chat" />-->
-  <!--    </div>-->
-  <!--  </div>-->
 </template>
 <script>
 import ably from "@/utils/socket";
 import { mapMutations, mapActions } from "vuex";
-import NavMenu from "../../components/NavMenu";
-// let chatObj = {
-//   userId: "5eb0bbcfe7ee750017666733",
-//   username: "Jane Doe",
-//   admin: null,
-//   is_admin: false,
-//   _id: "5ec273fa54b0b20017e9ace8",
-//   group: "5ebf3a83facf440017d68de6",
-//   message: "go",
-//   updatedAt: "2020-05-18T11:39:38.139Z",
-//   createdAt: "2020-05-18T11:39:38.139Z",
-//   __v: 0
-// };
 export default {
   data() {
     return {
       group: null,
       chats: [],
-      chat: "",
-      chatObj
+      chat: ""
     };
   },
-  components: {
-    NavMenu
-    // top: () => import("@/components/top"),
-    // chatBubble: () => import("@/components/chatBubble"),
-    // chatBox: () => import("@/components/chatBox")
-  },
-  methods: {
-    // ...mapActions(["sendChat", "getGroupMessages"]),
-    handleChat() {
-      if (this.chat == "") {
-        return;
-      }
-      this.processChat();
-    },
-    processChat() {
-      let chatObject = {
-        username: this.$store.state.user.data.first_name,
-        id: this.$store.state.user.data._id,
-        message: this.chat,
-        groupId: this.group._id,
-        createdAt: Date.now(),
-        groupSlug: this.group.slug
-      };
-
-      this.sendChat(chatObject);
-
-      this.chats.push(chatObject);
-      this.chat = "";
-    }
-  },
+  components: {},
+  methods: {},
   async mounted() {
     // let chats = await this.getGroupMessages({
     //   groupId: this.group._id

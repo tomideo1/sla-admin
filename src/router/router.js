@@ -82,6 +82,30 @@ const router = new Router({
           meta: {
             middleware: [auth]
           }
+        },
+        {
+          path: "coaches/all",
+          name: "all-coaches",
+          component: () => import("@/views/users/coaches/home.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "coaches/create",
+          name: "create-coach",
+          component: () => import("@/views/users/coaches/create.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "coaches/single/:id",
+          name: "single-user",
+          component: () => import("@/views/users/coaches/single.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },

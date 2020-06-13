@@ -11,11 +11,18 @@ export default {
       navigation: {
         title: [
           { name: "Create New Participant ", path: "/users/create" },
-          { name: "View All  Participant", path: "/users/all" }
+          { name: "View All  Participant", path: "/users/all" },
+          {
+            name: "Create New Coach  Paricipant",
+            path: "/users/coaches/create"
+          },
+          { name: "View All  Coaches", path: "/users/coaches/all" }
         ],
         actions: [
-          { name: "create", path: "/users/create" },
-          { name: "view all", path: "/users/all" }
+          { name: "Create New Participant", path: "/users/create" },
+          { name: "View all Participants", path: "/users/all" },
+          { name: "Create New coach", path: "/users/coaches/create" },
+          { name: "view all Coaches", path: "/users/coaches/all" }
         ]
       }
     };

@@ -29,7 +29,7 @@
 export default {
   props: ["dataObj"],
   components: {
-    Avatar: () => import("@/components/avatar")
+    Avatar: () => import("@/components/SlaAvatar")
   }
 };
 </script>

@@ -11,7 +11,7 @@
     </d-row>
     <v-client-table
       class="dataTables_wrapper"
-      :data="tableData"
+      :data="fetchAdmins"
       :columns="columns"
       :options="clientTableOptions"
     >
@@ -81,7 +81,11 @@ export default {
   computed: {
     ...mapGetters({
       tableData: "app/getAdmins"
-    })
+    }),
+
+    fetchAdmins() {
+      return this.tableData.filter(res => res.type === "admin");
+    }
   },
   methods: {
     handleActionClick(type, id) {

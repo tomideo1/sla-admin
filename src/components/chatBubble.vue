@@ -1,11 +1,11 @@
 <template>
   <div
     class="d-flex mb-12"
-    :class="position === 'right' ? 'justify-content-end mb-24 mt-24' : ''"
+    :class="position == 'right' ? 'justify-content-end mb-24 mt-24' : ''"
   >
     <div
       class="chat"
-      :class="position === 'right' ? 'right' : ''"
+      :class="position == 'right' ? 'right' : ''"
       :style="{ float: `${position}` }"
     >
       <span class="flex-inline flex-column message  p-8">
@@ -39,8 +39,7 @@ export default {
   computed: {
     ...mapState(["user"]),
     position() {
-      // return this.chat.id == this.user.data._id ? "right" : "left";
-      return "right";
+      return this.chat.id == this.user.data._id ? "right" : "left";
     }
   }
 };
