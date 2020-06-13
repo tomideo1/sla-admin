@@ -636,13 +636,13 @@ export default {
       .then(res => {
         self.Polls = res.data.data.poll;
         self.formData.options = self.Polls.options;
-        //  if (self.Polls.schedule !== 'null' || self.Polls.schedule !== undefined) {
-        //   self.splitDateString(
-        //     self.Polls.schedule,
-        //     self.time.schedule,
-        //     self.formData.schedule
-        //   );
-        // }
+        if (self.Polls.schedule !== "null") {
+          self.splitDateString(
+            self.Polls.schedule,
+            self.time.schedule,
+            self.formData.schedule
+          );
+        }
         if (self.Polls.remainder !== null) {
           self.splitDateString(
             self.Polls.remainder,

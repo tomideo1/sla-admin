@@ -68,7 +68,9 @@
                   >
                     <icon class="m-2 " size="lg" name="eclipse" /><d-input
                       class="col-md-4 m-2"
-                      v-model="item2.value"
+                      v-model="
+                        formData.questions[index].possible_options[index2]
+                      "
                       :placeholder="'option' + (index2 + 1)"
                     />
                     <icon
@@ -327,6 +329,9 @@ export default {
       },
       formData: {
         title: null,
+        expiry: undefined,
+        reminder: undefined,
+        schedule: undefined,
         description: "",
         question: "",
         recipients: "everyone",
@@ -386,6 +391,7 @@ export default {
       }
       const self = this;
       const token = store.state.auth.token;
+
       if (self.formData.survey_image !== undefined) {
         self.Survey.survey_image = self.Survey.survey_image;
       } else {
@@ -567,7 +573,7 @@ export default {
       this.formData.questions.splice(index, 1);
     },
     addOption(index) {
-      this.formData.questions[index].possible_options.push({ value: "" });
+      this.formData.questions[index].possible_options.push("");
     },
     deleteOption(index, index2) {
       this.formData.questions[index].possible_options.splice(index2, 1);
@@ -687,7 +693,9 @@ export default {
     const self = this;
     axios
       .get(
-        `${process.env.VUE_APP_API}/survey/` + self.$route.params.id + `/show`,
+        `${process.env.VUE_APP_API}/survey/` +
+          self.$route.params.id +
+          `/questions/list`,
         {
           headers: {
             Authorization: `Bearer ${token} `
@@ -695,41 +703,23 @@ export default {
         }
       )
       .then(res => {
-        self.Survey = res.data.survey;
-        self.isLoaded = true;
+        self.Survey = res.data.data.survey;
+        self.formData.questions = res.data.data.questions;
+        // if (
+        //   self.Survey.schedule !== null || self.Survey.schedule === undefined
 
-        self.Survey.category = self.Survey.category.split(",");
-        self.Survey.tags = self.Survey.tags.split(",");
-        axios
-          .get(
-            `${process.env.VUE_APP_API}/survey/` +
-              self.$route.params.id +
-              `/question/list`,
-            {
-              headers: {
-                Authorization: `Bearer ${token} `
-              }
-            }
-          )
-          .then(res => {
-            self.formData.question = res.data.data.questions;
-          })
-          .catch();
-        if (
-          self.Survey.schedule !== null ||
-          self.Survey.schedule !== undefined
-        ) {
+        // ) {
+        //   self.splitDateString(
+        //     self.Survey.schedule,
+        //     self.time.schedule,
+        //     self.formData.schedule
+        //   );
+        // }
+        if (self.Survey.reminder !== null) {
           self.splitDateString(
-            self.Survey.schedule,
-            self.time.schedule,
-            self.formData.schedule
-          );
-        }
-        if (self.Survey.remainder !== null) {
-          self.splitDateString(
-            self.Survey.remainder,
+            self.Survey.reminder,
             self.time.reminder,
-            self.formData.remainder
+            self.formData.reminder
           );
         }
         if (self.Survey.expiry !== null) {
@@ -739,8 +729,11 @@ export default {
             self.formData.expiry
           );
         }
+        self.isLoaded = true;
       })
-      .catch(ex => {});
+      .catch(ex => {
+        console.log(ex.response.data);
+      });
     axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
         headers: {
