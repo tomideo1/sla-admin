@@ -703,7 +703,7 @@ export default {
             }
           )
           .then(res => {
-            self.formData.questions = res.data.data.questions;
+            self.formData.question = res.data.data.questions;
           })
           .catch();
         if (
@@ -716,17 +716,14 @@ export default {
             self.formData.schedule
           );
         }
-        if (
-          self.Survey.remainder !== null ||
-          self.Survey.remainder !== undefined
-        ) {
+        if (self.Survey.remainder !== null) {
           self.splitDateString(
             self.Survey.remainder,
             self.time.reminder,
             self.formData.remainder
           );
         }
-        if (self.Survey.expiry !== null || self.Survey.expiry !== undefined) {
+        if (self.Survey.expiry !== null) {
           self.splitDateString(
             self.Survey.expiry,
             self.time.expiry,

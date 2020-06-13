@@ -38,43 +38,6 @@
           </div>
         </carousel>
       </div>
-      <div class="col-lg-12">
-        <h6 class="text-dark title text-capitalize m-1">
-          Most Recent
-        </h6>
-        <carousel refs="content">
-          <div class="scroll m-2" v-for="(poll, idx) in Polls" :key="idx">
-            <d-card
-              :style="
-                'width:200px!important;height: 120px!important;' +
-                  'backgroundImage:url(' +
-                  poll.cover_image +
-                  ');' +
-                  ' background-size:cover; background-position:center'
-              "
-              @click="
-                $router.push({
-                  path: 'single/' + poll._id
-                })
-              "
-            >
-            </d-card>
-            <div
-              style=" max-width: 200px;!important; word-wrap: break-word!important;"
-            >
-              <p
-                class="title-card  text-capitalize mt-2  text-bold font-open-sans "
-              >
-                {{ poll.title }}
-              </p>
-            </div>
-
-            <p class=" text-capitalize mt-n4  " style="color: #999999;">
-              <!--              {{ announcement.category.name }}-->
-            </p>
-          </div>
-        </carousel>
-      </div>
     </d-row>
     <!-- Page Header -->
     <!-- Using the slider component -->
@@ -99,7 +62,7 @@ export default {
       // maps courses to current computed resource
     }),
     getPolls() {
-      return this.Polls.sort(helper.GetSortOrder("title"));
+      return this.Polls.filter(res => res.schedule !== null);
     }
   },
   methods: {

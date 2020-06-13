@@ -14,7 +14,7 @@
         :class="[this.completed ? 'mb-1' : '']"
       >
         <span v-if="completed" class="text-bold">Completed</span>
-        <icon class="z-index-0" name="video" />
+        <icon class="z-index-0" name="video-icon" />
       </div>
     </div>
   </div>

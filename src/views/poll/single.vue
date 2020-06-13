@@ -36,7 +36,7 @@
         <p
           class="font-open-sans float-right m-4"
           style="color:#0087DB; cursor: pointer; font-size: 14px;"
-          @click="$router.push('/poll/edit/' + Polls._id)"
+          @click="$router.push('/polls/edit/' + Polls._id)"
         >
           EDIT
         </p>

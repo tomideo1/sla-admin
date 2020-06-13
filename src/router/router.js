@@ -37,7 +37,7 @@ const router = new Router({
   routes: [
     {
       path: "/",
-      name: "dashboard",
+      name: "main-dashboard",
       component: Dashboard,
       meta: {
         middleware: [auth]
@@ -252,6 +252,22 @@ const router = new Router({
           }
         },
         {
+          path: "schedule",
+          name: "schedule-survey",
+          component: () => import("@/views/survey/schedule.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "save",
+          name: "save-survey",
+          component: () => import("@/views/survey/save.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
           path: "single/:id",
           name: "single-survey",
           component: () => import("@/views/survey/single.vue"),
@@ -290,6 +306,22 @@ const router = new Router({
           path: "create",
           name: "create-poll",
           component: () => import("@/views/poll/create.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "save",
+          name: "saedv-poll",
+          component: () => import("@/views/poll/save.vue"),
+          meta: {
+            middleware: [auth]
+          }
+        },
+        {
+          path: "schedule",
+          name: "scheduled-poll",
+          component: () => import("@/views/poll/schedule.vue"),
           meta: {
             middleware: [auth]
           }
@@ -449,14 +481,6 @@ const router = new Router({
       children: [
         {
           path: "",
-          name: "all-coaches",
-          component: () => import("@/views/coaches/home.vue"),
-          meta: {
-            middleware: [auth]
-          }
-        },
-        {
-          path: "/",
           name: "all-coaches",
           component: () => import("@/views/coaches/home.vue"),
           meta: {

@@ -11,18 +11,20 @@ export default {
       navigation: {
         title: [
           { name: "Create Poll", path: "/polls/create" },
-          { name: "View All Polls", path: "/polls/all" }
+          { name: "View All Polls", path: "/polls/all" },
+          { name: "View Saved Polls", path: "/polls/save" },
+          { name: "View Scheduled Polls", path: "/polls/schedule" }
         ],
         actions: [
           { name: "create", path: "/polls/create" },
-          { name: "view all", path: "/polls/all" }
+          { name: "view all", path: "/polls/all" },
+          { name: "schedule", path: "/polls/schedule" },
+          { name: "Save", path: "/polls/save" }
         ]
       }
     };
   },
-  mounted() {
-    console.log(this.navigation);
-  },
+  mounted() {},
   components: {
     NavMenu: () => import("@/components/NavMenu")
   }

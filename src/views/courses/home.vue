@@ -260,7 +260,7 @@ export default {
     this.getAllEngagedCourses();
     this.getAllCategories();
     this.Categories.forEach(category => {
-      this.getCoursePrograms(category.name);
+      this.getCoursePrograms(category.name.replace(/%20/g, " "));
     });
   },
   components: {

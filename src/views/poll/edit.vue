@@ -7,7 +7,9 @@
       :size="30"
       :sizeUnit="'px'"
     ></beat-loader>
-    <d-container fluid class="main-content-container px-4">
+    <d-container fluid class="main-content-container px-4" v-if="isLoaded">
+      <top :heading="Polls.title" />
+
       <!-- Page Header -->
       <d-row no-gutters class="page-header py-4">
         <Toasts
@@ -22,12 +24,12 @@
             size="lg"
             class="mb-3"
             placeholder="Poll Title"
-            v-model="formData.title"
+            v-model="Polls.title"
           />
-          <d-textarea
-            v-model="formData.description"
+          <textarea
+            v-model="Polls.description"
             rows="8"
-            class="mb-3"
+            class="form-control mb-3"
             placeholder="Description"
           />
           <div class="form-group">
@@ -40,7 +42,7 @@
                 <d-input
                   class="col-md-12 col-12 col-lg-12 border-bottom m-2"
                   style="border: none;"
-                  v-model="formData.question"
+                  v-model="Polls.question"
                   placeholder="Enter the  question"
                 />
               </div>
@@ -89,7 +91,7 @@
           >
           <br />
           <div class="form-group mt-3 mb-3 ">
-            <d-select v-model="formData.recepients" class="col-md-3">
+            <d-select v-model="Polls.recepients" class="col-md-3">
               <option selected value="everyone">To Everyone</option>
               <option value="participant">Participant</option>
               <option value="admin">Admins</option>
@@ -105,11 +107,12 @@
             id="dropZone"
             :useCustomSlot="true"
             class="mx-auto mb-3"
+            @vdropzone-file-added="processImage"
             ref="courseImage"
             :style="
               'width: 300px; height: 300px;' +
                 'backgroundImage:url(' +
-                formData.cover_image +
+                Polls.cover_image +
                 '); ' +
                 ' background-size:cover; background-position:center'
             "
@@ -121,7 +124,9 @@
             </div>
           </vue-dropzone>
           <p class="text-center m-3 ">
-            <span class="text-black">Expiry </span><span>(DD/MM/YY)</span>
+            <span class="text-black text-bold"
+              >Remind Users About Expiry Date on: </span
+            ><span>(DD/MM/YY)</span>
           </p>
           <d-input-group class="justify-content-center m-2 ">
             <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
@@ -145,29 +150,27 @@
             <input type="hidden" v-model="reminderDate" />
           </d-input-group>
           <p class="text-center m-3 ">
-            <span class="text-black text-bold"
-              >Remind Users About Expiry Date on: </span
-            ><span>(DD/MM/YY)</span>
+            <span class="text-black">Expiry </span><span>(DD/MM/YY)</span>
           </p>
           <d-input-group class="justify-content-center m-2 ">
-            <d-select v-model="time.publish.days" class="col-md-2 mr-2">
+            <d-select v-model="time.expiry.days" class="col-md-2 mr-2">
               <option :value="undefined">Day:</option>
               <option :value="i" v-for="i in 31">{{ i }}</option>
             </d-select>
-            <d-select class="col-md-2 mr-2" v-model="time.publish.month">
+            <d-select class="col-md-2 mr-2" v-model="time.expiry.month">
               <option :value="undefined">Month:</option>
               <option :value="i" v-for="i in 12">{{ i }}</option>
             </d-select>
-            <d-select class="col-md-2 mr-2 " v-model="time.publish.year">
+            <d-select class="col-md-2 mr-2 " v-model="time.expiry.year">
               <option :value="undefined">Year:</option>
               <option v-for="year in years" :value="year">{{ year }}</option>
             </d-select>
             <input
               class="col-md-3 form-control"
               type="time"
-              v-model="time.publish.hour"
+              v-model="time.expiry.hour"
             />
-            <input type="hidden" v-model="publishdDate" />
+            <input type="hidden" v-model="expirydDate" />
           </d-input-group>
 
           <div class="text-center">
@@ -247,22 +250,23 @@ import "quill-emoji/dist/quill-emoji.css";
 const token = store.state.auth.token;
 
 export default {
-  name: "create",
+  name: "edit",
   data() {
     return {
+      isLoaded: false,
       error: {
         status: null,
         message: null
       },
       scheduleModal: false,
       buttons: {
-        publish: false,
         published: false,
         save: false,
         isLoading: true,
-        text: "PUBLISH",
+        text: "Publish",
         text1: "SAVE"
       },
+      Polls: undefined,
       options: [],
       dropzoneOptions: {
         // url:'localhost:8080',
@@ -285,7 +289,8 @@ export default {
         question: "",
         recepients: "everyone",
         cover_image: "",
-        options: []
+        options: [],
+        expiry: undefined
       },
       time: {
         reminder: {
@@ -295,7 +300,7 @@ export default {
           hour: undefined,
           final_date: null
         },
-        publish: {
+        expiry: {
           days: undefined,
           month: undefined,
           year: undefined,
@@ -318,7 +323,8 @@ export default {
     vueDropzone: vue2Dropzone,
     Multiselect,
     Editor: () => import("@/components/add-new-post/Editor"),
-    SlaButton: () => import("@/components/SlaButton")
+    SlaButton: () => import("@/components/SlaButton"),
+    Top: () => import("@/components/top")
   },
   computed: {
     years: () => {
@@ -348,26 +354,26 @@ export default {
         .catch(ex => {});
       return tags;
     },
-    publishdDate() {
+    expirydDate() {
       if (
-        this.time.publish.days !== undefined &&
-        this.time.publish.year !== undefined &&
-        this.time.publish.month !== undefined &&
-        this.time.publish.hour !== undefined
+        this.time.expiry.days !== undefined &&
+        this.time.expiry.year !== undefined &&
+        this.time.expiry.month !== undefined &&
+        this.time.expiry.hour !== undefined
       ) {
-        this.time.publish.final_date =
-          this.time.publish.year +
+        this.time.expiry.final_date =
+          this.time.expiry.year +
           "-" +
-          this.time.publish.month +
+          this.time.expiry.month +
           "-" +
-          this.time.publish.days +
+          this.time.expiry.days +
           " " +
-          this.time.publish.hour;
+          this.time.expiry.hour;
         this.formData.reminder = new Date(
-          this.time.publish.final_date
+          this.time.expiry.final_date
         ).toISOString();
 
-        return this.time.publish.final_date;
+        return this.time.expiry.final_date;
       }
     },
     scheduleDate() {
@@ -439,22 +445,32 @@ export default {
           this.buttons.text1 = "Loading.....";
           this.formData.status = "save";
           break;
-        case "publish":
+        case "expiry":
           this.buttons.isLoading = true;
-          this.formData.status = "publish";
+          this.formData.status = "expiry";
           this.buttons.text = "Loading.....";
           break;
         default:
           break;
       }
       const self = this;
+      if (self.formData.cover_image !== undefined) {
+        self.Polls.cover_image = self.Polls.cover_image;
+      } else {
+        delete self.Polls.cover_image;
+      }
+      self.Polls.options = self.formData.options;
       const token = store.state.auth.token;
       let res = await axios
-        .post(`${process.env.VUE_APP_API}/poll/create`, this.formData, {
-          headers: {
-            Authorization: `Bearer ${token} `
+        .put(
+          `${process.env.VUE_APP_API}/poll/edit/` + self.Polls._id,
+          self.Polls,
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
           }
-        })
+        )
         .then(res => {
           switch (type) {
             case "save":
@@ -466,9 +482,9 @@ export default {
                 self.$router.push({ path: "/polls/all" });
               }, 2000);
               break;
-            case "publish":
+            case "expiry":
               self.buttons.isLoading = false;
-              self.buttons.text = "Publish";
+              self.buttons.text = "expiry";
               self.quiz = [];
               self.$toast.success((self.error.message = res.data.message));
               setTimeout(function() {
@@ -490,9 +506,9 @@ export default {
                   : "An error occured")
               );
               break;
-            case "publish":
+            case "expiry":
               self.buttons.isLoading = false;
-              self.buttons.text = "Publish";
+              self.buttons.text = "expiry";
               self.$toast.error(
                 (self.error.message = ex.response.data
                   ? ex.response.data.message.message
@@ -528,14 +544,14 @@ export default {
           );
         });
     },
-    watchPublish: function() {
+    watchexpiry: function() {
       let currentDate =
         new Date().getFullYear() +
         "-" +
         (new Date().getMonth() + 1) +
         "-" +
         new Date().getDate();
-      let value = this.time.publish.final_date;
+      let value = this.time.expiry.final_date;
 
       if (new Date(value) < new Date(currentDate)) {
         this.$toast.error(
@@ -593,11 +609,24 @@ export default {
         }
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
       };
+    },
+    splitDateString(dateString, Obj, Obj2) {
+      let res = dateString.split("T");
+      let res2 = res[0].split("-");
+      let hr = res[1].split(":");
+      let final_hr = hr[0] + ":" + hr[1];
+      Obj.year = res2[0];
+      Obj.month = parseInt(res2[1]);
+      Obj.days = parseInt(res2[2]);
+      Obj.hour = final_hr;
+
+      Obj.final_date =
+        Obj.year + "-" + Obj.month + "-" + Obj.days + " " + Obj.hour;
+      Obj2 = new Date(Obj.final_date).toISOString();
     }
   },
   mounted() {
     const self = this;
-    const token = store.state.auth.token;
     axios
       .get(`${process.env.VUE_APP_API}/poll/get/` + self.$route.params.id, {
         headers: {
@@ -606,23 +635,39 @@ export default {
       })
       .then(res => {
         self.Polls = res.data.data.poll;
+        self.formData.options = self.Polls.options;
+        //  if (self.Polls.schedule !== 'null' || self.Polls.schedule !== undefined) {
+        //   self.splitDateString(
+        //     self.Polls.schedule,
+        //     self.time.schedule,
+        //     self.formData.schedule
+        //   );
+        // }
+        if (self.Polls.remainder !== null) {
+          self.splitDateString(
+            self.Polls.remainder,
+            self.time.reminder,
+            self.formData.remainder
+          );
+        }
+        if (self.Polls.expiry !== null) {
+          self.splitDateString(
+            self.Polls.expiry,
+            self.time.expiry,
+            self.formData.expiry
+          );
+        }
         self.isLoaded = true;
+        this.showQuestion = true;
       })
       .catch(ex => {});
-    self.Polls.options.forEach(data => {
-      self.chartData.push([data.value, data.count]);
-    });
-    self.Polls.responses = self.Polls.options.reduce(
-      (accum, item) => accum + item.count,
-      0
-    );
   },
   watch: {
     editorContent: {
       handler: "updateEditorContent"
     },
-    publishdDate: {
-      handler: "watchPublish"
+    expirydDate: {
+      handler: "watchexpiry"
     },
     scheduleDate: {
       handler: "watchSchedule"
