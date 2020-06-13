@@ -1,46 +1,55 @@
 <template>
-  <d-container fluid class="main-content-container px-4" v-if="isLoaded">
-    <top :heading="Polls.title" />
-    <h4 class="m-3 text-bold font-poppings text-black">
-      {{ Polls.responses }} responses
-    </h4>
-    <d-card class=" col-md-6 col-12 col-lg-6 ">
-      <d-card-header class="text-black font-open-sans border-bottom">
-        {{ Polls.question }}
-      </d-card-header>
-      <d-card-body>
-        <GChart type="PieChart" :data="chartData" :options="chartOptions" />
-      </d-card-body>
-    </d-card>
-    <footer class="border-top m-5 ">
-      <sla-button
-        class="btn  m-3  text-uppercase float-right"
-        :text="'EXPORT'"
-        type="filled"
-        size="sm"
-      />
-      <sla-button
-        class="btn  m-3  text-uppercase float-right"
-        :text="'CLOSE POLL'"
-        type="outline"
-        size="sm"
-      />
-      <p
-        class="font-open-sans float-right m-4"
-        style="color:#0087DB; cursor: pointer; font-size: 14px;"
-        @click="$router.push('/poll/edit/' + Polls._id)"
-      >
-        EDIT
-      </p>
-      <p
-        class="font-open-sans float-right m-4"
-        style="color: #FF4133; cursor: pointer; font-size: 14px;"
-        @click="deleteModal = true"
-      >
-        DELETE POLL
-      </p>
-    </footer>
-  </d-container>
+  <div>
+    <beat-loader
+      class="loader m-3"
+      :color="'#0087db'"
+      :loading="!isLoaded"
+      :size="'30'"
+      :sizeUnit="'px'"
+    ></beat-loader>
+    <d-container fluid class="main-content-container px-4" v-if="isLoaded">
+      <top :heading="Polls.title" />
+      <h4 class="m-3 text-bold font-poppings text-black">
+        {{ Polls.responses }} responses
+      </h4>
+      <d-card class=" col-md-6 col-12 col-lg-6 ">
+        <d-card-header class="text-black font-open-sans border-bottom">
+          {{ Polls.question }}
+        </d-card-header>
+        <d-card-body>
+          <GChart type="PieChart" :data="chartData" :options="chartOptions" />
+        </d-card-body>
+      </d-card>
+      <footer class="border-top m-5 ">
+        <sla-button
+          class="btn  m-3  text-uppercase float-right"
+          :text="'EXPORT'"
+          type="filled"
+          size="sm"
+        />
+        <sla-button
+          class="btn  m-3  text-uppercase float-right"
+          :text="'CLOSE POLL'"
+          type="outline"
+          size="sm"
+        />
+        <p
+          class="font-open-sans float-right m-4"
+          style="color:#0087DB; cursor: pointer; font-size: 14px;"
+          @click="$router.push('/poll/edit/' + Polls._id)"
+        >
+          EDIT
+        </p>
+        <p
+          class="font-open-sans float-right m-4"
+          style="color: #FF4133; cursor: pointer; font-size: 14px;"
+          @click="deleteModal = true"
+        >
+          DELETE POLL
+        </p>
+      </footer>
+    </d-container>
+  </div>
 </template>
 
 <script>

@@ -1,444 +1,463 @@
 <template>
-  <d-container v-if="isLoaded" fluid class="main-content-container px-4">
-    <Toasts
-      :show-progress="false"
-      :rtl="false"
-      :max-messages="5"
-      :time-out="4000"
-      :closeable="false"
-    ></Toasts>
-    <top :heading="course.title" />
-    <div class="d-flex flex-row m-4">
-      <a
-        href="javascript:void(0)"
-        style="color: inherit;text-decoration: none;"
-        :class="['mr-2  ', pages.courseInfo ? 'text-dark' : '']"
-        @click="step('course_info')"
-        >Course Info
-        <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span
-      ></a>
-      <a
-        href="javascript:void(0)"
-        style="color: inherit;text-decoration: none;"
-        :class="['mr-2  ', pages.lessons ? 'text-dark' : '']"
-        @click="step('lesson')"
-        >Add Lesson
-        <!--        <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span-->
-        <!--        >-->
-      </a>
-      <!--      <a-->
-      <!--        href="javascript:void(0)"-->
-      <!--        style="color: inherit;text-decoration: none;"-->
-      <!--        :class="['mr-2  ', pages.quiz ? 'text-dark' : '']"-->
-      <!--        @click="step('quiz')"-->
-      <!--      >-->
-      <!--        Add Quiz</a-->
-      <!--      >-->
-    </div>
+  <div>
+    <beat-loader
+      class="loader m-3"
+      :color="'#0087db'"
+      :loading="!isLoaded"
+      :size="'30'"
+      :sizeUnit="'px'"
+    ></beat-loader>
+    <d-container v-if="isLoaded" fluid class="main-content-container px-4">
+      <Toasts
+        :show-progress="false"
+        :rtl="false"
+        :max-messages="5"
+        :time-out="4000"
+        :closeable="false"
+      ></Toasts>
+      <top :heading="course.title" />
+      <div class="d-flex flex-row m-4">
+        <a
+          href="javascript:void(0)"
+          style="color: inherit;text-decoration: none;"
+          :class="['mr-2  ', pages.courseInfo ? 'text-dark' : '']"
+          @click="step('course_info')"
+          >Course Info
+          <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span
+        ></a>
+        <a
+          href="javascript:void(0)"
+          style="color: inherit;text-decoration: none;"
+          :class="['mr-2  ', pages.lessons ? 'text-dark' : '']"
+          @click="step('lesson')"
+          >Add Lesson
+          <!--        <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span-->
+          <!--        >-->
+        </a>
+        <!--      <a-->
+        <!--        href="javascript:void(0)"-->
+        <!--        style="color: inherit;text-decoration: none;"-->
+        <!--        :class="['mr-2  ', pages.quiz ? 'text-dark' : '']"-->
+        <!--        @click="step('quiz')"-->
+        <!--      >-->
+        <!--        Add Quiz</a-->
+        <!--      >-->
+      </div>
 
-    <d-row no-gutters class="page-header py-4">
-      <d-col sm="12" md="6" lg="6">
-        <div v-show="pages.courseInfo">
-          <d-input
-            size="lg"
-            class="mb-3"
-            v-model="course.title"
-            placeholder=" Title"
-          />
-          <multiselect
-            size="lg"
-            class="mb-3"
-            v-model="course.category"
-            placeholder="Search or add a Category"
-            :multiple="true"
-            :taggable="true"
-            :close-on-select="true"
-            :clear-on-select="false"
-            :preserve-search="true"
-            :preselect-first="false"
-            :options="categories"
-          >
-          </multiselect>
-          <multiselect
-            size="lg"
-            class="mb-3"
-            v-model="course.tags"
-            placeholder="Search for  course tag"
-            :multiple="true"
-            :taggable="true"
-            :close-on-select="true"
-            :clear-on-select="false"
-            :preserve-search="true"
-            :preselect-first="false"
-            :options="options"
-            @tag="addTag"
-          >
-          </multiselect>
-          <textarea
-            style="min-height: 140px;"
-            v-model="course.details"
-            class="form-control mb-3"
-          >
-          </textarea>
-          <textarea
-            style="min-height: 140px;"
-            v-model="course.requirements"
-            class="form-control"
-            placeholder="Requirements"
-          >
-          </textarea>
-          <div class="text-center">
-            <d-button
-              class="btn btn-outline-light  mt-4  p-3 col-md-8  text-uppercase"
-              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-              @click="step('lesson')"
+      <d-row no-gutters class="page-header py-4">
+        <d-col sm="12" md="6" lg="6">
+          <div v-show="pages.courseInfo">
+            <d-input
+              size="lg"
+              class="mb-3"
+              v-model="course.title"
+              placeholder=" Title"
+            />
+            <multiselect
+              size="lg"
+              class="mb-3"
+              v-model="course.category"
+              placeholder="Search or add a Category"
+              :multiple="true"
+              :taggable="true"
+              :close-on-select="true"
+              :clear-on-select="false"
+              :preserve-search="true"
+              :preselect-first="false"
+              :options="categories"
             >
-              Next
-            </d-button>
-          </div>
-        </div>
-        <!--Add Lesson-->
-        <div v-show="pages.lessons">
-          <div class="p-4" v-for="(item, index) in lesson.fields">
-            <div class="row">
-              <h5 class="text-dark col-md-6 ">Lesson {{ index + 1 }}</h5>
-              <label class="ml-auto col-md-4 ">
-                Order
-                <d-select class=" col-md-4" v-model="item.lesson_number">
-                  <option
-                    :selected="item.lesson_number === index + 1"
-                    :value="i"
-                    v-for="i in lesson.fields.length"
-                    >{{ i }}</option
-                  >
-                </d-select>
-              </label>
+            </multiselect>
+            <multiselect
+              size="lg"
+              class="mb-3"
+              v-model="course.tags"
+              placeholder="Search for  course tag"
+              :multiple="true"
+              :taggable="true"
+              :close-on-select="true"
+              :clear-on-select="false"
+              :preserve-search="true"
+              :preselect-first="false"
+              :options="options"
+              @tag="addTag"
+            >
+            </multiselect>
+            <textarea
+              style="min-height: 140px;"
+              v-model="course.details"
+              class="form-control mb-3"
+            >
+            </textarea>
+            <textarea
+              style="min-height: 140px;"
+              v-model="course.requirements"
+              class="form-control"
+              placeholder="Requirements"
+            >
+            </textarea>
+            <div class="text-center">
+              <d-button
+                class="btn btn-outline-light  mt-4  p-3 col-md-8  text-uppercase"
+                style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+                @click="step('lesson')"
+              >
+                Next
+              </d-button>
             </div>
-            <d-card>
-              <div class="row m-2">
-                <d-input
-                  class="col-md-8 col-12 col-lg-8 border-bottom m-2"
-                  style="border: none;"
-                  placeholder="Title"
-                  v-model="item.title"
-                />
-
-                <d-select
-                  class="col-md-3 col-12 col-lg-3 border-bottom m-2"
-                  style="border: none;"
-                  v-model="item.lesson_type"
-                >
-                  <option selected :value="undefined">Select Type</option>
-                  <option selected :value="'article'">Article</option>
-                  <option value="video">Video</option>
-                  <option value="audio">Audio</option>
-                </d-select>
-                <textarea
-                  class="col-md-12 col-12 col-lg-12 border-bottom m-2"
-                  style="border: none;"
-                  placeholder="Details"
-                  v-model="item.details"
-                >
-                </textarea>
+          </div>
+          <!--Add Lesson-->
+          <div v-show="pages.lessons">
+            <div class="p-4" v-for="(item, index) in lesson.fields">
+              <div class="row">
+                <h5 class="text-dark col-md-6 ">Lesson {{ index + 1 }}</h5>
+                <label class="ml-auto col-md-4 ">
+                  Order
+                  <d-select class=" col-md-4" v-model="item.lesson_number">
+                    <option
+                      :selected="item.lesson_number === index + 1"
+                      :value="i"
+                      v-for="i in lesson.fields.length"
+                      >{{ i }}</option
+                    >
+                  </d-select>
+                </label>
               </div>
-              <div class="m-2" v-if="item.lesson_type === 'article'">
-                <editor v-model="item.content" />
-              </div>
-              <div class="m-2 text-center " v-if="item.lesson_type === 'video'">
-                <div v-html="item.content"></div>
-                <d-input-group seamless>
+              <d-card>
+                <div class="row m-2">
                   <d-input
+                    class="col-md-8 col-12 col-lg-8 border-bottom m-2"
+                    style="border: none;"
+                    placeholder="Title"
+                    v-model="item.title"
+                  />
+
+                  <d-select
+                    class="col-md-3 col-12 col-lg-3 border-bottom m-2"
+                    style="border: none;"
+                    v-model="item.lesson_type"
+                  >
+                    <option selected :value="undefined">Select Type</option>
+                    <option selected :value="'article'">Article</option>
+                    <option value="video">Video</option>
+                    <option value="audio">Audio</option>
+                  </d-select>
+                  <textarea
+                    class="col-md-12 col-12 col-lg-12 border-bottom m-2"
+                    style="border: none;"
+                    placeholder="Details"
+                    v-model="item.details"
+                  >
+                  </textarea>
+                </div>
+                <div class="m-2" v-if="item.lesson_type === 'article'">
+                  <editor v-model="item.content" />
+                </div>
+                <div
+                  class="m-2 text-center "
+                  v-if="item.lesson_type === 'video'"
+                >
+                  <div v-html="item.content"></div>
+                  <d-input-group seamless>
+                    <d-input
+                      class="border-bottom p-3"
+                      style="border: none;"
+                      v-model="item.content"
+                      placeholder="Post an embedded video script of your video file "
+                    />
+                  </d-input-group>
+                </div>
+                <div class="m-2" v-if="item.lesson_type === 'audio'">
+                  <div v-html="item.content"></div>
+                  <d-input
+                    v-model="item.content"
                     class="border-bottom p-3"
                     style="border: none;"
-                    v-model="item.content"
-                    placeholder="Post an embedded video script of your video file "
-                  />
-                </d-input-group>
-              </div>
-              <div class="m-2" v-if="item.lesson_type === 'audio'">
-                <div v-html="item.content"></div>
-                <d-input
-                  v-model="item.content"
-                  class="border-bottom p-3"
-                  style="border: none;"
-                  placeholder="Post an embedded video script of your audio file "
-                />
-              </div>
-              <div class="d-flex flex-row m-2">
-                <icon
-                  size="lg"
-                  class="ml-auto border-right"
-                  @click="deleteValue(index)"
-                  name="bin"
-                />
-                <div class="d-flex flex-row m-1 mt-n1"></div>
-              </div>
-            </d-card>
-          </div>
-          <div class="text-center">
-            <d-button
-              class="btn btn-outline-light  mt-4  p-3 col-md-8 "
-              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-              @click="addValue()"
-            >
-              <icon name="add" /> <span> Add Lesson</span>
-            </d-button>
-            <d-button
-              class="btn btn-outline-light  mt-4  p-3 col-md-8  text-uppercase"
-              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-              @click="step('quiz')"
-            >
-              Next
-            </d-button>
-            <!--Add Quiz-->
-          </div>
-        </div>
-        <div v-show="pages.quiz">
-          <div class="p-4" v-for="(item, index) in quiz">
-            <div class="row">
-              <h5 class="text-dark col-md-7">
-                {{ questions_type.value }} {{ index + 1 }}
-              </h5>
-              <span class="col-md-5 mt-n3 fkoat-right">
-                <small class="text-sm"> Assign Points</small>
-                <d-select
-                  class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
-                  style="border: none;"
-                  v-model="item.reward"
-                >
-                  <option v-for="i in 10" :value="i">{{ i }}</option>
-                </d-select>
-              </span>
-            </div>
-            <d-card>
-              <div class="row m-2">
-                <d-input
-                  class="col-md-8 col-8 col-lg-8 border-bottom m-2"
-                  style="border: none;"
-                  v-model="item.question_text"
-                  placeholder="Enter the quiz question"
-                />
-
-                <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
-
-                <d-select
-                  class="col-md-3 col-12 text-dark col-lg-3 border-bottom m-2"
-                  style="border: none;"
-                  v-model="questions_type.value"
-                >
-                  <option selected value="quiz">Quiz</option>
-                </d-select>
-                <d-input
-                  class="col-md-5 col-12 col-lg-5 border-bottom m-2"
-                  style="border: none;"
-                  v-model="item.answer"
-                  placeholder="Enter the quiz answer"
-                />
-                <d-input
-                  class="col-md-6 col-12 col-lg-6 border-bottom m-2"
-                  style="border: none;"
-                  v-model="item.correction"
-                  placeholder="Enter the quiz correction text"
-                />
-              </div>
-              <div>
-                <div
-                  class="m-2 d-flex flex-row"
-                  v-for="(item2, index2) in quiz[index].options"
-                >
-                  <icon class="m-2 " size="lg" name="eclipse" /><d-input
-                    class="col-md-4 m-2"
-                    v-model="item2.value"
-                    :placeholder="'option' + (index2 + 1)"
-                  />
-                  <icon
-                    size="lg"
-                    class="ml-auto"
-                    @click="deleteOption(index, index2)"
-                    name="cancel"
+                    placeholder="Post an embedded video script of your audio file "
                   />
                 </div>
                 <div class="d-flex flex-row m-2">
                   <icon
                     size="lg"
-                    class=" "
-                    @click="addOption(index)"
-                    name="add"
-                  />
-
-                  <icon
-                    size="lg"
-                    class="ml-auto  border-right"
-                    @click="deleteQuiz(index)"
+                    class="ml-auto border-right"
+                    @click="deleteValue(index)"
                     name="bin"
                   />
-                  <div class="d-flex flex-row m-1 mt-n1">
-                    <label class="mt-2 p-1" style="color: #999999;"
-                      >Required</label
-                    >
-                    <input class="m-2" type="checkbox" />
+                  <div class="d-flex flex-row m-1 mt-n1"></div>
+                </div>
+              </d-card>
+            </div>
+            <div class="text-center">
+              <d-button
+                class="btn btn-outline-light  mt-4  p-3 col-md-8 "
+                style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+                @click="addValue()"
+              >
+                <icon name="add" /> <span> Add Lesson</span>
+              </d-button>
+              <d-button
+                class="btn btn-outline-light  mt-4  p-3 col-md-8  text-uppercase"
+                style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+                @click="step('quiz')"
+              >
+                Next
+              </d-button>
+              <!--Add Quiz-->
+            </div>
+          </div>
+          <div v-show="pages.quiz">
+            <div class="p-4" v-for="(item, index) in quiz">
+              <div class="row">
+                <h5 class="text-dark col-md-7">
+                  {{ questions_type.value }} {{ index + 1 }}
+                </h5>
+                <span class="col-md-5 mt-n3 fkoat-right">
+                  <small class="text-sm"> Assign Points</small>
+                  <d-select
+                    class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
+                    style="border: none;"
+                    v-model="item.reward"
+                  >
+                    <option v-for="i in 10" :value="i">{{ i }}</option>
+                  </d-select>
+                </span>
+              </div>
+              <d-card>
+                <div class="row m-2">
+                  <d-input
+                    class="col-md-8 col-8 col-lg-8 border-bottom m-2"
+                    style="border: none;"
+                    v-model="item.question_text"
+                    placeholder="Enter the quiz question"
+                  />
+
+                  <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
+
+                  <d-select
+                    class="col-md-3 col-12 text-dark col-lg-3 border-bottom m-2"
+                    style="border: none;"
+                    v-model="questions_type.value"
+                  >
+                    <option selected value="quiz">Quiz</option>
+                  </d-select>
+                  <d-input
+                    class="col-md-5 col-12 col-lg-5 border-bottom m-2"
+                    style="border: none;"
+                    v-model="item.answer"
+                    placeholder="Enter the quiz answer"
+                  />
+                  <d-input
+                    class="col-md-6 col-12 col-lg-6 border-bottom m-2"
+                    style="border: none;"
+                    v-model="item.correction"
+                    placeholder="Enter the quiz correction text"
+                  />
+                </div>
+                <div>
+                  <div
+                    class="m-2 d-flex flex-row"
+                    v-for="(item2, index2) in quiz[index].options"
+                  >
+                    <icon class="m-2 " size="lg" name="eclipse" /><d-input
+                      class="col-md-4 m-2"
+                      v-model="item2.value"
+                      :placeholder="'option' + (index2 + 1)"
+                    />
+                    <icon
+                      size="lg"
+                      class="ml-auto"
+                      @click="deleteOption(index, index2)"
+                      name="cancel"
+                    />
+                  </div>
+                  <div class="d-flex flex-row m-2">
+                    <icon
+                      size="lg"
+                      class=" "
+                      @click="addOption(index)"
+                      name="add"
+                    />
+
+                    <icon
+                      size="lg"
+                      class="ml-auto  border-right"
+                      @click="deleteQuiz(index)"
+                      name="bin"
+                    />
+                    <div class="d-flex flex-row m-1 mt-n1">
+                      <label class="mt-2 p-1" style="color: #999999;"
+                        >Required</label
+                      >
+                      <input class="m-2" type="checkbox" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </d-card>
-            <!--          <Editor />-->
+              </d-card>
+              <!--          <Editor />-->
+            </div>
+            <div class="text-center">
+              <d-button
+                class="btn btn-outline-light  mt-4  p-3 col-md-8 "
+                style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+                @click="addQuiz()"
+              >
+                <icon name="add" /> <span> Add Quiz</span>
+              </d-button>
+            </div>
           </div>
-          <div class="text-center">
-            <d-button
-              class="btn btn-outline-light  mt-4  p-3 col-md-8 "
-              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-              @click="addQuiz()"
-            >
-              <icon name="add" /> <span> Add Quiz</span>
-            </d-button>
-          </div>
-        </div>
-      </d-col>
-      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <vue-dropzone
-          v-model="formData.cover_image"
-          :options="dropzoneOptions"
-          id="singledropZone"
-          :useCustomSlot="true"
-          @vdropzone-file-added="processImage"
-          class="mx-auto"
-          ref="courseImage"
-          :style="
-            'width: 300px; height: 300px;' +
-              'backgroundImage:url(' +
-              course.cover_image +
-              '); ' +
-              ' background-size:cover; background-position:center'
-          "
-        >
-          <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
-          <div class="subtitle p-2 mt-3">Click to add cover image</div>
-          <div class="subtitle p-2 text-danger">
-            Image must be 300x300px
-          </div>
-        </vue-dropzone>
-        <p class="text-center m-3 ">
-          <span class="text-black">Create Reminder </span
-          ><span>(DD/MM/YY)</span>
-        </p>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.reminder.month">
-            <option :value="undefined">Month:</option>
-
-            <option v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.reminder.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <d-input class="col-md-3" type="time" v-model="time.reminder.hour" />
-          <input type="hidden" v-model="reminderDate" />
-        </d-input-group>
-
-        <p class="text-center m-3  text-dark">
-          Estimated Time to Complete Course
-        </p>
-        <d-input-group class="justify-content-center">
-          <d-input
-            class="col-md-8 "
-            v-model="course.estimate"
-            placeholder=" e.g 50 hours at 3 hours per week "
-          />
-        </d-input-group>
-        <div class="text-center">
-          <br />
-          <p
-            class="font-open-sans"
-            style="color: #0087DB; cursor: pointer; font-size: 14px;"
-            @click="scheduleModal = true"
+        </d-col>
+        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+          <vue-dropzone
+            v-model="formData.cover_image"
+            :options="dropzoneOptions"
+            id="singledropZone"
+            :useCustomSlot="true"
+            @vdropzone-file-added="processImage"
+            class="mx-auto"
+            ref="courseImage"
+            :style="
+              'width: 300px; height: 300px;' +
+                'backgroundImage:url(' +
+                course.cover_image +
+                '); ' +
+                ' background-size:cover; background-position:center'
+            "
           >
-            SCHEDULE
+            <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
+            <div class="subtitle p-2 mt-3">Click to add cover image</div>
+            <div class="subtitle p-2 text-danger">
+              Image must be 300x300px
+            </div>
+          </vue-dropzone>
+          <p class="text-center m-3 ">
+            <span class="text-black">Create Reminder </span
+            ><span>(DD/MM/YY)</span>
           </p>
-          <sla-button
-            type="outline"
-            size="md"
-            :text="buttons.text1"
-            class=" btn   p-3   col-md-6 m-1 "
-            @click="handleSubmit('save')"
-          >
-          </sla-button>
-          <sla-button
-            type="filled"
-            size="md"
-            :text="buttons.text"
-            class=" btn   p-3 mt-4  col-md-6  m-1"
-            @click="handleSubmit('publish')"
-            :disabled="buttons.isLoading"
-          >
-          </sla-button>
-          <p
-            class="font-open-sans mt-3"
-            style="color: #FF4133; cursor: pointer; font-size: 14px;"
-            @click="modalStatus = true"
-          >
-            DELETE COURSE
-          </p>
-        </div>
-      </d-col>
-      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
-        <d-modal-header class="text-center">
-          <d-modal-title class="font-poppings text-black">
-            What time and Date do you want to Schedule?
-          </d-modal-title>
-        </d-modal-header>
-        <d-modal-body>
           <d-input-group class="justify-content-center m-2 ">
-            <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+            <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
               <option :value="undefined">Day:</option>
-              <option :value="i" v-for="i in 31">{{ i }}</option>
+              <option v-for="i in 31">{{ i }}</option>
             </d-select>
-            <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+            <d-select class="col-md-2 mr-2" v-model="time.reminder.month">
               <option :value="undefined">Month:</option>
-              <option :value="i" v-for="i in 12">{{ i }}</option>
+
+              <option v-for="i in 12">{{ i }}</option>
             </d-select>
-            <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+            <d-select class="col-md-2 mr-2 " v-model="time.reminder.year">
               <option :value="undefined">Year:</option>
               <option v-for="year in years" :value="year">{{ year }}</option>
             </d-select>
-            <input
-              class="col-md-3 form-control"
+            <d-input
+              class="col-md-3"
               type="time"
-              v-model="time.schedule.hour"
+              v-model="time.reminder.hour"
             />
-            <input type="hidden" v-model="scheduleDate" />
+            <input type="hidden" v-model="reminderDate" />
           </d-input-group>
-        </d-modal-body>
-      </d-modal>
-      <d-modal v-if="modalStatus" @close="modalStatus = false" size="lg">
-        <div style="border-top: 4px solid #0087DB;" class="modal-header"></div>
-        <h6 class="text-center m-2 text-bold text-dark font-poppings">
-          Are you sure you want to delete this resource?
-        </h6>
-        <d-modal-body>
-          <div class="text-center">
-            <sla-button
-              class="m-2 col-md-12"
-              type="filled"
-              size="md"
-              text="YES, DELETE"
-              @click="deleteCourse(resource._id, 'courses/admin/delete/')"
+
+          <p class="text-center m-3  text-dark">
+            Estimated Time to Complete Course
+          </p>
+          <d-input-group class="justify-content-center">
+            <d-input
+              class="col-md-8 "
+              v-model="course.estimate"
+              placeholder=" e.g 50 hours at 3 hours per week "
             />
+          </d-input-group>
+          <div class="text-center">
+            <br />
+            <p
+              class="font-open-sans"
+              style="color: #0087DB; cursor: pointer; font-size: 14px;"
+              @click="scheduleModal = true"
+            >
+              SCHEDULE
+            </p>
             <sla-button
-              class="m-2 col-md-12"
               type="outline"
               size="md"
-              :text="'CANCEL'"
-              @click="modalStatus = false"
-            />
+              :text="buttons.text1"
+              class=" btn   p-3   col-md-6 m-1 "
+              @click="handleSubmit('save')"
+            >
+            </sla-button>
+            <sla-button
+              type="filled"
+              size="md"
+              :text="buttons.text"
+              class=" btn   p-3 mt-4  col-md-6  m-1"
+              @click="handleSubmit('publish')"
+              :disabled="buttons.isLoading"
+            >
+            </sla-button>
+            <p
+              class="font-open-sans mt-3"
+              style="color: #FF4133; cursor: pointer; font-size: 14px;"
+              @click="modalStatus = true"
+            >
+              DELETE COURSE
+            </p>
           </div>
-        </d-modal-body>
-      </d-modal>
-    </d-row>
-  </d-container>
+        </d-col>
+        <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
+          <d-modal-header class="text-center">
+            <d-modal-title class="font-poppings text-black">
+              What time and Date do you want to Schedule?
+            </d-modal-title>
+          </d-modal-header>
+          <d-modal-body>
+            <d-input-group class="justify-content-center m-2 ">
+              <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+                <option :value="undefined">Day:</option>
+                <option :value="i" v-for="i in 31">{{ i }}</option>
+              </d-select>
+              <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+                <option :value="undefined">Month:</option>
+                <option :value="i" v-for="i in 12">{{ i }}</option>
+              </d-select>
+              <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+                <option :value="undefined">Year:</option>
+                <option v-for="year in years" :value="year">{{ year }}</option>
+              </d-select>
+              <input
+                class="col-md-3 form-control"
+                type="time"
+                v-model="time.schedule.hour"
+              />
+              <input type="hidden" v-model="scheduleDate" />
+            </d-input-group>
+          </d-modal-body>
+        </d-modal>
+        <d-modal v-if="modalStatus" @close="modalStatus = false" size="lg">
+          <div
+            style="border-top: 4px solid #0087DB;"
+            class="modal-header"
+          ></div>
+          <h6 class="text-center m-2 text-bold text-dark font-poppings">
+            Are you sure you want to delete this resource?
+          </h6>
+          <d-modal-body>
+            <div class="text-center">
+              <sla-button
+                class="m-2 col-md-12"
+                type="filled"
+                size="md"
+                text="YES, DELETE"
+                @click="deleteCourse(resource._id, 'courses/admin/delete/')"
+              />
+              <sla-button
+                class="m-2 col-md-12"
+                type="outline"
+                size="md"
+                :text="'CANCEL'"
+                @click="modalStatus = false"
+              />
+            </div>
+          </d-modal-body>
+        </d-modal>
+      </d-row>
+    </d-container>
+  </div>
 </template>
 <script>
 import vue2Dropzone from "vue2-dropzone";

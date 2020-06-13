@@ -1,222 +1,235 @@
 <template>
-  <d-container fluid class="main-content-container px-4">
-    <!-- Page Header -->
-    <d-row no-gutters class="page-header py-4">
-      <Toasts
-        :show-progress="false"
-        :rtl="false"
-        :max-messages="5"
-        :time-out="4000"
-        :closeable="false"
-      ></Toasts>
-      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <d-input
-          size="lg"
-          class="mb-3"
-          placeholder="Poll Title"
-          v-model="formData.title"
-        />
-        <d-textarea
-          v-model="formData.description"
-          rows="8"
-          class="mb-3"
-          placeholder="Description"
-        />
-        <div class="form-group">
-          <label class="font-poppins " style="font-weight: bold;color: black"
-            >For Recipients</label
-          >
-          <br />
-          <d-card v-show="showQuestion">
-            <div class="row m-2">
-              <d-input
-                class="col-md-12 col-12 col-lg-12 border-bottom m-2"
-                style="border: none;"
-                v-model="formData.question"
-                placeholder="Enter the  question"
-              />
-            </div>
-            <div>
-              <div
-                class="m-2 d-flex flex-row"
-                v-for="(item, index) in formData.options"
-              >
-                <icon class="m-2 " size="lg" name="eclipse" /><d-input
-                  class="col-md-4 m-2"
-                  v-model="item.value"
-                  :placeholder="'option' + (index + 1)"
-                />
-                <icon
-                  size="lg"
-                  class="ml-auto"
-                  @click="deleteOption(index)"
-                  name="cancel"
-                />
-              </div>
-              <div class="d-flex flex-row m-2">
-                <icon size="lg" class=" " @click="addOption" name="add" />
-                <icon
-                  size="lg"
-                  class="ml-auto  border-right"
-                  @click="removeQuestion"
-                  name="bin"
-                />
-              </div>
-            </div>
-          </d-card>
-          <button
-            class="btn btn-sm btn-outline-light     "
-            style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-            @click="addQuestion()"
-            v-show="!showQuestion"
-          >
-            <icon name="add" /> <span> Add Question</span>
-          </button>
-        </div>
-        <label
-          class="font-poppins text-bold"
-          style="font-weight: bold;color: black;"
-        >
-          Recipients</label
-        >
-        <br />
-        <div class="form-group mt-3 mb-3 ">
-          <d-select v-model="formData.recepients" class="col-md-3">
-            <option selected value="everyone">To Everyone</option>
-            <option value="participant">Participant</option>
-            <option value="admin">Admins</option>
-            <option value="coaches">Coaches</option>
-          </d-select>
-        </div>
-      </d-col>
-
-      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <vue-dropzone
-          v-model="formData.cover_image"
-          :options="dropzoneOptions"
-          id="dropZone"
-          :useCustomSlot="true"
-          class="mx-auto mb-3"
-          ref="courseImage"
-          :style="
-            'width: 300px; height: 300px;' +
-              'backgroundImage:url(' +
-              formData.cover_image +
-              '); ' +
-              ' background-size:cover; background-position:center'
-          "
-        >
-          <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
-          <div class="subtitle p-2 mt-3">Click to add cover image</div>
-          <div class="subtitle p-2 text-danger">
-            Image must be 300x300px
-          </div>
-        </vue-dropzone>
-        <p class="text-center m-3 ">
-          <span class="text-black">Expiry </span><span>(DD/MM/YY)</span>
-        </p>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.reminder.month">
-            <option :value="undefined">Month:</option>
-
-            <option v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.reminder.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <d-input class="col-md-3" type="time" v-model="time.reminder.hour" />
-          <input type="hidden" v-model="reminderDate" />
-        </d-input-group>
-        <p class="text-center m-3 ">
-          <span class="text-black text-bold"
-            >Remind Users About Expiry Date on: </span
-          ><span>(DD/MM/YY)</span>
-        </p>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.publish.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option :value="i" v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.publish.month">
-            <option :value="undefined">Month:</option>
-            <option :value="i" v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.publish.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <input
-            class="col-md-3 form-control"
-            type="time"
-            v-model="time.publish.hour"
+  <div>
+    <beat-loader
+      class="loader m-3"
+      :color="'#0087db'"
+      :loading="!isLoaded"
+      :size="'30'"
+      :sizeUnit="'px'"
+    ></beat-loader>
+    <d-container fluid class="main-content-container px-4">
+      <!-- Page Header -->
+      <d-row no-gutters class="page-header py-4">
+        <Toasts
+          :show-progress="false"
+          :rtl="false"
+          :max-messages="5"
+          :time-out="4000"
+          :closeable="false"
+        ></Toasts>
+        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+          <d-input
+            size="lg"
+            class="mb-3"
+            placeholder="Poll Title"
+            v-model="formData.title"
           />
-          <input type="hidden" v-model="publishdDate" />
-        </d-input-group>
-
-        <div class="text-center">
+          <d-textarea
+            v-model="formData.description"
+            rows="8"
+            class="mb-3"
+            placeholder="Description"
+          />
+          <div class="form-group">
+            <label class="font-poppins " style="font-weight: bold;color: black"
+              >For Recipients</label
+            >
+            <br />
+            <d-card v-show="showQuestion">
+              <div class="row m-2">
+                <d-input
+                  class="col-md-12 col-12 col-lg-12 border-bottom m-2"
+                  style="border: none;"
+                  v-model="formData.question"
+                  placeholder="Enter the  question"
+                />
+              </div>
+              <div>
+                <div
+                  class="m-2 d-flex flex-row"
+                  v-for="(item, index) in formData.options"
+                >
+                  <icon class="m-2 " size="lg" name="eclipse" /><d-input
+                    class="col-md-4 m-2"
+                    v-model="item.value"
+                    :placeholder="'option' + (index + 1)"
+                  />
+                  <icon
+                    size="lg"
+                    class="ml-auto"
+                    @click="deleteOption(index)"
+                    name="cancel"
+                  />
+                </div>
+                <div class="d-flex flex-row m-2">
+                  <icon size="lg" class=" " @click="addOption" name="add" />
+                  <icon
+                    size="lg"
+                    class="ml-auto  border-right"
+                    @click="removeQuestion"
+                    name="bin"
+                  />
+                </div>
+              </div>
+            </d-card>
+            <button
+              class="btn btn-sm btn-outline-light     "
+              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+              @click="addQuestion()"
+              v-show="!showQuestion"
+            >
+              <icon name="add" /> <span> Add Question</span>
+            </button>
+          </div>
+          <label
+            class="font-poppins text-bold"
+            style="font-weight: bold;color: black;"
+          >
+            Recipients</label
+          >
           <br />
-          <p
-            class="font-open-sans"
-            style="color: #0087DB; cursor: pointer; font-size: 14px;"
-            @click="scheduleModal = true"
+          <div class="form-group mt-3 mb-3 ">
+            <d-select v-model="formData.recepients" class="col-md-3">
+              <option selected value="everyone">To Everyone</option>
+              <option value="participant">Participant</option>
+              <option value="admin">Admins</option>
+              <option value="coaches">Coaches</option>
+            </d-select>
+          </div>
+        </d-col>
+
+        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+          <vue-dropzone
+            v-model="formData.cover_image"
+            :options="dropzoneOptions"
+            id="dropZone"
+            :useCustomSlot="true"
+            class="mx-auto mb-3"
+            ref="courseImage"
+            :style="
+              'width: 300px; height: 300px;' +
+                'backgroundImage:url(' +
+                formData.cover_image +
+                '); ' +
+                ' background-size:cover; background-position:center'
+            "
           >
-            SCHEDULE
+            <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
+            <div class="subtitle p-2 mt-3">Click to add cover image</div>
+            <div class="subtitle p-2 text-danger">
+              Image must be 300x300px
+            </div>
+          </vue-dropzone>
+          <p class="text-center m-3 ">
+            <span class="text-black">Expiry </span><span>(DD/MM/YY)</span>
           </p>
-          <sla-button
-            type="outline"
-            size="md"
-            :text="buttons.text1"
-            class=" btn   p-3   col-md-6 m-1 "
-            @click="handleSubmit('save')"
-          >
-          </sla-button>
-          <sla-button
-            type="filled"
-            size="md"
-            :text="buttons.text"
-            class=" btn   p-3 mt-4  col-md-6  m-1"
-            @click="handleSubmit('publish')"
-            :disabled="buttons.isLoading"
-          >
-          </sla-button>
-        </div>
-      </d-col>
-      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
-        <d-modal-header class="text-center">
-          <d-modal-title class="font-poppings text-black">
-            What time and Date do you want to Schedule?
-          </d-modal-title>
-        </d-modal-header>
-        <d-modal-body>
           <d-input-group class="justify-content-center m-2 ">
-            <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+            <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
+              <option :value="undefined">Day:</option>
+              <option v-for="i in 31">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2" v-model="time.reminder.month">
+              <option :value="undefined">Month:</option>
+
+              <option v-for="i in 12">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2 " v-model="time.reminder.year">
+              <option :value="undefined">Year:</option>
+              <option v-for="year in years" :value="year">{{ year }}</option>
+            </d-select>
+            <d-input
+              class="col-md-3"
+              type="time"
+              v-model="time.reminder.hour"
+            />
+            <input type="hidden" v-model="reminderDate" />
+          </d-input-group>
+          <p class="text-center m-3 ">
+            <span class="text-black text-bold"
+              >Remind Users About Expiry Date on: </span
+            ><span>(DD/MM/YY)</span>
+          </p>
+          <d-input-group class="justify-content-center m-2 ">
+            <d-select v-model="time.publish.days" class="col-md-2 mr-2">
               <option :value="undefined">Day:</option>
               <option :value="i" v-for="i in 31">{{ i }}</option>
             </d-select>
-            <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+            <d-select class="col-md-2 mr-2" v-model="time.publish.month">
               <option :value="undefined">Month:</option>
               <option :value="i" v-for="i in 12">{{ i }}</option>
             </d-select>
-            <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+            <d-select class="col-md-2 mr-2 " v-model="time.publish.year">
               <option :value="undefined">Year:</option>
               <option v-for="year in years" :value="year">{{ year }}</option>
             </d-select>
             <input
               class="col-md-3 form-control"
               type="time"
-              v-model="time.schedule.hour"
+              v-model="time.publish.hour"
             />
-            <input type="hidden" v-model="scheduleDate" />
+            <input type="hidden" v-model="publishdDate" />
           </d-input-group>
-        </d-modal-body>
-      </d-modal>
-    </d-row>
-  </d-container>
+
+          <div class="text-center">
+            <br />
+            <p
+              class="font-open-sans"
+              style="color: #0087DB; cursor: pointer; font-size: 14px;"
+              @click="scheduleModal = true"
+            >
+              SCHEDULE
+            </p>
+            <sla-button
+              type="outline"
+              size="md"
+              :text="buttons.text1"
+              class=" btn   p-3   col-md-6 m-1 "
+              @click="handleSubmit('save')"
+            >
+            </sla-button>
+            <sla-button
+              type="filled"
+              size="md"
+              :text="buttons.text"
+              class=" btn   p-3 mt-4  col-md-6  m-1"
+              @click="handleSubmit('publish')"
+              :disabled="buttons.isLoading"
+            >
+            </sla-button>
+          </div>
+        </d-col>
+        <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
+          <d-modal-header class="text-center">
+            <d-modal-title class="font-poppings text-black">
+              What time and Date do you want to Schedule?
+            </d-modal-title>
+          </d-modal-header>
+          <d-modal-body>
+            <d-input-group class="justify-content-center m-2 ">
+              <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+                <option :value="undefined">Day:</option>
+                <option :value="i" v-for="i in 31">{{ i }}</option>
+              </d-select>
+              <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+                <option :value="undefined">Month:</option>
+                <option :value="i" v-for="i in 12">{{ i }}</option>
+              </d-select>
+              <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+                <option :value="undefined">Year:</option>
+                <option v-for="year in years" :value="year">{{ year }}</option>
+              </d-select>
+              <input
+                class="col-md-3 form-control"
+                type="time"
+                v-model="time.schedule.hour"
+              />
+              <input type="hidden" v-model="scheduleDate" />
+            </d-input-group>
+          </d-modal-body>
+        </d-modal>
+      </d-row>
+    </d-container>
+  </div>
 </template>
 
 <script>

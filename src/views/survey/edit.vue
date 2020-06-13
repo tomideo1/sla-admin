@@ -1,262 +1,279 @@
 <template>
-  <d-container fluid class="main-content-container px-4" v-if="isLoaded">
-    <!-- Page Header -->
-    <top :heading="Survey.title" />
-    <d-row no-gutters class="page-header py-4">
-      <Toasts
-        :show-progress="false"
-        :rtl="false"
-        :max-messages="5"
-        :time-out="4000"
-        :closeable="false"
-      ></Toasts>
-      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <d-input
-          size="lg"
-          class="mb-3"
-          placeholder="Survey Title"
-          v-model="Survey.title"
-        />
-        <textarea
-          v-model="Survey.description"
-          rows="8"
-          class="form-control  mb-3"
-          placeholder="Description"
-        />
-        <div class="form-group">
-          <label class="font-poppins " style="font-weight: bold;color: black"
-            >For Recipients</label
-          >
-          <br />
-          <div class="p-4" v-for="(item, index) in formData.questions">
-            <d-card>
-              <div class="row m-2">
-                <d-input
-                  class="col-md-8 col-8 col-lg-8 border-bottom m-2"
-                  style="border: none;"
-                  v-model="item.question_text"
-                  placeholder="Enter the Survey question"
-                />
+  <div>
+    <beat-loader
+      class="loader m-3"
+      :color="'#0087db'"
+      :loading="!isLoaded"
+      :size="'30'"
+      :sizeUnit="'px'"
+    ></beat-loader>
+    <d-container fluid class="main-content-container px-4" v-if="isLoaded">
+      <!-- Page Header -->
+      <top :heading="Survey.title" />
+      <d-row no-gutters class="page-header py-4">
+        <Toasts
+          :show-progress="false"
+          :rtl="false"
+          :max-messages="5"
+          :time-out="4000"
+          :closeable="false"
+        ></Toasts>
+        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+          <d-input
+            size="lg"
+            class="mb-3"
+            placeholder="Survey Title"
+            v-model="Survey.title"
+          />
+          <textarea
+            v-model="Survey.description"
+            rows="8"
+            class="form-control  mb-3"
+            placeholder="Description"
+          />
+          <div class="form-group">
+            <label class="font-poppins " style="font-weight: bold;color: black"
+              >For Recipients</label
+            >
+            <br />
+            <div class="p-4" v-for="(item, index) in formData.questions">
+              <d-card>
+                <div class="row m-2">
+                  <d-input
+                    class="col-md-8 col-8 col-lg-8 border-bottom m-2"
+                    style="border: none;"
+                    v-model="item.question_text"
+                    placeholder="Enter the Survey question"
+                  />
 
-                <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
+                  <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
 
-                <d-select
-                  class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
-                  style="border: none;"
-                  v-model="item.has_options"
-                >
-                  <option disabled selected :value="undefined"
-                    >Select Survey Type</option
+                  <d-select
+                    class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
+                    style="border: none;"
+                    v-model="item.has_options"
                   >
-                  <option selected :value="true">Multiple</option>
-                  <option selected :value="false">Long Text</option>
-                </d-select>
-              </div>
-              <div v-show="formData.questions[index].has_options">
-                <div
-                  class="m-2 d-flex flex-row"
-                  v-for="(item2, index2) in formData.questions[index]
-                    .possible_options"
-                >
-                  <icon class="m-2 " size="lg" name="eclipse" /><d-input
-                    class="col-md-4 m-2"
-                    v-model="item2.value"
-                    :placeholder="'option' + (index2 + 1)"
-                  />
-                  <icon
-                    size="lg"
-                    class="ml-auto"
-                    @click="deleteOption(index, index2)"
-                    name="cancel"
-                  />
+                    <option disabled selected :value="undefined"
+                      >Select Survey Type</option
+                    >
+                    <option selected :value="true">Multiple</option>
+                    <option selected :value="false">Long Text</option>
+                  </d-select>
+                </div>
+                <div v-show="formData.questions[index].has_options">
+                  <div
+                    class="m-2 d-flex flex-row"
+                    v-for="(item2, index2) in formData.questions[index]
+                      .possible_options"
+                  >
+                    <icon class="m-2 " size="lg" name="eclipse" /><d-input
+                      class="col-md-4 m-2"
+                      v-model="item2.value"
+                      :placeholder="'option' + (index2 + 1)"
+                    />
+                    <icon
+                      size="lg"
+                      class="ml-auto"
+                      @click="deleteOption(index, index2)"
+                      name="cancel"
+                    />
+                  </div>
+                  <div class="d-flex flex-row m-2">
+                    <icon
+                      size="lg"
+                      class=" "
+                      @click="addOption(index)"
+                      name="add"
+                      v-show="formData.questions[index].has_options"
+                    />
+                  </div>
                 </div>
                 <div class="d-flex flex-row m-2">
                   <icon
                     size="lg"
-                    class=" "
-                    @click="addOption(index)"
-                    name="add"
-                    v-show="formData.questions[index].has_options"
+                    class="ml-auto  border-right"
+                    @click="deleteQuiz(index)"
+                    name="bin"
                   />
+                  <div class="d-flex flex-row m-1 mt-n1">
+                    <label class="mt-2 p-1" style="color: #999999;"
+                      >Required</label
+                    >
+                    <input
+                      class="m-2"
+                      type="checkbox"
+                      v-model="item.required"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="d-flex flex-row m-2">
-                <icon
-                  size="lg"
-                  class="ml-auto  border-right"
-                  @click="deleteQuiz(index)"
-                  name="bin"
-                />
-                <div class="d-flex flex-row m-1 mt-n1">
-                  <label class="mt-2 p-1" style="color: #999999;"
-                    >Required</label
-                  >
-                  <input class="m-2" type="checkbox" v-model="item.required" />
-                </div>
-              </div>
-            </d-card>
-            <!--          <Editor />-->
+              </d-card>
+              <!--          <Editor />-->
+            </div>
+            <button
+              class="btn btn-sm btn-outline-light     "
+              style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
+              @click="addQuiz()"
+            >
+              <icon name="add" /> <span> Add Question</span>
+            </button>
           </div>
-          <button
-            class="btn btn-sm btn-outline-light     "
-            style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-            @click="addQuiz()"
+          <label
+            class="font-poppins text-bold"
+            style="font-weight: bold;color: black;"
           >
-            <icon name="add" /> <span> Add Question</span>
-          </button>
-        </div>
-        <label
-          class="font-poppins text-bold"
-          style="font-weight: bold;color: black;"
-        >
-          Recipients</label
-        >
-        <br />
-        <div class="form-group mt-3 mb-3 ">
-          <d-select v-model="Survey.recipients" class="col-md-3">
-            <option selected value="everyone">To Everyone</option>
-            <option value="participant">Participant</option>
-            <option value="admin">Admins</option>
-            <option value="coaches">Coaches</option>
-          </d-select>
-        </div>
-        <footer class="text-center text-grey">
-          <p>
-            Assign Points (This is the point a user will get for completing this
-            survey)
-          </p>
-          <d-input class="col-md-1 mx-auto" v-model="Survey.reward" />
-        </footer>
-      </d-col>
-
-      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <vue-dropzone
-          v-model="Survey.cover_image"
-          :options="dropzoneOptions"
-          id="dropZone"
-          :useCustomSlot="true"
-          @vdropzone-file-added="processImage"
-          class="mx-auto mb-3"
-          ref="courseImage"
-          :style="
-            'width: 300px; height: 300px;' +
-              'backgroundImage:url(' +
-              Survey.survey_image +
-              '); ' +
-              ' background-size:cover; background-position:center'
-          "
-        >
-          <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
-          <div class="subtitle p-2 mt-3">Click to add cover image</div>
-          <div class="subtitle p-2 text-danger">
-            Image must be 300x300px
-          </div>
-        </vue-dropzone>
-        <p class="text-center m-3 ">
-          <span class="text-black">Expiry </span><span>(DD/MM/YY)</span>
-        </p>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.expiry.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option :value="i" v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.expiry.month">
-            <option :value="undefined">Month:</option>
-            <option :value="i" v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.expiry.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <input
-            class="col-md-3 form-control"
-            type="time"
-            v-model="time.expiry.hour"
-          />
-          <input type="hidden" v-model="expiryDate" />
-        </d-input-group>
-
-        <p class="text-center m-3 ">
-          <span class="text-black text-bold"
-            >Remind Users About Expiry Date on: </span
-          ><span>(DD/MM/YY)</span>
-        </p>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.reminder.month">
-            <option :value="undefined">Month:</option>
-
-            <option v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.reminder.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <d-input class="col-md-3" type="time" v-model="time.reminder.hour" />
-          <input type="hidden" v-model="reminderDate" />
-        </d-input-group>
-        <div class="text-center">
+            Recipients</label
+          >
           <br />
-          <p
-            class="font-open-sans"
-            style="color: #0087DB; cursor: pointer; font-size: 14px;"
-            @click="scheduleModal = true"
+          <div class="form-group mt-3 mb-3 ">
+            <d-select v-model="Survey.recipients" class="col-md-3">
+              <option selected value="everyone">To Everyone</option>
+              <option value="participant">Participant</option>
+              <option value="admin">Admins</option>
+              <option value="coaches">Coaches</option>
+            </d-select>
+          </div>
+          <footer class="text-center text-grey">
+            <p>
+              Assign Points (This is the point a user will get for completing
+              this survey)
+            </p>
+            <d-input class="col-md-1 mx-auto" v-model="Survey.reward" />
+          </footer>
+        </d-col>
+
+        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+          <vue-dropzone
+            v-model="Survey.cover_image"
+            :options="dropzoneOptions"
+            id="dropZone"
+            :useCustomSlot="true"
+            @vdropzone-file-added="processImage"
+            class="mx-auto mb-3"
+            ref="courseImage"
+            :style="
+              'width: 300px; height: 300px;' +
+                'backgroundImage:url(' +
+                Survey.survey_image +
+                '); ' +
+                ' background-size:cover; background-position:center'
+            "
           >
-            SCHEDULE
+            <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
+            <div class="subtitle p-2 mt-3">Click to add cover image</div>
+            <div class="subtitle p-2 text-danger">
+              Image must be 300x300px
+            </div>
+          </vue-dropzone>
+          <p class="text-center m-3 ">
+            <span class="text-black">Expiry </span><span>(DD/MM/YY)</span>
           </p>
-          <sla-button
-            type="outline"
-            size="md"
-            :text="buttons.text1"
-            class=" btn   p-3   col-md-6 m-1 "
-            @click="handleSubmit('save')"
-          >
-          </sla-button>
-          <sla-button
-            type="filled"
-            size="md"
-            :text="buttons.text"
-            class=" btn   p-3 mt-4  col-md-6  m-1"
-            @click="handleSubmit('publish')"
-            :disabled="buttons.isLoading"
-          >
-          </sla-button>
-        </div>
-      </d-col>
-      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
-        <d-modal-header class="text-center">
-          <d-modal-title class="font-poppings text-black">
-            What time and Date do you want to Schedule?
-          </d-modal-title>
-        </d-modal-header>
-        <d-modal-body>
           <d-input-group class="justify-content-center m-2 ">
-            <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+            <d-select v-model="time.expiry.days" class="col-md-2 mr-2">
               <option :value="undefined">Day:</option>
               <option :value="i" v-for="i in 31">{{ i }}</option>
             </d-select>
-            <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+            <d-select class="col-md-2 mr-2" v-model="time.expiry.month">
               <option :value="undefined">Month:</option>
               <option :value="i" v-for="i in 12">{{ i }}</option>
             </d-select>
-            <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+            <d-select class="col-md-2 mr-2 " v-model="time.expiry.year">
               <option :value="undefined">Year:</option>
               <option v-for="year in years" :value="year">{{ year }}</option>
             </d-select>
             <input
               class="col-md-3 form-control"
               type="time"
-              v-model="time.schedule.hour"
+              v-model="time.expiry.hour"
             />
-            <input type="hidden" v-model="scheduleDate" />
+            <input type="hidden" v-model="expiryDate" />
           </d-input-group>
-        </d-modal-body>
-      </d-modal>
-    </d-row>
-  </d-container>
+
+          <p class="text-center m-3 ">
+            <span class="text-black text-bold"
+              >Remind Users About Expiry Date on: </span
+            ><span>(DD/MM/YY)</span>
+          </p>
+          <d-input-group class="justify-content-center m-2 ">
+            <d-select v-model="time.reminder.days" class="col-md-2 mr-2">
+              <option :value="undefined">Day:</option>
+              <option v-for="i in 31">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2" v-model="time.reminder.month">
+              <option :value="undefined">Month:</option>
+
+              <option v-for="i in 12">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2 " v-model="time.reminder.year">
+              <option :value="undefined">Year:</option>
+              <option v-for="year in years" :value="year">{{ year }}</option>
+            </d-select>
+            <d-input
+              class="col-md-3"
+              type="time"
+              v-model="time.reminder.hour"
+            />
+            <input type="hidden" v-model="reminderDate" />
+          </d-input-group>
+          <div class="text-center">
+            <br />
+            <p
+              class="font-open-sans"
+              style="color: #0087DB; cursor: pointer; font-size: 14px;"
+              @click="scheduleModal = true"
+            >
+              SCHEDULE
+            </p>
+            <sla-button
+              type="outline"
+              size="md"
+              :text="buttons.text1"
+              class=" btn   p-3   col-md-6 m-1 "
+              @click="handleSubmit('save')"
+            >
+            </sla-button>
+            <sla-button
+              type="filled"
+              size="md"
+              :text="buttons.text"
+              class=" btn   p-3 mt-4  col-md-6  m-1"
+              @click="handleSubmit('publish')"
+              :disabled="buttons.isLoading"
+            >
+            </sla-button>
+          </div>
+        </d-col>
+        <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
+          <d-modal-header class="text-center">
+            <d-modal-title class="font-poppings text-black">
+              What time and Date do you want to Schedule?
+            </d-modal-title>
+          </d-modal-header>
+          <d-modal-body>
+            <d-input-group class="justify-content-center m-2 ">
+              <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+                <option :value="undefined">Day:</option>
+                <option :value="i" v-for="i in 31">{{ i }}</option>
+              </d-select>
+              <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+                <option :value="undefined">Month:</option>
+                <option :value="i" v-for="i in 12">{{ i }}</option>
+              </d-select>
+              <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+                <option :value="undefined">Year:</option>
+                <option v-for="year in years" :value="year">{{ year }}</option>
+              </d-select>
+              <input
+                class="col-md-3 form-control"
+                type="time"
+                v-model="time.schedule.hour"
+              />
+              <input type="hidden" v-model="scheduleDate" />
+            </d-input-group>
+          </d-modal-body>
+        </d-modal>
+      </d-row>
+    </d-container>
+  </div>
 </template>
 
 <script>

@@ -1,152 +1,161 @@
 <template>
-  <d-container fluid class="main-content-container px-4" v-if="isLoaded">
-    <!-- Page Header -->
-    <top :heading="Announcement.title" />
+  <div>
+    <beat-loader
+      class="loader m-3"
+      :color="'#0087db'"
+      :loading="!isLoaded"
+      :size="'30'"
+      :sizeUnit="'px'"
+    ></beat-loader>
+    <d-container fluid class="main-content-container px-4" v-if="isLoaded">
+      <!-- Page Header -->
+      <top :heading="Announcement.title" />
 
-    <Toasts
-      :show-progress="false"
-      :rtl="false"
-      :max-messages="5"
-      :time-out="4000"
-      :closeable="false"
-    ></Toasts>
-    <d-row no-gutters class="page-header py-4">
-      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <d-form>
-          <d-input
-            size="lg"
-            class="mb-3"
-            placeholder="Announcement Title"
-            v-if="Announcement !== undefined"
-            v-model="Announcement.title"
-          />
-          <editor v-model="Announcement.normal_details" />
-          <multiselect
-            size="lg"
-            class="mb-3"
-            v-model="Announcement.category"
-            placeholder="Category"
-            :multiple="true"
-            :taggable="true"
-            :close-on-select="true"
-            :clear-on-select="false"
-            :preserve-search="true"
-            :preselect-first="true"
-            :options="categories"
+      <Toasts
+        :show-progress="false"
+        :rtl="false"
+        :max-messages="5"
+        :time-out="4000"
+        :closeable="false"
+      ></Toasts>
+      <d-row no-gutters class="page-header py-4">
+        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+          <d-form>
+            <d-input
+              size="lg"
+              class="mb-3"
+              placeholder="Announcement Title"
+              v-if="Announcement !== undefined"
+              v-model="Announcement.title"
+            />
+            <editor v-model="Announcement.normal_details" />
+            <multiselect
+              size="lg"
+              class="mb-3"
+              v-model="Announcement.category"
+              placeholder="Category"
+              :multiple="true"
+              :taggable="true"
+              :close-on-select="true"
+              :clear-on-select="false"
+              :preserve-search="true"
+              :preselect-first="true"
+              :options="categories"
+            >
+            </multiselect>
+            <multiselect
+              size="lg"
+              class="mb-3"
+              v-model="Announcement.tags"
+              placeholder="Category"
+              :multiple="true"
+              :taggable="true"
+              :close-on-select="true"
+              :clear-on-select="false"
+              :preserve-search="true"
+              :preselect-first="true"
+              :options="options"
+              @tag="addTag"
+            >
+            </multiselect>
+            <p class="font-poppins text-bold" style="font-weight: bold">
+              Recipients
+            </p>
+            <div class="form-group mt-3 mb-3 ">
+              <d-select v-model="Announcement.recepients" class="col-md-3">
+                <option selected value="everyone">To Everyone</option>
+                <option value="participant">Participant</option>
+                <option value="admin">Admins</option>
+                <option value="coaches">Coaches</option>
+              </d-select>
+            </div>
+          </d-form>
+        </d-col>
+
+        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+          <vue-dropzone
+            v-model="Announcement.cover_image"
+            :options="dropzoneOptions"
+            id="dropZone"
+            :useCustomSlot="true"
+            class="mx-auto"
+            @vdropzone-file-added="processImage"
+            ref="AnnouncementImage"
+            :style="
+              'width: 300px; height: 300px;' +
+                'backgroundImage:url(' +
+                Announcement.cover_image +
+                '); ' +
+                ' background-size:cover; background-position:center'
+            "
           >
-          </multiselect>
-          <multiselect
-            size="lg"
-            class="mb-3"
-            v-model="Announcement.tags"
-            placeholder="Category"
-            :multiple="true"
-            :taggable="true"
-            :close-on-select="true"
-            :clear-on-select="false"
-            :preserve-search="true"
-            :preselect-first="true"
-            :options="options"
-            @tag="addTag"
-          >
-          </multiselect>
-          <p class="font-poppins text-bold" style="font-weight: bold">
-            Recipients
-          </p>
-          <div class="form-group mt-3 mb-3 ">
-            <d-select v-model="Announcement.recepients" class="col-md-3">
-              <option selected value="everyone">To Everyone</option>
-              <option value="participant">Participant</option>
-              <option value="admin">Admins</option>
-              <option value="coaches">Coaches</option>
+            <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
+            <div class="subtitle p-2 mt-3">Click to add cover image</div>
+            <div class="subtitle p-2 text-danger">
+              Image must be 300x300px
+            </div>
+          </vue-dropzone>
+
+          <div class="text-center">
+            <br />
+            <p
+              class="font-open-sans"
+              style="color: #0087DB; cursor: pointer; font-size: 14px;"
+              @click="scheduleModal = true"
+            >
+              SCHEDULE
+            </p>
+            <sla-button
+              type="outline"
+              size="md"
+              :text="buttons.text1"
+              class=" btn   p-3   col-md-6 m-1 "
+              @click="handleSubmit('save')"
+            >
+            </sla-button>
+            <sla-button
+              type="filled"
+              size="md"
+              :text="buttons.text"
+              class=" btn   p-3 mt-4  col-md-6  m-1"
+              @click="handleSubmit('publish')"
+              :disabled="buttons.isLoading"
+            >
+            </sla-button>
+          </div>
+        </d-col>
+      </d-row>
+      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
+        <d-modal-header class="text-center">
+          <d-modal-title class="font-poppings text-black">
+            What time and Date do you want to Schedule?
+          </d-modal-title>
+        </d-modal-header>
+        <d-modal-body>
+          <d-input-group class="justify-content-center m-2 ">
+            <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+              <option :value="undefined">Day:</option>
+              <option :value="i" v-for="i in 31">{{ i }}</option>
             </d-select>
-          </div>
-        </d-form>
-      </d-col>
-
-      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <vue-dropzone
-          v-model="Announcement.cover_image"
-          :options="dropzoneOptions"
-          id="dropZone"
-          :useCustomSlot="true"
-          class="mx-auto"
-          @vdropzone-file-added="processImage"
-          ref="AnnouncementImage"
-          :style="
-            'width: 300px; height: 300px;' +
-              'backgroundImage:url(' +
-              Announcement.cover_image +
-              '); ' +
-              ' background-size:cover; background-position:center'
-          "
-        >
-          <h3 class="p-2 mt-5"><icon size="lg" name="camera" /></h3>
-          <div class="subtitle p-2 mt-3">Click to add cover image</div>
-          <div class="subtitle p-2 text-danger">
-            Image must be 300x300px
-          </div>
-        </vue-dropzone>
-
-        <div class="text-center">
-          <br />
-          <p
-            class="font-open-sans"
-            style="color: #0087DB; cursor: pointer; font-size: 14px;"
-            @click="scheduleModal = true"
-          >
-            SCHEDULE
-          </p>
-          <sla-button
-            type="outline"
-            size="md"
-            :text="buttons.text1"
-            class=" btn   p-3   col-md-6 m-1 "
-            @click="handleSubmit('save')"
-          >
-          </sla-button>
-          <sla-button
-            type="filled"
-            size="md"
-            :text="buttons.text"
-            class=" btn   p-3 mt-4  col-md-6  m-1"
-            @click="handleSubmit('publish')"
-            :disabled="buttons.isLoading"
-          >
-          </sla-button>
-        </div>
-      </d-col>
-    </d-row>
-    <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
-      <d-modal-header class="text-center">
-        <d-modal-title class="font-poppings text-black">
-          What time and Date do you want to Schedule?
-        </d-modal-title>
-      </d-modal-header>
-      <d-modal-body>
-        <d-input-group class="justify-content-center m-2 ">
-          <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
-            <option :value="undefined">Day:</option>
-            <option :value="i" v-for="i in 31">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
-            <option :value="undefined">Month:</option>
-            <option :value="i" v-for="i in 12">{{ i }}</option>
-          </d-select>
-          <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
-            <option :value="undefined">Year:</option>
-            <option v-for="year in years" :value="year">{{ year }}</option>
-          </d-select>
-          <input
-            class="col-md-3 form-control"
-            type="time"
-            v-model="time.schedule.hour"
-          />
-          <input type="hidden" v-model="scheduleDate" />
-        </d-input-group>
-      </d-modal-body>
-    </d-modal>
-  </d-container>
+            <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+              <option :value="undefined">Month:</option>
+              <option :value="i" v-for="i in 12">{{ i }}</option>
+            </d-select>
+            <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+              <option :value="undefined">Year:</option>
+              <option v-for="year in years" :value="year">{{ year }}</option>
+            </d-select>
+            <input
+              class="col-md-3 form-control"
+              type="time"
+              v-model="time.schedule.hour"
+            />
+            <input type="hidden" v-model="scheduleDate" />
+          </d-input-group>
+        </d-modal-body>
+      </d-modal>
+    </d-container>
+  </div>
 </template>
 
 <script>

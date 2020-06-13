@@ -1,5 +1,12 @@
 <template>
   <div>
+    <beat-loader
+      class="loader m-3"
+      :color="'#0087db'"
+      :loading="!isLoaded"
+      :size="'30'"
+      :sizeUnit="'px'"
+    ></beat-loader>
     <d-container fluid class="main-content-container" v-if="isLoaded">
       <top :heading="user.user.first_name" />
       <d-row>

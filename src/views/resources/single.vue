@@ -1,141 +1,150 @@
 <template>
-  <d-container fluid class="main-content-container px-4" v-if="isLoaded">
-    <!-- Page Header -->
-    <top :heading="Resource.question" />
-    <d-row no-gutters class="page-header py-4">
-      <Toasts
-        :show-progress="false"
-        :rtl="false"
-        :max-messages="5"
-        :time-out="4000"
-        :closeable="false"
-      ></Toasts>
-      <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
-        <d-form-row>
-          <d-col md="12" class="form-group">
-            <label class="text-grey"> Question</label>
-            <d-input
-              size="lg"
-              class="mb-3"
-              placeholder=" Question"
-              v-model="Resource.question"
-            />
-          </d-col>
-          <d-col md="12" class="form-group">
-            <label class="text-grey"> Answer</label>
-            <textarea
-              size="lg"
-              v-model="Resource.answer"
-              style="min-height: 140px;"
-              class="form-control mb-3"
-            >
-            </textarea>
-          </d-col>
-          <d-col md="12" class="form-group">
-            <label class="text-center"> Category</label>
-            <multiselect
-              size="lg"
-              class="mb-3"
-              v-model="Resource.category"
-              placeholder="Category"
-              :multiple="true"
-              :taggable="true"
-              :close-on-select="true"
-              :clear-on-select="false"
-              :preserve-search="true"
-              :preselect-first="false"
-              :options="category_options"
-              @tag="addCategory"
-            >
-            </multiselect>
-          </d-col>
-          <d-col md="12" class="form-group">
-            <label for="feFirstName"> Tags</label>
-            <multiselect
-              size="lg"
-              class="mb-3"
-              v-model="formData.list_tags"
-              placeholder="Tags"
-              :multiple="true"
-              :taggable="true"
-              :close-on-select="true"
-              :clear-on-select="false"
-              :preserve-search="true"
-              :preselect-first="false"
-              :options="options"
-              @tag="addTag"
-            >
-            </multiselect>
-            <p class="font-poppins text-bold" style="font-weight: bold">
-              Recipients
-            </p>
-            <div class="form-group mt-3 mb-3 ">
-              <d-select v-model="Resource.recepients" class="col-md-3">
-                <option selected value="everyone">To Everyone</option>
-                <option value="participant">Participant</option>
-                <option value="admin">Admins</option>
-                <option value="coaches">Coaches</option>
+  <div>
+    <beat-loader
+      class="loader m-3"
+      :color="'#0087db'"
+      :loading="!isLoaded"
+      :size="'30'"
+      :sizeUnit="'px'"
+    ></beat-loader>
+    <d-container fluid class="main-content-container px-4" v-if="isLoaded">
+      <!-- Page Header -->
+      <top :heading="Resource.question" />
+      <d-row no-gutters class="page-header py-4">
+        <Toasts
+          :show-progress="false"
+          :rtl="false"
+          :max-messages="5"
+          :time-out="4000"
+          :closeable="false"
+        ></Toasts>
+        <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
+          <d-form-row>
+            <d-col md="12" class="form-group">
+              <label class="text-grey"> Question</label>
+              <d-input
+                size="lg"
+                class="mb-3"
+                placeholder=" Question"
+                v-model="Resource.question"
+              />
+            </d-col>
+            <d-col md="12" class="form-group">
+              <label class="text-grey"> Answer</label>
+              <textarea
+                size="lg"
+                v-model="Resource.answer"
+                style="min-height: 140px;"
+                class="form-control mb-3"
+              >
+              </textarea>
+            </d-col>
+            <d-col md="12" class="form-group">
+              <label class="text-center"> Category</label>
+              <multiselect
+                size="lg"
+                class="mb-3"
+                v-model="Resource.category"
+                placeholder="Category"
+                :multiple="true"
+                :taggable="true"
+                :close-on-select="true"
+                :clear-on-select="false"
+                :preserve-search="true"
+                :preselect-first="false"
+                :options="category_options"
+                @tag="addCategory"
+              >
+              </multiselect>
+            </d-col>
+            <d-col md="12" class="form-group">
+              <label for="feFirstName"> Tags</label>
+              <multiselect
+                size="lg"
+                class="mb-3"
+                v-model="formData.list_tags"
+                placeholder="Tags"
+                :multiple="true"
+                :taggable="true"
+                :close-on-select="true"
+                :clear-on-select="false"
+                :preserve-search="true"
+                :preselect-first="false"
+                :options="options"
+                @tag="addTag"
+              >
+              </multiselect>
+              <p class="font-poppins text-bold" style="font-weight: bold">
+                Recipients
+              </p>
+              <div class="form-group mt-3 mb-3 ">
+                <d-select v-model="Resource.recepients" class="col-md-3">
+                  <option selected value="everyone">To Everyone</option>
+                  <option value="participant">Participant</option>
+                  <option value="admin">Admins</option>
+                  <option value="coaches">Coaches</option>
+                </d-select>
+              </div>
+            </d-col>
+          </d-form-row>
+        </d-col>
+        <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
+          <d-modal-header class="text-center">
+            <d-modal-title class="font-poppings text-black">
+              What time and Date do you want to Schedule?
+            </d-modal-title>
+          </d-modal-header>
+          <d-modal-body>
+            <d-input-group class="justify-content-center m-2 ">
+              <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
+                <option :value="undefined">Day:</option>
+                <option :value="i" v-for="i in 31">{{ i }}</option>
               </d-select>
-            </div>
-          </d-col>
-        </d-form-row>
-      </d-col>
-      <d-modal v-if="scheduleModal" @close="scheduleModal = false" size="lg">
-        <d-modal-header class="text-center">
-          <d-modal-title class="font-poppings text-black">
-            What time and Date do you want to Schedule?
-          </d-modal-title>
-        </d-modal-header>
-        <d-modal-body>
-          <d-input-group class="justify-content-center m-2 ">
-            <d-select v-model="time.schedule.days" class="col-md-2 mr-2">
-              <option :value="undefined">Day:</option>
-              <option :value="i" v-for="i in 31">{{ i }}</option>
-            </d-select>
-            <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
-              <option :value="undefined">Month:</option>
-              <option :value="i" v-for="i in 12">{{ i }}</option>
-            </d-select>
-            <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
-              <option :value="undefined">Year:</option>
-              <option v-for="year in years" :value="year">{{ year }}</option>
-            </d-select>
-            <input
-              class="col-md-3 form-control"
-              type="time"
-              v-model="time.schedule.hour"
-            />
-            <input type="hidden" v-model="scheduleDate" />
-          </d-input-group>
-        </d-modal-body>
-      </d-modal>
-    </d-row>
-    <footer class="border-top ">
-      <sla-button
-        class="btn  m-3  text-uppercase float-right"
-        :text="buttons.text"
-        type="filled"
-        size="sm"
-        :disabled="buttons.isLoading"
-        @click="handleSubmit('publish')"
-      />
-      <sla-button
-        class="btn  m-3  text-uppercase float-right"
-        :text="buttons.text1"
-        type="outline"
-        size="sm"
-        :disabled="buttons.isLoading"
-        @click="handleSubmit('save')"
-      />
-      <sla-button
-        class="btn  m-3  text-uppercase float-right"
-        text="Schedule"
-        type="outline"
-        @click="scheduleModal = true"
-        size="sm"
-      />
-    </footer>
-  </d-container>
+              <d-select class="col-md-2 mr-2" v-model="time.schedule.month">
+                <option :value="undefined">Month:</option>
+                <option :value="i" v-for="i in 12">{{ i }}</option>
+              </d-select>
+              <d-select class="col-md-2 mr-2 " v-model="time.schedule.year">
+                <option :value="undefined">Year:</option>
+                <option v-for="year in years" :value="year">{{ year }}</option>
+              </d-select>
+              <input
+                class="col-md-3 form-control"
+                type="time"
+                v-model="time.schedule.hour"
+              />
+              <input type="hidden" v-model="scheduleDate" />
+            </d-input-group>
+          </d-modal-body>
+        </d-modal>
+      </d-row>
+      <footer class="border-top ">
+        <sla-button
+          class="btn  m-3  text-uppercase float-right"
+          :text="buttons.text"
+          type="filled"
+          size="sm"
+          :disabled="buttons.isLoading"
+          @click="handleSubmit('publish')"
+        />
+        <sla-button
+          class="btn  m-3  text-uppercase float-right"
+          :text="buttons.text1"
+          type="outline"
+          size="sm"
+          :disabled="buttons.isLoading"
+          @click="handleSubmit('save')"
+        />
+        <sla-button
+          class="btn  m-3  text-uppercase float-right"
+          text="Schedule"
+          type="outline"
+          @click="scheduleModal = true"
+          size="sm"
+        />
+      </footer>
+    </d-container>
+  </div>
 </template>
 
 <script>
