@@ -4,7 +4,7 @@
       class="loader m-3"
       :color="'#0087db'"
       :loading="!isLoaded"
-      :size="'30'"
+      :size="30"
       :sizeUnit="'px'"
     ></beat-loader>
     <d-container fluid class="main-content-container px-4" v-if="isLoaded">
@@ -691,21 +691,42 @@ export default {
 
         self.Survey.category = self.Survey.category.split(",");
         self.Survey.tags = self.Survey.tags.split(",");
-        if (self.Survey.schedule !== null) {
+        axios
+          .get(
+            `${process.env.VUE_APP_API}/survey/` +
+              self.$route.params.id +
+              `/question/list`,
+            {
+              headers: {
+                Authorization: `Bearer ${token} `
+              }
+            }
+          )
+          .then(res => {
+            self.formData.questions = res.data.data.questions;
+          })
+          .catch();
+        if (
+          self.Survey.schedule !== null ||
+          self.Survey.schedule !== undefined
+        ) {
           self.splitDateString(
             self.Survey.schedule,
             self.time.schedule,
             self.formData.schedule
           );
         }
-        if (self.Survey.remainder !== null) {
+        if (
+          self.Survey.remainder !== null ||
+          self.Survey.remainder !== undefined
+        ) {
           self.splitDateString(
             self.Survey.remainder,
             self.time.reminder,
             self.formData.remainder
           );
         }
-        if (self.Survey.expiry !== null) {
+        if (self.Survey.expiry !== null || self.Survey.expiry !== undefined) {
           self.splitDateString(
             self.Survey.expiry,
             self.time.expiry,

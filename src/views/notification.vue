@@ -68,7 +68,7 @@
             class="loader"
             :color="'#0087db'"
             :loading="true"
-            :size="'30'"
+            :size="30"
             :sizeUnit="'px'"
           ></beat-loader>
         </div>

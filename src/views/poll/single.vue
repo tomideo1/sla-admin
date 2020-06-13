@@ -4,7 +4,7 @@
       class="loader m-3"
       :color="'#0087db'"
       :loading="!isLoaded"
-      :size="'30'"
+      :size="30"
       :sizeUnit="'px'"
     ></beat-loader>
     <d-container fluid class="main-content-container px-4" v-if="isLoaded">
