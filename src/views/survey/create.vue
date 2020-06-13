@@ -364,11 +364,10 @@ export default {
       }
       const self = this;
       const token = store.state.auth.token;
-      if (
-        self.formData.schdule !== null ||
-        self.formData.schedule !== undefined
-      )
-        formData.save_type = "scheduled";
+      if (self.formData.schduled_at !== undefined) {
+        self.formData.save_type = "scheduled";
+      }
+
       self.formData.survey_image = self.formData.cover_image;
       let res = await axios
         .post(`${process.env.VUE_APP_API}/survey/create`, self.formData, {

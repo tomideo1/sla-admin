@@ -335,7 +335,6 @@ export default {
         description: "",
         question: "",
         recipients: "everyone",
-        survey_image: "",
         questions: []
       },
       time: {
@@ -393,12 +392,14 @@ export default {
       const token = store.state.auth.token;
 
       if (self.formData.survey_image !== undefined) {
-        self.Survey.survey_image = self.Survey.survey_image;
+        self.Survey.survey_image = self.formData.survey_image;
       } else {
         delete self.Survey.survey_image;
       }
-      if (self.Survey.schdule !== null || self.Survey.schedule !== undefined)
+      if (self.formData.scheduled_at !== undefined) {
         self.Survey.save_type = "scheduled";
+        self.Survey.scheduled_at = self.formData.scheduled_at;
+      }
       let res = await axios
         .post(
           `${process.env.VUE_APP_API}/survey/` + self.Survey._id + `/update`,
@@ -705,16 +706,16 @@ export default {
       .then(res => {
         self.Survey = res.data.data.survey;
         self.formData.questions = res.data.data.questions;
-        // if (
-        //   self.Survey.schedule !== null || self.Survey.schedule === undefined
-
-        // ) {
-        //   self.splitDateString(
-        //     self.Survey.schedule,
-        //     self.time.schedule,
-        //     self.formData.schedule
-        //   );
-        // }
+        if (
+          self.Survey.publish_date !== null &&
+          self.Survey.publish_date !== undefined
+        ) {
+          self.splitDateString(
+            self.Survey.publish_date,
+            self.time.schedule,
+            self.formData.scheduled_at
+          );
+        }
         if (self.Survey.reminder !== null) {
           self.splitDateString(
             self.Survey.reminder,
