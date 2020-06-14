@@ -16,5 +16,6 @@ export default {
   Users: null,
   Analytics: null,
   ResourceCategories: null,
-  ScoreCard: null
+  ScoreCard: null,
+  AssignedUsers: null
 };

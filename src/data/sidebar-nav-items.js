@@ -140,8 +140,83 @@ export default function() {
     }
   ];
 
+  let coachRoutes = [
+    {
+      title: "Menu",
+      items: [
+        {
+          title: "Home",
+          htmlBefore: "home",
+          to: {
+            name: "coach-dashboard"
+          }
+        },
+        {
+          title: "Users",
+          htmlBefore: "group",
+          to: {
+            name: "coach-users-all"
+          }
+        },
+        {
+          title: "Announcements",
+          htmlBefore: "announce",
+          to: {
+            name: "coach-announcement-all"
+          }
+        },
+        // {
+        //   title: "Groups",
+        //   htmlBefore: "group",
+        //   to: {
+        //     name: "all-groups"
+        //   }
+        // },
+        // {
+        //   title: "Scorecard",
+        //   htmlBefore: "scorecard",
+        //   to: {
+        //     name: "all-scorecards"
+        //   }
+        // },
+        // {
+        //   title: "Surveys",
+        //   htmlBefore: "survey",
+        //   to: {
+        //     name: "all-surveys"
+        //   }
+        // },
+        {
+          title: "Resources",
+          htmlBefore: "resource",
+          to: {
+            name: "coach-resource-home"
+          }
+        },
+        // {
+        //   title: "Help",
+        //   htmlBefore: "faq",
+        //   to: {
+        //     name: "coach-help-all"
+        //   }
+        // },
+        {
+          title: "Logout",
+          htmlBefore: "logout",
+          to: {
+            name: "logout"
+          }
+        }
+      ]
+    }
+  ];
+
   if (store.state.auth.role === "superadmin") {
     appRoutes[0].items = [...appRoutes[0].items, ...superAdminRoutes];
+  }
+
+  if (store.state.auth.role === "coach") {
+    appRoutes = coachRoutes;
   }
 
   return appRoutes;
