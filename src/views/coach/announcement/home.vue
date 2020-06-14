@@ -17,8 +17,8 @@
             <d-card
               @click="
                 $router.push({
-                  path: 'coach/annoucement/single/' + announcement._id,
-                  params: { single_announcement: announcement }
+                  name: 'coach-single-announcement',
+                  params: { id: announcement._id }
                 })
               "
               :style="

@@ -178,79 +178,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-lg-4 col-12">
-          <glow-card class="col-md-8 col-lg-6 col-6  m-3 ">
-            <div class="d-flex flex-row ">
-              <h4 class="text-white">
-                {{
-                  Announcement.comments +
-                    Announcement.likes +
-                    Announcement.engagements
-                }}
-              </h4>
-              <span class="ml-3 mt-n1 "
-                ><icon name="arrow-up-white" size="xs" />
-              </span>
-            </div>
-            <span class="text-white">Total Responses</span>
-          </glow-card>
-        </div>
       </d-row>
-      <d-modal v-if="modalStatus" @close="modalStatus = false" size="lg">
-        <div style="border-top: 4px solid #0087DB;" class="modal-header"></div>
-        <h6 class="text-center m-2 text-bold text-dark font-poppings">
-          Are you sure you want to delete this announcement?
-        </h6>
-        <d-modal-body>
-          <div class="text-center">
-            <sla-button
-              class="m-2 col-md-12"
-              type="filled"
-              size="md"
-              text="YES, DELETE"
-              @click="
-                deleteAnnouncement(
-                  Announcement._id,
-                  'annoucement/admin/delete/'
-                )
-              "
-            />
-            <sla-button
-              class="m-2 col-md-12"
-              type="outline"
-              size="md"
-              :text="'CANCEL'"
-              @click="modalStatus = false"
-            />
-          </div>
-        </d-modal-body>
-      </d-modal>
-      <footer class="border-top m-5 ">
-        <sla-button
-          class="btn  m-3  text-uppercase float-right"
-          :text="'EXPORT'"
-          type="filled"
-          size="sm"
-        />
-        <sla-button
-          class="btn  m-3  text-uppercase float-right"
-          :text="'EDIT'"
-          type="outline"
-          size="sm"
-          @click="
-            $router.push({
-              path: '/announcements/edit/' + Announcement._id
-            })
-          "
-        />
-        <p
-          class="font-open-sans float-right m-4"
-          style="color: #FF4133; cursor: pointer; font-size: 14px;"
-          @click="modalStatus = true"
-        >
-          DELETE
-        </p>
-      </footer>
     </d-container>
   </div>
 </template>
