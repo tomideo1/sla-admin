@@ -216,15 +216,17 @@
             class="col-lg-12 col-md-12 col-12 p-2 "
           >
             <d-row class="col-md-12 col-lg-12 col-12 mx-auto">
-              <d-col>
+              <div class="d-flex flex-row flex-grow-1 align-content-center">
                 <sla-avatar
                   v-if="coach.image === null"
                   size="lg"
                   :user="{ name: coach.first_name }"
                 />
                 <sla-avatar v-else size="lg" :user="{ image: coach.image }" />
-                {{ coach.first_name + " " + coach.last_name }}
-              </d-col>
+                <span class="m-3">
+                  {{ coach.first_name + " " + coach.last_name }}
+                </span>
+              </div>
               <d-col md="6">
                 <d-btn class="btn btn-primary">
                   Assign

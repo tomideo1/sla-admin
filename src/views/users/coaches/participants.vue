@@ -1,80 +1,51 @@
 <template>
-  <div>
-    <beat-loader
-      class="loader m-3"
-      :color="'#0087db'"
-      :loading="!isLoaded"
-      :size="30"
-      :sizeUnit="'px'"
-    ></beat-loader>
-    <d-container fluid class="main-content-container" v-if="isLoaded">
-      <top heading="Assign Participants" />
-      <d-row>
-        <div class="col-md-2 col-lg-2 col-12">
-          <d-row class="m-3 text-center">
-            <div
-              class="mb-3 col-md-12 col-lg-12 col-12  align-items-center justify-content-center d-flex flex-column   "
-            >
-              <sla-avatar
-                v-if="user.admin.image === null"
-                size="xl"
-                class="mb-3"
-                :user="{ name: user.admin.first_name }"
-              />
-              <sla-avatar
-                v-else
-                size="xl"
-                :user="{ image: user.admin.image }"
-                class="mb-3"
-              />
-              <h6 class="font-weight-bold text-black   font-open-sans ">
-                {{ user.admin.first_name + " " + user.admin.last_name }}
-              </h6>
-
-              <p class="text-grey font-open-sans">
-                <span><icon size="sm" name="location"/></span>
-                {{ user.admin.location }}
-              </p>
-              <sla-button
-                type="filled"
-                size="md"
-                text="ASSIGN PARTICIPANTS"
-                class="btn  w-100 text-center "
-              />
-            </div>
-          </d-row>
-        </div>
-      </d-row>
-    </d-container>
-  </div>
+  <d-container fluid>
+    <top heading="Assing Participants" />
+  </d-container>
 </template>
-
 <script>
-import axios from "axios";
-import store from "@/store/index";
-const token = store.state.auth.token;
+import { mapActions, mapGetters } from "vuex";
+
 export default {
-  name: "single",
+  name: "home",
   data() {
-    return {
-      isLoaded: false,
-      user: null
-    };
+    return {};
   },
-  components: {
-    top: () => import("@/components/top"),
-    avatar: () => import("@/components/avatar.vue"),
-    SlaButton: () => import("@/components/SlaButton.vue"),
-    SlaAvatar: () => import("@/components/avatar.vue"),
-    Icon: () => import("@/components/SlaIcon.vue"),
-    Course: () => import("@/components/courseCard.vue")
+  computed: {
+    ...mapGetters({
+      Users: "app/getUsers"
+      // maps courses to current computed resource
+    })
   },
-  methods: {},
-  async mounted() {
-    const userId = this.$route.params.id;
-    const self = this;
+  methods: {
+    ...mapActions("app/", ["getAllUsers"]),
+    compareUsers: (arr1, arr2) => {
+      let valuesA = arr1.reduce(function(a, c) {
+        a[c._id] = c._id;
+        return a;
+      }, {});
+      let valuesB = arr2.reduce(function(a, c) {
+        a[c._id] = c._id;
+        return a;
+      }, {});
+      let result = arr1
+        .filter(function(c) {
+          return !valuesB[c._id];
+        })
+        .concat(
+          arr2.filter(function(c) {
+            return !valuesA[c._id];
+          })
+        );
+      return result;
+    }
+
+    //vuex call to get all courses
+  },
+  mounted() {
+    this.getAllAdmins();
     let res = axios
-      .get(`${process.env.VUE_APP_API}/admin/admins/` + userId, {
+      .get(`${process.env.VUE_APP_API}/admin/coach/` + userId, {
         headers: {
           Authorization: `Bearer ${token} `
         }
@@ -84,62 +55,16 @@ export default {
         self.isLoaded = true;
       })
       .catch();
+  },
+  components: {
+    SlaAvatar: () => import("@/components/avatar"),
+    Icon: () => import("@/components/SlaIcon")
   }
 };
 </script>
 
-<style scoped lang="scss">
-$bv-primary: #0087db;
-.rank {
-  height: 26px;
-  width: 45px;
-  border: 1px solid $bv-primary;
-  border-radius: 5px;
-  font-size: 12px;
-  padding: 20px;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.flip {
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 0;
-  border: 1px solid $bv-primary;
-
-  border-top-left-radius: 0;
-  margin-left: -1px;
-}
-
-.greet {
-  font-size: 24px;
-}
-.alert {
-  margin-right: 22px;
-  border-radius: 5px;
-  font-size: 12px;
-}
-
-.x-flow {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  & > :not(:last-child) {
-    margin-right: 12px !important;
-  }
-  & > *:last-child {
-    padding-right: 12px !important;
-  }
-}
-.overflow-y-auto {
-  overflow-y: auto !important;
-}
-
-.overflow-x-auto {
-  overflow-x: auto;
-}
-
-.overflow-hidden {
-  overflow: hidden !important;
+<style scoped>
+.avatar {
+  display: inline-block !important;
 }
 </style>

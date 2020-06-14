@@ -9,6 +9,8 @@
         <d-card class="m-3 text-center">
           <d-card-header class="border-bottom  mx-auto">
             <!-- User Avatar -->
+            <icon name="sla-power" size="xs" class="float-right" />
+
             <div class="mb-3  ">
               <sla-avatar
                 class="avatar"
@@ -72,7 +74,8 @@ export default {
     this.getAllAdmins();
   },
   components: {
-    SlaAvatar: () => import("@/components/avatar")
+    SlaAvatar: () => import("@/components/avatar"),
+    Icon: () => import("@/components/SlaIcon")
   }
 };
 </script>

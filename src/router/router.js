@@ -106,6 +106,14 @@ const router = new Router({
           meta: {
             middleware: [auth]
           }
+        },
+        {
+          path: "coaches/participants/:id",
+          name: "assign-user",
+          component: () => import("@/views/users/coaches/participants.vue"),
+          meta: {
+            middleware: [auth]
+          }
         }
       ]
     },

@@ -46,6 +46,7 @@
     <send v-if="name === 'send'"></send>
     <wave v-if="name === 'wave'"></wave>
     <thumbs v-if="name === 'thumbs'"></thumbs>
+    <sla-power v-if="name === 'sla-power'"></sla-power>
   </span>
 </template>
 <script>
@@ -110,7 +111,8 @@ export default {
     smile: () => import("@/components/__private__/media/smile.vue"),
     send: () => import("@/components/__private__/media/send.vue"),
     Wave: () => import("@/components/__private__/media/wave.vue"),
-    Thumbs: () => import("@/components/__private__/media/thumbs.vue")
+    Thumbs: () => import("@/components/__private__/media/thumbs.vue"),
+    slaPower: () => import("@/components/__private__/media/slaPower.vue")
   }
 };
 </script>

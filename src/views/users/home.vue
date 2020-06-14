@@ -68,7 +68,8 @@ export default {
     this.getAllUsers();
   },
   components: {
-    SlaAvatar: () => import("@/components/avatar")
+    SlaAvatar: () => import("@/components/avatar"),
+    Icon: () => import("@/components/SlaIcon")
   }
 };
 </script>
