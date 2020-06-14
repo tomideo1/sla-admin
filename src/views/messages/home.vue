@@ -3,23 +3,29 @@
     <d-row>
       <div class="col-md-4">
         <h4 class="m-3">Messages</h4>
+        <message-card
+          v-for="dataObj in getGroups"
+          :key="dataObj._id"
+          :dataObj="dataObj"
+        />
       </div>
       <div
         class="col-md-8 border-left shadow-sm "
         style="background: #FAFAFA;!important"
       >
-        <div class=" nav nav-bar bg-white sticky-top ">
+        <div
+          class=" nav nav-bar bg-white sticky-top "
+          style="max-height:100vh; overflow-y:auto"
+        >
           <h5 class="font-open-sans text-dark text-black">
             Group Name
           </h5>
         </div>
         <div class=" d-flex flex-column justify-content-between ">
-          <div ref="chatsection" style="height: 100px" class="section px-1">
+          <div ref="chatsection" class="section px-1">
             <chat-bubble :key="x._id" v-for="x in chats" :chat="x" />
           </div>
-          <div
-            class="position-fixed w-100 bottom-0   z-index-1 bg-white py-1  container"
-          >
+          <div class=" bottom-0   z-index-1">
             <chat-box />
           </div>
         </div>
@@ -29,12 +35,50 @@
 </template>
 <script>
 import ably from "@/utils/socket";
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      group: null,
       chats: [
+        {
+          message: "If you intend to seek financial a must",
+          createdAt: "2020-06-13T22:20:29+01:00",
+          username: "tomide",
+          id: "5ec51d59ddfb380017649591"
+        },
+        {
+          message:
+            "If you intend to seek financial support from an investor or financial institution, a traditional business plan is a must",
+          createdAt: "2020-06-13T22:20:29+01:00",
+          username: "Peter",
+          id: "kssssklslsl"
+        },
+        {
+          message: "If you intend to seek financial a must",
+          createdAt: "2020-06-13T22:20:29+01:00",
+          username: "tomide",
+          id: "5ec51d59ddfb380017649591"
+        },
+        {
+          message:
+            "If you intend to seek financial support from an investor or financial institution, a traditional business plan is a must",
+          createdAt: "2020-06-13T22:20:29+01:00",
+          username: "Peter",
+          id: "kssssklslsl"
+        },
+        {
+          message: "If you intend to seek financial a must",
+          createdAt: "2020-06-13T22:20:29+01:00",
+          username: "tomide",
+          id: "5ec51d59ddfb380017649591"
+        },
+        {
+          message:
+            "If you intend to seek financial support from an investor or financial institution, a traditional business plan is a must",
+          createdAt: "2020-06-13T22:20:29+01:00",
+          username: "Peter",
+          id: "kssssklslsl"
+        },
         {
           message: "If you intend to seek financial a must",
           createdAt: "2020-06-13T22:20:29+01:00",
@@ -63,22 +107,8 @@ export default {
     // });
     // this.chats = chats;
   },
-  created() {
-    // let x = this.$store.state.user.groups.find(g => {
-    //   if (g.group._id == this.$route.params.id) {
-    //     return g.group;
-    //   }
-    // });
-    //
-    // this.group = x.group;
-    // let channel = ably.channels.get(this.group.slug);
-    // var that = this;
-    //
-    // channel.subscribe(function(msg) {
-    //   if (msg.data.id != that.$store.state.user.data._id) {
-    //     that.chats.push(msg.data);
-    //   }
-    // });
+  computed: {
+    ...mapGetters("app/", ["getGroups"])
   }
 };
 </script>

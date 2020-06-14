@@ -54,7 +54,7 @@ export default {
   .message {
     background: #ecf0f3;
     border-radius: 5px;
-    width: 300px;
+    width: 200px;
   }
 
   &:before {
@@ -81,7 +81,7 @@ export default {
     background-color: #0087db;
     color: #ffffff;
     border-radius: 5px;
-    width: 300px;
+    width: 200px;
   }
 }
 .flex-inline {

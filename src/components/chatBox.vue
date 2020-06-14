@@ -1,5 +1,5 @@
 <template>
-  <div class="send d-flex justify-content-between align-items-center px-8">
+  <div class="send d-flex justify-content-between align-items-center px-2">
     <div class="d-flex comment flex-row align-items-center chatbox m-3 mr-2  ">
       <span
         @click.exact="pickEmoji($event)"
@@ -19,7 +19,7 @@
         "
         @keydown.enter.exact="emitEnter"
         placeholder="Type your comment"
-        class="text-bold text-grey-500 w-100 m-2"
+        class="text-bold  width-100 text-grey-500  m-2"
         type="text"
       >
       </textarea>
@@ -151,6 +151,26 @@ export default {
     &:focus {
       outline: none;
     }
+  }
+}
+.width- {
+  &25 {
+    width: 25% !important;
+  }
+  &50 {
+    width: 50% !important;
+  }
+  &100 {
+    width: 100% !important;
+  }
+  &auto {
+    width: auto !important;
+  }
+  &fit-content {
+    width: fit-content !important;
+  }
+  &fill-screen {
+    width: 100vh !important;
   }
 }
 </style>
