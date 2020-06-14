@@ -6,13 +6,12 @@ import PasswordCreate from "../views/auth/password-create";
 import PasswordReset from "../views/auth/password-reset";
 import SettingsPasswordReset from "../views/auth/settings-password-reset";
 import forgotPassword from "../views/auth/forgotPassword";
-import Dashboard from "@/views/Dashboard.vue";
 
 export default [
   {
     path: "/coach",
     name: "coach-dashboard",
-    component: Dashboard,
+    component: () => import("@/views/coach/Dashboard.vue"),
     meta: {
       middleware: [auth]
     }
