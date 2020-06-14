@@ -77,7 +77,9 @@ export default {
         self.buttons.push({ text: "INVITE", isLoading: false });
         user.push(res);
       });
-      return user;
+      let result = this.compareUsers(user, this.user.assignees);
+
+      return result;
     }
   },
   methods: {
@@ -121,7 +123,7 @@ export default {
         )
         .then(res => {
           self.buttons[index].isLoading = false;
-          self.buttons[index].text = "Create";
+          self.buttons[index].text = "INVITE";
           self.$toast.success(
             (self.error.message = res.data
               ? res.data.message

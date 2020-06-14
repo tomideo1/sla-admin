@@ -54,23 +54,23 @@
           <p class="font-poppins text-black " style="font-size:14px;">
             Mentees
           </p>
-          <div
-            class="d-flex flex-row m-3 "
-            v-for="(mentee, idx) in user.assignees"
-            :key="idx"
-          >
-            <sla-avatar
-              v-if="mentee.image === null"
-              size="lg"
-              :user="{ name: mentee.first_name }"
-            />
-            <sla-avatar v-else size="lg" :user="{ image: mentee.image }" />
-            <span
-              class="m-2 font-open-sans  text-black"
-              style="font-size:16px;"
-            >
-              {{ mentee.first_name + " " + mentee.last_name }}
-            </span>
+          <div class="d-flex flex-row flex-grow-1 " style="overflow-x:auto">
+            <div v-for="(mentee, idx) in user.assignees" :key="idx">
+              <div class="d-flex flex-row flex-grow-1 ml-4 mt-1">
+                <sla-avatar
+                  v-if="mentee.image === null"
+                  size="lg"
+                  :user="{ name: mentee.first_name }"
+                />
+                <sla-avatar v-else size="lg" :user="{ image: mentee.image }" />
+                <span
+                  class="m-2 font-open-sans  text-black"
+                  style="font-size:16px;"
+                >
+                  {{ mentee.first_name + " " + mentee.last_name }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </d-row>
