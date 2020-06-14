@@ -155,7 +155,7 @@ export default function() {
           title: "Announcements",
           htmlBefore: "announce",
           to: {
-            name: "all-announcements"
+            name: "coach-announcement-home"
           }
         },
         {

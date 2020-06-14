@@ -18,12 +18,24 @@ export default [
     }
   },
   {
-    path: "/coach",
-    name: "coach-dashboard",
-    component: Dashboard,
-    meta: {
-      middleware: [auth]
-    }
+    path: "/coach/announcement",
+    name: "announcement-home",
+    component: () => import("@/views/coach/announcement/index"),
+    children: [
+      {
+        path: "",
+        name: "announcement-all",
+        component: () => import("@/views/coach/announcement/home.vue")
+      },
+      {
+        path: "/single/:id",
+        name: "coach-single-announcement",
+        component: () => import("@/views/coach/announcement/single.vue"),
+        meta: {
+          middleware: [auth]
+        }
+      }
+    ]
   },
   {
     path: "/login",
