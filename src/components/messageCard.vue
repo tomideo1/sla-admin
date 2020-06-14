@@ -1,17 +1,18 @@
 <template>
-  <div @click="$emit('click', $event)">
-    <div class="d-flex align-items-center justify-content-even chat mt-1 mx-1">
+  <d-card @click="$emit('click', $event)" class="p-3 m-2">
+    <div class="d-flex align-items-center justify-content-even chat mt-1 m-1">
       <div>
-        <avatar size="xl" :user="{ image: dataObj.group.cover_image }" />
+        <avatar size="lg" :user="{ image: dataObj.cover_image }" />
       </div>
-      <div class="ml-8 width-100">
+      <div class="ml-4 w-100">
         <div class="d-flex align-items-center justify-content-between mb-4">
-          <div class="text-bold">{{ dataObj.group.title }}</div>
+          <div class="text-black">{{ dataObj.title }}</div>
           <small>6:34 PM</small>
         </div>
         <div class="d-flex">
           <div class="w-100 text-truncate ">
-            {{ dataObj.last_message.message }}
+            <!-- {{ dataObj.last_message.message }} -->
+            Last Message in the group
           </div>
           <div
             class="counter p-1 text-white d-flex align-items-center justify-content-center"
@@ -21,7 +22,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </d-card>
 </template>
 <script>
 export default {

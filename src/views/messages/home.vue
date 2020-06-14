@@ -11,12 +11,9 @@
       </div>
       <div
         class="col-md-8 border-left shadow-sm "
-        style="background: #FAFAFA;!important"
+        style="background: #FAFAFA;!important max-height:50%!important; overflow-y:auto"
       >
-        <div
-          class=" nav nav-bar bg-white sticky-top "
-          style="max-height:100vh; overflow-y:auto"
-        >
+        <div class=" nav nav-bar bg-white sticky-top container-fluid p-3">
           <h5 class="font-open-sans text-dark text-black">
             Group Name
           </h5>
@@ -41,12 +38,6 @@ export default {
     return {
       chats: [
         {
-          message: "If you intend to seek financial a must",
-          createdAt: "2020-06-13T22:20:29+01:00",
-          username: "tomide",
-          id: "5ec51d59ddfb380017649591"
-        },
-        {
           message:
             "If you intend to seek financial support from an investor or financial institution, a traditional business plan is a must",
           createdAt: "2020-06-13T22:20:29+01:00",
@@ -65,12 +56,6 @@ export default {
           createdAt: "2020-06-13T22:20:29+01:00",
           username: "Peter",
           id: "kssssklslsl"
-        },
-        {
-          message: "If you intend to seek financial a must",
-          createdAt: "2020-06-13T22:20:29+01:00",
-          username: "tomide",
-          id: "5ec51d59ddfb380017649591"
         },
         {
           message:
@@ -98,7 +83,8 @@ export default {
   components: {
     messageCard: () => import("@/components/messageCard"),
     ChatBubble: () => import("@/components/chatBubble"),
-    ChatBox: () => import("@/components/chatBox")
+    ChatBox: () => import("@/components/chatBox"),
+    Top: () => import("@/components/top")
   },
   methods: {},
   async mounted() {
