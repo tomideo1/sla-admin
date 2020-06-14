@@ -1,5 +1,14 @@
 <template>
   <d-container fluid class="main-content-container px-4 py-4 mt-4">
+    <div v-show="notifications.length == 0 && !isLoaded">
+      <beat-loader
+        class="loader"
+        :color="'#0087db'"
+        :loading="true"
+        :size="30"
+        :sizeUnit="'px'"
+      ></beat-loader>
+    </div>
     <h5 class="text-black font-poppings font-weight-bold">Notifications</h5>
     <d-row no-gutters>
       <div class="col-md-8">
@@ -19,68 +28,61 @@
                   notification.createdAt | moment("from")
                 }}</small>
               </p>
-              <d-card
+              <img
                 class="ml-auto"
-                :style="
-                  'width:56px!important;height: 56px!important;' +
-                    'backgroundImage:url(' +
-                    notification.image +
-                    ');' +
-                    ' background-size:cover; background-position:center'
-                "
-              >
-              </d-card>
+                :src="notification.image"
+                style="width:56px; height:56px;border-radius: 5px;"
+              />
             </span>
           </noty>
-          <p class="heading text-bold font-poppings text-dark ">Last Week</p>
-          <noty
-            :userName="notification.message.substring(0)"
-            v-for="notification in last_week_notifications"
-            :key="notification._id"
-          >
-            <span class="d-flex flex-row flex-grow-1 justify-content-lg-start">
-              <p class="mt-2">
-                <b>
-                  {{ notification.message }}
-                </b>
-                <small class="  ml-3 ">{{
-                  notification.createdAt | moment("from")
-                }}</small>
-              </p>
-              <d-card
-                class="ml-auto"
-                :style="
-                  'width:56px!important;height: 56px!important;' +
-                    'backgroundImage:url(' +
-                    'https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png' +
-                    ');' +
-                    ' background-size:cover; background-position:center'
-                "
-              >
-              </d-card>
-            </span>
-          </noty>
-
-          <!-- <p class="heading text-bold font-poppings text-dark ">Earlier</p> -->
-        </div>
-        <div v-show="notifications.length == 0 && !isLoaded" class="col">
-          <beat-loader
-            class="loader"
-            :color="'#0087db'"
-            :loading="true"
-            :size="30"
-            :sizeUnit="'px'"
-          ></beat-loader>
-        </div>
-        <div v-show="notifications.length == 0 && isLoaded" class="col">
-          <span
-            class="font-poppings text-dark justify-content-center d-flex"
-            style="font-size: 16px;"
-          >
-            You don’t have any notification
+          <div class="col" v-if="this_week_notifications.length === 0">
             <icon name="empty" class="m-3" size="retain" />
-          </span>
+            <span
+              class="font-poppings text-dark text-center mx-auto  justify-content-center d-flex"
+              style="font-size: 16px;"
+              >You don’t have any New Notifications</span
+            >
+            <p class="heading text-bold font-poppings text-dark ">Last Week</p>
+            <noty
+              :userName="notification.message.substring(0)"
+              v-for="notification in last_week_notifications"
+              :key="notification._id"
+            >
+              <span
+                class="d-flex flex-row flex-grow-1 justify-content-lg-start"
+              >
+                <p class="mt-2">
+                  <b>
+                    {{ notification.message }}
+                  </b>
+                  <small class="  ml-3 ">{{
+                    notification.createdAt | moment("from")
+                  }}</small>
+                </p>
+                <img
+                  v-if="
+                    notification.image !== null &&
+                      notification.image !== undefined
+                  "
+                  class="ml-auto"
+                  :src="notification.image"
+                  style="width:56px; height:56px;border-radius: 5px;"
+                />
+              </span>
+            </noty>
+          </div>
         </div>
+
+        <!-- <p class="heading text-bold font-poppings text-dark ">Earlier</p> -->
+      </div>
+
+      <div class="col" v-show="notifications.length == 0 && isLoaded">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark text-center mx-auto  justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any New Notifications</span
+        >
       </div>
       <div class="col-md-4"></div>
     </d-row>

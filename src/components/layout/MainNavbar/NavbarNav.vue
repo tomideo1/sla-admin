@@ -1,9 +1,9 @@
 <template>
   <d-navbar-nav class="flex-row ">
     <li class="nav-item   dropdown notifications">
-      <a class="nav-link mt-2 text-center">
+      <router-link to="/messages" class="nav-link mt-2 text-center">
         <icon size="xs" name="message" />
-      </a>
+      </router-link>
       <!--      <d-collapse id="notifications" class="dropdown-menu dropdown-menu-small">-->
       <!--        <d-dropdown-item>-->
       <!--          Notifications-->

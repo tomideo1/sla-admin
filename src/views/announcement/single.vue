@@ -42,7 +42,7 @@
               {{ Announcement.title }}
             </h5>
             <small class="font-open-sans text-grey-500 ml-auto m-4">{{
-              $moment(Announcement.createdAt)
+              Announcement.createdAt | chatTime
             }}</small>
           </div>
           <p class="m-3 font-open-sans text-dark">
@@ -142,13 +142,19 @@
                   />
                   <p class="  m-2 d-flex flex-column ">
                     <span class="mt-2 mb-2">
-                      {{ comment.admin.first_name }}
+                      {{
+                        comment.admin.first_name +
+                          "  " +
+                          (comment.admin.type === "coach"
+                            ? "(coach)"
+                            : "(admin)")
+                      }}
                     </span>
                     <span class=" mb-3">
                       {{ comment.content }}
                     </span>
                     <small class="text-grey-500  mt-n2">{{
-                      getTimeDiff(comment.createdAt) + " h"
+                      comment.createdAt | chatTime
                     }}</small>
                   </p>
                   <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->

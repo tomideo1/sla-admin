@@ -16,15 +16,15 @@
               <div class="">
                 <sla-avatar
                   class="avatar"
-                  v-if="AdminUser.image === null"
+                  v-if="user.image === null"
                   size="xl"
-                  :user="{ name: AdminUser.first_name }"
+                  :user="{ name: user.first_name }"
                 />
                 <sla-avatar
                   class="avatar"
                   v-else
                   size="xl"
-                  :user="{ image: AdminUser.image }"
+                  :user="{ image: user.image }"
                 />
               </div>
             </div>
@@ -35,19 +35,19 @@
             <!-- First Name -->
             <d-col md="12" class="form-group">
               <label class="text-grey"> First Name</label>
-              <d-form-input type="text" v-model="AdminUser.first_name" />
+              <d-form-input type="text" v-model="user.first_name" />
             </d-col>
             <d-col md="12" class="form-group">
               <label class="text-grey"> Last Name</label>
-              <d-form-input type="text" v-model="AdminUser.last_name" />
+              <d-form-input type="text" v-model="user.last_name" />
             </d-col>
             <d-col md="12" class="form-group">
               <label class="text-grey"> Phone Number</label>
-              <d-form-input type="text" v-model="AdminUser.phone_number" />
+              <d-form-input type="text" v-model="user.phone_number" />
             </d-col>
             <d-col md="12" class="form-group">
               <label class="text-grey"> Email</label>
-              <d-form-input type="text" v-model="AdminUser.email" />
+              <d-form-input type="text" v-model="user.email" />
             </d-col>
           </d-form-row>
           <div class="mx-auto">
@@ -70,11 +70,12 @@
 import axios from "axios";
 import store from "@/store/index";
 const token = store.state.auth.token;
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "single",
   data() {
     return {
-      AdminUser: null,
+      isLoaded: false,
       error: {
         status: null,
         message: null
@@ -97,7 +98,7 @@ export default {
       this.button.isLoading = true;
       const self = this;
       let res = await axios
-        .post(`${process.env.VUE_APP_API}/admin/update`, self.AdminUser, {
+        .post(`${process.env.VUE_APP_API}/admin/update`, self.user, {
           headers: {
             Authorization: `Bearer ${token} `
           }
@@ -122,8 +123,8 @@ export default {
         });
     }
   },
-  mounted() {
-    this.AdminUser = this.$route.params.admin;
+  computed: {
+    ...mapState("auth/", ["user"])
   }
 };
 </script>

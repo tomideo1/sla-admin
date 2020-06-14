@@ -1,15 +1,14 @@
 <template>
   <div
-    class="d-flex mb-12"
-    :class="position == 'right' ? 'justify-content-end mb-24 mt-24' : ''"
+    class="d-flex mb-1"
+    :class="position == 'right' ? 'justify-content-end mb-2 mt-2' : ''"
   >
     <div
-      class="chat"
-      :class="position == 'right' ? 'right' : ''"
+      :class="position == 'right' ? 'right' : 'chat'"
       :style="{ float: `${position}` }"
     >
-      <span class="flex-inline flex-column message  p-8">
-        <span v-if="position !== 'right'" class="name text-bolder ">{{
+      <span class="flex-inline flex-column message  p-2">
+        <span v-if="position !== 'right'" class="name text-bold ">{{
           chat.username
         }}</span>
         <div style="display: inline;">
@@ -25,6 +24,7 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
+
 export default {
   name: "chatBubble",
   props: {
@@ -37,9 +37,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState("auth/", ["user"]),
     position() {
-      return this.chat.id == this.user.data._id ? "right" : "left";
+      return this.chat.id == this.user._id ? "right" : "left";
     }
   }
 };
@@ -48,9 +48,13 @@ export default {
 <style lang="scss" scoped>
 .chat {
   max-width: 75vw;
+  display: inline-block;
+  position: relative;
+
   .message {
-    background-color: #ecf0f3;
+    background: #ecf0f3;
     border-radius: 5px;
+    width: 300px;
   }
 
   &:before {
@@ -69,9 +73,21 @@ export default {
 }
 
 .right {
+  max-width: 75vw;
+  display: inline-block;
+  position: relative;
+
   .message {
     background-color: #0087db;
     color: #ffffff;
+    border-radius: 5px;
+    width: 300px;
   }
+}
+.flex-inline {
+  display: inline-flex;
+}
+.flex-column {
+  flex-direction: column !important;
 }
 </style>
