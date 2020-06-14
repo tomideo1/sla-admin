@@ -1,10 +1,12 @@
 <template>
   <d-container fluid>
     <d-row>
-      <div class="col-lg-12 col-md-12 col-12" v-if="Resources.length > 0">
+      <div class="mt-4">
         <h6 class="text-dark title text-capitalize m-1">
           Resources
         </h6>
+      </div>
+      <div class="col-lg-12 col-md-12 col-12" v-if="Resources.length > 0">
         <div class="row">
           <div
             class="col-lg-6 col-md-6 col-12"

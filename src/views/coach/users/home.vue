@@ -1,8 +1,10 @@
 <template>
   <d-container fluid>
-    <h6 class="text-dark title text-capitalize m-1">
-      Assigned Users
-    </h6>
+    <div class="mt-4">
+      <h6 class="text-dark title text-capitalize m-1">
+        Assigned Users
+      </h6>
+    </div>
     <d-row>
       <div
         class="col-12 col-lg-3 col-md-6"
