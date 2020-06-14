@@ -183,7 +183,7 @@ export default function() {
           title: "Resources",
           htmlBefore: "resource",
           to: {
-            name: "all-resources"
+            name: "coach-resource-home"
           }
         },
         {

@@ -18,25 +18,30 @@ export default [
     }
   },
   {
-    path: "/coach/announcement",
-    name: "announcement-home",
-    component: () => import("@/views/coach/announcement/index"),
-    children: [
-      {
-        path: "",
-        name: "announcement-all",
-        component: () => import("@/views/coach/announcement/home.vue")
-      },
-      {
-        path: "/single/:id",
-        name: "coach-single-announcement",
-        component: () => import("@/views/coach/announcement/single.vue"),
-        meta: {
-          middleware: [auth]
-        }
-      }
-    ]
+    path: "/coach/resources",
+    name: "coach-resource-home",
+    component: () => import("@/views/coach/resources/home")
   },
+  // {
+  //   path: "/coach/announcement",
+  //   name: "coach-announcement-home",
+  //   component: () => import("@/views/coach/announcement/index"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       name: "announcement-all",
+  //       component: () => import("@/views/coach/announcement/home.vue")
+  //     },
+  //     {
+  //       path: "/single/:id",
+  //       name: "coach-single-announcement",
+  //       component: () => import("@/views/coach/announcement/single.vue"),
+  //       meta: {
+  //         middleware: [auth]
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: "/login",
     name: "login",
