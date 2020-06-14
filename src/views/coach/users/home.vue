@@ -71,6 +71,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
+    console.log("hhhhhhhhggggggggg");
     this.getAssignedUsers();
   },
   components: {

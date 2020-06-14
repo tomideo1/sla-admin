@@ -18,7 +18,7 @@ export default [
     }
   },
   {
-    path: "/announcement/coach",
+    path: "/coach/announcement",
     name: "coach-announcement-home",
     meta: {
       middleware: [auth]
@@ -26,24 +26,24 @@ export default [
     component: () => import("@/views/coach/announcement/index"),
     children: [
       {
-        path: "",
-        name: "announcement-all",
+        path: "all",
+        name: "coach-announcement-all",
         component: () => import("@/views/coach/announcement/home.vue")
       },
       {
-        path: "/single/:id",
+        path: "single/:id",
         name: "coach-single-announcement",
         component: () => import("@/views/coach/announcement/single.vue")
       }
     ]
   },
   {
-    path: "/resources/coach",
+    path: "/coach/resources",
     name: "coach-resource-home",
     component: () => import("@/views/coach/resources/home")
   },
   {
-    path: "/users/coach",
+    path: "/coach/users",
     component: () => import("@/views/coach/users/index.vue"),
     name: "coach-users-home",
     meta: {
@@ -51,12 +51,12 @@ export default [
     },
     children: [
       {
-        path: "",
+        path: "all",
         name: "coach-users-all",
         component: () => import("@/views/coach/users/home.vue")
       },
       {
-        path: "/single/:id",
+        path: "single/:id",
         name: "coach-single-user",
         component: () => import("@/views/coach/users/single.vue"),
         meta: {

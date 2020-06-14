@@ -155,14 +155,14 @@ export default function() {
           title: "Users",
           htmlBefore: "group",
           to: {
-            name: "coach-users-home"
+            name: "coach-users-all"
           }
         },
         {
           title: "Announcements",
           htmlBefore: "announce",
           to: {
-            name: "coach-announcement-home"
+            name: "coach-announcement-all"
           }
         },
         {

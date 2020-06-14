@@ -20,6 +20,7 @@ export default {
     };
   },
   mounted() {
+    console.log("yyyyyy");
     console.log(this.navigation);
   },
   components: {
