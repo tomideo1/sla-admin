@@ -7,7 +7,7 @@ export const login = async ({ commit }, payload) => {
   if (res.status == 200) {
     commit("setToken", res.data.token);
     commit("setUserDetails", res.data.admin);
-    return true;
+    return res;
   } else {
     return res;
   }

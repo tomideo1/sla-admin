@@ -134,13 +134,20 @@ export default {
       this.isLoading = true;
 
       let res = await this.login(this.form);
-      if (res === true) {
+      if (res.status == 200) {
         // route to dashboard
         this.isLoading = false;
         this.button.text = "Login";
-        this.$router.replace({
-          name: "dashboard"
-        });
+        console.log({ res });
+        if (res.data.admin.type == "coach") {
+          this.$router.replace({
+            name: "coach-dashboard"
+          });
+        } else {
+          this.$router.replace({
+            name: "dashboard"
+          });
+        }
       } else {
         this.button.text = "Login";
         this.error.type = res.data.type !== undefined ? res.data.type : "error";

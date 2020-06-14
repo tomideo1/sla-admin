@@ -51,6 +51,10 @@ export const getUsers = state => {
   return state.Users;
 };
 
+export const getAssignedUsers = state => {
+  return state.AssignedUsers;
+};
+
 export const getAnalytics = state => {
   return state.Analytics;
 };
