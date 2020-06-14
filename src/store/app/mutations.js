@@ -52,6 +52,10 @@ export const setUsers = (state, data) => {
   state.Users = data.data.user;
 };
 
+export const setAssignedUsers = (state, data) => {
+  state.AssignedUsers = data.data.users;
+};
+
 export const setAnalytics = (state, data) => {
   state.Analytics = data;
 };

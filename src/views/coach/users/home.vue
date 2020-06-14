@@ -59,17 +59,17 @@ export default {
   name: "home",
   computed: {
     ...mapGetters({
-      Users: "app/getUsers"
+      Users: "app/getAssignedUsers"
       // maps courses to current computed resource
     })
   },
   methods: {
-    ...mapActions("app/", ["getAllUsers"])
+    ...mapActions("app/", ["getAssignedUsers"])
 
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllUsers();
+    this.getAssignedUsers();
   },
   components: {
     SlaAvatar: () => import("@/components/avatar")

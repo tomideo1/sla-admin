@@ -64,6 +64,13 @@ export const getAllUsers = async ({ commit }) => {
   } else return res;
 };
 
+export const getAssignedUsers = async ({ commit }) => {
+  let res = await Api.get(`admin/coach/users`, true);
+  if (res.status === 200) {
+    commit("setAssignedUsers", res.data);
+  } else return res;
+};
+
 export const getAllAnnouncements = async ({ commit }) => {
   let res = await Api.get(`annoucement/admin/getAll`, true);
   if (res.status === 200) {
