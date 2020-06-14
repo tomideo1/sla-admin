@@ -152,6 +152,13 @@ export default function() {
           }
         },
         {
+          title: "Users",
+          htmlBefore: "group",
+          to: {
+            name: "coach-users-home"
+          }
+        },
+        {
           title: "Announcements",
           htmlBefore: "announce",
           to: {

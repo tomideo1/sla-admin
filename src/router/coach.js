@@ -18,30 +18,53 @@ export default [
     }
   },
   {
-    path: "/coach/resources",
+    path: "/announcement/coach",
+    name: "coach-announcement-home",
+    meta: {
+      middleware: [auth]
+    },
+    component: () => import("@/views/coach/announcement/index"),
+    children: [
+      {
+        path: "",
+        name: "announcement-all",
+        component: () => import("@/views/coach/announcement/home.vue")
+      },
+      {
+        path: "/single/:id",
+        name: "coach-single-announcement",
+        component: () => import("@/views/coach/announcement/single.vue")
+      }
+    ]
+  },
+  {
+    path: "/resources/coach",
     name: "coach-resource-home",
     component: () => import("@/views/coach/resources/home")
   },
-  // {
-  //   path: "/coach/announcement",
-  //   name: "coach-announcement-home",
-  //   component: () => import("@/views/coach/announcement/index"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       name: "announcement-all",
-  //       component: () => import("@/views/coach/announcement/home.vue")
-  //     },
-  //     {
-  //       path: "/single/:id",
-  //       name: "coach-single-announcement",
-  //       component: () => import("@/views/coach/announcement/single.vue"),
-  //       meta: {
-  //         middleware: [auth]
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    path: "/users/coach",
+    component: () => import("@/views/coach/users/index.vue"),
+    name: "coach-users-home",
+    meta: {
+      middleware: [auth]
+    },
+    children: [
+      {
+        path: "",
+        name: "coach-users-all",
+        component: () => import("@/views/coach/users/home.vue")
+      },
+      {
+        path: "/single/:id",
+        name: "coach-single-user",
+        component: () => import("@/views/coach/users/single.vue"),
+        meta: {
+          middleware: [auth]
+        }
+      }
+    ]
+  },
   {
     path: "/login",
     name: "login",

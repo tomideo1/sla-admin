@@ -1,8 +1,10 @@
 <template>
   <d-container fluid>
-    <nav-menu :navs="navigation" />
     <d-row>
       <div class="col-lg-12 col-md-12 col-12" v-if="Resources.length > 0">
+        <h6 class="text-dark title text-capitalize m-1">
+          Resources
+        </h6>
         <div class="row">
           <div
             class="col-lg-6 col-md-6 col-12"
