@@ -90,12 +90,7 @@
         </d-modal-header>
         <d-modal-body>
           <d-row>
-            <div
-              v-for="p in paginatedData"
-              md="6"
-              sm="6"
-              class="col-lg-6 col-md-6 col-6 p-2"
-            >
+            <div v-for="p in paginatedData" class="col-lg-6 col-md-6 col-6 p-2">
               <d-row>
                 <d-col md="8">
                   <div class="d-flex flex-row flex-grow-1">

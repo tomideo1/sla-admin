@@ -2,7 +2,11 @@
   <d-container
     fluid
     class="mt-5 mb-3 d-block text-center mx-auto d-md-block d-lg-block"
-    v-if="!$route.path.includes('single') && !$route.path.includes('edit')"
+    v-if="
+      !$route.path.includes('single') &&
+        !$route.path.includes('edit') &&
+        !$route.path.includes('participants')
+    "
   >
     <div class=" d-lg-flex d-md-flex flex-row  flex-grow-1 ">
       <h5

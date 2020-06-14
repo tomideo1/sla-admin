@@ -39,7 +39,11 @@
                   type="filled"
                   size="md"
                   text="ASSIGN PARTICIPANTS"
-                  @click="$router.push()"
+                  @click="
+                    $router.push({
+                      path: '/users/coaches/participants/' + user.coach._id
+                    })
+                  "
                   class="btn col-md-12 col-12 col-lg-12 text-center "
                 />
               </div>
@@ -51,7 +55,7 @@
             Mentees
           </p>
           <div
-            class="d-flex flex-row flex-grow-1 align-content-center"
+            class="d-flex flex-row m-3 "
             v-for="(mentee, idx) in user.assignees"
             :key="idx"
           >
@@ -60,7 +64,7 @@
               size="lg"
               :user="{ name: mentee.first_name }"
             />
-            <sla-avatar v-else size="lg" :user="{ mentee: coach.image }" />
+            <sla-avatar v-else size="lg" :user="{ image: mentee.image }" />
             <span
               class="m-2 font-open-sans  text-black"
               style="font-size:16px;"
