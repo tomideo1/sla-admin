@@ -181,7 +181,7 @@ export default {
       });
       let res = await axios
         .post(
-          `${process.env.VUE_APP_API}/scorecard/update-template`,
+          `${process.env.VUE_APP_API}/scorecard/create-template`,
           updatedScorecard,
           {
             headers: {
