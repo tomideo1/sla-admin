@@ -27,52 +27,7 @@
                   :color="index % 2 == 0 ? '#0087DB;' : '#DAAA55;'"
                 >
                   <p>{{ resource.answer }}</p>
-                  <icon
-                    name="pencil"
-                    size="xs"
-                    class="float-right m-2"
-                    @click="$router.push({ path: 'single/' + resource._id })"
-                  />
-                  <icon
-                    name="bin"
-                    size="xs"
-                    class="float-right m-2"
-                    @click="modalStatus = true"
-                  />
                 </resource>
-                <d-modal
-                  v-if="modalStatus"
-                  @close="modalStatus = false"
-                  size="lg"
-                >
-                  <div
-                    style="border-top: 4px solid #0087DB;"
-                    class="modal-header"
-                  ></div>
-                  <h6 class="text-center m-2 text-bold text-dark font-poppings">
-                    Are you sure you want to delete this resource?
-                  </h6>
-                  <d-modal-body>
-                    <div class="text-center">
-                      <sla-button
-                        class="m-2 col-md-12"
-                        type="filled"
-                        size="md"
-                        text="YES, DELETE"
-                        @click="
-                          deleteResource(resource._id, 'resource/admin/delete/')
-                        "
-                      />
-                      <sla-button
-                        class="m-2 col-md-12"
-                        type="outline"
-                        size="md"
-                        :text="'CANCEL'"
-                        @click="modalStatus = false"
-                      />
-                    </div>
-                  </d-modal-body>
-                </d-modal>
               </div>
             </d-row>
           </div>
