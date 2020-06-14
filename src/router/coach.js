@@ -66,6 +66,29 @@ export default [
     ]
   },
   {
+    path: "/coach/help",
+    component: () => import("@/views/coach/support/index.vue"),
+    name: "coach-help-home",
+    meta: {
+      middleware: [auth]
+    },
+    children: [
+      {
+        path: "all",
+        name: "coach-help-all",
+        component: () => import("@/views/coach/support/home.vue")
+      },
+      {
+        path: "single/:id",
+        name: "coach-single-user",
+        component: () => import("@/views/coach/users/single.vue"),
+        meta: {
+          middleware: [auth]
+        }
+      }
+    ]
+  },
+  {
     path: "/login",
     name: "login",
     meta: { layout: "no-sidebar" },

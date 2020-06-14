@@ -165,27 +165,27 @@ export default function() {
             name: "coach-announcement-all"
           }
         },
-        {
-          title: "Groups",
-          htmlBefore: "group",
-          to: {
-            name: "all-groups"
-          }
-        },
-        {
-          title: "Scorecard",
-          htmlBefore: "scorecard",
-          to: {
-            name: "all-scorecards"
-          }
-        },
-        {
-          title: "Surveys",
-          htmlBefore: "survey",
-          to: {
-            name: "all-surveys"
-          }
-        },
+        // {
+        //   title: "Groups",
+        //   htmlBefore: "group",
+        //   to: {
+        //     name: "all-groups"
+        //   }
+        // },
+        // {
+        //   title: "Scorecard",
+        //   htmlBefore: "scorecard",
+        //   to: {
+        //     name: "all-scorecards"
+        //   }
+        // },
+        // {
+        //   title: "Surveys",
+        //   htmlBefore: "survey",
+        //   to: {
+        //     name: "all-surveys"
+        //   }
+        // },
         {
           title: "Resources",
           htmlBefore: "resource",
@@ -193,13 +193,13 @@ export default function() {
             name: "coach-resource-home"
           }
         },
-        {
-          title: "Help",
-          htmlBefore: "faq",
-          to: {
-            name: "all-tickets"
-          }
-        },
+        // {
+        //   title: "Help",
+        //   htmlBefore: "faq",
+        //   to: {
+        //     name: "coach-help-all"
+        //   }
+        // },
         {
           title: "Logout",
           htmlBefore: "logout",
