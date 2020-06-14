@@ -17,7 +17,8 @@
           <div
             class="counter p-1 text-white d-flex align-items-center justify-content-center"
           >
-            <small>{{ dataObj.group_unread }}</small>
+            <!-- <small>{{ dataObj.group_unread }}</small> -->
+            <small>{{ "1" }}</small>
           </div>
         </div>
       </div>

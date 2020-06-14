@@ -2,11 +2,12 @@
   <d-container fluid class="main-content-container px-4 py-4 mt-4 ">
     <d-row>
       <div class="col-md-4">
-        <h4 class="m-3">Messages</h4>
+        <h4 class="m-3 font-open-sans text-black">Messages</h4>
         <message-card
           v-for="dataObj in getGroups"
           :key="dataObj._id"
           :dataObj="dataObj"
+          @click="getGroup(dataObj._id)"
         />
       </div>
       <div
@@ -15,7 +16,7 @@
       >
         <div class=" nav nav-bar bg-white sticky-top container-fluid p-3">
           <h5 class="font-open-sans text-dark text-black">
-            Group Name
+            {{ currentGroup[0].title }}
           </h5>
         </div>
         <div class=" d-flex flex-column justify-content-between ">
@@ -77,7 +78,9 @@ export default {
           username: "Peter",
           id: "kssssklslsl"
         }
-      ]
+      ],
+      currentGroup: "",
+      activeGroup: ""
     };
   },
   components: {
@@ -86,7 +89,13 @@ export default {
     ChatBox: () => import("@/components/chatBox"),
     Top: () => import("@/components/top")
   },
-  methods: {},
+  methods: {
+    getGroup(groupId) {
+      return (this.currentGroup = this.getGroups.filter(
+        res => res._id === groupId
+      ));
+    }
+  },
   async mounted() {
     // let chats = await this.getGroupMessages({
     //   groupId: this.group._id
