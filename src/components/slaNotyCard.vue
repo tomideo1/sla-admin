@@ -1,16 +1,21 @@
 <template>
   <component :is="tag" v-bind="$attrs" v-on="$listeners" :class="[classes]">
-    <div class="notifications__item">
+    <div class="d-flex flex-row m-2 m-lg-3 m-md-3 ">
       <sla-avatar
         v-if="avatar === undefined || avatar === null"
-        class="avatar mt-n3 "
+        class="avatar  m-lg-4 "
         size="lg"
         :user="{ name: userName }"
       />
-      <sla-avatar class="avatar" v-else size="lg" :user="{ image: avatar }" />
+      <sla-avatar
+        class="avatar m-lg-4 "
+        v-else
+        size="lg"
+        :user="{ image: avatar }"
+      />
 
-      <div class="notifications__item__content">
-        <span class="notifications__item__title  font-poppins">
+      <div class="m-4 d-flex flex-row">
+        <span class="  font-poppins">
           <slot />
         </span>
       </div>
@@ -76,7 +81,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .notifications__item {
   display: flex;
   align-items: center;

@@ -20,16 +20,20 @@
             :key="notification._id"
           >
             <span class="d-flex flex-row flex-grow-1 justify-content-lg-start">
-              <p class="mt-2">
+              <p class="mt-2  ">
                 <b>
                   {{ notification.message }}
                 </b>
-                <small class="  ml-3 ">{{
+                <small class=" ml-lg-3 ml-md-3 ml-0 ">{{
                   notification.createdAt | moment("from")
                 }}</small>
               </p>
               <img
-                class="ml-auto"
+                v-if="
+                  notification.image !== null &&
+                    notification.image !== undefined
+                "
+                class="ml-auto d-lg-block ml-lg-5 d-md-block d-none"
                 :src="notification.image"
                 style="width:56px; height:56px;border-radius: 5px;"
               />
@@ -51,11 +55,11 @@
               <span
                 class="d-flex flex-row flex-grow-1 justify-content-lg-start"
               >
-                <p class="mt-2">
+                <p class="mt-2  ">
                   <b>
                     {{ notification.message }}
                   </b>
-                  <small class="  ml-3 ">{{
+                  <small class=" ml-lg-3 ml-md-3 ml-0 ">{{
                     notification.createdAt | moment("from")
                   }}</small>
                 </p>
@@ -64,7 +68,7 @@
                     notification.image !== null &&
                       notification.image !== undefined
                   "
-                  class="ml-auto"
+                  class="ml-auto d-lg-block ml-lg-5 d-md-block d-none"
                   :src="notification.image"
                   style="width:56px; height:56px;border-radius: 5px;"
                 />

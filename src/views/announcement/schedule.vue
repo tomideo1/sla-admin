@@ -14,10 +14,6 @@
         <carousel refs="content">
           <div
             class="scroll m-2"
-            v-if="
-              announcement.schedule !== null &&
-                !announcement.status == 'publish'
-            "
             v-for="(announcement, idx) in getScheduledAnnouncement"
             :key="idx"
           >
@@ -106,7 +102,9 @@ export default {
     }),
     getScheduledAnnouncement() {
       return this.announcements.filter(announcement => {
-        return announcement.schedule !== null;
+        return (
+          announcement.schedule !== null && announcement.status !== "publish"
+        );
       });
     },
     getMostEngaged() {
