@@ -120,7 +120,7 @@ export default {
       this.sortedPolls.push(res);
     });
     this.sortedPolls.sort(helper.GetSortOrder("title"));
-    this.Polls.sort(helper.GetSortOrder("createdAt"));
+    this.Polls.sort(helper.GetSortOrder("createdAt")).reverse();
     // this.Polls
   },
   components: {

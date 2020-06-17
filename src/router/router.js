@@ -498,23 +498,7 @@ const baseRoutes = [
       middleware: [auth]
     }
   },
-  {
-    path: "/coaches",
-    meta: {
-      middleware: [auth]
-    },
-    component: () => import("@/views/coaches/index.vue"),
-    children: [
-      {
-        path: "",
-        name: "all-coaches",
-        component: () => import("@/views/coaches/home.vue"),
-        meta: {
-          middleware: [auth]
-        }
-      }
-    ]
-  },
+
   {
     path: "/messages",
     meta: {
