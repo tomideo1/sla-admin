@@ -7,7 +7,11 @@
           v-for="dataObj in getGroups"
           :key="dataObj._id"
           :dataObj="dataObj"
-          @click="getGroup(dataObj._id)"
+          @click="
+            getGroup(dataObj._id);
+            currentGroup = dataObj;
+            groupChats();
+          "
         />
       </div>
       <div
@@ -16,17 +20,17 @@
       >
         <div class=" nav nav-bar bg-white sticky-top container-fluid p-3">
           <h5 class="font-open-sans text-dark text-black">
-            {{
-              currentGroup[0].title !== undefined ? currentGroup[0].title : ""
-            }}
+            {{ currentGroup.title !== undefined ? currentGroup.title : "" }}
           </h5>
         </div>
         <div class=" d-flex flex-column justify-content-between ">
-          <div ref="chatsection" class="section px-1">
+          <div ref="chatsection" class="section px-1 chat-content">
             <chat-bubble :key="x._id" v-for="x in chats" :chat="x" />
           </div>
-          <div class=" bottom-0   z-index-1">
-            <chat-box />
+          <div
+            class="position-fixed width-100 bottom-0 z-index-1 bg-white py-12 shadow-3"
+          >
+            <chat-box class="width-100" @send="processChat" v-model="chat" />
           </div>
         </div>
       </div>
@@ -35,57 +39,13 @@
 </template>
 <script>
 import ably from "@/utils/socket";
-import { mapMutations, mapActions, mapGetters } from "vuex";
+import { mapMutations, mapActions, mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
-      chats: [
-        {
-          message:
-            "If you intend to seek financial support from an investor or financial institution, a traditional business plan is a must",
-          createdAt: "2020-06-13T22:20:29+01:00",
-          username: "Peter",
-          id: "kssssklslsl"
-        },
-        {
-          message: "If you intend to seek financial a must",
-          createdAt: "2020-06-13T22:20:29+01:00",
-          username: "tomide",
-          id: "5ec51d59ddfb380017649591"
-        },
-        {
-          message:
-            "If you intend to seek financial support from an investor or financial institution, a traditional business plan is a must",
-          createdAt: "2020-06-13T22:20:29+01:00",
-          username: "Peter",
-          id: "kssssklslsl"
-        },
-        {
-          message:
-            "If you intend to seek financial support from an investor or financial institution, a traditional business plan is a must",
-          createdAt: "2020-06-13T22:20:29+01:00",
-          username: "Peter",
-          id: "kssssklslsl"
-        },
-        {
-          message: "If you intend to seek financial a must",
-          createdAt: "2020-06-13T22:20:29+01:00",
-          username: "tomide",
-          id: "5ec51d59ddfb380017649591"
-        },
-        {
-          message:
-            "If you intend to seek financial support from an investor or financial institution, a traditional business plan is a must",
-          createdAt: "2020-06-13T22:20:29+01:00",
-          username: "Peter",
-          id: "kssssklslsl"
-        }
-      ],
-      currentGroup: [
-        {
-          title: ""
-        }
-      ],
+      chat: "",
+      chats: [],
+      currentGroup: {},
       activeGroup: ""
     };
   },
@@ -96,24 +56,53 @@ export default {
     Top: () => import("@/components/top")
   },
   methods: {
+    ...mapActions("app/", ["getGroupMessages", "getAllGroups", "sendChat"]),
     getGroup(groupId) {
       return (this.currentGroup = this.getGroups.filter(
         res => res._id === groupId
       ));
+    },
+    async groupChats() {
+      let chats = await this.getGroupMessages({
+        groupId: this.currentGroup._id
+      });
+      this.chats = chats;
+    },
+    processChat() {
+      if (this.chat == "") {
+        return;
+      }
+      let chatObject = {
+        username: this.user.first_name,
+        id: this.user._id,
+        message: this.chat,
+        groupId: this.currentGroup._id,
+        createdAt: Date.now(),
+        groupSlug: this.currentGroup.slug
+      };
+
+      this.sendChat(chatObject);
+
+      this.chats.push(chatObject);
+      this.chat = "";
     }
   },
   async mounted() {
-    // let chats = await this.getGroupMessages({
-    //   groupId: this.group._id
-    // });
-    // this.chats = chats;
+    await this.getAllGroups();
+    console.log({ hhhh: this.$store.state.user });
+    this.currentGroup = this.getGroups[0];
+    this.groupChats();
   },
   computed: {
-    ...mapGetters("app/", ["getGroups"])
+    ...mapGetters("app/", ["getGroups"]),
+    ...mapState("auth/", ["user"])
   }
 };
 </script>
 <style lang="scss">
+.chat-content {
+  height: 100vh;
+}
 .section {
   & > *:first-child {
     margin-top: 0.5rem;
