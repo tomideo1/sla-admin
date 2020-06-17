@@ -16,7 +16,9 @@
       >
         <div class=" nav nav-bar bg-white sticky-top container-fluid p-3">
           <h5 class="font-open-sans text-dark text-black">
-            {{ currentGroup[0].title }}
+            {{
+              currentGroup[0].title !== undefined ? currentGroup[0].title : ""
+            }}
           </h5>
         </div>
         <div class=" d-flex flex-column justify-content-between ">
@@ -79,7 +81,11 @@ export default {
           id: "kssssklslsl"
         }
       ],
-      currentGroup: "",
+      currentGroup: [
+        {
+          title: ""
+        }
+      ],
       activeGroup: ""
     };
   },
