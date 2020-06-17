@@ -130,7 +130,7 @@ export default {
     }
   },
   async mounted() {
-    this.getAllAssets();
+    await this.getAllAssets();
   }
 };
 </script>

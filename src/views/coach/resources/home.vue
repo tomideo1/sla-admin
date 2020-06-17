@@ -86,7 +86,7 @@ export default {
   },
   async mounted() {
     await this.getAllResources();
-    this.getAllResourceCategories();
+    await this.getAllResourceCategories();
   }
 };
 </script>

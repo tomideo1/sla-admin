@@ -71,8 +71,8 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllResources();
-    this.getAllResourceCategories();
+    await this.getAllResources();
+    await this.getAllResourceCategories();
   }
 };
 </script>

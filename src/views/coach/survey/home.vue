@@ -82,7 +82,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllSurveys();
+    await this.getAllSurveys();
     this.surveys.forEach(res => {
       this.recentSurvey.push(res);
     });

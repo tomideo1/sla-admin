@@ -203,10 +203,10 @@ export default {
     GChart,
     BeatLoader
   },
-  mounted() {
+  async mounted() {
     const self = this;
     const token = store.state.auth.token;
-    axios
+    await axios
       .get(
         `${process.env.VUE_APP_API}/survey/` + self.$route.params.id + `/show`,
         {

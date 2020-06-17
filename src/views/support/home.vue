@@ -94,7 +94,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllTickets();
+    await this.getAllTickets();
   }
 };
 </script>

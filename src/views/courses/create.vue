@@ -835,7 +835,7 @@ export default {
       handler: "watchReminder"
     }
   },
-  mounted() {
+  async mounted() {
     const token = store.state.auth.token;
     this.$refs.courseImage.dropzone.on("addedfile", file => {
       const reader = new FileReader();
@@ -850,7 +850,7 @@ export default {
       };
     });
     const self = this;
-    axios
+    await axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
         headers: {
           Authorization: `Bearer ${token} `

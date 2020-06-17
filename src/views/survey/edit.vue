@@ -699,10 +699,10 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     const token = store.state.auth.token;
     const self = this;
-    axios
+    await axios
       .get(
         `${process.env.VUE_APP_API}/survey/` +
           self.$route.params.id +
@@ -745,7 +745,7 @@ export default {
       .catch(ex => {
         console.log(ex.response.data);
       });
-    axios
+    await axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
         headers: {
           Authorization: `Bearer ${token} `

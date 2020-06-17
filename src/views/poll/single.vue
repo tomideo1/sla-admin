@@ -80,10 +80,10 @@ export default {
     SlaButton: () => import("@/components/SlaButton"),
     GChart
   },
-  mounted() {
+  async mounted() {
     const self = this;
     const token = store.state.auth.token;
-    axios
+    await axios
       .get(`${process.env.VUE_APP_API}/poll/get/` + self.$route.params.id, {
         headers: {
           Authorization: `Bearer ${token} `

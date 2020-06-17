@@ -263,9 +263,9 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllCourses();
-    this.getAllEngagedCourses();
-    this.getAllCategories();
+    await this.getAllCourses();
+    await this.getAllEngagedCourses();
+    await this.getAllCategories();
     this.courses.forEach(res => {
       this.sortedCourses.push(res);
     });

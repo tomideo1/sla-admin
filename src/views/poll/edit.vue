@@ -625,9 +625,9 @@ export default {
       Obj2 = new Date(Obj.final_date).toISOString();
     }
   },
-  mounted() {
+  async mounted() {
     const self = this;
-    axios
+    await axios
       .get(`${process.env.VUE_APP_API}/poll/get/` + self.$route.params.id, {
         headers: {
           Authorization: `Bearer ${token} `

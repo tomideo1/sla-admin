@@ -65,7 +65,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllUsers();
+    await this.getAllUsers();
   },
   components: {
     SlaAvatar: () => import("@/components/avatar"),

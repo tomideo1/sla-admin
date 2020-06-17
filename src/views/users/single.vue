@@ -130,7 +130,7 @@ export default {
   async mounted() {
     const userId = this.$route.params.id;
     const self = this;
-    let res = axios
+    let res = await axios
       .get(`${process.env.VUE_APP_API}/admin/user/details/` + userId, {
         headers: {
           Authorization: `Bearer ${token} `

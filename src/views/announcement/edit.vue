@@ -502,7 +502,7 @@ export default {
         }
       })
       .catch(ex => {});
-    axios
+    await axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
         headers: {
           Authorization: `Bearer ${token} `

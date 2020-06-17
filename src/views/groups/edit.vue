@@ -311,8 +311,8 @@ export default {
       // return this.Users.slice(start, end);
     }
   },
-  mounted() {
-    this.getAllUsers();
+  async mounted() {
+    await this.getAllUsers();
     const token = store.state.auth.token;
     const self = this;
     axios

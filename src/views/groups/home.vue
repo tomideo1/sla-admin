@@ -129,8 +129,8 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllGroups();
-    this.getAllCategories();
+    await this.getAllGroups();
+    await this.getAllCategories();
   },
   components: {
     Carousel: () => import("@/components/carousel"),

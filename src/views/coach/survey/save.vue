@@ -75,7 +75,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getSavedSurveys();
+    await this.getSavedSurveys();
   },
   components: {
     Carousel: () => import("@/components/carousel"),

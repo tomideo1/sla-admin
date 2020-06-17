@@ -409,9 +409,9 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     const self = this;
-    axios
+    await axios
       .get(`${process.env.VUE_APP_API}/resource/get/` + this.$route.params.id, {
         headers: {
           Authorization: `Bearer ${token} `
@@ -430,7 +430,7 @@ export default {
         }
       })
       .catch(ex => {});
-    axios
+    await axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
         headers: {
           Authorization: `Bearer ${token} `
@@ -443,7 +443,7 @@ export default {
         });
       })
       .catch(ex => {});
-    axios
+    await axios
       .get(`${process.env.VUE_APP_API}/resource-category/admin/list`, {
         headers: {
           Authorization: `Bearer ${token} `

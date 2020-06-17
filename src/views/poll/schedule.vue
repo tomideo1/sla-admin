@@ -81,7 +81,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllPolls();
+    await this.getAllPolls();
   },
   components: {
     Carousel: () => import("@/components/carousel"),

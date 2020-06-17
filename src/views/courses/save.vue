@@ -317,7 +317,7 @@ export default {
   },
 
   async mounted() {
-    this.getAllCourses();
+    await this.getAllCourses();
     this.courses.filter(course => {
       return course;
     });

@@ -115,7 +115,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllPolls();
+    await this.getAllPolls();
     this.Polls.forEach(res => {
       this.sortedPolls.push(res);
     });
