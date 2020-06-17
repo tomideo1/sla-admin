@@ -161,3 +161,11 @@ export const getGroupMessages = async ({ commit }, payload) => {
   return msg;
   // commit("populateMessage", {messages: res.data.data.group_messages, groupId: payload.groupId})
 };
+
+export const sendChat = async ({ commit }, payload) => {
+  let obj = {
+    message: payload
+  };
+  let res = await Api.post(`/group/admin/send-message`, obj, true);
+  console.log(res.status);
+};

@@ -30,7 +30,7 @@
           <div
             class="position-fixed width-100 bottom-0 z-index-1 bg-white py-12 shadow-3"
           >
-            <chat-box class="width-100" v-model="chat" />
+            <chat-box class="width-100" @send="processChat" v-model="chat" />
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
 </template>
 <script>
 import ably from "@/utils/socket";
-import { mapMutations, mapActions, mapGetters } from "vuex";
+import { mapMutations, mapActions, mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
     Top: () => import("@/components/top")
   },
   methods: {
-    ...mapActions("app/", ["getGroupMessages", "getAllGroups"]),
+    ...mapActions("app/", ["getGroupMessages", "getAllGroups", "sendChat"]),
     getGroup(groupId) {
       return (this.currentGroup = this.getGroups.filter(
         res => res._id === groupId
@@ -66,17 +66,36 @@ export default {
       let chats = await this.getGroupMessages({
         groupId: this.currentGroup._id
       });
-      console.log({ chats });
       this.chats = chats;
+    },
+    processChat() {
+      if (this.chat == "") {
+        return;
+      }
+      let chatObject = {
+        username: this.user.first_name,
+        id: this.user._id,
+        message: this.chat,
+        groupId: this.currentGroup._id,
+        createdAt: Date.now(),
+        groupSlug: this.currentGroup.slug
+      };
+
+      this.sendChat(chatObject);
+
+      this.chats.push(chatObject);
+      this.chat = "";
     }
   },
   async mounted() {
     await this.getAllGroups();
+    console.log({ hhhh: this.$store.state.user });
     this.currentGroup = this.getGroups[0];
     this.groupChats();
   },
   computed: {
-    ...mapGetters("app/", ["getGroups"])
+    ...mapGetters("app/", ["getGroups"]),
+    ...mapState("auth/", ["user"])
   }
 };
 </script>
