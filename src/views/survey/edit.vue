@@ -1,7 +1,7 @@
 <template>
   <div>
     <beat-loader
-      class="loader m-3"
+      class="loader m-3 centered"
       :color="'#0087db'"
       :loading="!isLoaded"
       :size="30"
@@ -36,7 +36,11 @@
               >For Recipients</label
             >
             <br />
-            <div class="p-4" v-for="(item, index) in formData.questions">
+            <div
+              class="p-4"
+              v-for="(item, index) in formData.questions"
+              :key="index"
+            >
               <d-card>
                 <div class="row m-2">
                   <d-input
@@ -65,6 +69,7 @@
                     class="m-2 d-flex flex-row"
                     v-for="(item2, index2) in formData.questions[index]
                       .possible_options"
+                    :key="index2"
                   >
                     <icon class="m-2 " size="lg" name="eclipse" /><d-input
                       class="col-md-4 m-2"
@@ -172,15 +177,20 @@
           <d-input-group class="justify-content-center m-2 ">
             <d-select v-model="time.expiry.days" class="col-md-2 mr-2">
               <option :value="undefined">Day:</option>
-              <option :value="i" v-for="i in 31">{{ i }}</option>
+              <option :value="i" v-for="i in 31" :key="i">{{ i }}</option>
             </d-select>
             <d-select class="col-md-2 mr-2" v-model="time.expiry.month">
               <option :value="undefined">Month:</option>
-              <option :value="i" v-for="i in 12">{{ i }}</option>
+              <option :value="i" v-for="i in 12" :key="i">{{ i }}</option>
             </d-select>
             <d-select class="col-md-2 mr-2 " v-model="time.expiry.year">
               <option :value="undefined">Year:</option>
-              <option v-for="year in years" :value="year">{{ year }}</option>
+              <option
+                v-for="(year, index) in years"
+                :value="year"
+                :key="index"
+                >{{ year }}</option
+              >
             </d-select>
             <input
               class="col-md-3 form-control"

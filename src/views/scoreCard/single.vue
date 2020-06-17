@@ -1,7 +1,7 @@
 <template>
   <div>
     <beat-loader
-      class="loader m-3"
+      class="loader m-3 centered"
       :color="'#0087db'"
       :loading="!isLoaded"
       :size="30"
@@ -18,10 +18,10 @@
           :closeable="false"
         ></Toasts>
         <div class="col-12 col-lg-6 col-md-6">
-          <div class="p-4">
+          <div class=" p-lg-3 p-md-3">
             <d-card
               class="m-3"
-              v-for="(sample, idx) in formData.templates"
+              v-for="(sample, idx) in formData.template"
               :key="idx"
             >
               <div class="row m-2">
@@ -31,24 +31,25 @@
                   placeholder="Enter The Field Name"
                 />
 
-                <!--                <input field_type="hidden" v-model="item.has_options === ?"/>-->
+                <!--                <input type="hidden" v-model="item.has_options === ?"/>-->
 
                 <d-select
                   class="col-md-3 col-3 text-dark col-lg-3 border-bottom m-2"
                   style="border: none;"
-                  v-model="sample.field_type"
+                  v-model="sample.type"
                 >
                   <option disabled selected :value="undefined"
-                    >Select Scorecard field_type</option
+                    >Select Scorecard Type</option
                   >
                   <option value="optional">DropDown</option>
                   <option value="direct">Short Text</option>
                 </d-select>
               </div>
-              <div v-show="sample.field_type === 'optional'">
+              <div v-show="sample.type === 'optional'">
                 <div
                   class="m-2 d-flex flex-row  "
                   v-for="(item, index) in sample.options"
+                  :key="index"
                 >
                   <icon class="m-2 " size="lg" name="eclipse" />
                   <d-input
@@ -58,7 +59,7 @@
                   />
                   <d-input
                     class="col-md-4 m-2"
-                    v-model="item.field_score"
+                    v-model="item.score"
                     placeholder="Score Value"
                   />
                   <icon
@@ -75,13 +76,13 @@
                     class=" "
                     @click="addOption(idx)"
                     name="add"
-                    v-show="sample.field_type === 'optional'"
+                    v-show="sample.type === 'optional'"
                   />
                 </div>
               </div>
-              <div v-show="sample.field_type === 'direct'">
+              <div v-show="sample.type === 'direct'">
                 <d-input
-                  v-model="sample.field_score"
+                  v-model="sample.score"
                   class="col-lg-4 col-md-4 col-6 m-3 "
                   placeholder="Enter Score"
                 />
@@ -90,7 +91,7 @@
                 <icon
                   size="lg"
                   class="ml-auto border-right"
-                  @click="deleteSample(idx, index)"
+                  @click="deleteSample(index)"
                   name="bin"
                 />
               </div>
@@ -101,19 +102,18 @@
                 style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
                 @click="addSample()"
               >
-                <icon name="add" /> <span> Add Sample</span>
+                <icon name="add" /> <span> Add Template</span>
               </d-button>
               <!--Add Quiz-->
             </div>
             <sla-button
               class="btn  m-3  text-uppercase "
               :text="buttons.text"
-              field_type="filled"
+              type="filled"
               size="md"
               :disabled="buttons.isLoading"
               @click="handleSubmit"
             />
-            <!--          <Editor />-->
           </div>
         </div>
       </d-row>
@@ -122,11 +122,9 @@
 </template>
 
 <script>
-import vue2Dropzone from "vue2-dropzone";
-import Multiselect from "vue-multiselect";
 import axios from "axios";
 import store from "@/store/index";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 const token = store.state.auth.token;
 export default {
   name: "create",
@@ -142,47 +140,38 @@ export default {
         text: "UPDATE"
       },
       formData: {
-        templates: []
+        template: []
       }
     };
   },
   methods: {
+    ...mapActions("app/", ["showScoreCard"]),
     addSample() {
-      this.formData.templates.push({
+      this.formData.template.push({
         field_name: "",
-        field_type: "direct",
+        type: "direct",
         options: []
       });
     },
     deleteSample(index) {
-      this.formData.templates.splice(index, 1);
+      this.formData.template.splice(index, 1);
     },
     addOption(index) {
-      this.formData.templates[index].options.push({
-        option: "",
-        field_score: ""
-      });
+      this.formData.template[index].options.push({ option: "", score: "" });
     },
     deleteOption(index, index2) {
-      this.formData.templates[index].options.splice(index2, 1);
+      this.formData.template[index].options.splice(index2, 1);
     },
+
     async handleSubmit() {
       this.buttons.isLoading = true;
       this.buttons.text = "Loading.....";
       const self = this;
       const token = store.state.auth.token;
-      let updatedScorecard = { templates: [] };
-      self.formData.templates.forEach(res => {
-        res.type = res.field_type;
-        res.score = res.field_score;
-        delete res.field_type;
-        delete res.field_score;
-        updatedScorecard.templates.push(res);
-      });
       let res = await axios
         .post(
           `${process.env.VUE_APP_API}/scorecard/create-template`,
-          updatedScorecard,
+          this.formData,
           {
             headers: {
               Authorization: `Bearer ${token} `
@@ -195,7 +184,7 @@ export default {
           self.quiz = [];
           self.$toast.success((self.error.message = res.data.message));
           setTimeout(function() {
-            self.$router.push({ path: "/scorecards/all" });
+            self.$router.go(-1);
           }, 2000);
         })
         .catch(ex => {
@@ -207,34 +196,31 @@ export default {
               : "An error occured")
           );
         });
-    },
-    ...mapActions("app/", ["showScoreCard"])
+    }
   },
   components: {
     Icon: () => import("@/components/SlaIcon"),
-    vueDropzone: vue2Dropzone,
-    Multiselect,
     Editor: () => import("@/components/add-new-post/Editor"),
     Icon: () => import("@/components/SlaIcon"),
     SlaButton: () => import("@/components/SlaButton"),
     Top: () => import("@/components/top")
   },
-  computed: {
-    ...mapGetters({
-      Template: "app/getScoreCard"
-    })
-  },
-  mounted() {
-    this.showScoreCard();
-    const self = this;
-    this.Template.forEach(res => {
-      // res.field_type = res.field_field_type;
-      // res.field_score = res.field_field_score;
-      // delete res.field_field_type;
-      // delete res.field_field_score;
-      self.formData.templates.push(res);
-      self.isLoaded = true;
+  async mounted() {
+    await this.showScoreCard();
+    this.getScoreCard.forEach(res => {
+      res.score = res.field_score;
+      res.type = res.field_type;
+      delete res._id;
+      delete res.field_score;
+      delete res.field_type;
+      console.log(res);
+
+      this.formData.template.push(res);
     });
+    this.isLoaded = true;
+  },
+  computed: {
+    ...mapGetters("app", ["getScoreCard"])
   }
 };
 </script>

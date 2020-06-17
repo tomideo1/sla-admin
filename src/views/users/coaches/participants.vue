@@ -1,7 +1,7 @@
 <template>
   <div>
     <beat-loader
-      class="loader m-3"
+      class="loader m-3 centered "
       :color="'#0087db'"
       :loading="!isLoaded"
       :size="30"

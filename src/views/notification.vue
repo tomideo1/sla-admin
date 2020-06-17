@@ -2,7 +2,7 @@
   <d-container fluid class="main-content-container px-4 py-4 mt-4">
     <div v-show="notifications.length == 0 && !isLoaded">
       <beat-loader
-        class="loader"
+        class="loader centered"
         :color="'#0087db'"
         :loading="true"
         :size="30"

@@ -40,6 +40,7 @@
               <div
                 class="m-2 d-flex flex-row  "
                 v-for="(item, index) in sample.options"
+                :key="item"
               >
                 <icon class="m-2 " size="lg" name="eclipse" />
                 <d-input
@@ -92,7 +93,7 @@
               style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
               @click="addSample()"
             >
-              <icon name="add" /> <span> Add Sample</span>
+              <icon name="add" /> <span> Add Template</span>
             </d-button>
             <!--Add Quiz-->
           </div>
