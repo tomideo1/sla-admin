@@ -172,7 +172,7 @@ export default {
   },
 
   async mounted() {
-    this.getAllLeaderboard();
+    await this.getAllLeaderboard();
     this.leaders.forEach(leader => {
       if (leader.user !== null) {
         switch (leader.position) {

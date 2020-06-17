@@ -467,10 +467,10 @@ export default {
       };
     }
   },
-  mounted() {
+  async mounted() {
     const token = store.state.auth.token;
     const self = this;
-    axios
+    await axios
       .get(
         `${process.env.VUE_APP_API}/annoucement/admin/get/` +
           self.$route.params.id,

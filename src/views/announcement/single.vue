@@ -188,11 +188,7 @@
           <glow-card class="col-md-8 col-lg-6 col-6  m-3 ">
             <div class="d-flex flex-row ">
               <h4 class="text-white">
-                {{
-                  Announcement.comments +
-                    Announcement.likes +
-                    Announcement.engagements
-                }}
+                {{ Announcement.engagements }}
               </h4>
               <span class="ml-3 mt-n1 "
                 ><icon name="arrow-up-white" size="xs" />
@@ -412,10 +408,10 @@ export default {
         });
     }
   },
-  mounted() {
+  async mounted() {
     const token = store.state.auth.token;
     const self = this;
-    axios
+    await axios
       .get(
         `${process.env.VUE_APP_API}/annoucement/admin/get/` +
           self.$route.params.id,

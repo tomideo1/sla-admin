@@ -146,8 +146,8 @@ export default {
 
     //vuex call to get all courses
   },
-  mounted() {
-    this.getAllUsers();
+  async mounted() {
+    await this.getAllUsers();
     const self = this;
     let res = axios
       .get(`${process.env.VUE_APP_API}/admin/coach/` + self.$route.params.id, {

@@ -80,7 +80,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllTickets();
+    await this.getAllTickets();
   }
 };
 </script>
@@ -101,6 +101,5 @@ export default {
   background: red;
   text-align: center;
   z-index: 1;
-  //font-weight:bold;
 }
 </style>

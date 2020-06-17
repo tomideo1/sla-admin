@@ -2,86 +2,53 @@
   <d-container fluid>
     <d-row class=" mt-5">
       <div class="col-lg-12">
-        <h6 class="text-dark title text-capitalize m-1">
-          Alphabetical Order (A -Z)
-        </h6>
-        <carousel refs="content">
-          <div
-            class="scroll m-2"
-            v-for="(survey, idx) in orderedSurvey"
-            :key="idx"
-          >
-            <d-card
-              @click="
-                $router.push({
-                  path: 'single/' + survey._id
-                })
-              "
-              :style="
-                'width:200px!important;height: 120px!important;' +
-                  'backgroundImage:url(' +
-                  survey.survey_image +
-                  ');' +
-                  ' background-size:cover; background-position:center'
-              "
-            >
-            </d-card>
+        <h4 class="font-poppings text-dark m-3">Survey</h4>
+        <div v-if="orderedSurvey.length > 0 || orderedSurvey === null">
+          <carousel refs="content">
             <div
-              style=" max-width: 200px;!important; word-wrap: break-word!important;"
+              class="scroll m-2"
+              v-for="(survey, idx) in orderedSurvey"
+              :key="idx"
             >
-              <p
-                class="title-card  text-capitalize mt-2 text-truncate  text-bold font-open-sans "
+              <d-card
+                @click="
+                  $router.push({
+                    path: 'single/' + survey._id
+                  })
+                "
+                :style="
+                  'width:200px!important;height: 120px!important;' +
+                    'backgroundImage:url(' +
+                    survey.survey_image +
+                    ');' +
+                    ' background-size:cover; background-position:center'
+                "
               >
-                {{ survey.title }}
+              </d-card>
+              <div
+                style=" max-width: 200px;!important; word-wrap: break-word!important;"
+              >
+                <p
+                  class="title-card  text-capitalize mt-2 text-truncate  text-bold font-open-sans "
+                >
+                  {{ survey.title }}
+                </p>
+              </div>
+
+              <p class=" text-capitalize mt-n4  " style="color: #999999;">
+                <!--              {{ survey.category.name }}-->
               </p>
             </div>
-
-            <p class=" text-capitalize mt-n4  " style="color: #999999;">
-              <!--              {{ survey.category.name }}-->
-            </p>
-          </div>
-        </carousel>
-      </div>
-      <div class="col-lg-12">
-        <h6 class="text-dark title text-capitalize m-1">
-          Most Recent
-        </h6>
-        <carousel refs="content">
-          <div
-            class="scroll m-2"
-            v-for="(survey, idx) in recentSurvey"
-            :key="idx"
+          </carousel>
+        </div>
+        <div v-else class="col">
+          <icon name="empty" class="m-3" size="retain" />
+          <span
+            class="font-poppings text-dark justify-content-center d-flex"
+            style="font-size: 16px;"
+            >You don’t have any announcements</span
           >
-            <d-card
-              @click="
-                $router.push({
-                  path: 'single/' + survey._id
-                })
-              "
-              :style="
-                'width:200px!important;height: 120px!important;' +
-                  'backgroundImage:url(' +
-                  survey.survey_image +
-                  ');' +
-                  ' background-size:cover; background-position:center'
-              "
-            >
-            </d-card>
-            <div
-              style=" max-width: 200px;!important; word-wrap: break-word!important;"
-            >
-              <p
-                class="title-card  text-capitalize mt-2 text-truncate  text-bold font-open-sans "
-              >
-                {{ survey.title }}
-              </p>
-            </div>
-
-            <p class=" text-capitalize mt-n4  " style="color: #999999;">
-              <!--              {{ survey.category.name }}-->
-            </p>
-          </div>
-        </carousel>
+        </div>
       </div>
     </d-row>
     <!-- Page Header -->

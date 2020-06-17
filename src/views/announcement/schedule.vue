@@ -119,7 +119,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllAnnouncements();
+    await this.getAllAnnouncements();
   },
   components: {
     Carousel: () => import("@/components/carousel"),

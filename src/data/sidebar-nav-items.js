@@ -179,13 +179,13 @@ export default function() {
         //     name: "all-scorecards"
         //   }
         // },
-        // {
-        //   title: "Surveys",
-        //   htmlBefore: "survey",
-        //   to: {
-        //     name: "all-surveys"
-        //   }
-        // },
+        {
+          title: "Surveys",
+          htmlBefore: "survey",
+          to: {
+            name: "coach-survey-all"
+          }
+        },
         {
           title: "Resources",
           htmlBefore: "resource",

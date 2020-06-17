@@ -252,7 +252,7 @@ export default {
     //vuex call to get all courses
   },
   async mounted() {
-    this.getAllAnnouncements();
+    await this.getAllAnnouncements();
     this.announcements.forEach(res => {
       this.recentAnnouncement.push(res);
     });

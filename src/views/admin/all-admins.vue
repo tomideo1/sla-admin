@@ -94,8 +94,8 @@ export default {
     ...mapActions("app/", ["getAllAdmins"])
   },
 
-  mounted() {
-    this.getAllAdmins();
+  async mounted() {
+    await this.getAllAdmins();
   }
 };
 </script>

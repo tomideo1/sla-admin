@@ -1509,8 +1509,8 @@ export default {
       );
     }
   },
-  mounted() {
-    this.getAllAnalysis();
+  async mounted() {
+    await this.getAllAnalysis();
     this.fetchPopularTimesData();
   }
 };

@@ -118,7 +118,7 @@ export default {
   methods: {},
   async mounted() {
     const self = this;
-    let res = axios
+    let res = await axios
       .get(`${process.env.VUE_APP_API}/notification/admin/getAll?page=371`, {
         headers: {
           Authorization: `Bearer ${token} `
