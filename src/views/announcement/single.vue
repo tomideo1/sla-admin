@@ -123,7 +123,7 @@
                       {{ comment.content }}
                     </span>
                     <small class="text-grey-500  mt-n2">{{
-                      getTimeDiff(comment.createdAt) + " h"
+                      comment.createdAt | chatTime
                     }}</small>
                   </p>
                 </span>
@@ -266,7 +266,7 @@ import axios from "axios";
 import store from "@/store/index";
 import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
-import helper from "../../helpers/helper";
+import helper from "@/helpers/helper";
 const token = store.state.auth.token;
 export default {
   name: "create",

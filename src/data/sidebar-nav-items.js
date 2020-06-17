@@ -193,13 +193,13 @@ export default function() {
             name: "coach-resource-home"
           }
         },
-        // {
-        //   title: "Help",
-        //   htmlBefore: "faq",
-        //   to: {
-        //     name: "coach-help-all"
-        //   }
-        // },
+        {
+          title: "Help",
+          htmlBefore: "faq",
+          to: {
+            name: "coach-help-all"
+          }
+        },
         {
           title: "Logout",
           htmlBefore: "logout",

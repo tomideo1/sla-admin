@@ -59,10 +59,10 @@
             </div>
           </d-row>
         </div>
-        <div class="col-md-10 col-lg-10 col-12">
-          <div class="row">
+        <div class="col-md-10 col-lg-10 col-12 ">
+          <div class="d-flex flex-row" style="overflow-x:auto">
             <course
-              class=" p-2 mb-3 courses x-flow mt-2 ml-2 py-2 d-flex overflow-x-auto"
+              class=" courses "
               v-for="(iter, idx) in user.courses"
               :key="idx"
               :title="iter.course.title"
@@ -70,7 +70,15 @@
               :id="iter.course.cover_image"
             />
           </div>
-          <div class="row"></div>
+          <p class="font-poppins m-4 text-bold text-black">Activity</p>
+          <div
+            class="d-flex flex-row m-4"
+            v-for="(activity, idx) in user.activity"
+            :key="idx"
+          >
+            <p class="font-open-sans">{{ activity.content }}y</p>
+            <span class="ml-5">{{ activity.createdAt | fromNow }}</span>
+          </div>
         </div>
       </d-row>
     </d-container>

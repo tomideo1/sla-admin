@@ -88,6 +88,29 @@ export default [
     ]
   },
   {
+    path: "/coach/survey",
+    component: () => import("@/views/coach/survey/index.vue"),
+    name: "coach-help-home",
+    meta: {
+      middleware: [auth]
+    },
+    children: [
+      {
+        path: "all",
+        name: "coach-survey-all",
+        component: () => import("@/views/coach/survey/home.vue")
+      },
+      {
+        path: "single/:id",
+        name: "coach-single-user",
+        component: () => import("@/views/coach/survey/single.vue"),
+        meta: {
+          middleware: [auth]
+        }
+      }
+    ]
+  },
+  {
     path: "/login",
     name: "login",
     meta: { layout: "no-sidebar" },

@@ -56,7 +56,7 @@
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
-import helper from "../../helpers/helper";
+import helper from "@/helpers/helper";
 export default {
   name: "polls-home",
   data() {

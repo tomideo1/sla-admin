@@ -172,7 +172,7 @@ import axios from "axios";
 import store from "@/store/index";
 import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
-import helper from "../../helpers/helper";
+import helper from "@/helpers/helper";
 const token = store.state.auth.token;
 export default {
   name: "create",

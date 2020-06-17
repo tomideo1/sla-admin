@@ -42,7 +42,7 @@
               {{ Announcement.title }}
             </h5>
             <small class="font-open-sans text-grey-500 ml-auto m-4">{{
-              $moment(Announcement.createdAt)
+              Announcement.createdAt | chatTime
             }}</small>
           </div>
           <p class="m-3 font-open-sans text-dark">
@@ -123,7 +123,7 @@
                       {{ comment.content }}
                     </span>
                     <small class="text-grey-500  mt-n2">{{
-                      getTimeDiff(comment.createdAt) + " h"
+                      comment.createdAt | chatTime
                     }}</small>
                   </p>
                 </span>
@@ -148,7 +148,7 @@
                       {{ comment.content }}
                     </span>
                     <small class="text-grey-500  mt-n2">{{
-                      getTimeDiff(comment.createdAt) + " h"
+                      comment.createdAt | chatTime
                     }}</small>
                   </p>
                   <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
@@ -188,7 +188,7 @@ import axios from "axios";
 import store from "@/store/index";
 import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
-import helper from "../../../helpers/helper";
+import helper from "@/helpers/helper";
 const token = store.state.auth.token;
 export default {
   name: "create",

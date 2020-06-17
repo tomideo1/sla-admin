@@ -1,36 +1,43 @@
 <template>
-  <d-container fluid>
-    <div class="row">
-      <div class="col-md-8">
-        <d-row>
-          <div class="col-md-7 col-lg-7 col-12">
-            <d-form-row class="p-4 mt-4">
-              <div class="form-group col-md-8 col-lg-8 col-12">
-                <label class="text-grey"> Feedback</label>
-                <d-form-textarea
-                  rows="5"
-                  v-model="feedback"
-                  placeholder="feedback"
-                  :readonly="true"
-                >
-                </d-form-textarea>
-              </div>
-            </d-form-row>
-            <!-- <div>
-              <sla-button
-                type="filled"
-                class="btn col-md-6 m-2"
-                size="md"
-                :disabled="button.isLoading"
-                :text="button.text"
-                @click="handleSubmit"
-              />
-            </div> -->
-          </div>
-        </d-row>
+  <d-container class="main-content-container px-4 py-4 " fluid>
+    <div class="row ">
+      <div class="col-md-8  p-4 ">
+        <h3 class="font-poppins text-black text-bold">Help</h3>
+
+        <div class="form-group">
+          <label class="text-grey font-open-sans"> Feedback / Complain </label>
+          <d-textarea rows="10"> </d-textarea>
+        </div>
       </div>
-      <div class="col-md-4">
-        <div v-if="Tickets.length < 1" class="col"></div>
+      <div class="col-md-4 border-left p-4">
+        <div v-if="Tickets.length > 0" class="col">
+          <h5 class="font-poppins text-black text-bold mb-3">My Tickets</h5>
+
+          <d-row class="m-3 border-bottom">
+            <div class="m-3">
+              <h6 class="font-poppins text-grey" style="color: #999999;">
+                344574
+              </h6>
+              <div style="border: 1px solid #E7E6E6;box-sizing: border-box;">
+                <p class="font-open-sans text-dark m-3">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam, purus sit amet luctus venenatis, lectus magna.
+                </p>
+              </div>
+            </div>
+            <div class="m-3">
+              <h6 class="font-poppins text-grey" style="color: #999999;">
+                Response From Admin
+              </h6>
+              <div style="border: 1px solid #E7E6E6;box-sizing: border-box;">
+                <p class="font-open-sans text-dark m-3">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam, purus sit amet luctus venenatis, lectus magna.
+                </p>
+              </div>
+            </div>
+          </d-row>
+        </div>
         <div v-else class="col">
           <icon name="empty" class="m-3" size="retain" />
           <span

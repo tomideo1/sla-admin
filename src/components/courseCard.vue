@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="details-card d-flex flex-column">
+    <div class="details-card d-flex flex-column m-2">
       <div class="image position-relative">
         <img class="object-cover" :src="image" alt="" />
       </div>
-      <div class="p-2">
-        <span class="text-bold truncate truncate-2">
-          <p class="font-open-sans course-title">{{ title }}</p></span
+      <div class="">
+        <span class="text-bold mtruncate truncate-2">
+          <p class="font-open-sans course-title m-2">{{ title }}</p></span
         >
       </div>
       <div
-        class=" p-2 d-flex justify-content-between text-grey"
+        class=" d-flex justify-content-between text-grey"
         :class="[this.completed ? 'mb-1' : '']"
       >
         <span v-if="completed" class="text-bold">Completed</span>
-        <icon class="z-index-0" name="video-icon" />
+        <icon class="z-index-0 m-2" name="video-icon" />
       </div>
     </div>
   </div>

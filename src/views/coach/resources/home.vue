@@ -51,7 +51,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import helper from "../../../helpers/helper";
+import helper from "@/helpers/helper";
 export default {
   name: "home",
   data() {

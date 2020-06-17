@@ -10,7 +10,7 @@ Vue.filter("chatTime", value => {
 Vue.filter("fromNow", value => {
   return formatDistanceToNowStrict(new Date(parseISO(value)), {
     addSuffix: true,
-    unit: "hour"
+    unit: "day"
   });
 });
 

@@ -466,7 +466,7 @@ import VueTrix from "vue-trix";
 import axios from "axios";
 import Multiselect from "vue-multiselect";
 import store from "@/store/index";
-import helper from "../../helpers/helper";
+import helper from "@/helpers/helper";
 export default {
   name: "course-create",
   data: () => {
