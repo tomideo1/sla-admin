@@ -39,7 +39,13 @@ export default {
   computed: {
     ...mapState("auth/", ["user"]),
     position() {
-      return this.chat.id == this.user._id ? "right" : "left";
+      let res;
+      if (this.chat.id == this.user._id || this.chat.admin == this.user._id) {
+        res = "right";
+      } else {
+        res = "left";
+      }
+      return res;
     }
   }
 };
