@@ -136,7 +136,7 @@ export const getAllAnalysis = async ({ commit }) => {
 
 export const getAllResourceCategories = async ({ commit }) => {
   let res = await Api.get(`/resource-category/admin/list`, true);
-
+  console.log({ res });
   if (res.status == 200) {
     commit("setResourceCategories", res.data.data);
   } else {
@@ -152,4 +152,20 @@ export const showScoreCard = async ({ commit }) => {
   } else {
     return res;
   }
+};
+
+export const getGroupMessages = async ({ commit }, payload) => {
+  let res = await Api.get(`/group/${payload.groupId}/group-messages`, true);
+  console.log({ res });
+  let msg = res.data.data.group_messages.map(x => x.message);
+  return msg;
+  // commit("populateMessage", {messages: res.data.data.group_messages, groupId: payload.groupId})
+};
+
+export const sendChat = async ({ commit }, payload) => {
+  let obj = {
+    message: payload
+  };
+  let res = await Api.post(`/group/admin/send-message`, obj, true);
+  console.log(res.status);
 };
