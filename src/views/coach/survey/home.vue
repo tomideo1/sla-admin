@@ -1,54 +1,53 @@
 <template>
   <d-container fluid>
+    <h4 class="font-poppings text-dark m-3">Survey</h4>
     <d-row class=" mt-5">
-      <div class="col-lg-12">
-        <h4 class="font-poppings text-dark m-3">Survey</h4>
-        <div v-if="orderedSurvey.length > 0 || orderedSurvey === null">
-          <carousel refs="content">
-            <div
-              class="scroll m-2"
-              v-for="(survey, idx) in orderedSurvey"
-              :key="idx"
-            >
-              <d-card
-                @click="
-                  $router.push({
-                    path: 'single/' + survey._id
-                  })
-                "
-                :style="
-                  'width:200px!important;height: 120px!important;' +
-                    'backgroundImage:url(' +
-                    survey.survey_image +
-                    ');' +
-                    ' background-size:cover; background-position:center'
-                "
-              >
-              </d-card>
-              <div
-                style=" max-width: 200px;!important; word-wrap: break-word!important;"
-              >
-                <p
-                  class="title-card  text-capitalize mt-2 text-truncate  text-bold font-open-sans "
-                >
-                  {{ survey.title }}
-                </p>
-              </div>
-
-              <p class=" text-capitalize mt-n4  " style="color: #999999;">
-                <!--              {{ survey.category.name }}-->
-              </p>
-            </div>
-          </carousel>
-        </div>
-        <div v-else class="col">
-          <icon name="empty" class="m-3" size="retain" />
-          <span
-            class="font-poppings text-dark justify-content-center d-flex"
-            style="font-size: 16px;"
-            >You don’t have any announcements</span
+      <div
+        class="col-lg-12 col-md-12 col-12 row"
+        v-if="surveys.length > 0 || surveys === null"
+      >
+        <div
+          class="m-1 mx-auto mx-lg-1 mx-md-1"
+          v-for="(survey, idx) in surveys"
+          :key="idx"
+        >
+          <d-card
+            @click="
+              $router.push({
+                path: 'single/' + survey._id
+              })
+            "
+            :style="
+              'width:200px!important;height: 120px!important;' +
+                'backgroundImage:url(' +
+                survey.survey_image +
+                ');' +
+                ' background-size:cover; background-position:center'
+            "
           >
+          </d-card>
+          <div
+            style=" max-width: 200px;!important; word-wrap: break-word!important;"
+          >
+            <p
+              class="title-card  text-capitalize mt-2 text-truncate  text-bold font-open-sans "
+            >
+              {{ survey.title }}
+            </p>
+          </div>
+
+          <p class=" text-capitalize mt-n4  " style="color: #999999;">
+            <!--              {{ survey.category.name }}-->
+          </p>
         </div>
+      </div>
+      <div class="col" v-else>
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any surveys</span
+        >
       </div>
     </d-row>
     <!-- Page Header -->
@@ -65,9 +64,7 @@ export default {
   name: "course-home",
   data() {
     return {
-      ref_data: "content",
-      recentSurvey: [],
-      orderedSurvey: undefined
+      ref_data: "content"
     };
   },
   computed: {
@@ -83,12 +80,6 @@ export default {
   },
   async mounted() {
     await this.getAllSurveys();
-    this.surveys.forEach(res => {
-      this.recentSurvey.push(res);
-    });
-
-    this.recentSurvey.sort(helper.GetSortOrder("updatedAt"));
-    this.orderedSurvey = this.surveys.sort(helper.GetSortOrder("title"));
   },
   components: {
     Carousel: () => import("@/components/carousel"),

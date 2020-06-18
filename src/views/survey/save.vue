@@ -37,7 +37,7 @@
             </div>
 
             <p class=" text-capitalize mt-n4  " style="color: #999999;">
-              <!--              {{ survey.category.name }}-->
+              {{ survey.responses + " Responses" }}
             </p>
           </div>
         </carousel>

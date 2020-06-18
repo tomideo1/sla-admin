@@ -338,7 +338,7 @@ const baseRoutes = [
       },
       {
         path: "save",
-        name: "saedv-poll",
+        name: "saved-poll",
         component: () => import("@/views/poll/save.vue"),
         meta: {
           middleware: [auth]

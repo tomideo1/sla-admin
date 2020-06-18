@@ -172,13 +172,13 @@ export default function() {
         //     name: "all-groups"
         //   }
         // },
-        // {
-        //   title: "Scorecard",
-        //   htmlBefore: "scorecard",
-        //   to: {
-        //     name: "all-scorecards"
-        //   }
-        // },
+        {
+          title: "Scorecard",
+          htmlBefore: "scorecard",
+          to: {
+            name: "all-coach-scorecards"
+          }
+        },
         {
           title: "Surveys",
           htmlBefore: "survey",

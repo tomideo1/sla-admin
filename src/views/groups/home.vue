@@ -6,7 +6,7 @@
           Alphabetical Order (A -Z)
         </h6>
         <carousel refs="content">
-          <div class="scroll m-2" v-for="(group, idx) in Groups" :key="idx">
+          <div class="scroll m-2" v-for="(group, idx) in AllGroups" :key="idx">
             <d-card
               :style="
                 'width:200px!important;height: 120px!important;' +
@@ -22,7 +22,7 @@
               style=" max-width: 200px;!important; word-wrap: break-word!important;"
             >
               <p
-                class="title-card  text-capitalize mt-2  text-bold font-open-sans "
+                class="title-card text-truncate text-capitalize mt-2  text-bold font-open-sans "
               >
                 {{ group.title }}
               </p>
@@ -55,9 +55,13 @@
                   ' background-size:cover; background-position:center'
               "
             >
-              <p class="category-text text-uppercase mx-auto my-auto">
-                {{ category.name }}
-              </p>
+              <div style="max-width: 200px;!important;">
+                <p
+                  class="category-text  text-truncate text-uppercase mt-5 mx-auto"
+                >
+                  {{ category.name }}
+                </p>
+              </div>
             </d-card>
           </div>
         </carousel>
@@ -67,7 +71,11 @@
           Most Recent
         </h6>
         <carousel refs="content">
-          <div class="scroll m-2" v-for="(group, idx) in Groups" :key="idx">
+          <div
+            class="scroll m-2"
+            v-for="(group, idx) in fetchLatest"
+            :key="idx"
+          >
             <d-card
               :style="
                 'width:200px!important;height: 120px!important;' +
@@ -82,7 +90,7 @@
               style=" max-width: 200px;!important; word-wrap: break-word!important;"
             >
               <p
-                class="title-card  text-capitalize mt-2  text-bold font-open-sans "
+                class="title-card text-truncate text-capitalize mt-2  text-bold font-open-sans "
               >
                 {{ group.title }}
               </p>
@@ -101,9 +109,10 @@
   </d-container>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
+import helper from "@/helpers/helper";
 export default {
   name: "polls-home",
   data() {
@@ -118,10 +127,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      Groups: "app/getGroups",
+      AllGroups: "app/getGroups",
       Categories: "app/getCategories"
       // maps courses to current computed resource
-    })
+    }),
+    ...mapState("app/", ["Groups"]),
+
+    fetchLatest() {
+      return this.Groups.sort(helper.GetSortOrder("createdAt")).reverse();
+    }
   },
   methods: {
     ...mapActions("app/", ["getAllGroups", "getAllCategories"])

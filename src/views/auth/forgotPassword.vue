@@ -200,8 +200,7 @@ export default {
 }
 
 .bg-image {
-  background-image: linear-gradient(rgba(30, 136, 229, 0.19)),
-    url("https://res.cloudinary.com/dwpu7jpku/image/upload/v1584548572/auth-bg_i6msdh.png");
+  background-image: url("https://res.cloudinary.com/dwpu7jpku/image/upload/v1592506403/Image_from_iOS_1_1_izhxu5.png");
   background-size: cover;
   background-position: center;
 }

@@ -111,6 +111,34 @@ export default [
     ]
   },
   {
+    path: "/coach/scorecards",
+    meta: {
+      middleware: [auth]
+    },
+    name: "coach-scorecards",
+    component: () => import("@/views/coach/scoreCard/index.vue"),
+
+    children: [
+      {
+        path: "all",
+        name: "all-coach-scorecards",
+        component: () => import("@/views/coach/scoreCard/home.vue"),
+        meta: {
+          middleware: [auth]
+        }
+      },
+
+      {
+        path: "single",
+        name: "single-user-scorecard",
+        component: () => import("@/views/coach/scoreCard/single.vue"),
+        meta: {
+          middleware: [auth]
+        }
+      }
+    ]
+  },
+  {
     path: "/login",
     name: "login",
     meta: { layout: "no-sidebar" },

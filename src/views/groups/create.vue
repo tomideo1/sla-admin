@@ -228,9 +228,31 @@
                 </span>
               </div>
               <d-col md="6">
-                <d-btn class="btn btn-primary">
+                <sla-button
+                  size="sm "
+                  text="ASSING"
+                  type="filled"
+                  class="btn btn-primary"
+                  @click="formData.coaches.push(coach._id)"
+                  v-if="!formData.coaches.includes(coach._id)"
+                >
                   Assign
-                </d-btn>
+                </sla-button>
+                <sla-button
+                  class="btn "
+                  size="sm "
+                  style="background: #000000!important;"
+                  text="UNASSIGN"
+                  type="filled"
+                  @click="
+                    formData.coaches.splice(
+                      formData.coaches.indexOf(coach._id),
+                      1
+                    )
+                  "
+                  v-if="formData.coaches.includes(coach._id)"
+                >
+                </sla-button>
               </d-col>
             </d-row>
           </div>
@@ -297,7 +319,8 @@ export default {
         list_category: [],
         list_tags: [],
         cover_image: "",
-        users: []
+        users: [],
+        coaches: []
       }
     };
   },
@@ -419,7 +442,7 @@ export default {
         this.pageNumber--;
       }
     },
-    ...mapActions("app/", ["getAllUsers"]),
+    ...mapActions("app/", ["getAllUsers", "getAllAdmins"]),
     addAll(user) {
       if (!this.formData.users.includes(user._id)) {
         return this.formData.users.push(user._id);
@@ -434,7 +457,7 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     this.$refs.courseImage.dropzone.on("addedfile", file => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -447,8 +470,8 @@ export default {
         self.formData.cover_image = "data:image/jpg/png;base64," + encoded;
       };
     });
-    this.getAllUsers();
-    this.getAllAdmins();
+    await this.getAllUsers();
+    await this.getAllAdmins();
     const self = this;
     axios
       .get(`${process.env.VUE_APP_API}/tag/admin/list`, {
