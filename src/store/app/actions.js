@@ -162,6 +162,16 @@ export const getGroupMessages = async ({ commit }, payload) => {
   // commit("populateMessage", {messages: res.data.data.group_messages, groupId: payload.groupId})
 };
 
+export const getAnnouncementDetails = async ({ commit }, payload) => {
+  let res = await Api.get(`/annoucement/admin/get/${payload.id}`, true);
+  if (res.status == 200) {
+    return res.data.data;
+  } else {
+    return res;
+  }
+  // commit("populateMessage", {messages: res.data.data.group_messages, groupId: payload.groupId})
+};
+
 export const sendChat = async ({ commit }, payload) => {
   let obj = {
     message: payload

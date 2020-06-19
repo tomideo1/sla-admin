@@ -1,7 +1,7 @@
 <template>
   <d-container fluid class="main-content-container px-4 py-4 mt-4 ">
     <div class="d-flex flex-lg-row flex-column flex-md-row flex-grow-1">
-      <div class="mr-4 w-lg-50 w-md-50  w-100">
+      <div class="mr-4 col-md-3  col-12 col-lg-3">
         <h4 class="m-3 font-open-sans text-black">Messages</h4>
         <message-card
           v-for="dataObj in getGroups"
@@ -17,7 +17,7 @@
         />
       </div>
       <div
-        class=" w-100  border-left shadow-sm "
+        class=" w-100 d-none d-lg-block d-md-block   border-left shadow-sm "
         style="background: #FAFAFA;!important; min-height:100vh!important;overflow:auto"
       >
         <div class=" nav nav-bar bg-white sticky-top container-fluid p-3">
