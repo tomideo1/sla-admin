@@ -139,6 +139,14 @@ export default [
     ]
   },
   {
+    path: "coach/profile",
+    name: "coach-profile",
+    component: () => import("@/views/coach/profile.vue"),
+    meta: {
+      middleware: [auth]
+    }
+  },
+  {
     path: "/login",
     name: "login",
     meta: { layout: "no-sidebar" },

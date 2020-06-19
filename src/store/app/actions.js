@@ -169,3 +169,18 @@ export const sendChat = async ({ commit }, payload) => {
   let res = await Api.post(`/group/admin/send-message`, obj, true);
   console.log(res.status);
 };
+
+export const submitSurveyApi = async ({ commit }, payload) => {
+  let res = await Api.post(
+    `survey/coach/${payload.id}/submit`,
+    {
+      answers: payload.answers
+    },
+    true
+  );
+  if (res && res.status == 200) {
+    return res;
+  } else {
+    return res;
+  }
+};

@@ -41,7 +41,21 @@
     <li class="nav-item mr-2 dropdown border-left">
       <router-link
         class="nav-link  text-nowrap px-3 mt-2"
+        v-if="Admin.type === 'admin'"
         :to="{ name: 'profile', params: { admin: Admin } }"
+      >
+        <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
+        <img
+          class="user-avatar rounded-circle  "
+          width="25px"
+          src="@/assets/images/avatars/user.png"
+          alt="User Avatar"
+        />
+      </router-link>
+      <router-link
+        class="nav-link  text-nowrap px-3 mt-2"
+        v-else
+        :to="{ name: 'coach-profile', params: { admin: Admin } }"
       >
         <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
         <img
