@@ -99,17 +99,6 @@
           <div class="p-4" v-for="(item, index) in lesson.fields">
             <div class="row">
               <h5 class="text-dark col-md-6 ">Lesson {{ index + 1 }}</h5>
-              <label class="ml-auto col-md-4 ">
-                Order
-                <d-select class=" col-md-4" v-model="item.lesson_number">
-                  <option
-                    :selected="item.lesson_number === index + 1"
-                    :value="i"
-                    v-for="i in lesson.fields.length"
-                    >{{ i }}</option
-                  >
-                </d-select>
-              </label>
             </div>
             <d-card>
               <div class="row m-2">
@@ -199,7 +188,7 @@
             <d-button
               class="btn btn-outline-light  mt-4  p-3 col-md-8 "
               style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-              @click="addValue()"
+              @click="addValue(lesson.fields.length)"
             >
               <icon name="add" /> <span> Add Lesson</span>
             </d-button>
@@ -510,15 +499,7 @@ export default {
         }
       },
       lesson: {
-        fields: [
-          {
-            title: undefined,
-            lesson_type: undefined,
-            details: undefined,
-            content: undefined,
-            lesson_number: undefined
-          }
-        ]
+        fields: []
       },
       quiz: [
         {
@@ -562,8 +543,9 @@ export default {
     deleteValue(index) {
       this.lesson.fields.splice(index, 1);
     },
-    addValue() {
-      this.lesson.fields.push({});
+    addValue(index) {
+      console.log(index);
+      this.lesson.fields.push({ lesson_number: index + 1 });
       // this.$emit('input', this.fields);
     },
     addQuiz() {
