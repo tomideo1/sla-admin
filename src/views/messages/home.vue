@@ -1,7 +1,7 @@
 <template>
   <d-container fluid class="main-content-container px-4 py-4 mt-4 ">
-    <d-row>
-      <div class="col-md-4">
+    <div class="d-flex flex-lg-row flex-column flex-md-row flex-grow-1">
+      <div class="mr-4 w-lg-50 w-md-50  w-100">
         <h4 class="m-3 font-open-sans text-black">Messages</h4>
         <message-card
           v-for="dataObj in getGroups"
@@ -11,12 +11,14 @@
             getGroup(dataObj._id);
             currentGroup = dataObj;
             groupChats();
+            selectItem(dataObj._id);
           "
+          :class="{ active: dataObj._id === activeItem }"
         />
       </div>
       <div
-        class="col-md-8 border-left shadow-sm "
-        style="background: #FAFAFA;!important max-height:50%!important; overflow-y:auto"
+        class=" w-100  border-left shadow-sm "
+        style="background: #FAFAFA;!important; min-height:100vh!important;overflow:auto"
       >
         <div class=" nav nav-bar bg-white sticky-top container-fluid p-3">
           <h5 class="font-open-sans text-dark text-black">
@@ -24,17 +26,18 @@
           </h5>
         </div>
         <div class=" d-flex flex-column justify-content-between ">
-          <div ref="chatsection" class="section px-1 chat-content">
+          <div ref="chatsection" class="section m-2 px-1 chat-content">
             <chat-bubble :key="x._id" v-for="x in chats" :chat="x" />
           </div>
           <div
-            class="position-fixed width-100 bottom-0 z-index-1 bg-white py-12 shadow-3"
+            class="  bottom-0 z-index-1   py-2 shadow-sm"
+            style="background: #FAFAFA;!important; width:100%; position:fixed"
           >
-            <chat-box class="width-100" @send="processChat" v-model="chat" />
+            <chat-box class="w-70" @send="processChat" v-model="chat" />
           </div>
         </div>
       </div>
-    </d-row>
+    </div>
   </d-container>
 </template>
 <script>
@@ -46,7 +49,8 @@ export default {
       chat: "",
       chats: [],
       currentGroup: {},
-      activeGroup: ""
+      activeGroup: "",
+      activeItem: null
     };
   },
   components: {
@@ -61,6 +65,9 @@ export default {
       return (this.currentGroup = this.getGroups.filter(
         res => res._id === groupId
       ));
+    },
+    selectItem(i) {
+      this.activeItem = i;
     },
     async groupChats() {
       let chats = await this.getGroupMessages({
@@ -99,7 +106,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .chat-content {
   height: 100vh;
 }
@@ -157,16 +164,25 @@ export default {
 }
 
 .position-fixed {
-  position: fixed;
+  position: fixed !important;
 }
 .z-index-1 {
-  z-index: 1;
+  z-index: 1 !important;
 }
 
 .z-index-0 {
-  z-index: 0;
+  z-index: 0 !important;
 }
 .bottom-0 {
-  bottom: 0;
+  bottom: 0 !important;
+}
+.w-lg-50 {
+  width: 50% !important;
+}
+.w-70 {
+  width: 70% !important;
+}
+.active {
+  border: 0.5px solid #0087db;
 }
 </style>

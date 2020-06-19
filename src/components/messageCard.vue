@@ -7,18 +7,17 @@
       <div class="ml-4 w-100">
         <div class="d-flex align-items-center justify-content-between mb-4">
           <div class="text-black">{{ dataObj.title }}</div>
-          <small>6:34 PM</small>
+          <small></small>
         </div>
         <div class="d-flex">
           <div class="w-100 text-truncate ">
             <!-- {{ dataObj.last_message.message }} -->
-            Last Message in the group
           </div>
           <div
             class="counter p-1 text-white d-flex align-items-center justify-content-center"
           >
             <!-- <small>{{ dataObj.group_unread }}</small> -->
-            <small>{{ "1" }}</small>
+            <!--<small>{{  }}</small> -->
           </div>
         </div>
       </div>
