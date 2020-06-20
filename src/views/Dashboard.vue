@@ -775,7 +775,7 @@
           class="  col-md-12  col-lg-12 "
           style="border-radius:0!important;"
         >
-          <div class="row " style="max-height400px;overflow-y:auto">
+          <div class="row " style="max-height:400px;overflow-y:auto">
             <div class="col-md-12 col-lg-12 col-12">
               <div class="row ">
                 <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">

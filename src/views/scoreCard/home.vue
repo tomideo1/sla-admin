@@ -1,12 +1,12 @@
 <template>
   <d-container fluid class="main-content-container px-4">
     <d-row>
-      <div class="col-12 col-lg-3 col-md-6" v-show="false">
-        <d-card class="m-3">
+      <div class="col-12 col-lg-3 col-md-6" v-if="scorecards.length > 0">
+        <d-card class="m-3" v-for="(user, index) in scorecards" :key="index">
           <d-card-header class="border-bottom text-center">
             <!-- User Avatar -->
             <div class="mb-3 mx-auto">
-              <!-- <sla-avatar
+              <sla-avatar
                 class="avatar"
                 v-if="user.image === null"
                 size="xl"
@@ -17,16 +17,11 @@
                 v-else
                 size="xl"
                 :user="{ image: user.image }"
-              /> -->
-              <sla-avatar
-                class="avatar"
-                size="xl"
-                :user="{ name: 'Kesha Mbatswe' }"
               />
             </div>
 
             <!-- User Name -->
-            <h5 class="mb-0">{{ "Kesha Mbatswe" }}</h5>
+            <h5 class="mb-0">{{ user.first_name }}</h5>
 
             <!-- User Job Title -->
             <!--          <span class="text-muted d-block mb-2">{{ userDetails.jobTitle }}</span>-->
@@ -44,7 +39,7 @@
           </d-card-header>
         </d-card>
       </div>
-      <div class="col">
+      <div class="col" v-else>
         <icon name="empty" class="m-3" size="retain" />
         <span
           class="font-poppings text-dark justify-content-center d-flex"
@@ -56,10 +51,22 @@
   </d-container>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
-    avatar: () => import("@/components/avatar.vue"),
+    slaAvatar: () => import("@/components/avatar.vue"),
     Icon: () => import("@/components/SlaIcon.vue")
+  },
+  methods: {
+    ...mapActions("app/", ["getUserScoreCards"])
+  },
+  computed: {
+    ...mapGetters({
+      scorecards: "app/getUserScorecard"
+    })
+  },
+  async mounted() {
+    await this.getUserScoreCards();
   }
 };
 </script>

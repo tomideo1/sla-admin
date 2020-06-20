@@ -17,5 +17,7 @@ export default {
   Analytics: null,
   ResourceCategories: null,
   ScoreCard: null,
-  AssignedUsers: null
+  AssignedUsers: null,
+  UserScoreCards: null,
+  CoachTickets: null
 };

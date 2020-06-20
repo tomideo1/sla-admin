@@ -1,39 +1,59 @@
 <template>
   <d-container class="main-content-container px-4 py-4 " fluid>
+    <Toasts
+      :show-progress="false"
+      :rtl="false"
+      :max-messages="5"
+      :time-out="4000"
+      :closeable="false"
+    ></Toasts>
     <div class="row ">
       <div class="col-md-8  p-4 ">
         <h3 class="font-poppins text-black text-bold">Help</h3>
 
         <div class="form-group">
           <label class="text-grey font-open-sans"> Feedback / Complain </label>
-          <d-textarea rows="10"> </d-textarea>
+          <d-textarea rows="10" v-model="feedback"> </d-textarea>
         </div>
+        <sla-button
+          type="filled"
+          size="md"
+          :text="text"
+          @click="submitTicket"
+          :disabled="isLoading"
+          class="btn col-md-4 float-right "
+        />
       </div>
-      <div class="col-md-4 border-left p-4">
+      <div
+        class="col-md-4 border-left p-4"
+        style="max-height:100vh; overflow-y:auto"
+      >
         <div v-if="Tickets.length > 0" class="col">
           <h5 class="font-poppins text-black text-bold mb-3">My Tickets</h5>
 
-          <d-row class="m-3 border-bottom">
-            <div class="m-3">
+          <d-row class="m-3 ">
+            <div
+              class="m-3 border-bottom"
+              v-for="(ticket, index) in Tickets"
+              :key="index"
+            >
               <h6 class="font-poppins text-grey" style="color: #999999;">
-                344574
+                {{ ticket.indicator_num }}
               </h6>
               <div style="border: 1px solid #E7E6E6;box-sizing: border-box;">
                 <p class="font-open-sans text-dark m-3">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                  aliquam, purus sit amet luctus venenatis, lectus magna.
+                  {{ ticket.feedback }}
                 </p>
               </div>
-            </div>
-            <div class="m-3">
-              <h6 class="font-poppins text-grey" style="color: #999999;">
-                Response From Admin
-              </h6>
-              <div style="border: 1px solid #E7E6E6;box-sizing: border-box;">
-                <p class="font-open-sans text-dark m-3">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                  aliquam, purus sit amet luctus venenatis, lectus magna.
-                </p>
+              <div class="m-3" v-if="ticket.admin !== null">
+                <h6 class="font-poppins text-grey" style="color: #999999;">
+                  Response From Admin
+                </h6>
+                <div style="border: 1px solid #E7E6E6;box-sizing: border-box;">
+                  <p class="font-open-sans text-dark m-3">
+                    {{ ticket.response }}
+                  </p>
+                </div>
               </div>
             </div>
           </d-row>
@@ -58,29 +78,60 @@ import store from "@/store/index";
 export default {
   name: "home",
   components: {
-    Icon: () => import("@/components/SlaIcon")
+    Icon: () => import("@/components/SlaIcon"),
+    SlaButton: () => import("@/components/SlaButton")
   },
   data() {
     return {
-      feedback: ""
+      feedback: "",
+      isLoading: false,
+      text: "SUBMIT TICKET",
+      error: {
+        message: "",
+        data: ""
+      }
     };
   },
   computed: {
     ...mapGetters({
-      Tickets: "app/getTickets"
+      Tickets: "app/getCoachTickets"
       // maps courses to current computed resource
     })
   },
   methods: {
-    ...mapActions("app/", ["getAllTickets"]),
+    ...mapActions("app/", ["getAllCoachTickets", "submitHelp"]),
     getDateFormat(date) {
       return this.$moment(date).format("YYYY/MM/DD");
+    },
+    async submitTicket() {
+      this.isLoading = true;
+      this.text = "loading....";
+      let res = await this.submitHelp({
+        feedback: this.feedback
+      });
+      if (res && res.status == 201) {
+        this.isLoading = false;
+        this.text = "SUBMIT TICKET";
+        this.$toast.success(
+          (this.error.message = res.data
+            ? res.data.message
+            : "An error occured")
+        );
+      } else {
+        this.isLoading = false;
+        this.text = "SUBMIT TICKET";
+        this.$toast.error(
+          (this.error.message = res.data
+            ? res.data.message
+            : "An error occured")
+        );
+      }
     }
 
     //vuex call to get all courses
   },
   async mounted() {
-    await this.getAllTickets();
+    await this.getAllCoachTickets();
   }
 };
 </script>

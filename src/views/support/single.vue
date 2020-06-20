@@ -24,9 +24,16 @@
               <label class="text-grey"> Name</label>
               <d-form-input
                 type="text"
+                v-if="Ticket.user !== null && Ticket.user !== undefined"
                 :value="Ticket.user.first_name + ' ' + Ticket.user.last_name"
               />
+              <d-form-input
+                type="text"
+                v-if="Ticket.coach !== null && Ticket.coach !== undefined"
+                :value="Ticket.coach.first_name + ' ' + Ticket.coach.last_name"
+              />
             </div>
+
             <div class="form-group col-md-8 col-lg-8 col-12">
               <label class="text-grey"> Feedback</label>
               <d-form-textarea

@@ -66,3 +66,11 @@ export const getResourceCategories = state => {
 export const getScoreCard = state => {
   return state.ScoreCard;
 };
+
+export const getUserScorecard = state => {
+  return state.UserScoreCards;
+};
+
+export const getCoachTickets = state => {
+  return state.CoachTickets;
+};

@@ -154,6 +154,16 @@ export const showScoreCard = async ({ commit }) => {
   }
 };
 
+export const getUserScoreCards = async ({ commit }) => {
+  let res = await Api.get(`/scorecard/getAll`, true);
+
+  if (res.status == 200) {
+    commit("setUserScoreCards", res.data);
+  } else {
+    return res;
+  }
+};
+
 export const getGroupMessages = async ({ commit }, payload) => {
   let res = await Api.get(`/group/${payload.groupId}/group-messages`, true);
   console.log({ res });
@@ -188,6 +198,29 @@ export const submitSurveyApi = async ({ commit }, payload) => {
     },
     true
   );
+  if (res && res.status == 200) {
+    return res;
+  } else {
+    return res;
+  }
+};
+
+export const getAllCoachTickets = async ({ commit }) => {
+  let res = await Api.get(`help/coach/list`, true);
+  if (res.status === 200) {
+    commit("setCoachTickets", res.data);
+  } else return res;
+};
+
+export const submitHelp = async ({ commit }, payload) => {
+  let res = await Api.post(
+    `help/coach/create`,
+    {
+      feedback: payload.feedback
+    },
+    true
+  );
+
   if (res && res.status == 200) {
     return res;
   } else {

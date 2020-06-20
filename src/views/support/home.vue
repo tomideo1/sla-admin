@@ -18,14 +18,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="(ticket, idx) in Tickets"
-              :key="idx"
-              v-if="ticket.user !== null && ticket.user !== undefined"
-            >
+            <tr v-for="(ticket, idx) in Tickets" :key="idx">
               <td class="p-4">{{ (idx += 1) }}</td>
-              <td class="p-4">
+              <td
+                class="p-4"
+                v-if="ticket.user !== null && ticket.user !== undefined"
+              >
                 {{ ticket.user.first_name + " " + ticket.user.last_name }}
+              </td>
+              <td
+                class="p-4"
+                v-if="ticket.coach !== null && ticket.coach !== undefined"
+              >
+                {{ ticket.coach.first_name + " " + ticket.coach.last_name }}
               </td>
               <td class="p-4">{{ ticket.feedback }}</td>
               <td class="p-4">{{ getDateFormat(ticket.createdAt) }}</td>

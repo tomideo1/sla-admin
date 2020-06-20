@@ -67,3 +67,10 @@ export const setResourceCategories = (state, data) => {
 export const SetScoreCard = (state, data) => {
   state.ScoreCard = data.template;
 };
+export const setUserScoreCards = (state, data) => {
+  state.UserScoreCards = data.data.scorecards;
+};
+
+export const setCoachTickets = (state, data) => {
+  state.CoachTickets = data.data.help;
+};
