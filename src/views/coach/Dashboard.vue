@@ -7,24 +7,164 @@
       :size="30"
       :sizeUnit="'px'"
     ></beat-loader>
-    <d-container fluid class="main-content-container " v-if="isLoaded">
+    <d-container fluid class="main-content-container" v-if="isLoaded">
       <!-- Page Header -->
       <d-row no-gutters class="page-header py-4 my-4">
-        <div class="col-md-10">
+        <div class="col-md-10 col-lg-10 col-12">
           <d-col col sm="12" class="text-center text-sm-left mb-4 mb-sm-0">
             <h3 class="page-title font-poppings text-black">Dashboard</h3>
           </d-col>
-          <d-col col sm="4" class="float-left  mt-5 text-sm-left mb-4 mb-sm-0">
-            <h5 class=" font-poppings text-black">Announcement</h5>
+          <d-col col sm="10" class="float-left mt-5 text-sm-left mb-4 mb-sm-0">
+            <h5 class="font-poppings text-black">Announcement</h5>
             <div
+              class="col-md-12 col-lg-12"
               v-for="(announcement, index) in individual_announcement"
               :key="index"
-            ></div>
+            >
+              <div class="row m-1 py-4">
+                <div style="border: 1px solid #e7e6e6; box-sizing: border-box;">
+                  <p class="m-3 font-open-sans text-dark">
+                    {{ announcement.annoucement.normal_details }}
+                  </p>
+                  <div>
+                    <img
+                      class="p-3 w-100 h-100 border-bottom"
+                      :src="announcement.annoucement.cover_image"
+                    />
+                    <div class="border-bottom p-2 d-flex flex-row">
+                      <span class="ml-3">
+                        <icon name="wave" size="xs" />
+                        <icon name="thumbs" size="xs" />
+                        <small class="font-open-sans"
+                          >&nbsp;{{ &nbsp;announcement.annoucement.likes + " likes" }}</small
+                        >
+                      </span>
+                      <span class="mr-3 ml-auto">
+                        <small class="font-open-sans">{{
+                          announcement.annoucement.comments + " Comments"
+                        }}</small>
+                      </span>
+                    </div>
+                    <div class="d-flex flex-row m-3">
+                      <span class="mr-3 ml-3">
+                        <icon
+                          name="fb-like"
+                          @click="likeAnnouncement"
+                          size="sm"
+                        />
+                        <span class="text-primary justify-content-center"
+                          >&nbsp;&nbsp;&nbsp;Like</span
+                        >
+                      </span>
+                      <span class="mr-3 ml-3">
+                        <icon name="comment" size="sm" />
+                        <span class="justify-content-center"
+                          >&nbsp;&nbsp;&nbsp;Comment</span
+                        >
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="col-md-12"
+                    style="max-height: 300px !important; overflow-y: auto;"
+                  >
+                    <!--          <div class="col-md-12 " v-for="comment in Announcement.comments">-->
+                    <div
+                      class="d-flex flex-column"
+                      v-for="(comment, idx) in announcement.comments"
+                      :key="idx"
+                    >
+                      <span
+                        v-if="comment.user !== null"
+                        class="ml-2 d-flex flex-row"
+                      >
+                        <sla-avatar
+                          class="avatar m-1"
+                          size="md"
+                          v-if="comment.user.image === null"
+                          :user="{ name: comment.user.first_name }"
+                        />
+                        <sla-avatar
+                          class="avatar m-1"
+                          v-else
+                          size="md"
+                          :user="{ image: comment.user.image }"
+                        />
+                        <p class="m-2 d-flex flex-column">
+                          <span class="mt-2 mb-2">
+                            {{ comment.user.first_name }}
+                          </span>
+                          <span class="mb-3">
+                            {{ comment.content }}
+                          </span>
+                          <small class="text-grey-500 mt-n2">{{
+                            comment.createdAt | chatTime
+                          }}</small>
+                        </p>
+                      </span>
+                      <span v-else class="ml-2 d-flex m-2 flex-row">
+                        <sla-avatar
+                          class="avatar m-1"
+                          size="md"
+                          v-if="comment.admin.image === null"
+                          :user="{ name: comment.admin.first_name }"
+                        />
+                        <sla-avatar
+                          class="avatar m-1"
+                          v-else
+                          size="md"
+                          :user="{ image: comment.admin.image }"
+                        />
+                        <p class="m-2 d-flex flex-column">
+                          <span class="mt-2 mb-2">
+                            {{
+                              comment.admin.first_name +
+                                " " +
+                                (comment.admin.type === "coach"
+                                  ? "(coach)"
+                                  : "(admin)")
+                            }}
+                          </span>
+                          <span class="mb-3">
+                            {{ comment.content }}
+                          </span>
+                          <small class="text-grey-500 mt-n2">{{
+                            comment.createdAt | chatTime
+                          }}</small>
+                        </p>
+                        <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
+                        <!--                <small class="text-grey-500 ml-5 mt-n2">Reply</small>-->
+                      </span>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-lg-row w-100 mt-3">
+                    <sla-avatar
+                      size="md"
+                      v-if="Admin.image === null"
+                      :user="{ name: Admin.first_name }"
+                      class="ml-5  mt-4  "
+                    />
+                    <sla-avatar
+                      size="md"
+                      v-else
+                      :user="{ image: Admin.image }"
+                      class="ml-5  mt-4  "
+                    />
+                    <chat-box
+                      @keyup="handleComment"
+                      class="col-md-112 col-lg-12 col-12"
+                      @send="handleComment"
+                      v-model="content"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </d-col>
         </div>
         <div class="col-md-2">
-          <h5 class=" font-poppings text-black">Your Groups</h5>
-          <div v-for="group in Groups">
+          <h5 class="font-poppings text-black">Your Groups</h5>
+          <div v-for="(group, index) in Groups" :key="index">
             <d-card
               :style="
                 'width:200px!important;height: 120px!important;' +
@@ -40,13 +180,13 @@
               style=" max-width: 200px;!important; word-wrap: break-word!important;"
             >
               <p
-                class="title-card text-truncate text-capitalize mt-2  text-bold font-open-sans "
+                class="title-card text-truncate text-capitalize mt-2 text-bold font-open-sans"
               >
                 {{ group.title }}
               </p>
             </div>
 
-            <p class=" text-capitalize mt-n4  " style="color: #999999;">
+            <p class="text-capitalize mt-n4" style="color: #999999;">
               <!--              {{ announcement.category.name }}-->
             </p>
           </div>
@@ -65,14 +205,23 @@ export default {
   data() {
     return {
       individual_announcement: [],
-      isLoaded: false
+      isLoaded: false,
+      content: ""
     };
   },
-  components: {},
+  components: {
+    SlaAvatar: () => import("@/components/avatar"),
+    Icon: () => import("@/components/SlaIcon"),
+    SlaButton: () => import("@/components/SlaButton"),
+    Top: () => import("@/components/top"),
+    ChatBox: () => import("@/components/chatBox"),
+    glowCard: () => import("@/components/glowCard")
+  },
   computed: {
     ...mapGetters({
       Groups: "app/getGroups",
-      announcements: "app/getAnnouncements"
+      announcements: "app/getAnnouncements",
+      Admin: "auth/getAdmin"
     })
   },
   methods: {
@@ -80,17 +229,95 @@ export default {
       "getAllGroups",
       "getAllAnnouncements",
       "getAnnouncementDetails"
-    ])
+    ]),
+
+    async sendComment(commentObj) {
+      const self = this;
+      let res = await axios
+        .post(`${process.env.VUE_APP_API}/comment/admin/create/`, commentObj, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          self.$toast.success((self.error.message = res.data.message));
+          return true;
+        })
+        .catch(ex => {
+          self.$toast.error(
+            (self.error.message = ex.response.data
+              ? ex.response.data.message
+              : "An error occured")
+          );
+          return false;
+        });
+    },
+
+    async likeAnnouncement() {
+      const self = this;
+      let res = await axios
+        .post(
+          `${process.env.VUE_APP_API}/annoucement/admin/like`,
+          { _id: self.Announcement._id },
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
+          }
+        )
+        .then(res => {
+          self.$toast.success((self.error.message = res.data.message));
+          self.Announcement.likes++;
+          return true;
+        })
+        .catch(ex => {
+          self.$toast.error(
+            (self.error.message = ex.response.data
+              ? ex.response.data.message
+              : "An error occured")
+          );
+          return false;
+        });
+    },
+    handleComment(id) {
+      if (this.content == "") {
+        return;
+      }
+      this.processComment(id);
+    },
+    processComment(announcement_id) {
+      let comment = {
+        admin: this.Admin,
+        user: null,
+        // id: this.$store.state.user.data._id,
+        annoucement: announcement_id,
+        content: this.content,
+        // groupId: this.group._id,
+        createdAt: new Date()
+        // groupSlug: this.group.slug
+      };
+
+      let send = this.sendComment(comment);
+      if (send) {
+        this.AllComments.push(comment);
+        this.Announcement.comments++;
+      } else {
+        return;
+      }
+      this.content = "";
+    }
   },
   async mounted() {
     await this.getAllGroups();
     await this.getAllAnnouncements();
     const self = this;
-    this.announcements.forEach(res => {
+    await this.announcements.forEach(res => {
       let data = this.getAnnouncementDetails({ id: res._id });
-      self.individual_announcement.push(data);
+      data.then(res => {
+        self.individual_announcement.push(res);
+      });
+      self.isLoaded = true;
     });
-    self.isLoaded = true;
   }
 };
 </script>
