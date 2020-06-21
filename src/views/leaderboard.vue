@@ -83,23 +83,41 @@
             <sla-avatar
               :class="'avatar col-12'"
               size="xl"
-              v-if="top_1 !== null"
+              v-if="top_1 !== null && top_1.user.image === null"
               :user="{ name: top_1.user.first_name }"
+            />
+            <sla-avatar
+              :class="'avatar col-12'"
+              size="xl"
+              v-else
+              :user="{ image: top_1.user.image }"
             />
             <div class="col-md-6 col-lg-6 col-6 ">
               <sla-avatar
-                class="avatar float-right col-lg-6   mt-lg-n5 "
+                :class="'avatar  float-right col-lg-6   mt-lg-n5 '"
                 size="lg-2"
-                v-if="top_2 !== null"
+                v-if="top_2 !== null && top_2.user.image === null"
                 :user="{ name: top_2.user.first_name }"
+              />
+              <sla-avatar
+                :class="'avatar  float-right col-lg-6   mt-lg-n5 '"
+                size="lg-2"
+                v-else
+                :user="{ image: top_2.user.image }"
               />
             </div>
             <div class="col-md-6 col-lg-6 col-6 ">
               <sla-avatar
                 class="avatar mr-lg-5 col-lg-6 mt-lg-n5 "
                 size="lg-2"
-                v-if="top_3 !== null"
-                :user="{ name: top_3.user.first_name }"
+                v-if="top_3 !== null && top_3.user.image === null"
+                :user="{ name: top_2.user.first_name }"
+              />
+              <sla-avatar
+                class="avatar mr-lg-5 col-lg-6 mt-lg-n5 "
+                size="lg-2"
+                v-else
+                :user="{ image: top_3.user.image }"
               />
             </div>
           </div>

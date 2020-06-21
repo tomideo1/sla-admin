@@ -22,7 +22,7 @@
           v-for="(p, idx) in getUsers"
           :key="idx"
         >
-          <div class=" d-flex flex-row flex-grow-1 m-3">
+          <div class=" d-flex flex-lg-row flex-column flex-grow-1 p-3">
             <sla-avatar
               v-if="p.image === null"
               size="lg"

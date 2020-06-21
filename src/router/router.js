@@ -29,14 +29,14 @@ import Asset from "@/views/asset.vue";
 import coachRoutes from "./coach";
 
 const baseRoutes = [
-  // {
-  //     path: "/dashboard",
-  //     name: "dashboard",
-  //     component: Dashboard,
-  //     meta: {
-  //         middleware: [auth]
-  //     }
-  // },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: Dashboard,
+    meta: {
+      middleware: [auth]
+    }
+  },
   {
     path: "/users",
     component: () => import("@/views/users/index.vue"),

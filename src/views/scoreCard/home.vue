@@ -1,7 +1,8 @@
 <template>
   <d-container fluid class="main-content-container px-4">
     <d-row>
-      <div class="col-12 col-lg-3 col-md-6" v-if="scorecards.length > 0">
+      <div class="col-12 col-lg-3 col-md-6" v-if="true">
+        <h4 class="font-poppins text-black p-4 mt-4">Scorecards</h4>
         <d-card class="m-3" v-for="(user, index) in scorecards" :key="index">
           <d-card-header class="border-bottom text-center">
             <!-- User Avatar -->
