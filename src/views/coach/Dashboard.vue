@@ -7,6 +7,13 @@
       :size="30"
       :sizeUnit="'px'"
     ></beat-loader>
+    <Toasts
+      :show-progress="false"
+      :rtl="false"
+      :max-messages="5"
+      :time-out="4000"
+      :closeable="false"
+    ></Toasts>
     <d-container fluid class="main-content-container" v-if="isLoaded">
       <!-- Page Header -->
       <d-row no-gutters class="page-header py-4 my-4">
@@ -49,7 +56,7 @@
                       <span class="mr-3 ml-3">
                         <icon
                           name="fb-like"
-                          @click="likeAnnouncement"
+                          @click="likeAnnouncement(announcement.annoucement)"
                           size="sm"
                         />
                         <span class="text-primary justify-content-center"
@@ -151,10 +158,20 @@
                       class="ml-5  mt-4  "
                     />
                     <chat-box
-                      @keyup="handleComment"
+                      @keyup="
+                        handleComment(
+                          announcement.annoucement,
+                          announcement.comments
+                        )
+                      "
                       class="col-md-112 col-lg-12 col-12"
-                      @send="handleComment"
-                      v-model="content"
+                      @send="
+                        handleComment(
+                          announcement.annoucement,
+                          announcement.comments
+                        )
+                      "
+                      v-model="announcement.annoucement.content"
                     />
                   </div>
                 </div>
@@ -200,13 +217,17 @@
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
+const token = store.state.auth.token;
 export default {
   name: "Dashboard",
   data() {
     return {
       individual_announcement: [],
       isLoaded: false,
-      content: ""
+      error: {
+        status: null,
+        message: null
+      }
     };
   },
   components: {
@@ -253,12 +274,12 @@ export default {
         });
     },
 
-    async likeAnnouncement() {
+    async likeAnnouncement(announcement) {
       const self = this;
       let res = await axios
         .post(
           `${process.env.VUE_APP_API}/annoucement/admin/like`,
-          { _id: self.Announcement._id },
+          { _id: announcement._id },
           {
             headers: {
               Authorization: `Bearer ${token} `
@@ -267,7 +288,7 @@ export default {
         )
         .then(res => {
           self.$toast.success((self.error.message = res.data.message));
-          self.Announcement.likes++;
+          announcement.likes++;
           return true;
         })
         .catch(ex => {
@@ -279,19 +300,20 @@ export default {
           return false;
         });
     },
-    handleComment(id) {
-      if (this.content == "") {
+    handleComment(announcement, current_comments) {
+      console.log(announcement);
+      if (announcement.content === undefined || announcement.content == "") {
         return;
       }
-      this.processComment(id);
+      this.processComment(announcement, current_comments);
     },
-    processComment(announcement_id) {
+    processComment(announcement, current_comments) {
       let comment = {
         admin: this.Admin,
         user: null,
         // id: this.$store.state.user.data._id,
-        annoucement: announcement_id,
-        content: this.content,
+        annoucement: announcement._id,
+        content: announcement.content,
         // groupId: this.group._id,
         createdAt: new Date()
         // groupSlug: this.group.slug
@@ -299,12 +321,12 @@ export default {
 
       let send = this.sendComment(comment);
       if (send) {
-        this.AllComments.push(comment);
-        this.Announcement.comments++;
+        current_comments.push(comment);
+        announcement.comments++;
       } else {
         return;
       }
-      this.content = "";
+      announcement.content = "";
     }
   },
   async mounted() {

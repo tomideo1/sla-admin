@@ -11,7 +11,7 @@
       <!-- Page Header -->
       <top :heading="Announcement.title" />
       <small class="text-uppercase text-grey-500 font-open-sans ml-4">{{
-        Announcement.category
+        Announcement.catezgory
       }}</small>
       <br />
       <div class="d-flex flex-row ml-4 mt-3 ">
