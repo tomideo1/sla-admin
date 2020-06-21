@@ -178,6 +178,82 @@
               </div>
             </div>
           </d-col>
+          <d-col sm="10">
+            <h5 class="font-poppings text-black">Surveys</h5>
+
+            <div class="mx-auto m-3">
+              <div class="col-md-6 col-12 col-lg-6  m-2">
+                <div
+                  class="p-3"
+                  style="border:1px solid #E7E6E6; box-sizing:border-box;"
+                >
+                  <div
+                    :style="
+                      'height: 120px!important;' +
+                        'backgroundImage:url(' +
+                        latest_survey.survey.survey_image +
+                        ');' +
+                        ' background-size:cover; background-position:center'
+                    "
+                  ></div>
+                  <div
+                    class="p-4"
+                    style="border:1px solid #E7E6E6; box-sizing:border-box;"
+                    v-for="(data, idx) in latest_survey.questions"
+                    :key="idx"
+                    :id="data._id"
+                  >
+                    <h6 class="text-black p-3 font-open-sans border-bottom">
+                      {{ data.question_text }}
+                    </h6>
+                    <div v-if="!data.has_options">
+                      <textarea
+                        class="form-control mb-3"
+                        :ref="`survey_text_answer-${data._id}`"
+                        :id="data._id"
+                        placeholder="Type your response here"
+                      >
+                      </textarea>
+                    </div>
+                    <div v-else>
+                      <div
+                        :id="data._id"
+                        :ref="`survey_quiz_answer-${data._id}`"
+                        class="d-flex flex-column"
+                      >
+                        <label
+                          class="container"
+                          v-for="(option, index) in data.possible_options"
+                          :key="index"
+                        >
+                          <input
+                            type="radio"
+                            :value="option"
+                            :name="`quiz-group-${idx}`"
+                            class="mr-2"
+                          />
+                          {{ option }}
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <sla-button
+                  type="filled"
+                  class="btn m-3 col-md-6 float-right"
+                  size="md"
+                  text="TAKE SURVEY"
+                  @click="
+                    $router.push({
+                      path: 'coach/survey/single/' + latest_survey.survey._id
+                    })
+                  "
+                />
+              </div>
+            </div>
+          </d-col>
         </div>
         <div class="col-md-2">
           <h5 class="font-poppings text-black">Your Groups</h5>
@@ -190,7 +266,6 @@
                   ');' +
                   ' background-size:cover; background-position:center'
               "
-              @click="$router.push({ path: 'edit/' + group._id })"
             >
             </d-card>
             <div
@@ -218,6 +293,7 @@ import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
 const token = store.state.auth.token;
+import helper from "@/helpers/helper";
 export default {
   name: "Dashboard",
   data() {
@@ -227,7 +303,8 @@ export default {
       error: {
         status: null,
         message: null
-      }
+      },
+      latest_survey: []
     };
   },
   components: {
@@ -242,14 +319,16 @@ export default {
     ...mapGetters({
       Groups: "app/getGroups",
       announcements: "app/getAnnouncements",
-      Admin: "auth/getAdmin"
+      Admin: "auth/getAdmin",
+      surveys: "app/getSurveys"
     })
   },
   methods: {
     ...mapActions("app/", [
       "getAllGroups",
       "getAllAnnouncements",
-      "getAnnouncementDetails"
+      "getAnnouncementDetails",
+      "getAllSurveys"
     ]),
 
     async sendComment(commentObj) {
@@ -332,14 +411,33 @@ export default {
   async mounted() {
     await this.getAllGroups();
     await this.getAllAnnouncements();
+    await this.getAllSurveys();
     const self = this;
     await this.announcements.forEach(res => {
       let data = this.getAnnouncementDetails({ id: res._id });
       data.then(res => {
         self.individual_announcement.push(res);
       });
-      self.isLoaded = true;
     });
+    let latest_survey = this.surveys
+      .sort(helper.GetSortOrder("createdAt"))
+      .reverse()[0];
+    await axios
+      .get(
+        `${process.env.VUE_APP_API}/survey/` +
+          latest_survey._id +
+          `/questions/list`,
+        {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        }
+      )
+      .then(res => {
+        self.latest_survey = res.data.data;
+        self.isLoaded = true;
+      })
+      .catch(ex => {});
   }
 };
 </script>
