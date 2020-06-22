@@ -1,9 +1,14 @@
 <template>
   <d-container fluid class="main-content-container px-4">
+    <h4 class="font-poppins text-black p-4 mt-4">Scorecards</h4>
     <d-row>
-      <div class="col-12 col-lg-3 col-md-6" v-if="true">
-        <h4 class="font-poppins text-black p-4 mt-4">Scorecards</h4>
-        <d-card class="m-3" v-for="(user, index) in scorecards" :key="index">
+      <div
+        v-if="scorecards.length > 0"
+        class="col-lg-3 col-md-6 col-12"
+        v-for="(user, index) in scorecards"
+        :key="index"
+      >
+        <d-card class="m-3 ">
           <d-card-header class="border-bottom text-center">
             <!-- User Avatar -->
             <div class="mb-3 mx-auto">
@@ -29,8 +34,7 @@
 
             <!-- User Follow -->
             <p
-              class="mb-2  text-uppercase
-             font-weight-bold"
+              class="mb-2  text-uppercase font-weight-bold"
               style="color: #0087DB;"
             >
               <router-link to="coaches/scorecards/single"

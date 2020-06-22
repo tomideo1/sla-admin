@@ -47,38 +47,48 @@
           </d-row>
         </div>
         <div class="col-md-10 col-lg-10 col-12">
-          <d-form-row>
+          <d-form-row v-for="(scorecard, index) in user_scorecard" :key="index">
             <!-- First Name -->
-            <div v-for="(scorecard, index) in user_scorecard" :key="index">
-              <d-col
-                md="8"
-                class="form-group"
-                v-if="scorecard.scorecard_field.field_type === 'direct'"
+
+            <d-col
+              md="8"
+              class="form-group"
+              v-if="scorecard.scorecard_field.field_type === 'direct'"
+            >
+              <label class="text-grey">
+                {{ scorecard.scorecard_field.field_name }}</label
               >
-                <label class="text-grey">
-                  {{ scorecard.scorecard_field.field_name }}</label
-                >
-                <d-form-input
-                  class="form-control"
-                  type="text"
-                  v-model="scorecard.scorecard_field.field_score"
-                />
-              </d-col>
-              <d-col
-                md="8"
-                class="form-group"
-                v-if="scorecard.scorecard_field.field_type === 'optional'"
+              <d-form-input
+                class="form-control"
+                type="text"
+                v-model="scorecard.scorecard_field.user_value"
+              />
+            </d-col>
+            <d-col
+              md="8"
+              class="form-group"
+              v-if="scorecard.scorecard_field.field_type === 'optional'"
+            >
+              <label class="text-grey">
+                {{ scorecard.scorecard_field.field_name }}</label
               >
-                <label class="text-grey">
-                  {{ scorecard.scorecard_field.field_name }}</label
+              <select
+                class="form-control form-select"
+                v-model="scorecard.scorecard_field.user_value"
+              >
+                <option selected :value="undefined" :disabled="true">
+                  Select Answer For {{ scorecard.scorecard_field.field_name }}
+                </option>
+                <option
+                  :key="index"
+                  v-for="(selection, index) in scorecard.scorecard_field
+                    .options"
+                  :value="selection.option"
                 >
-                <d-select>
-                  <option selected :value="undefined">
-                    Completion of 10% to 30% Weekly Course...
-                  </option>
-                </d-select>
-              </d-col>
-            </div>
+                  {{ selection.option }}
+                </option>
+              </select>
+            </d-col>
           </d-form-row>
         </div>
       </d-row>
