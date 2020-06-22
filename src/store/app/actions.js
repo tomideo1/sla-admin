@@ -232,7 +232,7 @@ export const fetchUserScorecard = async ({ commit }, payload) => {
   let res = await Api.get(`scorecard/${payload.id}/show `, true);
 
   if (res && res.status == 200) {
-    return res;
+    return res.data.scorecard;
   } else {
     return res;
   }
