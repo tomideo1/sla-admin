@@ -5,7 +5,8 @@
     v-if="
       !$route.path.includes('single') &&
         !$route.path.includes('edit') &&
-        !$route.path.includes('participants')
+        !$route.path.includes('participants') &&
+        !$route.path.includes('scorecards/user')
     "
   >
     <div class=" d-lg-flex d-md-flex flex-row  flex-grow-1 ">

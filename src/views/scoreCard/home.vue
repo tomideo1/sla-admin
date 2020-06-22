@@ -35,7 +35,7 @@
             <!-- User Follow -->
             <p
               class="mb-2  text-uppercase font-weight-bold"
-              style="color: #0087DB;"
+              style="color: #0087DB; cursor:pointer"
               @click="$router.push({ path: `user/${user._id}` })"
             >
               view ScoreCard
