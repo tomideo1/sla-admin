@@ -394,6 +394,14 @@ const baseRoutes = [
         meta: {
           middleware: [auth]
         }
+      },
+      {
+        path: "user/:id",
+        name: "admin-user-scorecard",
+        component: () => import("@/views/scoreCard/user_scorecard.vue"),
+        meta: {
+          middleware: [auth]
+        }
       }
     ]
   },

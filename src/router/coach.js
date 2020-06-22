@@ -135,6 +135,15 @@ export default [
         meta: {
           middleware: [auth]
         }
+      },
+
+      {
+        path: "create/:id",
+        name: "create-user-scorecard",
+        component: () => import("@/views/coach/scoreCard/create.vue"),
+        meta: {
+          middleware: [auth]
+        }
       }
     ]
   },

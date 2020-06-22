@@ -43,14 +43,6 @@
                 <p class="text-grey font-open-sans">
                   {{ user.user.location }}a
                 </p>
-                <sla-button
-                  type="outline"
-                  :text="text"
-                  size="md"
-                  @click="submitScoreCard"
-                  :disabled="isLoading"
-                  class="btn col-md-12"
-                />
               </div>
             </div>
           </d-row>

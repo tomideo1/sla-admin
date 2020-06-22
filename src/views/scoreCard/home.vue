@@ -36,10 +36,9 @@
             <p
               class="mb-2  text-uppercase font-weight-bold"
               style="color: #0087DB;"
+              @click="$router.push({ path: `user/${user._id}` })"
             >
-              <router-link to="coaches/scorecards/single"
-                >View Scorecard</router-link
-              >
+              view ScoreCard
             </p>
           </d-card-header>
         </d-card>

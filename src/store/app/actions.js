@@ -237,3 +237,20 @@ export const fetchUserScorecard = async ({ commit }, payload) => {
     return res;
   }
 };
+
+export const submitScoreCard = async ({ commit }, payload) => {
+  let res = await Api.post(
+    `scorecard/create`,
+    {
+      scorecard: payload.scorecard,
+      user: payload.user
+    },
+    true
+  );
+
+  if (res && res.status == 200) {
+    return res;
+  } else {
+    return res;
+  }
+};

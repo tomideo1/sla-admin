@@ -62,36 +62,31 @@
             <d-col
               md="8"
               class="form-group"
-              v-if="scorecard.scorecard_field.field_type === 'direct'"
+              v-if="scorecard.field_type === 'direct'"
             >
-              <label class="text-grey">
-                {{ scorecard.scorecard_field.field_name }}</label
-              >
+              <label class="text-grey"> {{ scorecard.field_name }}</label>
               <d-form-input
                 class="form-control"
                 type="text"
-                v-model="scorecard.scorecard_field.user_value"
+                v-model="scorecard.user_value"
               />
             </d-col>
             <d-col
               md="8"
               class="form-group"
-              v-if="scorecard.scorecard_field.field_type === 'optional'"
+              v-if="scorecard.field_type === 'optional'"
             >
-              <label class="text-grey">
-                {{ scorecard.scorecard_field.field_name }}</label
-              >
+              <label class="text-grey"> {{ scorecard.field_name }}</label>
               <select
                 class="form-control form-select"
-                v-model="scorecard.scorecard_field.user_value"
+                v-model="scorecard.user_value"
               >
                 <option selected :value="undefined" :disabled="true">
-                  Select Answer For {{ scorecard.scorecard_field.field_name }}
+                  Select Answer For {{ scorecard.field_name }}
                 </option>
                 <option
                   :key="index"
-                  v-for="(selection, index) in scorecard.scorecard_field
-                    .options"
+                  v-for="(selection, index) in scorecard.options"
                   :value="selection.option"
                 >
                   {{ selection.option }}
@@ -118,7 +113,6 @@ export default {
       isLoaded: false,
       text: "SUBMIT",
       isLoading: false,
-      user_scorecard: null,
       error: {
         status: null,
         message: null
@@ -132,9 +126,17 @@ export default {
     SlaAvatar: () => import("@/components/avatar.vue"),
     Icon: () => import("@/components/SlaIcon.vue")
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      user_scorecard: "app/getScoreCard"
+    })
+  },
   methods: {
-    ...mapActions("app/", ["fetchUserScorecard", "submitScoreCard"]),
+    ...mapActions("app/", [
+      "fetchUserScorecard",
+      "submitScoreCard",
+      "showScoreCard"
+    ]),
     async submitScoreCard() {
       this.text = "Loading....";
       this.isLoading = false;
@@ -162,10 +164,8 @@ export default {
     }
   },
   async mounted() {
+    await this.showScoreCard();
     const userId = this.$route.params.id;
-    this.user_scorecard = await this.fetchUserScorecard({
-      id: this.$route.params.id
-    });
     const self = this;
     let res = await axios
       .get(`${process.env.VUE_APP_API}/admin/user/details/` + userId, {

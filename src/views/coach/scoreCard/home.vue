@@ -55,6 +55,7 @@
                 class="btn m-2"
                 v-else
                 text="Create Scorecard"
+                @click="$router.push({ path: `create/${user._id}` })"
               />
             </d-card-header>
           </d-card>
