@@ -148,7 +148,7 @@ export default [
     ]
   },
   {
-    path: "coach/profile",
+    path: "/profile",
     name: "coach-profile",
     component: () => import("@/views/coach/profile.vue"),
     meta: {

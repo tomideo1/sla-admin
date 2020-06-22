@@ -12,6 +12,12 @@ export const login = async ({ commit }, payload) => {
     return res;
   }
 };
+
+export const uploadProfileImage = async ({ commit }, payload) => {
+  let res = await Api.post(`/admin/profile/image`, payload, true);
+  commit("setProfileImage", res.data.user.image);
+};
+
 export const Logout = async ({ commit }) => {
   commit("setToken", {});
   commit("setUserDetails", {});

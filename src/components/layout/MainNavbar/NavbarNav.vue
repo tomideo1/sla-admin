@@ -38,11 +38,11 @@
         <icon size="xs" name="setting" />
       </router-link>
     </li>
-    <li class="nav-item mr-2 dropdown border-left">
+    <li class="d-flex flex-row nav-item mr-2  border-left">
       <router-link
         class="nav-link  text-nowrap px-3 mt-2"
-        v-if="Admin.type === 'admin'"
-        :to="{ name: 'profile', params: { admin: Admin } }"
+        v-if="Admin.type === 'admin' || Admin.type === 'superadmin'"
+        :to="{ name: 'profile' }"
       >
         <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
         <img
@@ -55,16 +55,22 @@
       <router-link
         class="nav-link  text-nowrap px-3 mt-2"
         v-else
-        :to="{ name: 'coach-profile', params: { admin: Admin } }"
+        :to="{ name: 'coach-profile' }"
       >
         <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
-        <img
-          class="user-avatar rounded-circle  "
-          width="25px"
-          src="@/assets/images/avatars/user.png"
-          alt="User Avatar"
-        />
       </router-link>
+      <sla-avatar
+        class="avatar"
+        v-if="Admin.image === null"
+        size="sm"
+        :user="{ name: Admin.first_name }"
+      />
+      <sla-avatar
+        class="avatar"
+        v-else
+        size="sm"
+        :user="{ image: Admin.image }"
+      />
     </li>
   </d-navbar-nav>
 </template>
@@ -81,7 +87,8 @@ export default {
     })
   },
   components: {
-    Icon: () => import("@/components/SlaIcon.vue")
+    Icon: () => import("@/components/SlaIcon.vue"),
+    SlaAvatar: () => import("@/components/avatar.vue")
   }
 };
 </script>

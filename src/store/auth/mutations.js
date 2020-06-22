@@ -12,3 +12,7 @@ export const setToken = (state, data) => {
 export const logout = state => {
   state.isLoggedIn = false;
 };
+
+export const setProfileImage = (state, data) => {
+  state.user.image = data;
+};

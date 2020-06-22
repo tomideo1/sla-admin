@@ -13,19 +13,28 @@
         <div class="col-md-2 col-lg-2 col-12">
           <d-row>
             <div class="mb-3 col-md-12 col-lg-12 col-12  ">
-              <div class="">
+              <div class="d-flex  justify-content-center text-align-center">
                 <sla-avatar
                   class="avatar"
                   v-if="user.image === null"
                   size="xl"
+                  @click="$refs['upload-image'].click()"
                   :user="{ name: user.first_name }"
                 />
                 <sla-avatar
                   class="avatar"
                   v-else
                   size="xl"
+                  @click="$refs['upload-image'].click()"
                   :user="{ image: user.image }"
                 />
+                <label class="edit-user-details__avatar__change">
+                  <input
+                    @change="uploadImage($event)"
+                    ref="upload-image"
+                    type="file"
+                  />
+                </label>
               </div>
             </div>
           </d-row>
@@ -70,7 +79,7 @@
 import axios from "axios";
 import store from "@/store/index";
 const token = store.state.auth.token;
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState, mapActions } from "vuex";
 export default {
   name: "single",
   data() {
@@ -93,6 +102,7 @@ export default {
     SlaAvatar: () => import("@/components/avatar.vue")
   },
   methods: {
+    ...mapActions("auth/", ["uploadProfileImage"]),
     async handleSubmit() {
       this.button.text = "Loading.....";
       this.button.isLoading = true;
@@ -121,6 +131,18 @@ export default {
               : "An error occured")
           );
         });
+    },
+    uploadImage(e) {
+      var FR = new FileReader();
+      var that = this;
+      FR.onloadend = function() {
+        that.uploadProfileImage({
+          image: FR.result
+        });
+      };
+      FR.readAsDataURL(e.target.files[0]);
+
+      this.user.image = URL.createObjectURL(e.target.files[0]);
     }
   },
   computed: {
@@ -129,4 +151,48 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.edit-user-details {
+  .card-header {
+    overflow: hidden;
+  }
+  .card-body {
+    z-index: 1;
+  }
+  &__avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    // max-width: $eu-avatar-max-width;
+    img {
+      width: 100%;
+    }
+    &__change {
+      margin: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      position: absolute;
+      text-align: center;
+      border-radius: 50%;
+      // font-size: $eu-avatar-change-font-size;
+      // background: $eu-avatar-change-background;
+      //transition: $eu-avatar-change-transition;
+      .icon-image {
+        //height: 50px;
+        width: 50px;
+        position: center;
+        margin-top: 35%;
+      }
+    }
+    &:hover {
+      .edit-user-details__avatar__change {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>
