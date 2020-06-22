@@ -47,7 +47,7 @@
                   type="outline"
                   :text="text"
                   size="md"
-                  @click="submitScoreCard"
+                  @click="handleSubmit"
                   :disabled="isLoading"
                   class="btn col-md-12"
                 />
@@ -135,7 +135,7 @@ export default {
   computed: {},
   methods: {
     ...mapActions("app/", ["fetchUserScorecard", "submitScoreCard"]),
-    async submitScoreCard() {
+    async handleSubmit() {
       this.text = "Loading....";
       this.isLoading = false;
       let res = await this.submitScoreCard({
@@ -150,6 +150,7 @@ export default {
             ? res.data.message
             : "An error occured")
         );
+        this.$router.push({ path: "/coach/scorecards/all" });
       } else {
         this.isLoading = false;
         this.text = "SUBMIT";

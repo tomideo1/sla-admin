@@ -45,12 +45,6 @@
         :to="{ name: 'profile' }"
       >
         <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
-        <img
-          class="user-avatar rounded-circle  "
-          width="25px"
-          src="@/assets/images/avatars/user.png"
-          alt="User Avatar"
-        />
       </router-link>
       <router-link
         class="nav-link  text-nowrap px-3 mt-2"

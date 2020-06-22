@@ -44,10 +44,10 @@
                   {{ user.user.location }}a
                 </p>
                 <sla-button
-                  type="outline"
+                  type="filled"
                   :text="text"
                   size="md"
-                  @click="submitScoreCard"
+                  @click="handleSubmit"
                   :disabled="isLoading"
                   class="btn col-md-12"
                 />
@@ -137,9 +137,9 @@ export default {
       "submitScoreCard",
       "showScoreCard"
     ]),
-    async submitScoreCard() {
+    async handleSubmit() {
       this.text = "Loading....";
-      this.isLoading = false;
+      this.isLoading = true;
       let res = await this.submitScoreCard({
         user: this.$route.params.id,
         scorecard: this.user_scorecard
@@ -152,6 +152,7 @@ export default {
             ? res.data.message
             : "An error occured")
         );
+        this.$router.push({ path: "/coach/scorecards/all" });
       } else {
         this.isLoading = false;
         this.text = "SUBMIT";
