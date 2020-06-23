@@ -2,9 +2,6 @@
   <d-container fluid class="main-content-container px-4">
     <!-- Page Header -->
     <d-row no-gutters class="page-header py-4">
-      <d-col col sm="12" class="text-center text-sm-left mb-4 mb-sm-0">
-        <h3 class="page-title font-poppings text-dark">Leaderboard</h3>
-      </d-col>
       <div class="col-md-12 col-12 col-lg-12 ">
         <div
           class="card text-dark mt-5 mx-auto shadow container"
@@ -74,51 +71,79 @@
       </div>
       <div class="col-md-12">
         <div
-          class="card text-dark mt-5 p-4  "
-          style="border: 1px solid #E7E6E6;
-         background: linear-gradient(133.56deg, #0087DB -33.88%, #1F497D 95.84%);
-         box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.03); border-radius: 0"
+          class=" text-dark mt-5 w-100"
+          style="
+         background: url('https://res.cloudinary.com/sla-sheleadsafrica/image/upload/v1592925869/Vector_1_z5eegc.png') no-repeat center bottom
+         background-size: fill;box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.03); border-radius: 0"
         >
           <div class="row">
-            <sla-avatar
-              :class="'avatar col-12'"
-              size="xl"
-              v-if="top_1 !== null && top_1.user.image === null"
-              :user="{ name: top_1.user.first_name }"
-            />
-            <sla-avatar
-              :class="'avatar col-12'"
-              size="xl"
-              v-else
-              :user="{ image: top_1.user.image }"
-            />
-            <div class="col-md-6 col-lg-6 col-6 ">
+            <div class="col-12">
               <sla-avatar
-                :class="'avatar  float-right col-lg-6   mt-lg-n5 '"
-                size="lg-2"
-                v-if="top_2 !== null && top_2.user.image === null"
-                :user="{ name: top_2.user.first_name }"
+                :class="'avatar col-12'"
+                size="xl"
+                v-if="top_1 !== null && top_1.user.image === null"
+                :user="{ name: top_1.user.first_name }"
               />
               <sla-avatar
-                :class="'avatar  float-right col-lg-6   mt-lg-n5 '"
-                size="lg-2"
+                :class="'avatar col-12'"
+                size="xl"
                 v-else
-                :user="{ image: top_2.user.image }"
+                :user="{ image: top_1.user.image }"
               />
+              <span class="text-center d-block">
+                {{ top_1.user.first_name }} {{ top_1.user.last_name }}
+              </span>
+              <span class="text-center d-block">{{ top_1.total }} points</span>
             </div>
-            <div class="col-md-6 col-lg-6 col-6 ">
-              <sla-avatar
-                class="avatar mr-lg-5 col-lg-6 mt-lg-n5 "
-                size="lg-2"
-                v-if="top_3 !== null && top_3.user.image === null"
-                :user="{ name: top_2.user.first_name }"
-              />
-              <sla-avatar
-                class="avatar mr-lg-5 col-lg-6 mt-lg-n5 "
-                size="lg-2"
-                v-else
-                :user="{ image: top_3.user.image }"
-              />
+            <div class="mx-auto text-center col-12 d-flex">
+              <div class="col-4 offset-md-2 mb-3">
+                <div class="col-12 d-flex flex-column align-items-center">
+                  <sla-avatar
+                    :class="'avatar   col-lg-6  '"
+                    size="lg-2"
+                    v-if="top_2 !== null && top_2.user.image === null"
+                    :user="{ name: top_2.user.first_name }"
+                  />
+                  <sla-avatar
+                    :class="'avatar   col-lg-6  '"
+                    size="lg-2"
+                    v-else
+                    :user="{ image: top_2.user.image }"
+                  />
+                  <main class=" ">
+                    <span class=" text-center d-block">
+                      {{ top_2.user.first_name }} {{ top_2.user.last_name }}
+                    </span>
+                    <span class="text-center d-block"
+                      >{{ top_2.total }} points</span
+                    >
+                  </main>
+                </div>
+              </div>
+              <div class="col-4 mb-3">
+                <div class="col-12 d-flex flex-column align-items-center">
+                  <sla-avatar
+                    :class="'avatar   col-lg-6  '"
+                    size="lg-2"
+                    v-if="top_3 !== null && top_3.user.image === null"
+                    :user="{ name: top_3.user.first_name }"
+                  />
+                  <sla-avatar
+                    :class="'avatar   col-lg-6  '"
+                    size="lg-2"
+                    v-else
+                    :user="{ image: top_3.user.image }"
+                  />
+                  <main class=" ">
+                    <span class=" text-center d-block">
+                      {{ top_3.user.first_name }} {{ top_3.user.last_name }}
+                    </span>
+                    <span class="text-center d-block"
+                      >{{ top_3.total }} points</span
+                    >
+                  </main>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -144,7 +169,17 @@
               v-if="item.user !== null"
             >
               <td>{{ item.position }}</td>
-              <td>{{ item.user.first_name }}</td>
+              <td class="d-flex flex-column">
+                <span class=""
+                  >{{ item.user.first_name }} {{ item.user.last_name }}
+                  <i
+                    v-if="item.trend != 'decrease'"
+                    class="text-success fas fa-arrow-up"
+                  ></i>
+                  <i v-else class="text-danger fas fa-arrow-down"></i
+                ></span>
+                <span class="text-muted">{{ item.user.location }} </span>
+              </td>
               <td>{{ item.score_card }}</td>
               <td>{{ item.survey }}</td>
               <td>{{ item.quiz }}</td>
@@ -168,20 +203,27 @@ export default {
   name: "LeaderBoard",
   components: {
     Icon: () => import("@/components/SlaIcon"),
-    SlaAvatar: () => import("@/components/avatar")
+    SlaAvatar: () => import("@/components/avatar"),
+    NavMenu: () => import("@/components/NavMenu")
   },
   data() {
     return {
       top_1: null,
       top_2: null,
-      top_3: null
+      top_3: null,
+      navigation: {
+        title: [{ name: "Leaderboard", path: "/leaderboard" }]
+      }
     };
   },
   computed: {
     ...mapGetters({
       leaders: "app/getLeaderboard"
       // maps courses to current computed resource
-    })
+    }),
+    splitLeaderboard() {
+      return this.leaders.splice(3, this.leaders.length);
+    }
   },
   methods: {
     ...mapActions("app/", ["getAllLeaderboard"])
