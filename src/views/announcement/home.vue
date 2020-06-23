@@ -10,7 +10,7 @@
         </h6>
         <carousel refs="content">
           <div
-            class="scroll m-2"
+            class="scroll m-2 cursor-pointer"
             v-for="(announcement, idx) in sortedAnnouncement"
             :key="idx"
           >
@@ -71,7 +71,7 @@
         </h6>
         <carousel refs="content">
           <div
-            class="scroll m-2"
+            class="scroll m-2 cursor-pointer"
             v-for="(announcement, idx) in recentAnnouncement"
             :key="idx"
           >
@@ -131,7 +131,7 @@
         </h6>
         <carousel refs="content">
           <div
-            class="scroll m-2"
+            class="scroll m-2 cursor-pointer"
             v-for="(announcement, idx) in getMostEngaged"
             :key="idx"
           >
