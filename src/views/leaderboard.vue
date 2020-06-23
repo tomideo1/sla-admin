@@ -18,7 +18,7 @@
               <div>
                 <icon size="lg" name="medal"></icon>
                 <p class="mt-2">Filling Out Surveys</p>
-                <p class="mt-n2">1 Point</p>
+                <p class="mt-n2">2 Points</p>
               </div>
             </div>
             <div
@@ -35,8 +35,8 @@
             >
               <div>
                 <icon size="lg" name="medal"></icon>
-                <p class="mt-2">Completing a Lesson</p>
-                <p class="mt-n2">50 Points</p>
+                <p class="mt-2">Post Engagement (Comment)</p>
+                <p class="mt-n2">3 Points</p>
               </div>
             </div>
             <div
@@ -44,7 +44,7 @@
             >
               <div>
                 <icon size="lg" name="medal"></icon>
-                <p class="mt-2">Engaging with Community</p>
+                <p class="mt-2">Post Engagement (Likes)</p>
                 <p class="mt-n2">2 Points</p>
               </div>
             </div>
