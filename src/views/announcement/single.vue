@@ -11,13 +11,12 @@
       <!-- Page Header -->
       <top :heading="Announcement.title" />
       <small class="text-uppercase text-grey-500 font-open-sans ml-4">{{
-        Announcement.catezgory
+        Announcement.category
       }}</small>
       <br />
-      <div class="d-flex flex-row ml-4 mt-3 ">
+      <div class="d-flex flex-row ml-4 mt-1 ">
         <small
-          class="ml-2 "
-          style="text-decoration: underline"
+          class=" "
           v-if="Announcement.tags.length > 0"
           v-for="tag in Announcement.tags.split(',')"
           >{{ tag }}</small
@@ -71,7 +70,13 @@
             </div>
             <div class="d-flex flex-row m-3">
               <span class="mr-3 ml-3">
-                <icon name="fb-like" @click="likeAnnouncement" size="sm" />
+                <icon v-if="isLiked" name="thumb-filled" size="sm" />
+                <icon
+                  v-else
+                  name="thumb-unfilled"
+                  @click="likeAnnouncement"
+                  size="sm"
+                />
                 <span class="text-primary justify-content-center"
                   >&nbsp;&nbsp;&nbsp;Like</span
                 >
@@ -146,8 +151,8 @@
                         comment.admin.first_name +
                           "  " +
                           (comment.admin.type === "coach"
-                            ? "(coach)"
-                            : "(admin)")
+                            ? "(Coach)"
+                            : "(Admin)")
                       }}
                     </span>
                     <span class=" mb-3">
@@ -269,6 +274,7 @@ export default {
   data() {
     return {
       isLoaded: false,
+      isLiked: false,
       modalStatus: false,
       error: {
         status: null,
@@ -425,6 +431,7 @@ export default {
         self.Announcement = res.data.data.annoucement;
         self.AllComments = res.data.data.comments;
         self.isLoaded = true;
+        self.isLiked = res.data.data.isLiked;
       })
       .catch(ex => {});
   },

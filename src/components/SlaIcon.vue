@@ -46,6 +46,9 @@
     <send v-if="name === 'send'"></send>
     <wave v-if="name === 'wave'"></wave>
     <thumbs v-if="name === 'thumbs'"></thumbs>
+    <thumb v-if="name === 'thumb'"></thumb>
+    <ThumbsUnfilled v-if="name === 'thumb-unfilled'"></ThumbsUnfilled>
+    <ThumbsFilled v-if="name === 'thumb-filled'"></ThumbsFilled>
     <sla-power v-if="name === 'sla-power'"></sla-power>
   </span>
 </template>
@@ -112,6 +115,11 @@ export default {
     send: () => import("@/components/__private__/media/send.vue"),
     Wave: () => import("@/components/__private__/media/wave.vue"),
     Thumbs: () => import("@/components/__private__/media/thumbs.vue"),
+    Thumb: () => import("@/components/__private__/media/thumb.vue"),
+    ThumbsUnfilled: () =>
+      import("@/components/__private__/media/thumbsUnfilled.vue"),
+    ThumbsFilled: () =>
+      import("@/components/__private__/media/thumbsFilled.vue"),
     slaPower: () => import("@/components/__private__/media/slaPower.vue")
   }
 };
