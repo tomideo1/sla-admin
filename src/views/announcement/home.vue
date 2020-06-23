@@ -48,25 +48,17 @@
               style=" max-width: 200px;!important; word-wrap: break-word!important;"
             >
               <p
-                class="title-card  text-capitalize mt-2  text-truncate text-bold font-open-sans "
+                class="title-card  text-capitalize text-truncate text-bold font-open-sans "
               >
                 {{ announcement.title }}
               </p>
             </div>
-
-            <!--            <p class=" text-capitalize mt-n2 d-flex flex-row text-underline" style="color: #999999;" v-for="announcement_tag in announcement.tags.split(',')">-->
-            <!--            {{ announcement_tag }}-->
-            <!--            </p>-->
-            <div class="d-flex flex-row  mt-3 ">
-              <small
-                class="ml-2 "
-                style="text-decoration: underline"
-                v-if="announcement.tags.length > 0"
-                v-for="tag in announcement.tags.split(',')"
-                >{{ tag }}</small
-              >
-              <small class="ml-2" v-else>{{ announcement.tags }}</small>
-            </div>
+            <small
+              class="mt-n4 d-flex flex-row"
+              v-if="announcement.tags.length > 0"
+              v-for="tag in announcement.tags.split(',')"
+              >{{ tag }}</small
+            >
           </div>
         </carousel>
       </div>
@@ -121,20 +113,12 @@
                 {{ announcement.title }}
               </p>
             </div>
-
-            <!--            <p class=" text-capitalize mt-n2 d-flex flex-row text-underline" style="color: #999999;" v-for="announcement_tag in announcement.tags.split(',')">-->
-            <!--            {{ announcement_tag }}-->
-            <!--            </p>-->
-            <div class="d-flex flex-row  mt-3 ">
-              <small
-                class="ml-2 "
-                style="text-decoration: underline"
-                v-if="announcement.tags.length > 0"
-                v-for="tag in announcement.tags.split(',')"
-                >{{ tag }}</small
-              >
-              <small class="ml-2" v-else>{{ announcement.tags }}</small>
-            </div>
+            <small
+              class="mt-n4 d-flex flex-row"
+              v-if="announcement.tags.length > 0"
+              v-for="tag in announcement.tags.split(',')"
+              >{{ tag }}</small
+            >
           </div>
         </carousel>
       </div>
@@ -189,20 +173,12 @@
                 {{ announcement.title }}
               </p>
             </div>
-
-            <!--            <p class=" text-capitalize mt-n2 d-flex flex-row text-underline" style="color: #999999;" v-for="announcement_tag in announcement.tags.split(',')">-->
-            <!--            {{ announcement_tag }}-->
-            <!--            </p>-->
-            <div class="d-flex flex-row  mt-3 ">
-              <small
-                class="ml-2 "
-                style="text-decoration: underline"
-                v-if="announcement.tags.length > 0"
-                v-for="tag in announcement.tags.split(',')"
-                >{{ tag }}</small
-              >
-              <small class="ml-2" v-else>{{ announcement.tags }}</small>
-            </div>
+            <small
+              class="mt-n4 d-flex flex-row"
+              v-if="announcement.tags.length > 0"
+              v-for="tag in announcement.tags.split(',')"
+              >{{ tag }}</small
+            >
           </div>
         </carousel>
       </div>
