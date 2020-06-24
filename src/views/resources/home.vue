@@ -7,6 +7,7 @@
             class="col-lg-6 col-md-6 col-12"
             v-for="(category, index) in Categories"
             :key="index"
+            v-if="checkContains(category.name)"
           >
             <h6 class="font-poppings text-dark font-weight-bold">
               {{ category.name }}
@@ -116,6 +117,16 @@ export default {
     ...mapActions("app/", ["getAllResources", "getAllResourceCategories"]),
     deleteResource(id, Url) {
       return helper.handleDelete(id, Url, "/resources/all");
+    },
+    checkContains(name) {
+      var found = this.Resources.filter(function(resource) {
+        return resource.category === name;
+      });
+      if (found.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
     //vuex call to get all courses

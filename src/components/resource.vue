@@ -9,7 +9,7 @@
         <icon
           @click="toggleAccordion"
           name="arrow-up"
-          :style="arrpwPos === false ? '' : 'transform: rotate(180deg);'"
+          :style="arrpwPos === true ? '' : 'transform: rotate(180deg);'"
           size="sm"
           class="float-right"
         />

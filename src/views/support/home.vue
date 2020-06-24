@@ -13,7 +13,7 @@
               <th scope="col" class="border-0">Feedback</th>
               <th scope="col" class="border-0">Date</th>
               <th scope="col" class="border-0">Resolved</th>
-              <th scope="col" class="border-0">Action</th>
+              <!-- <th scope="col" class="border-0">Action</th> -->
               <th scope="col" class="border-0">Indicator Number</th>
             </tr>
           </thead>
@@ -43,7 +43,7 @@
                   style="height: 40px"
                 />
               </td>
-              <td class="text-center">
+              <!-- <td class="text-center">
                 <icon name="arrow-back" class="m-1" size="xs" />
                 <icon
                   name="message"
@@ -57,7 +57,7 @@
                     })
                   "
                 />
-              </td>
+              </td> -->
               <td class="p-4">{{ ticket.indicator_num }}</td>
             </tr>
           </tbody>
