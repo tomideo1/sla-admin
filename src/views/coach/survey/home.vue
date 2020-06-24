@@ -1,6 +1,10 @@
 <template>
   <d-container fluid>
-    <h4 class="font-poppings text-dark m-3">Survey</h4>
+    <div class="mt-4">
+      <h6 class="text-dark title text-capitalize m-1">
+        Survey
+      </h6>
+    </div>
     <d-row class=" mt-5">
       <div
         class="col-lg-12 col-md-12 col-12 row"

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="mt-4">
+      <h6 class="text-dark title text-capitalize m-1">
+        Scorecard
+      </h6>
+    </div>
     <beat-loader
       class="loader m-3 centered"
       :color="'#0087db'"
@@ -8,8 +13,6 @@
       :sizeUnit="'px'"
     ></beat-loader>
     <d-container fluid class="main-content-container px-4" v-if="isLoaded">
-      <h4 class="font-poppins text-black p-4 mt-4">Scorecards</h4>
-
       <d-row>
         <div
           class=" col-12 col-lg-3 col-md-6"

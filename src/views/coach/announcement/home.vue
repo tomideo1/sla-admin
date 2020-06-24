@@ -1,15 +1,15 @@
 <template>
   <d-container fluid>
+    <div class="mt-4">
+      <h6 class="text-dark title text-capitalize m-1">
+        Announcements
+      </h6>
+    </div>
     <d-row class=" mt-5">
       <div
         v-if="announcements.length > 0 || announcements === null"
         class="col-lg-12"
       >
-        <div class="mt-4">
-          <h6 class="text-dark title text-capitalize m-1">
-            Announcements
-          </h6>
-        </div>
         <div class="row">
           <div
             class="col-md-3"

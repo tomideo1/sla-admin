@@ -120,6 +120,6 @@ export default {
   background: red;
   text-align: center;
   z-index: 1;
-  //font-weight:bold;
+  font-weight: bold;
 }
 </style>

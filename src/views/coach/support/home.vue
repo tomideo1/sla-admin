@@ -1,5 +1,10 @@
 <template>
   <d-container class="main-content-container px-4 py-4 " fluid>
+    <div class="">
+      <h6 class="text-dark title text-capitalize m-1">
+        Help
+      </h6>
+    </div>
     <Toasts
       :show-progress="false"
       :rtl="false"
@@ -9,8 +14,6 @@
     ></Toasts>
     <div class="row ">
       <div class="col-md-8  p-4 ">
-        <h3 class="font-poppins text-black text-bold">Help</h3>
-
         <div class="form-group">
           <label class="text-grey font-open-sans"> Feedback / Complain </label>
           <d-textarea rows="10" v-model="feedback"> </d-textarea>
