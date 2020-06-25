@@ -275,8 +275,12 @@ export default {
         this.formData.rich_details,
         true
       );
-      this.formData.category = this.formData.list_category.join();
-      this.formData.tags = this.formData.list_tags.join();
+      if (this.formData.category.length > 0) {
+        this.formData.category = this.formData.list_category.join();
+      }
+      if (this.formData.tags.length > 0) {
+        this.formData.tags = this.formData.list_tags.join();
+      }
       const self = this;
       switch (type) {
         case "save":
