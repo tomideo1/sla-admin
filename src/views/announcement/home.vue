@@ -54,12 +54,9 @@
               </p>
             </div>
             <section class="d-flex">
-              <small
-                class="mt-n4 mr-1 flex-row"
-                v-if="announcement.tags.length > 0"
-                v-for="tag in announcement.tags.split(',')"
-                >{{ tag }}</small
-              >
+              <small class="mt-n4 mr-1 flex-row" v-if="announcement.tags">{{
+                announcement.tags
+              }}</small>
             </section>
           </div>
         </carousel>
@@ -116,12 +113,9 @@
               </p>
             </div>
             <section class="d-flex">
-              <small
-                class="mt-n4 mr-1 flex-row"
-                v-if="announcement.tags.length > 0"
-                v-for="tag in announcement.tags.split(',')"
-                >{{ tag }}</small
-              >
+              <small class="mt-n4 mr-1 flex-row" v-if="announcement.tags">{{
+                announcement.tags
+              }}</small>
             </section>
           </div>
         </carousel>
@@ -178,12 +172,9 @@
               </p>
             </div>
             <section class="d-flex">
-              <small
-                class="mt-n4 mr-1 flex-row"
-                v-if="announcement.tags.length > 0"
-                v-for="tag in announcement.tags.split(',')"
-                >{{ tag }}</small
-              >
+              <small class="mt-n4 mr-1 flex-row" v-if="announcement.tags">{{
+                announcement.tags
+              }}</small>
             </section>
           </div>
         </carousel>
