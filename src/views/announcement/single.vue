@@ -197,7 +197,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-lg-4 col-12">
+        <div class="col-md-4 col-lg-4 mt-5 mt-lg-0 mt-md-4 col-12">
           <glow-card class="col-md-8 col-lg-6 col-6  m-3 ">
             <div class="d-flex flex-row ">
               <h4 class="text-white">

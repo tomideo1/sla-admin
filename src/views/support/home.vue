@@ -18,7 +18,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(ticket, idx) in Tickets" :key="idx">
+            <tr
+              v-for="(ticket, idx) in Tickets"
+              :key="idx"
+              @click="
+                $router.push({
+                  name: 'single-ticket',
+                  params: { singleTicket: ticket }
+                })
+              "
+            >
               <td class="p-4">{{ (idx += 1) }}</td>
               <td
                 class="p-4"

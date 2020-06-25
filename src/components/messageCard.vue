@@ -13,12 +13,12 @@
           <div class="w-100 text-truncate ">
             <!-- {{ dataObj.last_message.message }} -->
           </div>
-          <div
-            class="counter p-1 text-white d-flex align-items-center justify-content-center"
-          >
-            <!-- <small>{{ dataObj.group_unread }}</small> -->
-            <!--<small>{{  }}</small> -->
-          </div>
+          <!--          <div-->
+          <!--            class="counter p-1 text-white d-flex align-items-center justify-content-center"-->
+          <!--          >-->
+          <!--            &lt;!&ndash; <small>{{ dataObj.group_unread }}</small> &ndash;&gt;-->
+          <!--            &lt;!&ndash;<small>{{  }}</small> &ndash;&gt;-->
+          <!--          </div>-->
         </div>
       </div>
     </div>

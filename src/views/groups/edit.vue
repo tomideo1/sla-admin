@@ -56,7 +56,13 @@
             <span class="d-flex flex-row col-md-12 ml-4  mt-3 font-open-sans">
               <small>Date Created </small>
               <small class="ml-auto text-bold"
-                ><b>{{ $moment(Group.created_at) }} </b></small
+                ><b
+                  >{{
+                    $moment(Group.created_at).format(
+                      "dddd, MMMM Do YYYY, h:mm:ss a"
+                    )
+                  }}
+                </b></small
               >
             </span>
             <p class="text-bold font-open-sans text-black ml-5 mt-4">Members</p>
