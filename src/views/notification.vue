@@ -80,7 +80,7 @@
         <!-- <p class="heading text-bold font-poppings text-dark ">Earlier</p> -->
       </div>
 
-      <div class="col" v-show="notifications.length == 0 && isLoaded">
+      <div class="col-md-8" v-show="notifications.length == 0 && isLoaded">
         <icon name="empty" class="m-3" size="retain" />
         <span
           class="font-poppings text-dark text-center mx-auto  justify-content-center d-flex"

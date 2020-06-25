@@ -93,7 +93,7 @@
           <div class="form-group mt-3 mb-3 ">
             <d-select v-model="Polls.recepients" class="col-md-3">
               <option selected value="everyone">To Everyone</option>
-              <option value="participant">Participant</option>
+              <option value="participants">Participant</option>
               <option value="admin">Admins</option>
               <option value="coaches">Coaches</option>
             </d-select>

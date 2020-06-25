@@ -15,7 +15,7 @@
       :closeable="false"
     ></Toasts>
     <d-container fluid v-if="isLoaded">
-      <top heading="Assing Participants" />
+      <top heading="Assign Participants" />
       <d-row>
         <div
           class="col-md-3 col-lg-3 col-4"
