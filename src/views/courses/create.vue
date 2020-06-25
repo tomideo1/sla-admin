@@ -449,8 +449,8 @@ export default {
         message: null
       },
       dropzoneOptions: {
-        // url:'localhost:8080',
-        url: `${process.env.VUE_APP_API}`,
+        // url:' url:  'localhost',',
+        url: "http://localhost:8000/api/image",
         // acceptedFiles: "images/*",
         // thumbnailMethod:'contain',
         addRemoveLinks: true,
@@ -743,9 +743,13 @@ export default {
           break;
       }
       const self = this;
+      if (self.formData.tags.length > 0) {
+        self.formData.tags = self.formData.tag_lists.join();
+      }
+      if (self.formData.category.length > 0) {
+        self.formData.category = self.formData.category_lists.join();
+      }
 
-      self.formData.tags = self.formData.tag_lists.join();
-      self.formData.category = self.formData.category_lists.join();
       self.formData.lessons = self.lesson.fields;
       self.formData.quizzes = self.quiz;
       const token = store.state.auth.token;

@@ -38,7 +38,7 @@
           </div>
         </carousel>
       </div>
-      <div v-else class="col">
+      <div v-else class="col mb-4">
         <icon name="empty" class="m-3" size="retain" />
         <span
           class="font-poppings text-dark justify-content-center d-flex"
@@ -75,7 +75,7 @@
           </div>
         </carousel>
       </div>
-      <div v-else class="col">
+      <div v-else class="col mb-4">
         <icon name="empty" class="m-3" size="retain" />
         <span
           class="font-poppings text-dark justify-content-center d-flex"
@@ -115,7 +115,7 @@
           </div>
         </carousel>
       </div>
-      <div v-else class="col">
+      <div v-else class="col mb-4">
         <icon name="empty" class="m-3" size="retain" />
         <span
           class="font-poppings text-dark justify-content-center d-flex"

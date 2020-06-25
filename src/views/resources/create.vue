@@ -262,8 +262,12 @@ export default {
       }
     },
     async handleSubmit(type) {
-      this.formData.category = this.formData.list_category;
-      this.formData.tags = this.formData.list_tags.join();
+      if (typeof this.formData.category !== "undefined") {
+        this.formData.category = this.formData.list_category.join();
+      }
+      if (typeof this.formData.tags == "undefined") {
+        this.formData.tags = this.formData.list_tags.join();
+      }
       switch (type) {
         case "save":
           this.buttons.isLoading = true;

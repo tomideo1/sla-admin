@@ -173,8 +173,8 @@ export default {
       },
       options: [],
       dropzoneOptions: {
-        // url:'localhost:8080',
-        url: `${process.env.VUE_APP_API}`,
+        // url:' url:  'localhost',',
+        url: "http://localhost:8000/api/image",
         // acceptedFiles: "images/*",
         // thumbnailMethod:'contain',
         addRemoveLinks: true,
@@ -275,10 +275,10 @@ export default {
         this.formData.rich_details,
         true
       );
-      if (this.formData.category.length > 0) {
+      if (typeof this.formData.category !== "undefined") {
         this.formData.category = this.formData.list_category.join();
       }
-      if (this.formData.tags.length > 0) {
+      if (typeof this.formData.tags !== "undefined") {
         this.formData.tags = this.formData.list_tags.join();
       }
       const self = this;

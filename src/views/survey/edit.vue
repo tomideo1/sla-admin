@@ -323,8 +323,8 @@ export default {
       },
       options: [],
       dropzoneOptions: {
-        // url:'localhost:8080',
-        url: `${process.env.VUE_APP_API}`,
+        // url:' url:  'localhost',',
+        url: "http://localhost:8000/api/image",
         // acceptedFiles: "images/*",
         // thumbnailMethod:'contain',
         addRemoveLinks: true,
