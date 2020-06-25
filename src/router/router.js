@@ -30,6 +30,14 @@ import coachRoutes from "./coach";
 
 const baseRoutes = [
   {
+    path: "/",
+    name: "home",
+    component: Dashboard,
+    meta: {
+      middleware: [auth]
+    }
+  },
+  {
     path: "/dashboard",
     name: "dashboard",
     component: Dashboard,

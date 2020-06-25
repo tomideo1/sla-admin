@@ -44,9 +44,10 @@
               Announcement.createdAt | chatTime
             }}</small>
           </div>
-          <p class="m-3 font-open-sans text-dark">
-            {{ Announcement.normal_details }}
-          </p>
+          <p
+            class="m-3 font-open-sans text-dark"
+            v-html="Announcement.rich_details"
+          ></p>
           <div>
             <img
               class="p-3 w-100 h-100 border-bottom"
@@ -121,18 +122,23 @@
                     :user="{ image: comment.user.image }"
                   />
                   <p class="  m-2 d-flex flex-column ">
-                    <span class="mt-2 mb-2">
-                      {{ comment.user.first_name }}
+                    <span class="d-flex flex-row">
+                      <span class="mt-3 text-bold text-black">
+                        {{ comment.user.first_name }}
+                      </span>
+                      <span class="text-grey-500  mt-3 ml-3 ">
+                        <small>{{ comment.createdAt | chatTime }}</small>
+                      </span>
                     </span>
-                    <span class=" mb-3">
+                    <span class=" mb-1">
                       {{ comment.content }}
                     </span>
-                    <small class="text-grey-500  mt-n2">{{
-                      comment.createdAt | chatTime
-                    }}</small>
                   </p>
                 </span>
-                <span v-else class="ml-2 d-flex m-2 flex-row">
+                <span
+                  v-else-if="comment.admin !== null"
+                  class="ml-2 d-flex m-2 flex-row"
+                >
                   <sla-avatar
                     class="avatar m-1"
                     size="md"
@@ -145,22 +151,24 @@
                     size="md"
                     :user="{ image: comment.admin.image }"
                   />
-                  <p class="  m-2 d-flex flex-column ">
-                    <span class="mt-2 mb-2">
-                      {{
-                        comment.admin.first_name +
-                          "  " +
-                          (comment.admin.type === "coach"
-                            ? "(Coach)"
-                            : "(Admin)")
-                      }}
+                  <p class="  m-1 d-flex flex-column ">
+                    <span class="d-flex flex-row">
+                      <span class="mt-3 text-bold text-black">
+                        {{
+                          comment.admin.first_name +
+                            "  " +
+                            (comment.admin.type === "coach"
+                              ? "(Coach)"
+                              : "(Admin)")
+                        }}
+                      </span>
+                      <span class="text-grey-500  mt-3 ml-3 ">
+                        <small>{{ comment.createdAt | chatTime }}</small>
+                      </span>
                     </span>
-                    <span class=" mb-3">
+                    <span class=" mb-1">
                       {{ comment.content }}
                     </span>
-                    <small class="text-grey-500  mt-n2">{{
-                      comment.createdAt | chatTime
-                    }}</small>
                   </p>
                   <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
                   <!--                <small class="text-grey-500 ml-5 mt-n2">Reply</small>-->

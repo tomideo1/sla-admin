@@ -129,19 +129,21 @@ export default {
           Math.max(res.data.notifications.length - 10, 0)
         );
         self.this_week_notifications = self.notifications.filter(notif => {
-          var this_week = moment(notif.createdAt);
-          var last_week = moment().subtract(1, "days");
+          let this_week = moment(notif.createdAt);
+          let last_week = moment().subtract(1, "days");
           return this_week.isAfter(last_week);
         });
         self.last_week_notifications = self.notifications.filter(notif => {
-          var this_week = moment(notif.createdAt);
-          var last_week = moment().subtract(1, "days");
+          let this_week = moment(notif.createdAt);
+          let last_week = moment().subtract(1, "days");
           return this_week.isBefore(last_week);
         });
 
         self.isLoaded = true;
       })
-      .catch();
+      .catch(ex => {
+        console.log(ex.response.data);
+      });
   }
 };
 </script>

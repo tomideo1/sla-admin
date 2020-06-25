@@ -41,7 +41,7 @@
                   {{ JSON.parse(user.user.intrests) }}
                 </p>
                 <p class="text-grey font-open-sans">
-                  {{ user.user.location }}a
+                  {{ user.user.location }}
                 </p>
               </div>
             </div>

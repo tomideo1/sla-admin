@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
   <div>
     <beat-loader
@@ -30,9 +31,10 @@
             >
               <div class="row m-1 py-4">
                 <div style="border: 1px solid #e7e6e6; box-sizing: border-box;">
-                  <p class="m-3 font-open-sans text-dark">
-                    {{ announcement.annoucement.normal_details }}
-                  </p>
+                  <p
+                    class="m-3 font-open-sans text-dark"
+                    v-html="announcement.annoucement.rich_details"
+                  ></p>
                   <div>
                     <img
                       class="p-3 w-100 h-100 border-bottom"
@@ -43,7 +45,9 @@
                         <icon name="wave" size="xs" />
                         <icon name="thumbs" size="xs" />
                         <small class="font-open-sans"
-                          >&nbsp;{{ &nbsp;announcement.annoucement.likes + " likes" }}</small
+                          >&nbsp;{{
+                            announcement.annoucement.likes + " likes"
+                          }}</small
                         >
                       </span>
                       <span class="mr-3 ml-auto">
@@ -109,7 +113,10 @@
                           }}</small>
                         </p>
                       </span>
-                      <span v-else class="ml-2 d-flex m-2 flex-row">
+                      <span
+                        v-else-if="comment.admin !== null"
+                        class="ml-2 d-flex m-2 flex-row"
+                      >
                         <sla-avatar
                           class="avatar m-1"
                           size="md"
@@ -180,9 +187,8 @@
           </d-col>
           <d-col sm="10">
             <h5 class="font-poppings text-black">Surveys</h5>
-
             <div class="mx-auto m-3">
-              <div class="col-md-6 col-12 col-lg-6  m-2">
+              <div class="col-md-10 col-10 col-lg-10  m-2">
                 <div
                   class="p-3"
                   style="border:1px solid #E7E6E6; box-sizing:border-box;"
@@ -196,48 +202,6 @@
                         ' background-size:cover; background-position:center'
                     "
                   ></div>
-                  <div
-                    class="p-4"
-                    style="border:1px solid #E7E6E6; box-sizing:border-box;"
-                    v-for="(data, idx) in latest_survey.questions"
-                    :key="idx"
-                    :id="data._id"
-                  >
-                    <h6 class="text-black p-3 font-open-sans border-bottom">
-                      {{ data.question_text }}
-                    </h6>
-                    <div v-if="!data.has_options">
-                      <textarea
-                        class="form-control mb-3"
-                        :ref="`survey_text_answer-${data._id}`"
-                        :id="data._id"
-                        placeholder="Type your response here"
-                      >
-                      </textarea>
-                    </div>
-                    <div v-else>
-                      <div
-                        :id="data._id"
-                        :ref="`survey_quiz_answer-${data._id}`"
-                        class="d-flex flex-column"
-                      >
-                        <label
-                          class="container"
-                          v-for="(option, index) in data.possible_options"
-                          :key="index"
-                        >
-                          <input
-                            type="radio"
-                            :value="option"
-                            :name="`quiz-group-${idx}`"
-                            class="mr-2"
-                          />
-                          {{ option }}
-                          <span class="checkmark"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <sla-button
@@ -354,6 +318,7 @@ export default {
     },
 
     async likeAnnouncement(announcement) {
+      console.log(announcement);
       const self = this;
       let res = await axios
         .post(

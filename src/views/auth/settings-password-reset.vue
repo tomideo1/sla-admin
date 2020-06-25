@@ -255,7 +255,7 @@ export default {
 }
 
 .bg-image {
-  background-image: url("https://res.cloudinary.com/dwpu7jpku/image/upload/v1592506403/Image_from_iOS_1_1_izhxu5.png");
+  background-image: url("https://res.cloudinary.com/dwpu7jpku/image/upload/c_fit,h_900,q_100,y_0/v1593104919/Image_from_iOS_1_1_izhxu5.png");
   background-size: cover;
   background-position: center;
 }

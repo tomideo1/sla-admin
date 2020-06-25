@@ -77,11 +77,11 @@
          background-size: fill;box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.03); border-radius: 0"
         >
           <div class="row">
-            <div class="col-12">
+            <div class="col-12" v-if="top_1 !== null && top_1.user !== null">
               <sla-avatar
                 :class="'avatar col-12'"
                 size="xl"
-                v-if="top_1 !== null && top_1.user.image === null"
+                v-if="top_1.user.image === null"
                 :user="{ name: top_1.user.first_name }"
               />
               <sla-avatar
@@ -95,13 +95,16 @@
               </span>
               <span class="text-center d-block">{{ top_1.total }} points</span>
             </div>
-            <div class="mx-auto text-center col-12 d-flex">
+            <div
+              class="mx-auto text-center col-12 d-flex"
+              v-if="top_2 !== null && top_2.user !== null"
+            >
               <div class="col-4 offset-md-2 mb-3">
                 <div class="col-12 d-flex flex-column align-items-center">
                   <sla-avatar
                     :class="'avatar   col-lg-6  '"
                     size="lg-2"
-                    v-if="top_2 !== null && top_2.user.image === null"
+                    v-if="top_2.user.image === null"
                     :user="{ name: top_2.user.first_name }"
                   />
                   <sla-avatar
@@ -121,11 +124,14 @@
                 </div>
               </div>
               <div class="col-4 mb-3">
-                <div class="col-12 d-flex flex-column align-items-center">
+                <div
+                  class="col-12 d-flex flex-column align-items-center"
+                  v-if="top_3 !== null && top_3.user !== null"
+                >
                   <sla-avatar
                     :class="'avatar   col-lg-6  '"
                     size="lg-2"
-                    v-if="top_3 !== null && top_3.user.image === null"
+                    v-if="top_3.user.image === null"
                     :user="{ name: top_3.user.first_name }"
                   />
                   <sla-avatar
@@ -166,7 +172,7 @@
             <tr
               v-for="(item, index) in leaders"
               :key="index"
-              v-if="item.user !== null"
+              v-if="item.user !== null && item.user !== undefined"
             >
               <td>{{ item.position }}</td>
               <td class="d-flex flex-column">
