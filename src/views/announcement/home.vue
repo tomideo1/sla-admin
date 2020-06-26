@@ -39,20 +39,19 @@
                 {{ announcement.engagements + " Responses " }}
               </small>
             </div>
-            <div
-              style=" max-width: 200px;!important; word-wrap: break-word!important;"
-            >
-              <p
+            <p class="d-flex flex-column">
+              <span
+                style=" max-width: 200px;!important; word-wrap: break-word!important;"
                 class="title-card  text-capitalize text-truncate text-bold font-open-sans "
               >
                 {{ announcement.title }}
-              </p>
-            </div>
-            <section class="d-flex">
-              <small class="mt-n4 mr-1 flex-row" v-if="announcement.tags">{{
-                announcement.tags
-              }}</small>
-            </section>
+              </span>
+              <span class="d-flex">
+                <small class=" mr-1 flex-row" v-if="announcement.tags">{{
+                  announcement.tags
+                }}</small>
+              </span>
+            </p>
           </div>
         </carousel>
       </div>
@@ -93,20 +92,19 @@
                 {{ announcement.engagements + " Responses " }}
               </small>
             </div>
-            <div
-              style=" max-width: 200px;!important; word-wrap: break-word!important;"
-            >
-              <p
-                class="title-card  text-capitalize mt-2  text-truncate text-bold font-open-sans "
+            <p class="d-flex flex-column">
+              <span
+                style=" max-width: 200px;!important; word-wrap: break-word!important;"
+                class="title-card  text-capitalize text-truncate text-bold font-open-sans "
               >
                 {{ announcement.title }}
-              </p>
-            </div>
-            <section class="d-flex">
-              <small class="mt-n4 mr-1 flex-row" v-if="announcement.tags">{{
-                announcement.tags
-              }}</small>
-            </section>
+              </span>
+              <span class="d-flex">
+                <small class=" mr-1 flex-row" v-if="announcement.tags">{{
+                  announcement.tags
+                }}</small>
+              </span>
+            </p>
           </div>
         </carousel>
       </div>
@@ -147,20 +145,19 @@
                 {{ announcement.engagements + " Responses " }}
               </small>
             </div>
-            <div
-              style=" max-width: 200px;!important; word-wrap: break-word!important;"
-            >
-              <p
-                class="title-card  text-capitalize mt-2  text-truncate text-bold font-open-sans "
+            <p class="d-flex flex-column">
+              <span
+                style=" max-width: 200px;!important; word-wrap: break-word!important;"
+                class="title-card  text-capitalize text-truncate text-bold font-open-sans "
               >
                 {{ announcement.title }}
-              </p>
-            </div>
-            <section class="d-flex">
-              <small class="mt-n4 mr-1 flex-row" v-if="announcement.tags">{{
-                announcement.tags
-              }}</small>
-            </section>
+              </span>
+              <span class="d-flex">
+                <small class=" mr-1 flex-row" v-if="announcement.tags">{{
+                  announcement.tags
+                }}</small>
+              </span>
+            </p>
           </div>
         </carousel>
       </div>
