@@ -120,6 +120,7 @@ export default {
             ? res.data.message
             : "An error occured")
         );
+        this.getAllCoachTickets();
       } else {
         this.isLoading = false;
         this.text = "SUBMIT TICKET";

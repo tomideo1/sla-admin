@@ -183,17 +183,17 @@
                 size="md"
                 v-if="Admin.image === null"
                 :user="{ name: Admin.first_name }"
-                class="ml-5  mt-4  "
+                class="ml-5  mt-4 d-none d-lg-block d-md-block "
               />
               <sla-avatar
                 size="md"
                 v-else
                 :user="{ image: Admin.image }"
-                class="ml-5  mt-4  "
+                class="ml-5  mt-4 d-none d-lg-block d-md-block "
               />
               <chat-box
                 @keyup="handleComment"
-                class="col-md-112 col-lg-12 col-12"
+                class="col-md-12 col-lg-12 col-12"
                 @send="handleComment"
                 v-model="content"
               />
