@@ -22,8 +22,8 @@
           <d-col col sm="12" class="text-center text-sm-left mb-4 mb-sm-0">
             <h3 class="page-title font-poppings text-black">Dashboard</h3>
           </d-col>
-          <d-col col sm="10" class="float-left mt-5 text-sm-left mb-4 mb-sm-0">
-            <h5 class="font-poppings text-black">Announcement</h5>
+          <d-col sm="10" class="">
+            <h5 class="font-poppings mt-5  text-black">Announcement</h5>
             <div
               class="col-md-12 col-lg-12"
               v-for="(announcement, index) in individual_announcement"
@@ -79,7 +79,6 @@
                     class="col-md-12"
                     style="max-height: 300px !important; overflow-y: auto;"
                   >
-                    <!--          <div class="col-md-12 " v-for="comment in Announcement.comments">-->
                     <div
                       class="d-flex flex-column"
                       v-for="(comment, idx) in announcement.comments"
@@ -87,7 +86,7 @@
                     >
                       <span
                         v-if="comment.user !== null"
-                        class="ml-2 d-flex flex-row"
+                        class="ml-2 d-flex  flex-row"
                       >
                         <sla-avatar
                           class="avatar m-1"
@@ -101,16 +100,18 @@
                           size="md"
                           :user="{ image: comment.user.image }"
                         />
-                        <p class="m-2 d-flex flex-column">
-                          <span class="mt-2 mb-2">
-                            {{ comment.user.first_name }}
+                        <p class="  m-2 d-flex flex-column ">
+                          <span class="d-flex flex-row">
+                            <span class="mt-3 text-bold text-black">
+                              {{ comment.user.first_name }}
+                            </span>
+                            <span class="text-grey-500  mt-3 ml-3 ">
+                              <small>{{ comment.createdAt | chatTime }}</small>
+                            </span>
                           </span>
-                          <span class="mb-3">
+                          <span class=" mb-1">
                             {{ comment.content }}
                           </span>
-                          <small class="text-grey-500 mt-n2">{{
-                            comment.createdAt | chatTime
-                          }}</small>
                         </p>
                       </span>
                       <span
@@ -129,22 +130,24 @@
                           size="md"
                           :user="{ image: comment.admin.image }"
                         />
-                        <p class="m-2 d-flex flex-column">
-                          <span class="mt-2 mb-2">
-                            {{
-                              comment.admin.first_name +
-                                " " +
-                                (comment.admin.type === "coach"
-                                  ? "(coach)"
-                                  : "(admin)")
-                            }}
+                        <p class="  m-1 d-flex flex-column ">
+                          <span class="d-flex flex-row">
+                            <span class="mt-3 text-bold text-black">
+                              {{
+                                comment.admin.first_name +
+                                  "  " +
+                                  (comment.admin.type === "coach"
+                                    ? "(Coach)"
+                                    : "(Admin)")
+                              }}
+                            </span>
+                            <span class="text-grey-500  mt-3 ml-3 ">
+                              <small>{{ comment.createdAt | chatTime }}</small>
+                            </span>
                           </span>
-                          <span class="mb-3">
+                          <span class=" mb-1">
                             {{ comment.content }}
                           </span>
-                          <small class="text-grey-500 mt-n2">{{
-                            comment.createdAt | chatTime
-                          }}</small>
                         </p>
                         <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
                         <!--                <small class="text-grey-500 ml-5 mt-n2">Reply</small>-->

@@ -1546,8 +1546,7 @@ hr.style1 {
 }
 
 .scorecard-selected {
-  background-color: #e7e6e6;
-  opacity: 0.6;
+  background: #e7e6e6;
 }
 .btn-primary {
   background: rgba(0, 135, 219, 0.16) !important;
