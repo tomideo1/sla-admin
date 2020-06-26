@@ -1,7 +1,18 @@
 <template>
   <d-navbar-nav class="flex-row ">
     <li class="nav-item   dropdown notifications">
-      <router-link to="/messages" class="nav-link mt-2 text-center">
+      <router-link
+        v-if="Admin.type !== 'coach'"
+        to="/messages"
+        class="nav-link mt-2 text-center"
+      >
+        <icon size="xs" name="message" />
+      </router-link>
+      <router-link
+        v-else
+        to="/coach/messages"
+        class="nav-link mt-2 text-center"
+      >
         <icon size="xs" name="message" />
       </router-link>
       <!--      <d-collapse id="notifications" class="dropdown-menu dropdown-menu-small">-->

@@ -195,6 +195,14 @@ export const sendChat = async ({ commit }, payload) => {
   console.log(res.status);
 };
 
+export const sendCoachChat = async ({ commit }, payload) => {
+  let obj = {
+    message: payload
+  };
+  let res = await Api.post(`/admin/send-message`, obj, true);
+  console.log(res.status);
+};
+
 export const submitSurveyApi = async ({ commit }, payload) => {
   let res = await Api.post(
     `survey/coach/${payload.id}/submit`,

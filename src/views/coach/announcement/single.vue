@@ -70,7 +70,17 @@
             </div>
             <div class="d-flex flex-row m-3">
               <span class="mr-3 ml-3">
-                <icon name="fb-like" @click="likeAnnouncement" size="sm" />
+                <icon
+                  v-if="Announcement.isLiked"
+                  name="thumb-filled"
+                  size="sm"
+                />
+                <icon
+                  v-else
+                  name="thumb-unfilled"
+                  @click="likeAnnouncement"
+                  size="sm"
+                />
                 <span class="text-primary justify-content-center"
                   >&nbsp;&nbsp;&nbsp;Like</span
                 >

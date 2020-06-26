@@ -148,6 +148,23 @@ export default [
     ]
   },
   {
+    path: "/coach/messages",
+    meta: {
+      middleware: [auth]
+    },
+    component: () => import("@/views/coach/messages/index.vue"),
+    children: [
+      {
+        path: "/",
+        name: "all-messages",
+        component: () => import("@/views/coach/messages/home.vue"),
+        meta: {
+          middleware: [auth]
+        }
+      }
+    ]
+  },
+  {
     path: "/profile",
     name: "coach-profile",
     component: () => import("@/views/coach/profile.vue"),
@@ -178,6 +195,7 @@ export default [
     meta: { layout: "no-sidebar" },
     component: PasswordReset
   },
+
   {
     path: "/admin/settings/password-reset",
     name: "settings-password-resetsettings-password-reset",

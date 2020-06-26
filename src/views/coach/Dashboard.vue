@@ -25,11 +25,11 @@
           <d-col sm="10" class="">
             <h5 class="font-poppings mt-5  text-black">Announcement</h5>
             <div
-              class="col-md-12 col-lg-12"
+              class="col-md-12 col-lg-12 col-12"
               v-for="(announcement, index) in individual_announcement"
               :key="index"
             >
-              <div class="row m-1 py-4">
+              <div class="row m-lg-1 m-0 m-md-1 py-4">
                 <div style="border: 1px solid #e7e6e6; box-sizing: border-box;">
                   <p
                     class="m-3 font-open-sans text-dark"
@@ -59,7 +59,13 @@
                     <div class="d-flex flex-row m-3">
                       <span class="mr-3 ml-3">
                         <icon
-                          name="fb-like"
+                          v-if="announcement.isLiked"
+                          name="thumb-filled"
+                          size="sm"
+                        />
+                        <icon
+                          v-else
+                          name="thumb-unfilled"
                           @click="likeAnnouncement(announcement.annoucement)"
                           size="sm"
                         />
@@ -154,18 +160,18 @@
                       </span>
                     </div>
                   </div>
-                  <div class="d-flex flex-lg-row w-100 mt-3">
+                  <div class="d-flex flex-lg-row flex-column w-100 mt-3">
                     <sla-avatar
                       size="md"
                       v-if="Admin.image === null"
                       :user="{ name: Admin.first_name }"
-                      class="ml-5  mt-4  "
+                      class="ml-5  mt-4 d-none d-lg-block d-md-block  "
                     />
                     <sla-avatar
                       size="md"
                       v-else
                       :user="{ image: Admin.image }"
-                      class="ml-5  mt-4  "
+                      class="ml-5  mt-4 d-none d-lg-block d-md-block  "
                     />
                     <chat-box
                       @keyup="
@@ -174,7 +180,7 @@
                           announcement.comments
                         )
                       "
-                      class="col-md-112 col-lg-12 col-12"
+                      class="col-md-12 col-lg-12 col-12"
                       @send="
                         handleComment(
                           announcement.annoucement,
@@ -196,15 +202,10 @@
                   class="p-3"
                   style="border:1px solid #E7E6E6; box-sizing:border-box;"
                 >
-                  <div
-                    :style="
-                      'height: 120px!important;' +
-                        'backgroundImage:url(' +
-                        latest_survey.survey.survey_image +
-                        ');' +
-                        ' background-size:cover; background-position:center'
-                    "
-                  ></div>
+                  <img
+                    class="p-3 w-100 h-100 border-bottom"
+                    :src="latest_survey.survey.survey_image"
+                  />
                 </div>
 
                 <sla-button
@@ -336,6 +337,7 @@ export default {
         .then(res => {
           self.$toast.success((self.error.message = res.data.message));
           announcement.likes++;
+          announcement.isLiked = true;
           return true;
         })
         .catch(ex => {

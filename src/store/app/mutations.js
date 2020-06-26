@@ -14,7 +14,7 @@ export const setGroups = (state, data) => {
 };
 
 export const setCoachesGroups = (state, data) => {
-  state.CoachGroups = data.data.groups;
+  state.CoachGroups = data.data;
 };
 
 export const setSurveys = (state, data) => {
