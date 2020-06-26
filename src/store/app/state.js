@@ -19,5 +19,6 @@ export default {
   ScoreCard: null,
   AssignedUsers: null,
   UserScoreCards: null,
-  CoachTickets: null
+  CoachTickets: null,
+  CoachGroups: null
 };

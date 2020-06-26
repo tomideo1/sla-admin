@@ -172,7 +172,7 @@ export default {
         return;
       }
       console.log(this.password_strength);
-      if (this.password_strength < 2) {
+      if (this.password_strength < 1) {
         this.isLoading = false;
         this.$toast.error((this.error.message = "The strength is too weak "));
         this.error.show = true;

@@ -80,9 +80,9 @@
         <div
           class="modal-header"
           :style="
-            'width:100%!important;height: 206px!important;' +
+            'width:100%!important;height: 100%!important;' +
               'backgroundImage:url(' +
-              'https://res.cloudinary.com/dwpu7jpku/image/upload/v1592525158/Rectangle_1_zyvfzz.png' +
+              'https://media.giphy.com/media/3oKIPnJHi1y2eUG7gk/giphy.gif' +
               ');' +
               ' background-size:cover; background-position:center'
           "

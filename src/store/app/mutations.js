@@ -13,6 +13,10 @@ export const setGroups = (state, data) => {
   state.Groups = data.data.groups;
 };
 
+export const setCoachesGroups = (state, data) => {
+  state.CoachGroups = data.data.groups;
+};
+
 export const setSurveys = (state, data) => {
   state.Surveys = data.data.surveys;
 };

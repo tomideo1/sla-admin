@@ -36,6 +36,10 @@ export const getGroups = state => {
   return state.Groups;
 };
 
+export const getCoachGroups = state => {
+  return state.CoachGroups;
+};
+
 export const getTickets = state => {
   return state.Tickets;
 };

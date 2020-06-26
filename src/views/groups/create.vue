@@ -375,10 +375,10 @@ export default {
   methods: {
     async handleSubmit() {
       this.buttons.isLoading = true;
-      if (typeof this.formData.category !== "undefined") {
+      if (typeof this.formData.category === "undefined") {
         this.formData.category = this.formData.list_category.join();
       }
-      if (typeof this.formData.tags !== "undefined") {
+      if (typeof this.formData.tags === "undefined") {
         this.formData.tags = this.formData.list_tags.join();
       }
       this.buttons.text = "Loading...";
@@ -404,6 +404,8 @@ export default {
           self.formData = {};
         })
         .catch(ex => {
+          this.formData.list_category.split(",");
+          this.formData.list_tags.split(",");
           self.buttons.isLoading = false;
           self.buttons.text = "Create Group";
           self.$toast.error(

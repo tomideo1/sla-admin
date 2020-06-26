@@ -281,7 +281,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      Groups: "app/getGroups",
+      Groups: "app/getCoachGroups",
       announcements: "app/getAnnouncements",
       Admin: "auth/getAdmin",
       surveys: "app/getSurveys"
@@ -289,7 +289,7 @@ export default {
   },
   methods: {
     ...mapActions("app/", [
-      "getAllGroups",
+      "getCoachesGroups",
       "getAllAnnouncements",
       "getAnnouncementDetails",
       "getAllSurveys"
@@ -374,7 +374,7 @@ export default {
     }
   },
   async mounted() {
-    await this.getAllGroups();
+    await this.getCoachesGroups();
     await this.getAllAnnouncements();
     await this.getAllSurveys();
     const self = this;

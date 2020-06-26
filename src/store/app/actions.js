@@ -91,7 +91,12 @@ export const getAllGroups = async ({ commit }) => {
     commit("setGroups", res.data);
   } else return res;
 };
-
+export const getCoachesGroups = async ({ commit }) => {
+  let res = await Api.get(`group/list-admin-groups`, true);
+  if (res.status === 200) {
+    commit("setCoachesGroups", res.data);
+  } else return res;
+};
 export const getAllSurveys = async ({ commit }) => {
   let res = await Api.get(`survey/list`, true);
   if (res.status === 200) {

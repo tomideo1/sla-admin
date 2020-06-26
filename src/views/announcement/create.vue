@@ -275,10 +275,10 @@ export default {
         this.formData.rich_details,
         true
       );
-      if (typeof this.formData.category !== "undefined") {
+      if (typeof this.formData.category == "undefined") {
         this.formData.category = this.formData.list_category.join();
       }
-      if (typeof this.formData.tags !== "undefined") {
+      if (typeof this.formData.tags == "undefined") {
         this.formData.tags = this.formData.list_tags.join();
       }
       const self = this;
@@ -329,6 +329,12 @@ export default {
           this.formData = {};
         })
         .catch(ex => {
+          if (typeof this.formData.category !== "undefined") {
+            this.formData.list_category.split(",");
+          }
+          if (typeof this.formData.tags !== "undefined") {
+            this.formData.list_tags.join(",");
+          }
           switch (type) {
             case "save":
               self.buttons.isLoading = false;
