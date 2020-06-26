@@ -265,7 +265,7 @@ export default {
       if (this.formData.list_tags.length > 0) {
         this.formData.tags = this.formData.list_tags.join();
       }
-      this.formData.category = this.formData.list_category.join();
+      this.formData.category = this.formData.list_category;
       switch (type) {
         case "save":
           this.buttons.isLoading = true;
