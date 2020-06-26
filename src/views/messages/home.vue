@@ -17,7 +17,7 @@
         />
       </div>
       <div
-        class=" w-100 d-none d-lg-block d-md-block   border-left shadow-sm "
+        class=" w-100  border-left shadow-sm "
         style="background: #FAFAFA;!important; min-height:100vh!important;overflow:auto"
       >
         <div class=" nav nav-bar bg-white sticky-top container-fluid p-3">
