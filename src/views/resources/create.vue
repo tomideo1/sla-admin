@@ -262,7 +262,7 @@ export default {
       }
     },
     async handleSubmit(type) {
-      if (this.formData.tag_lists.length > 0) {
+      if (this.formData.list_tags.length > 0) {
         this.formData.tags = this.formData.list_tags.join();
       }
       this.formData.category = this.formData.list_category.join();

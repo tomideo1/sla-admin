@@ -5,15 +5,15 @@
         <h4 class="m-3 font-open-sans text-black">Messages</h4>
         <message-card
           v-for="dataObj in getCoachGroups"
-          :key="dataObj._id"
+          :key="dataObj.group._id"
           :dataObj="dataObj"
           @click="
-            getGroup(dataObj._id);
-            currentGroup = dataObj;
+            getGroup(dataObj.group._id);
+            currentGroup = dataObj.group;
             groupChats();
-            selectItem(dataObj._id);
+            selectItem(dataObj.group._id);
           "
-          :class="{ active: dataObj._id === activeItem }"
+          :class="{ active: dataObj.group._id === activeItem }"
         />
       </div>
       <div
@@ -70,7 +70,7 @@ export default {
     ]),
     getGroup(groupId) {
       return (this.currentGroup = this.getCoachGroups.filter(
-        res => res._id === groupId
+        res => res.group._id === groupId
       ));
     },
     selectItem(i) {
@@ -104,7 +104,7 @@ export default {
   async mounted() {
     await this.getCoachesGroups();
     console.log({ hhhh: this.$store.state.user });
-    this.currentGroup = this.getCoachGroups[0];
+    this.currentGroup = this.getCoachGroups[0].group;
     this.groupChats();
   },
   computed: {

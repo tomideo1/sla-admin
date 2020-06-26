@@ -230,7 +230,7 @@
               :style="
                 'width:200px!important;height: 120px!important;' +
                   'backgroundImage:url(' +
-                  group.cover_image +
+                  group.group.cover_image +
                   ');' +
                   ' background-size:cover; background-position:center'
               "
@@ -242,7 +242,7 @@
               <p
                 class="title-card text-truncate text-capitalize mt-2 text-bold font-open-sans"
               >
-                {{ group.title }}
+                {{ group.group.title }}
               </p>
             </div>
 
