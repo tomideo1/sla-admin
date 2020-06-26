@@ -77,16 +77,10 @@
       </div>
 
       <d-modal v-if="submitted" @close="submitted = false" size="lg">
-        <div
+        <img
           class="modal-header"
-          :style="
-            'width:100%!important;height: 100%!important;' +
-              'backgroundImage:url(' +
-              'https://media.giphy.com/media/3oKIPnJHi1y2eUG7gk/giphy.gif' +
-              ');' +
-              ' background-size:cover; background-position:center'
-          "
-        ></div>
+          src="https://media.giphy.com/media/3oKIPnJHi1y2eUG7gk/giphy.gif"
+        />
 
         <d-modal-body>
           <div class="text-center">
