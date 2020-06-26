@@ -275,10 +275,10 @@ export default {
         this.formData.rich_details,
         true
       );
-      if (self.formData.tag_lists.length > 0) {
-        self.formData.tags = self.formData.list_tags.join();
+      if (this.formData.list_tags.length > 0) {
+        this.formData.tags = this.formData.list_tags.join();
       }
-      self.formData.category = self.formData.list_category.join();
+      this.formData.category = this.formData.list_category.join();
       const self = this;
       switch (type) {
         case "save":
