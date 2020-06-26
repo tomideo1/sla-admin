@@ -258,11 +258,7 @@
           </div>
         </d-row>
       </d-modal-body>
-      <d-modal-footer>
-        <button class="btn p-3 m-1 mx-auto col-md-5  btn-primary ">
-          INVITE ALL
-        </button>
-      </d-modal-footer>
+      <d-modal-footer> </d-modal-footer>
     </d-modal>
   </d-container>
 </template>
