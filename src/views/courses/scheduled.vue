@@ -14,7 +14,7 @@
             class="scroll m-2"
             v-for="(course, idx) in courses"
             :key="idx"
-            v-if="course.saved === false && course.schedule !== null"
+            v-if="course.saved === true && course.schedule !== null"
           >
             <d-card
               @click="
@@ -30,14 +30,17 @@
               "
             >
             </d-card>
-            <p
-              class="title  text-capitalize mt-2 text-bold "
-              style="max-width: 50%!important;"
-            >
-              {{ course.title }}
-            </p>
-            <p class=" text-capitalize mt-n4  " style="color: #999999;">
-              {{ course.tags }}
+            <p class="d-flex flex-column">
+              <span
+                class="title  text-truncate  text-capitalize mt-2 text-bold "
+                style="max-width: 200px;"
+              >
+                {{ course.title }}
+              </span>
+
+              <span class=" text-capitalize mt-1 " style="color: #999999;">
+                {{ course.tags }}
+              </span>
             </p>
           </div>
         </carousel>
@@ -305,9 +308,7 @@ export default {
   async mounted() {
     await this.getAllCourses();
     this.courses.filter(course => {
-      if (course.saved === false) {
-        return course;
-      }
+      return course.saved === true;
     });
   },
   components: {

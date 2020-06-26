@@ -809,6 +809,7 @@ export default {
         case "publish":
           this.buttons.isLoading = true;
           this.buttons.text = "Loading.....";
+          this.course.saved = false;
           break;
         default:
           break;

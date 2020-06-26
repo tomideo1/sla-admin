@@ -434,7 +434,7 @@
         <d-select class="col-md-3 mb-4">
           <option selected :value="undefined">All</option>
         </d-select>
-        <div class="col-md-4 float-right">
+        <!-- <div class="col-md-4 float-right">
           <div class="d-flex flex-row mx-auto ">
             <div
               class="legend_block m-1"
@@ -449,7 +449,7 @@
               <p>{{ legend.name }}</p>
             </div>
           </div>
-        </div>
+        </div> -->
         <d-card
           class="  col-md-12  col-lg-12 "
           style="border-radius:0!important;"
@@ -534,7 +534,7 @@
                 </div>
                 <div class="col-md-2  border-right text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
-                    {{ data.engagements * 0.01 }}
+                    {{ getEnagegmentRatio(data.engagements, data.likes) }}
                   </p>
                 </div>
               </div>
@@ -952,7 +952,7 @@
         >
           <div class="row" style="max-height:500px;overflow-y:auto">
             <div class="col-md-12 col-lg-12 col-12">
-              <div class="row">
+              <div class="row  sticky-top bg-white">
                 <div class="col-md-6  text-center text-lg-left col-12 col-lg-6">
                   <p class="text-black font-poppings  m-3">
                     Top Courses
@@ -963,11 +963,11 @@
                     Number of Enrollees
                   </p>
                 </div>
-                <!-- <div class="col-md-3 text-center  col-12 col-lg-3">
+                <div class="col-md-3 text-center  col-12 col-lg-3">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
                     Completion Rate
                   </p>
-                </div> -->
+                </div>
               </div>
               <div
                 :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
@@ -1000,9 +1000,11 @@
                 >
                   {{ data.count }}
                 </div>
-                <!-- <div class="col-md-3 border-right  text-center col-12 col-lg-3">
+                <div
+                  class="col-md-3 border-right mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-3"
+                >
                   0
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -1445,6 +1447,10 @@ export default {
         });
       });
       return self.series;
+    },
+    getEnagegmentRatio(engagements, impressions) {
+      let result = (engagements / impressions) * 100;
+      return Math.ceil(result);
     }
   },
   computed: {
