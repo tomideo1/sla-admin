@@ -99,7 +99,7 @@
               class="mx-auto text-center col-12 d-flex"
               v-if="top_2 !== null && top_2.user !== null"
             >
-              <div class="col-4 offset-md-2 mb-3">
+              <div class="col-lg-4 offset-md-2 mb-3">
                 <div class="col-12 d-flex flex-column align-items-center">
                   <sla-avatar
                     :class="'avatar   col-lg-6  '"
@@ -108,7 +108,7 @@
                     :user="{ name: top_2.user.first_name }"
                   />
                   <sla-avatar
-                    :class="'avatar  col-lg-6  '"
+                    :class="'avatar   col-lg-6  '"
                     size="lg-2"
                     v-else
                     :user="{ image: top_2.user.image }"
@@ -123,7 +123,7 @@
                   </main>
                 </div>
               </div>
-              <div class="col-4 mb-3">
+              <div class="col-lg-4 mb-3">
                 <div
                   class="col-12 d-flex flex-column align-items-center"
                   v-if="top_3 !== null && top_3.user !== null"
