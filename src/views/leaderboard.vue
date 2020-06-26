@@ -157,13 +157,15 @@
       <d-col col sm="12" class="mt-4">
         <table class="table mb-0 table-hover table-striped table-responsive-xl">
           <thead class="bg-light">
-            <tr>
+            <tr class=" ">
               <th scope="col" class="border-0">Rank</th>
               <th scope="col" class="border-0">Name</th>
               <th scope="col" class="border-0">Score Card</th>
               <th scope="col" class="border-0">Survey</th>
               <th scope="col" class="border-0">Quiz</th>
               <th scope="col" class="border-0">Lessons</th>
+              <th scope="col" class="border-0">Likes</th>
+              <th scope="col" class="border-0">Comments</th>
               <th scope="col" class="border-0">Courses</th>
               <th scope="col" class="border-0">Total Points</th>
             </tr>
@@ -190,6 +192,8 @@
               <td>{{ item.survey }}</td>
               <td>{{ item.quiz }}</td>
               <td>{{ item.lesson }}</td>
+              <td>{{ item.likes }}</td>
+              <td>{{ item.comments }}</td>
               <td>{{ item.courses }}</td>
               <td>{{ item.total }}</td>
             </tr>

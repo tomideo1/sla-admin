@@ -430,7 +430,7 @@
     <!--      </d-card>-->
     <!--    </d-row>-->
     <d-row class="p-3 mb-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
+      <div class="col-lg-12 mx-auto ">
         <d-select class="col-md-3 mb-4">
           <option selected :value="undefined">All</option>
         </d-select>
@@ -762,7 +762,7 @@
     <!--&lt;!&ndash;      </d-card>&ndash;&gt;-->
     <!--    </d-row>-->
     <d-row class="p-3 mb-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
+      <div class="col-lg-12 mx-auto ">
         <d-select class="col-md-3 mb-4">
           <option selected :value="undefined">All</option>
         </d-select>
@@ -848,7 +848,7 @@
     </d-row>
 
     <d-row class="p-3 mb-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
+      <div class="col-lg-12 mx-auto ">
         <d-select class="col-md-3 mb-4">
           <option selected :value="undefined">Top Locations</option>
         </d-select>
@@ -942,7 +942,7 @@
     </d-row>
 
     <d-row class="p-3 mb-3" no-gutters>
-      <div class="col-lg-10 mx-auto ">
+      <div class="col-lg-12 mx-auto ">
         <d-select class="col-md-3 mb-4">
           <option selected :value="undefined">Top Courses</option>
         </d-select>
