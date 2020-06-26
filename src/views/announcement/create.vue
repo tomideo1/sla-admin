@@ -275,12 +275,10 @@ export default {
         this.formData.rich_details,
         true
       );
-      if (typeof this.formData.category == "undefined") {
-        this.formData.category = this.formData.list_category.join();
+      if (self.formData.tag_lists.length > 0) {
+        self.formData.tags = self.formData.list_tags.join();
       }
-      if (typeof this.formData.tags == "undefined") {
-        this.formData.tags = this.formData.list_tags.join();
-      }
+      self.formData.category = self.formData.list_category.join();
       const self = this;
       switch (type) {
         case "save":
@@ -329,12 +327,8 @@ export default {
           this.formData = {};
         })
         .catch(ex => {
-          if (typeof this.formData.category !== "undefined") {
-            this.formData.list_category.split(",");
-          }
-          if (typeof this.formData.tags !== "undefined") {
-            this.formData.list_tags.join(",");
-          }
+          self.formData.tag_lists = [];
+          self.formData.category_lists = [];
           switch (type) {
             case "save":
               self.buttons.isLoading = false;

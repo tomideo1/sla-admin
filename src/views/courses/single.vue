@@ -819,8 +819,13 @@ export default {
       } else {
         delete self.course.cover_image;
       }
-      self.course.tags = self.course.tags.join();
-      self.course.category = self.course.category.join();
+
+      if (self.course.tags.length > 0) {
+        self.course.tags = self.course.tags.join();
+      }
+      if (self.course.category.length > 0) {
+        self.course.category = self.course.category.join();
+      }
       self.course.lessons = self.lesson.fields;
       self.course.schedule = self.formData.schedule;
       self.course.remainder = self.formData.remainder;
@@ -864,8 +869,9 @@ export default {
         })
         .catch(ex => {
           self.course.cover_image = self.formData.cover_image;
-          self.course.tags = self.course.tags.split(",");
-          self.course.category = self.course.category.split(",");
+          self.course.tags = [];
+          self.course.category = [];
+
           switch (type) {
             case "save":
               self.buttons.isLoading = false;

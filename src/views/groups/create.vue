@@ -375,12 +375,10 @@ export default {
   methods: {
     async handleSubmit() {
       this.buttons.isLoading = true;
-      if (typeof this.formData.category === "undefined") {
-        this.formData.category = this.formData.list_category.join();
-      }
-      if (typeof this.formData.tags === "undefined") {
+      if (this.formData.tag_lists.length > 0) {
         this.formData.tags = this.formData.list_tags.join();
       }
+      this.formData.category = this.formData.list_category.join();
       this.buttons.text = "Loading...";
       const self = this;
       let res = await axios
@@ -404,8 +402,8 @@ export default {
           self.formData = {};
         })
         .catch(ex => {
-          this.formData.list_category.split(",");
-          this.formData.list_tags.split(",");
+          self.formData.list_category = [];
+          self.formData.list_tags = [];
           self.buttons.isLoading = false;
           self.buttons.text = "Create Group";
           self.$toast.error(

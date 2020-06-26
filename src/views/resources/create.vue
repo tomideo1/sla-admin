@@ -262,12 +262,10 @@ export default {
       }
     },
     async handleSubmit(type) {
-      if (typeof this.formData.category !== "undefined") {
-        this.formData.category = this.formData.list_category.join();
-      }
-      if (typeof this.formData.tags == "undefined") {
+      if (this.formData.tag_lists.length > 0) {
         this.formData.tags = this.formData.list_tags.join();
       }
+      this.formData.category = this.formData.list_category.join();
       switch (type) {
         case "save":
           this.buttons.isLoading = true;
@@ -315,6 +313,8 @@ export default {
           }
         })
         .catch(ex => {
+          self.formData.list_category = [];
+          self.formData.list_tags = [];
           switch (type) {
             case "save":
               self.buttons.isLoading = false;

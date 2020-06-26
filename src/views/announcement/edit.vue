@@ -316,8 +316,10 @@ export default {
         default:
           break;
       }
+      if (self.Announcement.tags !== "" && self.Announcement.tags.length > 0) {
+        self.Announcement.tags = self.Announcement.tags.join();
+      }
 
-      self.Announcement.tags = self.Announcement.tags.join();
       self.Announcement.category = self.Announcement.category.join();
       if (self.formData.cover_image !== undefined) {
         self.Announcement.cover_image = self.formData.cover_image;
@@ -362,7 +364,7 @@ export default {
         .catch(ex => {
           self.Announcement.cover_image = self.formData.cover_image;
           self.Announcement.category = self.Announcement.category.split(",");
-          self.Announcement.tags = self.Announcement.tags.split(",");
+          self.Announcement.tags = [];
           switch (type) {
             case "save":
               self.buttons.isLoading = false;

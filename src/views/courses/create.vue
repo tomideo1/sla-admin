@@ -469,6 +469,8 @@ export default {
         requirements: null,
         category: [],
         tags: [],
+        tag_lists: [],
+        category_lists: [],
         cover_image: "",
         estimate: null,
         publish: null,
@@ -743,13 +745,10 @@ export default {
           break;
       }
       const self = this;
-      if (self.formData.tags.length > 0) {
+      if (self.formData.tag_lists.length > 0) {
         self.formData.tags = self.formData.tag_lists.join();
       }
-      if (self.formData.category.length > 0) {
-        self.formData.category = self.formData.category_lists.join();
-      }
-
+      self.formData.category = self.formData.category_lists.join();
       self.formData.lessons = self.lesson.fields;
       self.formData.quizzes = self.quiz;
       const token = store.state.auth.token;
@@ -785,6 +784,9 @@ export default {
           }
         })
         .catch(ex => {
+          self.formData.tag_lists = [];
+          self.formData.category_lists = [];
+
           switch (type) {
             case "save":
               self.buttons.isLoading = false;
