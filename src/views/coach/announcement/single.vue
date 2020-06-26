@@ -42,7 +42,9 @@
               {{ Announcement.title }}
             </h5>
             <small class="font-open-sans text-grey-500 ml-auto m-4">{{
-              Announcement.createdAt | chatTime
+              $moment(Announcement.createdAt).format(
+                "dddd, MMMM Do YYYY, h:mm:ss a"
+              )
             }}</small>
           </div>
           <p
