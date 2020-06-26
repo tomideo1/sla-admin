@@ -108,7 +108,7 @@
                     :user="{ name: top_2.user.first_name }"
                   />
                   <sla-avatar
-                    :class="'avatar   col-lg-6  '"
+                    :class="'avatar  col-lg-6  '"
                     size="lg-2"
                     v-else
                     :user="{ image: top_2.user.image }"
