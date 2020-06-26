@@ -457,7 +457,7 @@
           <div class="row" style="max-height:500px;overflow-y:auto">
             <div class="col-md-12 col-lg-12 col-12">
               <div class="row">
-                <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
+                <div class="col-md-4  text-center text-lg-left col-12 col-lg-4">
                   <p class="text-black font-poppings  m-3">
                     Posts
                   </p>
@@ -472,17 +472,17 @@
                     Author
                   </p>
                 </div>
-                <div class="col-md-1 text-center col-12 col-lg-1">
+                <div class="col-md-2 text-center col-12 col-lg-2">
                   <p class="text-black w-100 mx-auto font-poppings  m-3">
                     Impressions
                   </p>
                 </div>
-                <div class="col-md-1 text-center col-12 col-lg-1">
+                <div class="col-md-2 text-center col-12 col-lg-2">
                   <p class="text-black mx-auto w-100 font-poppings  m-3">
                     Engagements
                   </p>
                 </div>
-                <div class="col-md-1 text-center col-12 col-lg-1">
+                <div class="col-md-2 text-center col-12 col-lg-2">
                   <p class="text-black w-100 mx-auto font-poppings  m-3">
                     Engagement Ratio
                   </p>
@@ -493,22 +493,17 @@
                 v-for="(data, idx) in fetchTopAnnouncements"
                 :key="idx"
               >
-                <div class="col-md-7 border-right col-12 col-lg-7">
+                <div class="col-md-4 border-right col-12 col-lg-4">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     class="font-open-sans text-dark
-                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-row"
+                      col-md-12 col-12 col-lg-12 m-3 m-lg-3 m-md-0 d-flex flex-lg-row flex-grow-1"
                   >
-                    <d-card
-                      :style="
-                        'width:87px!important;height: 63px!important;' +
-                          'backgroundImage:url(' +
-                          data.cover_image +
-                          ');' +
-                          ' background-size:cover; background-position:center'
-                      "
-                    >
-                    </d-card>
+                    <img
+                      :src="data.cover_image"
+                      :style="'width:87px!important;height: 63px!important;'"
+                    />
+
                     <span class="m-1 ml-4">
                       {{ data.title }}
                     </span>
@@ -527,17 +522,17 @@
                     SLA
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                <div class="col-md-2  border-right text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ data.likes }}
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                <div class="col-md-2  border-right text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ data.engagements }}
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                <div class="col-md-2  border-right text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ data.engagements * 0.01 }}
                   </p>

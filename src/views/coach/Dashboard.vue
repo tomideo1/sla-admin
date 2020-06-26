@@ -23,7 +23,7 @@
             <h3 class="page-title font-poppings text-black">Dashboard</h3>
           </d-col>
           <d-col sm="10" class="">
-            <h5 class="font-poppings mt-5  text-black">Announcement</h5>
+            <h5 class="font-poppings mt-5  m-5 text-black">Announcement</h5>
             <div
               class="col-md-12 col-lg-12 col-12"
               v-for="(announcement, index) in individual_announcement"
@@ -195,7 +195,7 @@
             </div>
           </d-col>
           <d-col sm="10">
-            <h5 class="font-poppings text-black">Surveys</h5>
+            <h5 class="font-poppings text-black m-5">Surveys</h5>
             <div class="mx-auto m-3">
               <div class="col-md-10 col-10 col-lg-10  m-2">
                 <div

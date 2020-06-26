@@ -26,14 +26,17 @@
               "
             >
             </d-card>
-            <p
-              class="title  text-truncate  text-capitalize mt-2 text-bold "
-              style="max-width: 200px;"
-            >
-              {{ course.title }}
-            </p>
-            <p class=" text-capitalize mt-n4  " style="color: #999999;">
-              {{ course.tags }}
+            <p class="d-flex flex-column">
+              <span
+                class="title  text-truncate  text-capitalize mt-2 text-bold "
+                style="max-width: 200px;"
+              >
+                {{ course.title }}
+              </span>
+
+              <span class=" text-capitalize mt-1 " style="color: #999999;">
+                {{ course.tags }}
+              </span>
             </p>
           </div>
         </carousel>
@@ -103,14 +106,17 @@
               "
             >
             </d-card>
-            <p
-              class="title text-truncate  text-capitalize  text-bold "
-              style="max-width: 50%!important;"
-            >
-              {{ course.title }}
-            </p>
-            <p class=" text-capitalize mt-n4 " style="color: #999999;">
-              {{ course.tags }}
+            <p class="d-flex flex-column">
+              <span
+                class="title  text-truncate  text-capitalize mt-2 text-bold "
+                style="max-width: 200px;"
+              >
+                {{ course.title }}
+              </span>
+
+              <span class=" text-capitalize mt-1 " style="color: #999999;">
+                {{ course.tags }}
+              </span>
             </p>
           </div>
         </carousel>
@@ -144,14 +150,17 @@
               "
             >
             </d-card>
-            <p
-              class="title text-truncate  text-capitalize  text-bold "
-              style="max-width: 50%!important;"
-            >
-              {{ course.course.title }}
-            </p>
-            <p class=" text-capitalize  mt-n4 " style="color: #999999;">
-              {{ course.course.tags }}
+            <p class="d-flex flex-column">
+              <span
+                class="title  text-truncate  text-capitalize mt-2 text-bold "
+                style="max-width: 200px;"
+              >
+                {{ course.course.title }}
+              </span>
+
+              <span class=" text-capitalize mt-1 " style="color: #999999;">
+                {{ course.course.tags }}
+              </span>
             </p>
           </div>
         </carousel>
@@ -186,14 +195,17 @@
                 "
               >
               </d-card>
-              <p
-                class="title  text-capitalize text-truncate mt-3 text-bold "
-                style="max-width: 50%!important;"
-              >
-                {{ tags.title }}
-              </p>
-              <p class=" text-capitalize mt-1 " style="color: #999999;">
-                {{ tags.tags }}
+              <p class="d-flex flex-column">
+                <span
+                  class="title  text-truncate  text-capitalize mt-2 text-bold "
+                  style="max-width: 200px;"
+                >
+                  {{ tags.title }}
+                </span>
+
+                <span class=" text-capitalize mt-1 " style="color: #999999;">
+                  {{ tags.tags }}
+                </span>
               </p>
             </div>
           </carousel>

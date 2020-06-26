@@ -36,12 +36,7 @@
               }}</small>
 
               <small class="font-open-sans text-grey-500 ml-5">
-                {{
-                  announcement.likes +
-                    announcement.comments +
-                    announcement.engagements +
-                    " Responses "
-                }}
+                {{ announcement.engagements + " Responses " }}
               </small>
             </div>
             <div
@@ -95,12 +90,7 @@
                 $moment(announcement.createdAt).format("YYYY/MM/DD")
               }}</small>
               <small class="font-open-sans text-grey-500 ml-5">
-                {{
-                  announcement.likes +
-                    announcement.comments +
-                    announcement.engagements +
-                    " Responses "
-                }}
+                {{ announcement.engagements + " Responses " }}
               </small>
             </div>
             <div
@@ -154,12 +144,7 @@
                 $moment(announcement.createdAt).format("YYYY/MM/DD")
               }}</small>
               <small class="font-open-sans text-grey-500 ml-5">
-                {{
-                  announcement.likes +
-                    announcement.comments +
-                    announcement.engagements +
-                    " Responses "
-                }}
+                {{ announcement.engagements + " Responses " }}
               </small>
             </div>
             <div
@@ -216,7 +201,8 @@ export default {
     getMostEngaged() {
       return this.announcements
         .slice()
-        .sort(helper.GetSortOrder("engagements"));
+        .sort(helper.GetSortOrder("engagements"))
+        .reverse();
     }
   },
   methods: {
