@@ -73,17 +73,17 @@ export default {
   },
   computed: {
     ...mapGetters({
-      surveys: "app/getSurveys"
+      surveys: "app/getCoachSurveys"
       // maps courses to current computed resource
     })
   },
   methods: {
-    ...mapActions("app/", ["getAllSurveys"])
+    ...mapActions("app/", ["getAllCoachSurveys"])
 
     //vuex call to get all courses
   },
   async mounted() {
-    await this.getAllSurveys();
+    await this.getAllCoachSurveys();
   },
   components: {
     Carousel: () => import("@/components/carousel"),

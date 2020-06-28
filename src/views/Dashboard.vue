@@ -984,26 +984,26 @@
                       :style="
                         'width:87px!important;height: 63px!important;' +
                           'backgroundImage:url(' +
-                          (data.course ? data.course.cover_image : '') +
+                          (data ? data.cover_image : '') +
                           ');' +
                           ' background-size:cover; background-position:center'
                       "
                     >
                     </d-card>
                     <span class="m-1 ml-4">
-                      {{ data.course ? data.course.title : "" }}
+                      {{ data ? data.title : "" }}
                     </span>
                   </span>
                 </div>
                 <div
                   class="col-md-3 border-right mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-3"
                 >
-                  {{ data.count }}
+                  {{ data.enrollments }}
                 </div>
                 <div
                   class="col-md-3 border-right mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-3"
                 >
-                  0
+                  {{ data.enrollments }}
                 </div>
               </div>
             </div>

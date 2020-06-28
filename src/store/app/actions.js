@@ -104,6 +104,13 @@ export const getAllSurveys = async ({ commit }) => {
   } else return res;
 };
 
+export const getAllCoachSurveys = async ({ commit }) => {
+  let res = await Api.get(`survey/coach/list`, true);
+  if (res.status === 200) {
+    commit("setCoachSurveys", res.data);
+  } else return res;
+};
+
 export const getScheduledSurveys = async ({ commit }) => {
   let res = await Api.get(`survey/list/scheduled`, true);
   if (res.status === 200) {
