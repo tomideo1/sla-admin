@@ -43,14 +43,6 @@
                 <p class="text-grey font-open-sans">
                   {{ user.user.location }}
                 </p>
-                <sla-button
-                  type="outline"
-                  :text="text"
-                  size="md"
-                  @click="handleSubmit"
-                  :disabled="isLoading"
-                  class="btn col-md-12"
-                />
               </div>
             </div>
           </d-row>
@@ -71,6 +63,7 @@
               <d-form-input
                 class="form-control"
                 type="text"
+                :disabled="true"
                 v-model="scorecard.user_value"
               />
             </d-col>
@@ -83,6 +76,7 @@
               <select
                 class="form-control form-select"
                 v-model="scorecard.user_value"
+                :disabled="true"
               >
                 <option selected :value="undefined" :disabled="true">
                   Select Answer For {{ scorecard.field_name }}
@@ -148,7 +142,7 @@ export default {
             ? res.data.message
             : "An error occured")
         );
-        this.$router.push({ path: "/scorecards/all" });
+        this.$router.push({ path: "/coach/scorecards/all" });
       } else {
         this.isLoading = false;
         this.text = "SUBMIT";
