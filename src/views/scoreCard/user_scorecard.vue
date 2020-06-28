@@ -43,47 +43,53 @@
                 <p class="text-grey font-open-sans">
                   {{ user.user.location }}
                 </p>
+                <sla-button
+                  type="outline"
+                  :text="text"
+                  size="md"
+                  @click="handleSubmit"
+                  :disabled="isLoading"
+                  class="btn col-md-12"
+                />
               </div>
             </div>
           </d-row>
         </div>
         <div class="col-md-10 col-lg-10 col-12">
-          <d-form-row v-for="(scorecard, index) in user_scorecard" :key="index">
+          <d-form-row
+            v-for="(scorecard, index) in user_scorecard.scorecard_field"
+            :key="index"
+          >
             <!-- First Name -->
 
             <d-col
               md="8"
               class="form-group"
-              v-if="scorecard.scorecard_field.field_type === 'direct'"
+              v-if="scorecard.field_type === 'direct'"
             >
-              <label class="text-grey">
-                {{ scorecard.scorecard_field.field_name }}</label
-              >
+              <label class="text-grey"> {{ scorecard.field_name }}</label>
               <d-form-input
                 class="form-control"
                 type="text"
-                v-model="scorecard.scorecard_field.user_value"
+                v-model="scorecard.user_value"
               />
             </d-col>
             <d-col
               md="8"
               class="form-group"
-              v-if="scorecard.scorecard_field.field_type === 'optional'"
+              v-if="scorecard.field_type === 'optional'"
             >
-              <label class="text-grey">
-                {{ scorecard.scorecard_field.field_name }}</label
-              >
+              <label class="text-grey"> {{ scorecard.field_name }}</label>
               <select
                 class="form-control form-select"
-                v-model="scorecard.scorecard_field.user_value"
+                v-model="scorecard.user_value"
               >
                 <option selected :value="undefined" :disabled="true">
-                  Select Answer For {{ scorecard.scorecard_field.field_name }}
+                  Select Answer For {{ scorecard.field_name }}
                 </option>
                 <option
                   :key="index"
-                  v-for="(selection, index) in scorecard.scorecard_field
-                    .options"
+                  v-for="(selection, index) in scorecard.options"
                   :value="selection.option"
                 >
                   {{ selection.option }}
@@ -127,7 +133,7 @@ export default {
   computed: {},
   methods: {
     ...mapActions("app/", ["fetchUserScorecard", "submitScoreCard"]),
-    async submitScoreCard() {
+    async handleSubmit() {
       this.text = "Loading....";
       this.isLoading = false;
       let res = await this.submitScoreCard({
@@ -142,6 +148,7 @@ export default {
             ? res.data.message
             : "An error occured")
         );
+        this.$router.push({ path: "/scorecards/all" });
       } else {
         this.isLoading = false;
         this.text = "SUBMIT";
@@ -155,8 +162,9 @@ export default {
   },
   async mounted() {
     const userId = this.$route.params.id;
+    const scorecardId = this.$route.params.scorecard_id;
     this.user_scorecard = await this.fetchUserScorecard({
-      id: this.$route.params.id
+      id: this.$route.params.scorecard_id
     });
     const self = this;
     let res = await axios
