@@ -53,7 +53,9 @@
               <p
                 class="mb-2  text-uppercase font-weight-bold"
                 style="color: #0087DB; cursor:pointer"
-                @click="$router.push({ path: `single/${card.user._id}` })"
+                @click="
+                  $router.push({ path: `single/${card.user._id}/${card._id}` })
+                "
               >
                 View Scorecard
               </p>

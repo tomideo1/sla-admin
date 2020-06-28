@@ -129,7 +129,7 @@ export default [
       },
 
       {
-        path: "single/:id",
+        path: "single/:id/:scorecard_id",
         name: "single-user-scorecard",
         component: () => import("@/views/coach/scoreCard/single.vue"),
         meta: {
