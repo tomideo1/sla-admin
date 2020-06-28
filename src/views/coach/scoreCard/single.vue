@@ -43,14 +43,14 @@
                 <p class="text-grey font-open-sans">
                   {{ user.user.location }}
                 </p>
-                <sla-button
+                <!--<sla-button
                   type="outline"
                   :text="text"
                   size="md"
                   @click="handleSubmit"
-                  :disabled="isLoading"
+                  :disabled="true"
                   class="btn col-md-12"
-                />
+                />-->
               </div>
             </div>
           </d-row>
