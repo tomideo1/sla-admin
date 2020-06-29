@@ -163,7 +163,6 @@
               <th scope="col" class="border-0">Score Card</th>
               <th scope="col" class="border-0">Survey</th>
               <th scope="col" class="border-0">Quiz</th>
-              <th scope="col" class="border-0">Lessons</th>
               <th scope="col" class="border-0">Likes</th>
               <th scope="col" class="border-0">Comments</th>
               <th scope="col" class="border-0">Courses</th>
@@ -191,7 +190,6 @@
               <td>{{ item.score_card }}</td>
               <td>{{ item.survey }}</td>
               <td>{{ item.quiz }}</td>
-              <td>{{ item.lesson }}</td>
               <td>{{ item.likes }}</td>
               <td>{{ item.comments }}</td>
               <td>{{ item.courses }}</td>

@@ -5,7 +5,7 @@ import parseISO from "date-fns/parseISO";
 import moment from "moment";
 
 Vue.filter("chatTime", value => {
-  return moment(value).format("dd, mm  YYYY, h:mm:ss a");
+  return moment(value).format("ddd, MM  YYYY, h:mm:ss a");
   // return format(new Date(value), "h:m aaaa");
 });
 
