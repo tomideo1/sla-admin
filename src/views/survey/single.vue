@@ -99,49 +99,43 @@
                 data.has_option === false)
           "
         >
-          <d-card
-            class=" col-md-6 col-12 col-lg-6  m-2"
-            style="border:1px solid #E7E6E6; box-sizing:border-box; max-height:200px; overflow-y:auto"
-            v-for="(data, idx) in paginatedData"
-            :key="idx"
-          >
-            <d-card-header class="text-black font-open-sans border-bottom">
-              {{ data.response[0].question }}
-            </d-card-header>
-            <d-card-body v-if="!data.response[0].has_option">
-              <div
-                v-for="(answer, idx) in data.response"
-                :key="idx"
-                class="m-2 p-2"
-              >
-                {{ answer.answers }}
-              </div>
-            </d-card-body>
-            <d-card-body v-else>
-              <div
-                v-for="(answer, idx) in data.response"
-                :key="idx"
-                class="m-2 p-2"
-              >
-                <div class="form-check">
-                  <div
-                    class="form-check"
-                    v-for="(option, idx) in answer.options"
-                    :key="idx"
-                  >
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      :checked="option === answer.answers"
-                    />
-                    <label class="form-check-label" for="exampleRadios2">
-                      {{ option }}
-                    </label>
+          <div v-for="(data, idx) in paginatedData" :key="idx">
+            <d-card
+              v-for="(response, idx) in data.response"
+              :key="idx"
+              class=" col-md-6 col-12 col-lg-6  m-2"
+              style="border:1px solid #E7E6E6; box-sizing:border-box; max-height:200px; overflow-y:auto"
+            >
+              <d-card-header class="text-black font-open-sans border-bottom">
+                {{ response.question }}
+              </d-card-header>
+              <d-card-body v-if="!response.has_option">
+                <div class="m-2 p-2">
+                  {{ response.answers }}
+                </div>
+              </d-card-body>
+              <d-card-body v-else>
+                <div class="m-2 p-2">
+                  <div class="form-check">
+                    <div
+                      class="form-check"
+                      v-for="(option, idx) in response.options"
+                      :key="idx"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        :checked="option === response.answers"
+                      />
+                      <label class="form-check-label" for="exampleRadios2">
+                        {{ option }}
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </d-card-body>
-          </d-card>
+              </d-card-body>
+            </d-card>
+          </div>
         </div>
       </div>
       <footer class="border-top m-5 ">
@@ -230,11 +224,6 @@ export default {
           )
           .then(res => {
             self.Survey.responses = res.data.data;
-            let sum = 0;
-            self.Survey.responses.forEach(res => {
-              sum = sum + res.response.length;
-            });
-            self.Survey.total_responses = sum;
 
             axios
               .get(
@@ -249,6 +238,8 @@ export default {
               )
               .then(res => {
                 self.Survey.individualResponses = res.data.data;
+                self.Survey.total_responses =
+                  self.Survey.individualResponses.length;
                 self.isLoaded = true;
               })
               .catch(ex => {});
