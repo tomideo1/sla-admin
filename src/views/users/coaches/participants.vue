@@ -74,7 +74,7 @@ export default {
       let user = [];
       const self = this;
       this.Users.forEach(res => {
-        self.buttons.push({ text: "INVITE", isLoading: false });
+        self.buttons.push({ text: "ASSIGN", isLoading: false });
         user.push(res);
       });
       let result = this.compareUsers(user, this.user.assignees);
@@ -105,7 +105,7 @@ export default {
       return result;
     },
     async inviteUser(assignee, index) {
-      this.buttons[index].text = "Inviting...";
+      this.buttons[index].text = "ASSIGNING...";
       this.buttons[index].isLoading = true;
       const self = this;
       let res = await axios
@@ -123,7 +123,7 @@ export default {
         )
         .then(res => {
           self.buttons[index].isLoading = false;
-          self.buttons[index].text = "INVITE";
+          self.buttons[index].text = "ASSIGN";
           self.$toast.success(
             (self.error.message = res.data
               ? res.data.message
@@ -135,7 +135,7 @@ export default {
         })
         .catch(ex => {
           self.buttons[index].isLoading = false;
-          self.buttons[index].text = "INVITE";
+          self.buttons[index].text = "ASSIGN";
           self.$toast.error(
             (self.error.message = ex.response.data
               ? ex.response.data.message

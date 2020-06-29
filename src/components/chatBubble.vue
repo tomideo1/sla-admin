@@ -8,9 +8,11 @@
       :style="{ float: `${position}` }"
     >
       <span class="flex-inline flex-column message  p-2">
-        <span v-if="position !== 'right'" class="name text-bold ">{{
-          chat.username
-        }}</span>
+        <span
+          v-if="position !== 'right'"
+          class="name text-black font-open-sans "
+          >{{ chat.username }}</span
+        >
         <div style="display: inline;">
           <span style="word-break: break-all;">{{ chat.message }}</span>
         </div>
@@ -95,5 +97,8 @@ export default {
 }
 .flex-column {
   flex-direction: column !important;
+}
+.name {
+  font-size: 12px !important;
 }
 </style>

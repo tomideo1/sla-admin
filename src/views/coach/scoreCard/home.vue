@@ -67,7 +67,7 @@
 
     <d-modal v-if="showUsers" @close="showUsers = false" size="lg">
       <d-modal-header>
-        <d-modal-title>Assign Coach</d-modal-title>
+        <d-modal-title>Select User </d-modal-title>
       </d-modal-header>
       <d-modal-body>
         <d-row class="text-center">
