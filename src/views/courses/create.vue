@@ -503,16 +503,7 @@ export default {
       lesson: {
         fields: []
       },
-      quiz: [
-        {
-          question_text: "",
-          has_options: true,
-          reward: "",
-          answer: "",
-          correction: "",
-          options: []
-        }
-      ],
+      quiz: [],
       questions_type: {
         value: "quiz"
       }
