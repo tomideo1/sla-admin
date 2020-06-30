@@ -374,7 +374,9 @@ export default {
       if (this.formData.list_tags.length > 0) {
         this.formData.tags = this.formData.list_tags.join();
       }
-      this.formData.category = this.formData.list_category.join();
+      if (this.formData.list_category.length > 0) {
+        this.formData.category = this.formData.list_category.join();
+      }
       this.buttons.text = "Loading...";
       const self = this;
       let res = await axios
