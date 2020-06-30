@@ -282,7 +282,7 @@ export default {
       this.sortedCourses.push(res);
     });
     this.Categories.forEach(category => {
-      this.getCoursePrograms(category.name.replace(/%20/g, " "));
+      this.getCoursePrograms(category.name.split(" ")[0]);
     });
     // this.sortedCourses.sort(helper.GetSortOrder("createdAt"))
     this.sortedCourses.sort(helper.GetSortOrder("title"));
