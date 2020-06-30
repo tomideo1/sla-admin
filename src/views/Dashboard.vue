@@ -761,9 +761,12 @@
     <!--    </d-row>-->
     <d-row class="p-3 mb-3" no-gutters>
       <div class="col-lg-12 mx-auto ">
-        <d-select class="col-md-3 mb-4">
-          <option selected :value="undefined">All</option>
-        </d-select>
+        <select class="form-control col-md-3 mb-4" v-model="current_filter">
+          <option :value="undefined">All</option>
+          <option value="admin">Admins</option>
+          <option value="user">Users</option>
+          <option value="coach">Coaches</option>
+        </select>
         <d-card
           class="  col-md-12  col-lg-12 "
           style="border-radius:0!important;"
@@ -799,7 +802,7 @@
               </div>
               <div
                 :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="(user, idx) in fetchTopUsers"
+                v-for="(user, idx) in filterTopUsers"
                 :key="idx"
               >
                 <div class="col-md-7   col-12 col-lg-7">
@@ -1074,6 +1077,7 @@ export default {
   },
   data() {
     return {
+      current_filter: "All",
       loginChartData: [["Year", "Users", "Coaches"]],
       loginChartOptions: {
         legend: {
@@ -1477,6 +1481,15 @@ export default {
       return self.loginChartData;
     },
 
+    filterTopUsers() {
+      if (this.current_filter === "All") {
+        return this.fetchTopUsers;
+      }
+      return this.fetchTopUsers.filter(
+        res => res.userType === this.current_filter
+      );
+      // const self = this
+    },
     fetchTopAnnouncements() {
       const self = this;
       let series = [];
