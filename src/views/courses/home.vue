@@ -282,8 +282,8 @@ export default {
       this.sortedCourses.push(res);
     });
     for (let category of this.Categories) {
-      let split_category = category.name;
-      this.getCoursePrograms(split_category.split(" ")[0]);
+      let split_category = category;
+      this.getCoursePrograms(split_category.name.split(" ")[0]);
     }
 
     // this.sortedCourses.sort(helper.GetSortOrder("createdAt"))
