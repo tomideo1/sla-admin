@@ -31,6 +31,9 @@
             >
               <div class="row m-lg-1 m-0 m-md-1 py-4">
                 <div style="border: 1px solid #e7e6e6; box-sizing: border-box;">
+                  <h5 class="text-black font-open-sans m-3 ">
+                    {{ announcement.annoucement.title }}
+                  </h5>
                   <p
                     class="m-3 font-open-sans text-dark"
                     v-html="announcement.annoucement.rich_details"
