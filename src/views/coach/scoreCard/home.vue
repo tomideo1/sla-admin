@@ -67,7 +67,7 @@
 
     <d-modal v-if="showUsers" @close="showUsers = false" size="lg">
       <d-modal-header>
-        <d-modal-title>Select User </d-modal-title>
+        <h6 class=" text-black font-open-sans ">Select User</h6>
       </d-modal-header>
       <d-modal-body>
         <d-row class="text-center">

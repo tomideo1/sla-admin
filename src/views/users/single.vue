@@ -47,12 +47,20 @@
                   <div
                     class="rank  text-dark bg-white d-flex justify-content-center align-items-center text-align-center"
                   >
-                    {{ getUserPosition(user.leaderboard[0].position) }}
+                    {{
+                      user.leaderboard.length > 0
+                        ? getUserPosition(user.leaderboard[0].position)
+                        : "Last"
+                    }}
                   </div>
                   <div
                     class="rank flip d-flex justify-content-center align-items-center text-align-center"
                   >
-                    {{ user.leaderboard[0].total + "XP" }}
+                    {{
+                      user.leaderboard.length > 0
+                        ? user.leaderboard[0].total
+                        : "0" + "XP"
+                    }}
                   </div>
                 </div>
               </div>

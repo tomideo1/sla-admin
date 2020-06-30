@@ -493,7 +493,7 @@
                 v-for="(data, idx) in fetchTopAnnouncements"
                 :key="idx"
               >
-                <div class="col-md-4 border-right col-12 col-lg-4">
+                <div class="col-md-4   col-12 col-lg-4">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     class="font-open-sans text-dark
@@ -509,30 +509,28 @@
                     </span>
                   </span>
                 </div>
-                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                <div class="col-md-1    text-center col-12 col-lg-1">
                   <div
                     class="legend_circle mt-lg-4  mx-auto "
                     :style="'background-color:' + '#0087DB;' + ';'"
                   ></div>
                 </div>
-                <div
-                  class="col-md-1    border-right text-center col-12 col-lg-1"
-                >
+                <div class="col-md-1      text-center col-12 col-lg-1">
                   <p class="text-black  w-100 mx-auto font-open-sanst  m-3">
                     SLA
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ data.likes }}
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ data.engagements }}
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ getEnagegmentRatio(data.engagements, data.likes) }}
                   </p>
@@ -608,7 +606,7 @@
     <!--                v-for="(legend, idx) in postInteractionsChartLegends"-->
     <!--                :key="idx"-->
     <!--              >-->
-    <!--                <div class="col-md-7 border-right col-12 col-lg-7">-->
+    <!--                <div class="col-md-7   col-12 col-lg-7">-->
     <!--                  <span-->
     <!--                    style="font-size: 16px;letter-spacing: 0.15px;"-->
     <!--                    class="font-open-sans text-dark-->
@@ -629,30 +627,30 @@
     <!--                    </span>-->
     <!--                  </span>-->
     <!--                </div>-->
-    <!--                <div class="col-md-1 border-right  text-center col-12 col-lg-1">-->
+    <!--                <div class="col-md-1    text-center col-12 col-lg-1">-->
     <!--                  <div-->
     <!--                    class="legend_circle mt-lg-4  mx-auto "-->
     <!--                    :style="'background-color:' + legend.color + ';'"-->
     <!--                  ></div>-->
     <!--                </div>-->
     <!--                <div-->
-    <!--                  class="col-md-1    border-right text-center col-12 col-lg-1"-->
+    <!--                  class="col-md-1      text-center col-12 col-lg-1"-->
     <!--                >-->
     <!--                  <p class="text-black  w-100 mx-auto font-open-sanst  m-3">-->
     <!--                    SLA-->
     <!--                  </p>-->
     <!--                </div>-->
-    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                <div class="col-md-1    text-center col-12 col-lg-1">-->
     <!--                  <p class="text-black  font-open-sanst  m-3">-->
     <!--                    253-->
     <!--                  </p>-->
     <!--                </div>-->
-    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                <div class="col-md-1    text-center col-12 col-lg-1">-->
     <!--                  <p class="text-black  font-open-sanst  m-3">-->
     <!--                    642-->
     <!--                  </p>-->
     <!--                </div>-->
-    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                <div class="col-md-1    text-center col-12 col-lg-1">-->
     <!--                  <p class="text-black  font-open-sanst  m-3">-->
     <!--                    1.12-->
     <!--                  </p>-->
@@ -804,7 +802,7 @@
                 v-for="(user, idx) in fetchTopUsers"
                 :key="idx"
               >
-                <div class="col-md-7 border-right col-12 col-lg-7">
+                <div class="col-md-7   col-12 col-lg-7">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     :class="[
@@ -818,24 +816,22 @@
                     </span>
                   </span>
                 </div>
-                <div
-                  class="col-md-1 border-right  text-center p-lg-3  col-12 col-lg-1"
-                >
+                <div class="col-md-1    text-center p-lg-3  col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     {{ user.count }}
                   </p>
                 </div>
-                <!-- <div class="col-md-1  border-right text-center p-lg-3  col-12 col-lg-1">
+                <!-- <div class="col-md-1    text-center p-lg-3  col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center p-lg-3 col-12 col-lg-1">
+                <div class="col-md-1    text-center p-lg-3 col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     0
                   </p>
@@ -896,7 +892,7 @@
                 v-for="(location, idx) in fetchTopLocations"
                 :key="idx"
               >
-                <div class="col-md-4 border-right col-12 col-lg-4">
+                <div class="col-md-4   col-12 col-lg-4">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     :class="[
@@ -909,27 +905,27 @@
                     </span>
                   </span>
                 </div>
-                <!-- <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                <!-- <div class="col-md-1    text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                <div class="col-md-1    text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     0
                   </p>
@@ -958,14 +954,19 @@
                     Top Courses
                   </p>
                 </div>
-                <div class="col-md-3 text-center  col-12 col-lg-3">
+                <div class="col-md-2 text-center  col-12 col-lg-2">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
                     Number of Enrollees
                   </p>
                 </div>
-                <div class="col-md-3 text-center  col-12 col-lg-3">
+                <div class="col-md-2 text-center  col-12 col-lg-2">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
                     Completion Rate
+                  </p>
+                </div>
+                <div class="col-md-2 text-center  col-12 col-lg-2">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Engagements
                   </p>
                 </div>
               </div>
@@ -974,7 +975,7 @@
                 v-for="(data, idx) in fetchTopCourses"
                 :key="idx"
               >
-                <div class="col-md-6 border-right col-12 col-lg-6">
+                <div class="col-md-6  col-12 col-lg-6">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     class="font-open-sans text-dark
@@ -996,14 +997,19 @@
                   </span>
                 </div>
                 <div
-                  class="col-md-3 border-right mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-3"
+                  class="col-md-2  mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-2"
                 >
                   {{ data.enrollments }}
                 </div>
                 <div
-                  class="col-md-3 border-right mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-3"
+                  class="col-md-2  mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-2"
                 >
                   {{ data.enrollments }}
+                </div>
+                <div
+                  class="col-md-2   mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-2"
+                >
+                  {{ data.engagements }}
                 </div>
               </div>
             </div>

@@ -545,12 +545,11 @@ export default {
       this.quiz.push({
         question_text: "",
         has_options: true,
-        reward: "",
+        reward: 1,
         answer: "",
         correction: "",
         options: []
       });
-      console.log(this.quiz);
 
       // this.$emit('input', this.fields);
     },
