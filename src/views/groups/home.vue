@@ -1,66 +1,174 @@
 <template>
-	<d-container fluid class="main-content-container px-4">
-		<d-row no-gutters class="page-header py-4">
-	    <d-col col sm="4" class="text-center text-sm-left mb-4 mb-sm-0">
-	      <span class="text-uppercase page-subtitle">Dashboard</span>
-	      <h3 class="page-title">Groups Home/List</h3>
-	    </d-col>
-	  </d-row>
+  <d-container fluid>
+    <d-row class=" mt-5">
+      <div class="col-lg-12 mt-3">
+        <h6 class="text-dark title text-capitalize m-1">
+          Alphabetical Order (A -Z)
+        </h6>
+        <carousel refs="content">
+          <div class="scroll m-2" v-for="(group, idx) in AllGroups" :key="idx">
+            <d-card
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  group.cover_image +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+              @click="$router.push({ path: 'edit/' + group._id })"
+            >
+            </d-card>
+            <div
+              style=" max-width: 200px;!important; word-wrap: break-word!important;"
+            >
+              <p
+                class="title-card text-truncate text-capitalize mt-2  text-bold font-open-sans "
+              >
+                {{ group.title }}
+              </p>
+            </div>
 
-	  <d-row>
-      <d-col v-for="(post, idx) in data3" :key="idx" lg="4">
-        <d-card class="card-small card-post mb-4">
-          <d-card-body>
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text text-muted">{{ post.body }}</p>
-          </d-card-body>
-          <d-card-footer class="border-top d-flex">
-            <div class="card-post__author d-flex">
-              <a href="#" class="card-post__author-avatar card-post__author-avatar--small" :style="{ backgroundImage: 'url(\'' + post.authorAvatar + '\')' }">Written by James Khan</a>
-              <div class="d-flex flex-column justify-content-center ml-3">
-                <span class="card-post__author-name">{{ post.author }}</span>
-                <small class="text-muted">{{ post.date }}</small>
+            <p class=" text-capitalize mt-n4  " style="color: #999999;">
+              <!--              {{ announcement.category.name }}-->
+            </p>
+          </div>
+        </carousel>
+      </div>
+      <div class="col-lg-12 mt-3">
+        <h6 class="text-dark title text-capitalize m-1">
+          Categories
+        </h6>
+        <carousel refs="content">
+          <div
+            class="scroll m-2"
+            v-for="(category, idx) in Categories"
+            :key="idx"
+          >
+            <d-card
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  categoryImages[
+                    Math.floor(Math.random() * categoryImages.length)
+                  ] +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+            >
+              <div style="max-width: 200px;!important;">
+                <p
+                  class="category-text  text-truncate text-uppercase mt-5 mx-auto"
+                >
+                  {{ category.name }}
+                </p>
               </div>
+            </d-card>
+          </div>
+        </carousel>
+      </div>
+      <div class="col-lg-12 mt-3 ">
+        <h6 class="text-dark title text-capitalize m-1">
+          Most Recent
+        </h6>
+        <carousel refs="content">
+          <div
+            class="scroll m-2"
+            v-for="(group, idx) in fetchLatest"
+            :key="idx"
+          >
+            <d-card
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  group.cover_image +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+            >
+            </d-card>
+            <div
+              style=" max-width: 200px;!important; word-wrap: break-word!important;"
+            >
+              <p
+                class="title-card text-truncate text-capitalize mt-2  text-bold font-open-sans "
+              >
+                {{ group.title }}
+              </p>
             </div>
-            <div class="my-auto ml-auto">
-              <d-button size="sm" class="btn-white">
-                <i class="far fa-bookmark mr-1"></i> Bookmark
-              </d-button>
-            </div>
-          </d-card-footer>
-        </d-card>
-      </d-col>
+
+            <p class=" text-capitalize mt-n4  " style="color: #999999;">
+              <!--              {{ announcement.category.name }}-->
+            </p>
+          </div>
+        </carousel>
+      </div>
     </d-row>
-
-
-	</d-container>
+    <!-- Page Header -->
+    <!-- Using the slider component -->
+    <!-- slideritem wrapped package with the components you need -->
+  </d-container>
 </template>
 <script>
-const data3 = [{
-  author: 'John James',
-  authorAvatar: require('@/assets/images/avatars/1.jpg'),
-  title: 'Had denoting properly jointure which well books beyond',
-  body: 'In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer wisdom work...',
-  date: '29 February 2019',
-}, {
-  author: 'John James',
-  authorAvatar: require('@/assets/images/avatars/2.jpg'),
-  title: 'Husbands ask repeated resolved but laughter debating',
-  body: 'It abode words began enjoy years no do ﻿no. Tried spoil as heart visit blush or. Boy possible blessing sensible set but margaret interest. Off tears...',
-  date: '29 February 2019',
-}, {
-  author: 'John James',
-  authorAvatar: require('@/assets/images/avatars/3.jpg'),
-  title: 'Instantly gentleman contained belonging exquisite now direction',
-  body: 'West room at sent if year. Numerous indulged distance old law you. Total state as merit court green decay he. Steepest merit checking railway...',
-  date: '29 February 2019',
-}];
-
+import { mapActions, mapGetters, mapState } from "vuex";
+import axios from "axios";
+import store from "@/store/index";
+import helper from "@/helpers/helper";
 export default {
-	data () {
-		return {
-			data3
-		}
-	}
-}
+  name: "polls-home",
+  data() {
+    return {
+      ref_data: "content",
+      categoryImages: [
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808813/Rectangle_529_apeq0b.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808832/Rectangle_530_iw8pgd.png"
+      ]
+    };
+  },
+  computed: {
+    ...mapGetters({
+      AllGroups: "app/getGroups",
+      Categories: "app/getCategories"
+      // maps courses to current computed resource
+    }),
+    ...mapState("app/", ["Groups"]),
+
+    fetchLatest() {
+      return this.Groups.sort(helper.GetSortOrder("createdAt")).reverse();
+    }
+  },
+  methods: {
+    ...mapActions("app/", ["getAllGroups", "getAllCategories"])
+
+    //vuex call to get all courses
+  },
+  async mounted() {
+    await this.getAllGroups();
+    await this.getAllCategories();
+  },
+  components: {
+    Carousel: () => import("@/components/carousel"),
+    Icon: () => import("@/components/SlaIcon")
+  }
+};
 </script>
+
+<style scoped lang="css">
+.title-card {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.15px;
+
+  color: #333333;
+}
+.category-text {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.15px;
+  color: #ffffff;
+}
+</style>

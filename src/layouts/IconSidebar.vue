@@ -11,30 +11,29 @@
         <slot />
 
         <!-- Main Footer -->
-        <main-footer />
+        <!--        <main-footer />-->
       </main>
     </d-row>
   </d-container>
 </template>
 
 <script>
-import getSidebarItems from '@/data/sidebar-nav-items';
+import getSidebarItems from "@/data/sidebar-nav-items";
 
-import MainNavbar from '@/components/layout/MainNavbar/MainNavbar.vue';
-import MainSidebar from '@/components/layout/MainSidebar/MainSidebar.vue';
-import MainFooter from '@/components/layout/MainFooter/MainFooter.vue';
+import MainNavbar from "@/components/layout/MainNavbar/MainNavbar.vue";
+import MainSidebar from "@/components/layout/MainSidebar/MainSidebar.vue";
+import MainFooter from "@/components/layout/MainFooter/MainFooter.vue";
 
 export default {
   components: {
     MainNavbar,
     MainSidebar,
-    MainFooter,
+    MainFooter
   },
   data() {
     return {
-      sidebarItems: getSidebarItems(),
+      sidebarItems: getSidebarItems()
     };
-  },
+  }
 };
 </script>
-

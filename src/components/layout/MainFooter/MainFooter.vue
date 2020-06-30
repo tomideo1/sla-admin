@@ -4,59 +4,46 @@
       <div class="row">
         <ul class="nav">
           <li v-for="(item, idx) in menuItems" :key="idx" class="nav-item">
-            <d-link class="nav-link" :to="item.to">{{ item.title }}</d-link>
+            <router-link class="nav-link" :to="item.to">{{
+              item.title
+            }}</router-link>
           </li>
         </ul>
-        <span class="copyright ml-auto my-auto mr-2">{{ copyright }}</span>
+        <span class="copyright ml-auto my-auto mr-2 mt-4">{{ copyright }}</span>
       </div>
     </div>
   </footer>
 </template>
 
 <script>
-const defaultMenuItems = [{
-  title: 'Home',
-  to: '#',
-}, {
-  title: 'Services',
-  to: '#',
-}, {
-  title: 'About',
-  to: '#',
-}, {
-  title: 'Products',
-  to: '#',
-}, {
-  title: 'Blog',
-  to: '#',
-}];
-
 export default {
-  name: 'main-footer',
+  name: "main-footer",
   props: {
     /**
-       * The footer menu items.
-       */
+     * The footer menu items.
+     */
     menuItems: {
-      type: Array,
+      type: Object,
       default() {
-        return defaultMenuItems;
-      },
+        return {};
+      }
     },
+
     /**
-       * The copyright information.
-       */
+     * The copyright information.
+     */
     copyright: {
       type: String,
-      default: 'Copyright © 2018 DesignRevision',
+      default: "Copyright © " + new Date().getFullYear() + " SheLeads Africa"
     },
+
     /**
-       * Whether the footer should be wrapped in a container, or not.
-       */
+     * Whether the footer should be wrapped in a container, or not.
+     */
     contained: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 };
 </script>

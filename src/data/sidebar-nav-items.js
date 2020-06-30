@@ -1,223 +1,223 @@
-export default function () {
-  return [
-  {
-    title: 'Dashboards',
-    items: [{
-      title: 'Dashboard',
-      to: 'dashboard',
-      htmlBefore: '<i class="material-icons">dashboard</i>',
-      htmlAfter: '',
-    },
+import store from "@/store/index";
+
+export default function() {
+  let superAdminRoutes = [
     {
-      title: 'Courses',
-      htmlBefore: '<i class="material-icons">library_books</i>',
+      title: "Admins",
+      htmlBefore: "group",
       to: {
-        name: 'all-courses'
+        name: "all-admins"
       }
-    },
-    {
-      title: 'Groups',
-      htmlBefore: '<i class="material-icons">library_books</i>',
-      to: {
-        name: 'all-groups'
-      }
-    },
-    {
-      title: 'Coaches',
-      htmlBefore: '<i class="material-icons">school</i>',
-      to: {
-        name: 'add-new-post',
-      },
-    },
-    {
-      title: 'Messaging',
-      htmlBefore: '<i class="material-icons">message</i>',
-      to: {
-        name: 'components-overview',
-      },
-    },
-    {
-      title: 'Groups',
-      htmlBefore: '<i class="material-icons">people</i>',
-      to: {
-        name: 'tables',
-      },
-    },
-    {
-    title: 'User Profile',
-    htmlBefore: '<i class="material-icons">person</i>',
-    to: {
-      name: 'user-profile-lite',
-    },
-  }, {
-    title: 'Reports',
-    htmlBefore: '<i class="material-icons">report</i>',
-    to: {
-      name: 'errors',
-    },
-  }
-    ],
-  },
-    // {
-    //   title: 'Templates',
-    //   items: [{
-    //     title: 'User Account',
-    //     htmlBefore: '<i class="material-icons">&#xE7FD;</i>',
-    //     items: [{
-    //       title: 'User Profile',
-    //       to: {
-    //         name: 'user-profile',
-    //       },
-    //     }, {
-    //       title: 'User Profile Lite',
-    //       to: {
-    //         name: 'user-profile-lite',
-    //       },
-    //     }, {
-    //       title: 'Edit User Profile',
-    //       to: {
-    //         name: 'edit-user-profile',
-    //       },
-    //     }, {
-    //       title: 'Login',
-    //       to: {
-    //         name: 'login',
-    //       },
-    //     }, {
-    //       title: 'Register',
-    //       to: {
-    //         name: 'register',
-    //       },
-    //     }, {
-    //       title: 'Change Password',
-    //       to: {
-    //         name: 'change-password',
-    //       },
-    //     }, {
-    //       title: 'Forgot Password',
-    //       to: {
-    //         name: 'forgot-password',
-    //       },
-    //     },
-    //     ],
-    //   }, {
-    //     title: 'File Managers',
-    //     htmlBefore: '<i class="material-icons">&#xE2C7;</i>',
-    //     items: [{
-    //       title: 'Files - List View',
-    //       to: {
-    //         name: 'file-manager-list',
-    //       },
-    //     }, {
-    //       title: 'Files - Cards View',
-    //       to: {
-    //         name: 'file-manager-cards',
-    //       },
-    //     }],
-    //   }, {
-    //     title: 'Transaction History',
-    //     htmlBefore: '<i class="material-icons">&#xE889;</i>',
-    //     to: {
-    //       name: 'transaction-history',
-    //     },
-    //   }, {
-    //     title: 'Add New Post',
-    //     htmlBefore: '<i class="material-icons">note_add</i>',
-    //     to: {
-    //       name: 'add-new-post',
-    //     },
-    //   }, {
-    //     title: 'Errors',
-    //     htmlBefore: '<i class="material-icons">error</i>',
-    //     to: {
-    //       name: 'errors',
-    //     },
-    //   }],
-    // }, {
-    //   title: 'Components',
-    //   items: [{
-    //     title: 'Overview',
-    //     htmlBefore: '<i class="material-icons">view_module</i>',
-    //     to: {
-    //       name: 'components-overview',
-    //     },
-    //   }, {
-    //     title: 'Tables',
-    //     htmlBefore: '<i class="material-icons">table_chart</i>',
-    //     to: {
-    //       name: 'tables',
-    //     },
-    //   }, {
-    //     title: 'Blog Posts',
-    //     htmlBefore: '<i class="material-icons">vertical_split</i>',
-    //     to: {
-    //       name: 'blog-posts',
-    //     },
-    //   }],
-    // }, {
-    //   title: 'Layouts',
-    //   items: [{
-    //     title: 'Header Nav',
-    //     htmlBefore: '<i class="material-icons">view_day</i>',
-    //     to: {
-    //       name: 'header-navigation',
-    //     },
-    //   }, {
-    //     title: 'Icon Sidebar',
-    //     htmlBefore: '<i class="material-icons">&#xE251;</i>',
-    //     to: {
-    //       name: 'icon-sidebar-nav',
-    //     },
-    //   }],
-    // },
+      // title: "Admin",
+      // htmlBefore: "group",
+      // items: [
+      //   {
+      //     title: "All Admins",
+      //     to: {
+      //       name: "all-admins"
+      //     }
+      //   },
+      //   {
+      //     title: "Add New",
+      //     to: {
+      //       name: "create-admin"
+      //     }
+      //   },
+      //   {
+      //     title: " Admin Profile",
+      //     to: {
+      //       name: "edit-profile"
+      //     }
+      //   }
+      // ]
+    }
   ];
+
+  let appRoutes = [
+    {
+      title: "Menu",
+      items: [
+        {
+          title: "Home",
+          htmlBefore: "home",
+          to: {
+            name: "dashboard"
+          }
+        },
+        {
+          title: "Users",
+          htmlBefore: "group",
+          to: {
+            name: "all-users"
+          }
+        },
+        // {
+        //   title: "Activity",
+        //   htmlBefore: "activity",
+        //   to: {
+        //     name: "all-coaches"
+        //   }
+        // },
+
+        {
+          title: "Courses",
+          htmlBefore: "courses",
+          to: {
+            name: "all-courses"
+          }
+        },
+        {
+          title: "Announcements",
+          htmlBefore: "announce",
+          to: {
+            name: "all-announcements"
+          }
+        },
+        {
+          title: "Groups",
+          htmlBefore: "group",
+          to: {
+            name: "all-groups"
+          }
+        },
+        {
+          title: "Leaderboard",
+          htmlBefore: "leaderboard",
+          to: {
+            name: "leaderboard"
+          }
+        },
+        {
+          title: "Scorecard",
+          htmlBefore: "scorecard",
+          to: {
+            name: "all-scorecards"
+          }
+        },
+        {
+          title: "Surveys",
+          htmlBefore: "survey",
+          to: {
+            name: "all-surveys"
+          }
+        },
+        {
+          title: "Polls",
+          htmlBefore: "poll",
+          to: {
+            name: "all-polls"
+          }
+        },
+        {
+          title: "Asset",
+          htmlBefore: "asset",
+          to: {
+            name: "assets"
+          }
+        },
+        {
+          title: "Resources",
+          htmlBefore: "resource",
+          to: {
+            name: "all-resources"
+          }
+        },
+        {
+          title: "Help",
+          htmlBefore: "faq",
+          to: {
+            name: "all-tickets"
+          }
+        },
+        {
+          title: "Logout",
+          htmlBefore: "logout",
+          to: {
+            name: "logout"
+          }
+        }
+      ]
+    }
+  ];
+
+  let coachRoutes = [
+    {
+      title: "Menu",
+      items: [
+        {
+          title: "Home",
+          htmlBefore: "home",
+          to: {
+            name: "coach-dashboard"
+          }
+        },
+        {
+          title: "Users",
+          htmlBefore: "group",
+          to: {
+            name: "coach-users-all"
+          }
+        },
+        {
+          title: "Announcements",
+          htmlBefore: "announce",
+          to: {
+            name: "coach-announcement-all"
+          }
+        },
+        // {
+        //   title: "Groups",
+        //   htmlBefore: "group",
+        //   to: {
+        //     name: "all-groups"
+        //   }
+        // },
+        {
+          title: "Scorecard",
+          htmlBefore: "scorecard",
+          to: {
+            name: "all-coach-scorecards"
+          }
+        },
+        {
+          title: "Surveys",
+          htmlBefore: "survey",
+          to: {
+            name: "coach-survey-all"
+          }
+        },
+        {
+          title: "Resources",
+          htmlBefore: "resource",
+          to: {
+            name: "coach-resource-home"
+          }
+        },
+        {
+          title: "Help",
+          htmlBefore: "faq",
+          to: {
+            name: "coach-help-all"
+          }
+        },
+        {
+          title: "Logout",
+          htmlBefore: "logout",
+          to: {
+            name: "logout"
+          }
+        }
+      ]
+    }
+  ];
+
+  if (store.state.auth.role === "superadmin") {
+    appRoutes[0].items = [...appRoutes[0].items, ...superAdminRoutes];
+  }
+
+  if (store.state.auth.role === "coach") {
+    appRoutes = coachRoutes;
+  }
+
+  return appRoutes;
 }
-
-
-
-// export default function () {
-//   return [{
-//     title: ' Dashboard',
-//     to: {
-//       name: 'dashboard',
-//     },
-//     htmlBefore: '<i class="material-icons">dashboard</i>',
-//     htmlAfter: '',
-//   }, {
-//     title: 'Courses',
-//     htmlBefore: '<i class="material-icons">library_books</i>',
-//     to: {
-//       name: 'blog-posts',
-//     },
-//   }, {
-//     title: 'Coaches',
-//     htmlBefore: '<i class="material-icons">school</i>',
-//     to: {
-//       name: 'add-new-post',
-//     },
-//   }, {
-//     title: 'Messaging',
-//     htmlBefore: '<i class="material-icons">message</i>',
-//     to: {
-//       name: 'components-overview',
-//     },
-//   }, {
-//     title: 'Groups',
-//     htmlBefore: '<i class="material-icons">people</i>',
-//     to: {
-//       name: 'tables',
-//     },
-//   }, {
-//     title: 'User Profile',
-//     htmlBefore: '<i class="material-icons">person</i>',
-//     to: {
-//       name: 'user-profile-lite',
-//     },
-//   }, {
-//     title: 'Reports',
-//     htmlBefore: '<i class="material-icons">report</i>',
-//     to: {
-//       name: 'errors',
-//     },
-//   }];
-// }

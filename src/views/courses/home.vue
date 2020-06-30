@@ -1,79 +1,312 @@
 <template>
-	<d-container fluid class="main-content-container px-4">
-    <!-- Page Header -->
-    <d-row no-gutters class="page-header py-4">
-      <d-col col sm="4" class="text-center text-sm-left mb-4 mb-sm-0">
-        <span class="text-uppercase page-subtitle">Dashboard</span>
-        <h3 class="page-title">Courses</h3>
-      </d-col>
-    </d-row>
+  <d-container fluid>
+    <d-row class=" mt-5">
+      <div v-if="courses.length > 0" class="col-lg-12">
+        <h6 class="text-dark title text-capitalize m-1">
+          Alphabetical Order (A -Z)
+        </h6>
+        <carousel refs="content">
+          <div
+            class="scroll m-2"
+            v-for="(course, idx) in sortedCourses"
+            :key="idx"
+          >
+            <d-card
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  course.cover_image +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+              @click="
+                $router.push({
+                  path: 'single/' + course._id
+                })
+              "
+            >
+            </d-card>
+            <p class="d-flex flex-column">
+              <span
+                class="title  text-truncate  text-capitalize mt-2 text-bold "
+                style="max-width: 200px;"
+              >
+                {{ course.title }}
+              </span>
 
-    <d-row>
-      <d-col v-for="(post, idx) in PostsListOne" :key="idx" lg="3" md="6" sm="12" class="mb-4">
-        <d-card class="card-small card-post card-post--1">
-          <div class="card-post__image" :style="{ backgroundImage: 'url(\'' + post.backgroundImage + '\')' }">
-            <d-badge pill :class="['card-post__category', 'bg-' + post.categoryTheme ]">{{ post.category }}</d-badge>
-            <div class="card-post__author d-flex">
-              <a href="#" class="card-post__author-avatar card-post__author-avatar--small" :style="{ backgroundImage: 'url(\'' + post.authorAvatar + '\')' }">Written by {{ post.author }}</a>
-            </div>
+              <span class=" text-capitalize mt-1 " style="color: #999999;">
+                {{ course.tags }}
+              </span>
+            </p>
           </div>
-          <d-card-body>
-            <h5 class="card-title">
-              <a href="#" class="text-fiord-blue">{{ post.title }}</a>
-            </h5>
-            <p class="card-text d-inline-block mb-3">{{ post.body }}</p>
-            <span class="text-muted">{{ post.date }}</span>
-          </d-card-body>
-        </d-card>
-      </d-col>
+        </carousel>
+      </div>
+      <div v-else class="col mb-4">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any C=vourses</span
+        >
+      </div>
+      <div v-if="Categories.length > 0" class="col-lg-12">
+        <h6 class="text-dark title text-capitalize m-1">
+          Categories
+        </h6>
+        <carousel refs="content">
+          <div
+            class="scroll m-2"
+            v-for="(category, idx) in Categories"
+            :key="idx"
+          >
+            <d-card
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  getCategoryBackground +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+            >
+              <p
+                class="category-text text-uppercase text-truncate  truncate-3 mx-auto my-auto"
+                style="max-width: 200px!important;"
+              >
+                {{ category.name }}
+              </p>
+            </d-card>
+          </div>
+        </carousel>
+      </div>
+      <div v-else class="col mb-4">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any categories</span
+        >
+      </div>
+      <div v-if="courses.length > 0" class="col-lg-12">
+        <h6 class="text-dark title text-capitalize m-1">
+          Most Recent
+        </h6>
+        <carousel refs="content">
+          <div
+            class="scroll m-2"
+            v-for="(course, idx) in recentCourses"
+            :key="idx"
+          >
+            <d-card
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  course.cover_image +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+            >
+            </d-card>
+            <p class="d-flex flex-column">
+              <span
+                class="title  text-truncate  text-capitalize mt-2 text-bold "
+                style="max-width: 200px;"
+              >
+                {{ course.title }}
+              </span>
+
+              <span class=" text-capitalize mt-1 " style="color: #999999;">
+                {{ course.tags }}
+              </span>
+            </p>
+          </div>
+        </carousel>
+      </div>
+      <div v-else class="col mb-4">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any recent courses</span
+        >
+      </div>
+      <div v-if="courses.length > 0" class="col-lg-12">
+        <h6 class="text-dark title text-capitalize m-1">
+          Most Engaged
+        </h6>
+        <carousel refs="content">
+          <div
+            class="scroll m-2"
+            v-for="(course, idx) in engagedCourses"
+            :key="idx"
+            v-if="course.course !== null"
+          >
+            <d-card
+              :style="
+                'width:200px!important;height: 120px!important;' +
+                  'backgroundImage:url(' +
+                  course.course.cover_image +
+                  ');' +
+                  ' background-size:cover; background-position:center'
+              "
+            >
+            </d-card>
+            <p class="d-flex flex-column">
+              <span
+                class="title  text-truncate  text-capitalize mt-2 text-bold "
+                style="max-width: 200px;"
+              >
+                {{ course.course.title }}
+              </span>
+
+              <span class=" text-capitalize mt-1 " style="color: #999999;">
+                {{ course.course.tags }}
+              </span>
+            </p>
+          </div>
+        </carousel>
+      </div>
+      <div v-else class="col-lg-12">
+        <icon name="empty" class="m-3" size="retain" />
+        <span
+          class="font-poppings text-dark justify-content-center d-flex"
+          style="font-size: 16px;"
+          >You don’t have any most engaged courses</span
+        >
+      </div>
+      <div
+        v-for="(course, idx) in courseProgram"
+        :key="idx"
+        class="col-lg-12"
+        v-if="course.courses.course.length > 0"
+      >
+        <div>
+          <h6 class="text-dark title text-capitalize m-1">
+            {{ course.courses.tag }}
+          </h6>
+          <carousel refs="content">
+            <div class="scroll m-2" v-for="tags in course.courses.course">
+              <d-card
+                :style="
+                  'width:200px!important;height: 120px!important;' +
+                    'backgroundImage:url(' +
+                    tags.cover_image +
+                    ');' +
+                    ' background-size:cover; background-position:center'
+                "
+              >
+              </d-card>
+              <p class="d-flex flex-column">
+                <span
+                  class="title  text-truncate  text-capitalize mt-2 text-bold "
+                  style="max-width: 200px;"
+                >
+                  {{ tags.title }}
+                </span>
+
+                <span class=" text-capitalize mt-1 " style="color: #999999;">
+                  {{ tags.tags }}
+                </span>
+              </p>
+            </div>
+          </carousel>
+        </div>
+      </div>
     </d-row>
+    <!-- Page Header -->
+    <!-- Using the slider component -->
+    <!-- slideritem wrapped package with the components you need -->
   </d-container>
 </template>
 <script>
-// First Row of Posts
-const PostsListOne = [{
-  backgroundImage: require('@/assets/images/content-management/1.jpeg'),
-  category: 'Business',
-  categoryTheme: 'dark',
-  author: 'Anna Kunis',
-  authorAvatar: require('@/assets/images/avatars/1.jpg'),
-  title: 'Conduct at an replied removal an amongst',
-  body: 'However venture pursuit he am mr cordial. Forming musical am hearing studied be luckily. But in for determine what would see...',
-  date: '28 February 2019',
-}, {
-  backgroundImage: require('@/assets/images/content-management/2.jpeg'),
-  category: 'Travel',
-  categoryTheme: 'info',
-  author: 'James Jamerson',
-  authorAvatar: require('@/assets/images/avatars/2.jpg'),
-  title: 'Off tears are day blind smile alone had ready',
-  body: 'Is at purse tried jokes china ready decay an. Small its shy way had woody downs power. To denoting admitted speaking learning my...',
-  date: '29 February 2019',
-}, {
-  backgroundImage: require('@/assets/images/content-management/3.jpeg'),
-  category: 'Technology',
-  categoryTheme: 'royal-blue',
-  author: 'Jimmy Jackson',
-  authorAvatar: require('@/assets/images/avatars/2.jpg'),
-  title: 'Difficult in delivered extensive at direction',
-  body: 'Is at purse tried jokes china ready decay an. Small its shy way had woody downs power. To denoting admitted speaking learning my...',
-  date: '29 February 2019',
-}, {
-  backgroundImage: require('@/assets/images/content-management/4.jpeg'),
-  category: 'Business',
-  categoryTheme: 'warning',
-  author: 'John James',
-  authorAvatar: require('@/assets/images/avatars/3.jpg'),
-  title: 'It so numerous if he may outlived disposal',
-  body: 'How but sons mrs lady when. Her especially are unpleasant out alteration continuing unreserved ready road market resolution...',
-  date: '29 February 2019',
-}];
-
+import { mapActions, mapGetters } from "vuex";
+import axios from "axios";
+import store from "@/store/index";
+import helper from "@/helpers/helper";
 export default {
-	data () {
-		return {
-			PostsListOne
-		}
-	}
-}
+  name: "course-home",
+  data() {
+    return {
+      ref_data: "content",
+      courseProgram: [],
+
+      sortedCourses: [],
+      recentCourses: undefined
+    };
+  },
+  computed: {
+    ...mapGetters({
+      courses: "app/getCourses",
+      engagedCourses: "app/getEngagedCourses",
+      Categories: "app/getCategories"
+
+      // maps courses to current computed resource
+    }),
+
+    getCategoryBackground() {
+      let categoryImages = [
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589458917/Rectangle_309_fwpz7p.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808813/Rectangle_529_apeq0b.png",
+        "https://res.cloudinary.com/dwpu7jpku/image/upload/v1589808832/Rectangle_530_iw8pgd.png"
+      ];
+      const num = Math.floor(Math.random() * categoryImages.length);
+      return categoryImages[num];
+    }
+  },
+  methods: {
+    ...mapActions("app/", [
+      "getAllCourses",
+      "getAllEngagedCourses",
+      "getAllCategories"
+    ]),
+
+    async getCoursePrograms(program) {
+      const token = store.state.auth.token;
+      let tags = await axios
+        .get(`${process.env.VUE_APP_API}/course/` + program, {
+          headers: {
+            Authorization: `Bearer ${token} `
+          }
+        })
+        .then(res => {
+          this.courseProgram.push({ courses: res.data.data });
+        })
+        .catch();
+    }
+    //vuex call to get all courses
+  },
+  async mounted() {
+    await this.getAllCourses();
+    await this.getAllEngagedCourses();
+    await this.getAllCategories();
+    this.courses.forEach(res => {
+      this.sortedCourses.push(res);
+    });
+    for (let category of this.Categories) {
+      let split_category = category;
+      this.getCoursePrograms(split_category.name.split(" ")[0]);
+    }
+
+    // this.sortedCourses.sort(helper.GetSortOrder("createdAt"))
+    this.sortedCourses.sort(helper.GetSortOrder("title"));
+    this.recentCourses = this.courses
+      .sort(helper.GetSortOrder("createdAt"))
+      .reverse();
+  },
+  components: {
+    Carousel: () => import("@/components/carousel"),
+    Icon: () => import("@/components/SlaIcon")
+  }
+};
 </script>
+
+<style scoped lang="css">
+.category-text {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.15px;
+  color: #ffffff;
+}
+</style>

@@ -9,25 +9,25 @@
 </template>
 
 <script>
-import NavbarSearch from './NavbarSearch.vue';
-import NavbarNav from './NavbarNav.vue';
-import NavbarToggle from './NavbarToggle.vue';
+import NavbarSearch from "./NavbarSearch.vue";
+import NavbarNav from "./NavbarNav.vue";
+import NavbarToggle from "./NavbarToggle.vue";
 
 export default {
   components: {
     NavbarSearch,
     NavbarNav,
-    NavbarToggle,
+    NavbarToggle
   },
   props: {
     /**
-       * Whether the main navbar should be sticky, or not.
-       */
+     * Whether the main navbar should be sticky, or not.
+     */
     stickyTop: {
       type: Boolean,
-      default: true,
-    },
-  },
+      default: true
+    }
+  }
 };
 </script>
 

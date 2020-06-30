@@ -1,71 +1,136 @@
 <template>
-  <d-navbar-nav class="flex-row">
-    <li class="nav-item border-left border-right dropdown notifications">
-      <a class="nav-link nav-link-icon text-center" v-d-toggle.notifications>
-        <div class="nav-link-icon__wrapper">
-          <i class="material-icons">&#xE7F4;</i>
-          <d-badge pill theme="danger">2</d-badge>
-        </div>
-      </a>
-      <d-collapse id="notifications" class="dropdown-menu dropdown-menu-small">
-        <d-dropdown-item>
-          <div class="notification__icon-wrapper">
-            <div class="notification__icon">
-              <i class="material-icons">&#xE6E1;</i>
-            </div>
-          </div>
-          <div class="notification__content">
-            <span class="notification__category">Analytics</span>
-            <p>Your website’s active users count increased by <span class="text-success text-semibold">28%</span> in the last week. Great job!</p>
-          </div>
-        </d-dropdown-item>
-        <d-dropdown-item href="#">
-          <div class="notification__icon-wrapper">
-            <div class="notification__icon">
-              <i class="material-icons">&#xE8D1;</i>
-            </div>
-          </div>
-          <div class="notification__content">
-            <span class="notification__category">Sales</span>
-            <p>Last week your store’s sales count decreased by <span class="text-danger text-semibold">5.52%</span>. It could have been worse!</p>
-          </div>
-        </d-dropdown-item>
-        <d-dropdown-item class="notification__all text-center">View all Notifications</d-dropdown-item>
-      </d-collapse>
+  <d-navbar-nav class="flex-row ">
+    <li class="nav-item   dropdown notifications">
+      <router-link
+        v-if="Admin.type !== 'coach'"
+        to="/messages"
+        class="nav-link mt-2 text-center"
+      >
+        <icon size="xs" name="message" />
+      </router-link>
+      <router-link
+        v-else
+        to="/coach/messages"
+        class="nav-link mt-2 text-center"
+      >
+        <icon size="xs" name="message" />
+      </router-link>
+      <!--      <d-collapse id="notifications" class="dropdown-menu dropdown-menu-small">-->
+      <!--        <d-dropdown-item>-->
+      <!--          Notifications-->
+      <!--        </d-dropdown-item>-->
+      <!--        <d-dropdown-item class="notification__all text-center">-->
+      <!--          <router-link to="/notification">-->
+      <!--            View all Notifications-->
+      <!--          </router-link>-->
+      <!--        </d-dropdown-item>-->
+      <!--      </d-collapse>-->
     </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle text-nowrap px-3" v-d-toggle.user-actions>
-        <img class="user-avatar rounded-circle mr-2" src="@/assets/images/avatars/0.jpg" alt="User Avatar"> <span class="d-none d-md-inline-block">Sierra Brooks</span>
-      </a>
-      <d-collapse id="user-actions" class="dropdown-menu dropdown-menu-small">
-        <d-dropdown-item to="user-profile"><i class="material-icons">&#xE7FD;</i> Profile</d-dropdown-item>
-        <d-dropdown-item to="edit-user-profile"><i class="material-icons">&#xE8B8;</i> Edit Profile</d-dropdown-item>
-        <d-dropdown-item to="file-manager-list"><i class="material-icons">&#xE2C7;</i> Files</d-dropdown-item>
-        <d-dropdown-item to="transaction-history"><i class="material-icons">&#xE896;</i> Transactions</d-dropdown-item>
-        <d-dropdown-divider />
-        <d-dropdown-item href="#" class="text-danger">
-          <i class="material-icons text-danger">&#xE879;</i> Logout
-        </d-dropdown-item>
-      </d-collapse>
+    <li class="nav-item   dropdown messages">
+      <router-link
+        to="/notification"
+        class="nav-link mt-2 text-center notification-icon"
+        v-d-toggle.messages
+      >
+        <span class="notification-count">{{ Admin.notificationCounter }}</span>
+        <icon size="xs" name="bell" />
+      </router-link>
+      <!--      <d-collapse id="messages" class="dropdown-menu dropdown-menu-small">-->
+      <!--        <d-dropdown-item>-->
+      <!--          Messages-->
+      <!--        </d-dropdown-item>-->
+      <!--        <d-dropdown-item class="notification__all text-center"-->
+      <!--          >View all Messages</d-dropdown-item-->
+      <!--        >-->
+      <!--      </d-collapse>-->
+    </li>
+    <li class="nav-item  ">
+      <router-link :to="{ name: 'settings' }" class="nav-link mt-2 text-center">
+        <icon size="xs" name="setting" />
+      </router-link>
+    </li>
+    <li class="d-flex flex-row nav-item mr-2  border-left">
+      <router-link
+        class="nav-link  text-nowrap px-3 mt-2"
+        v-if="Admin.type === 'admin' || Admin.type === 'superadmin'"
+        :to="{ name: 'profile' }"
+      >
+        <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
+      </router-link>
+      <router-link
+        class="nav-link  text-nowrap px-3 mt-2"
+        v-else
+        :to="{ name: 'coach-profile' }"
+      >
+        <b>{{ Admin.first_name + " " + Admin.last_name }}</b> &nbsp;
+      </router-link>
+      <sla-avatar
+        class="avatar"
+        v-if="Admin.image === null"
+        size="sm"
+        :user="{ name: Admin.first_name }"
+      />
+      <sla-avatar
+        class="avatar"
+        v-else
+        size="sm"
+        :user="{ image: Admin.image }"
+      />
     </li>
   </d-navbar-nav>
 </template>
+<script>
+import { mapActions, mapGetters } from "vuex";
 
-<style>
-  .nav-link:hover {
-    cursor: pointer;
+export default {
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters({
+      Admin: "auth/getAdmin"
+    })
+  },
+  components: {
+    Icon: () => import("@/components/SlaIcon.vue"),
+    SlaAvatar: () => import("@/components/avatar.vue")
+  }
+};
+</script>
+<style lang="css" scoped>
+.nav-link:hover {
+  cursor: pointer;
+}
+
+/* IE11 Navbar flex fix. */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .navbar-nav {
+    align-items: stretch !important;
+    flex: 1 1 100%;
+    flex-flow: row wrap;
   }
 
-  /* IE11 Navbar flex fix. */
-  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-    .navbar-nav {
-      align-items: stretch !important;
-      flex: 1 1 100%;
-      flex-flow: row wrap;
-    }
-
-    .nav-item.notifications {
-      margin-left: auto !important;
-    }
+  .nav-item.notifications {
+    margin-left: auto !important;
   }
+}
+.main-navbar .navbar .nav-link {
+  min-width: 2.45rem;
+}
+
+.notification-icon {
+  position: relative;
+}
+.notification-count {
+  position: absolute;
+  left: 55.02%;
+  bottom: 45.04%;
+  border-radius: 50% 50%;
+  color: white;
+  background: #fe4437;
+  font-size: 10px;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+}
 </style>
