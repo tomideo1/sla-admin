@@ -1482,7 +1482,7 @@ export default {
     },
 
     filterTopUsers() {
-      if (this.current_filter === "All") {
+      if (this.current_filter === undefined) {
         return this.fetchTopUsers;
       }
       return this.fetchTopUsers.filter(

@@ -162,6 +162,7 @@
               <th scope="col" class="border-0">Name</th>
               <th scope="col" class="border-0">Score Card</th>
               <th scope="col" class="border-0">Survey</th>
+              <th scope="col" class="border-0">Polls</th>
               <th scope="col" class="border-0">Quiz</th>
               <th scope="col" class="border-0">Likes</th>
               <th scope="col" class="border-0">Comments</th>
@@ -189,6 +190,7 @@
               </td>
               <td>{{ item.score_card }}</td>
               <td>{{ item.survey }}</td>
+              <td>{{ item.poll }}</td>
               <td>{{ item.quiz }}</td>
               <td>{{ item.likes }}</td>
               <td>{{ item.comments }}</td>
