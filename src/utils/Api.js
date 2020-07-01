@@ -3,7 +3,7 @@ import store from "@/store";
 
 // console.log(store.state.auth)
 const instance = axios.create({
-  baseURL: "https://sla-be.herokuapp.com/api/v1"
+  baseURL: process.env.VUE_APP_API
 });
 
 // request interceptor
