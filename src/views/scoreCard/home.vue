@@ -5,7 +5,7 @@
       <div
         v-if="scorecards.length > 0"
         class="col-lg-3 col-md-6 col-12"
-        v-for="(user, index) in scorecards"
+        v-for="(data, index) in scorecards"
         :key="index"
       >
         <d-card class="m-3 ">
@@ -14,20 +14,20 @@
             <div class="mb-3 mx-auto">
               <sla-avatar
                 class="avatar"
-                v-if="user.image === null"
+                v-if="data.user.image === null"
                 size="xl"
-                :user="{ name: user.first_name }"
+                :user="{ name: data.user.first_name }"
               />
               <sla-avatar
                 class="avatar"
                 v-else
                 size="xl"
-                :user="{ image: user.image }"
+                :user="{ image: data.user.image }"
               />
             </div>
 
             <!-- User Name -->
-            <h5 class="mb-0">{{ user.first_name }}</h5>
+            <h5 class="mb-0">{{ data.user.first_name }}</h5>
 
             <!-- User Job Title -->
             <!--          <span class="text-muted d-block mb-2">{{ userDetails.jobTitle }}</span>-->
@@ -36,7 +36,9 @@
             <p
               class="mb-2  text-uppercase font-weight-bold"
               style="color: #0087DB; cursor:pointer"
-              @click="$router.push({ path: `user/${user._id}` })"
+              @click="
+                $router.push({ path: `user/${data.user._id}/${data._id}` })
+              "
             >
               view ScoreCard
             </p>

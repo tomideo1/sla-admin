@@ -87,7 +87,11 @@
                   >&nbsp;&nbsp;&nbsp;Like</span
                 >
               </span>
-              <span class="mr-3 ml-3" @click="comments = !comments">
+              <span
+                class="mr-3 ml-3"
+                style="cursor: pointer"
+                @click="comments = !comments"
+              >
                 <icon name="comment" size="sm" />
                 <span class=" justify-content-center"
                   >&nbsp;&nbsp;&nbsp;Comment</span

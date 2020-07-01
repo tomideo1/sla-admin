@@ -2,9 +2,11 @@ import Vue from "vue";
 import format from "date-fns/format";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import parseISO from "date-fns/parseISO";
+import moment from "moment";
 
 Vue.filter("chatTime", value => {
-  return format(new Date(value), "h:m aaaa");
+  return moment(value).format("ddd, MM  YYYY, h:mm:ss a");
+  // return format(new Date(value), "h:m aaaa");
 });
 
 Vue.filter("fromNow", value => {

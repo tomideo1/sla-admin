@@ -46,7 +46,7 @@
         <span
           class="font-poppings text-dark justify-content-center d-flex"
           style="font-size: 16px;"
-          >You don’t have any Courses</span
+          >You don’t have any C=vourses</span
         >
       </div>
       <div v-if="Categories.length > 0" class="col-lg-12">
@@ -83,7 +83,7 @@
         <span
           class="font-poppings text-dark justify-content-center d-flex"
           style="font-size: 16px;"
-          >You don’t have any Categories</span
+          >You don’t have any categories</span
         >
       </div>
       <div v-if="courses.length > 0" class="col-lg-12">
@@ -126,7 +126,7 @@
         <span
           class="font-poppings text-dark justify-content-center d-flex"
           style="font-size: 16px;"
-          >You don’t have any Courses</span
+          >You don’t have any recent courses</span
         >
       </div>
       <div v-if="courses.length > 0" class="col-lg-12">
@@ -165,12 +165,12 @@
           </div>
         </carousel>
       </div>
-      <div v-else class="col">
+      <div v-else class="col-lg-12">
         <icon name="empty" class="m-3" size="retain" />
         <span
           class="font-poppings text-dark justify-content-center d-flex"
           style="font-size: 16px;"
-          >You don’t have any Courses</span
+          >You don’t have any most engaged courses</span
         >
       </div>
       <div
@@ -281,9 +281,11 @@ export default {
     this.courses.forEach(res => {
       this.sortedCourses.push(res);
     });
-    this.Categories.forEach(category => {
-      this.getCoursePrograms(category.name.replace(/%20/g, " "));
-    });
+    for (let category of this.Categories) {
+      let split_category = category;
+      this.getCoursePrograms(split_category.name.split(" ")[0]);
+    }
+
     // this.sortedCourses.sort(helper.GetSortOrder("createdAt"))
     this.sortedCourses.sort(helper.GetSortOrder("title"));
     this.recentCourses = this.courses

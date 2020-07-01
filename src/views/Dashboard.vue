@@ -493,7 +493,7 @@
                 v-for="(data, idx) in fetchTopAnnouncements"
                 :key="idx"
               >
-                <div class="col-md-4 border-right col-12 col-lg-4">
+                <div class="col-md-4   col-12 col-lg-4">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     class="font-open-sans text-dark
@@ -509,30 +509,28 @@
                     </span>
                   </span>
                 </div>
-                <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                <div class="col-md-1    text-center col-12 col-lg-1">
                   <div
                     class="legend_circle mt-lg-4  mx-auto "
                     :style="'background-color:' + '#0087DB;' + ';'"
                   ></div>
                 </div>
-                <div
-                  class="col-md-1    border-right text-center col-12 col-lg-1"
-                >
+                <div class="col-md-1      text-center col-12 col-lg-1">
                   <p class="text-black  w-100 mx-auto font-open-sanst  m-3">
                     SLA
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ data.likes }}
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ data.engagements }}
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     {{ getEnagegmentRatio(data.engagements, data.likes) }}
                   </p>
@@ -608,7 +606,7 @@
     <!--                v-for="(legend, idx) in postInteractionsChartLegends"-->
     <!--                :key="idx"-->
     <!--              >-->
-    <!--                <div class="col-md-7 border-right col-12 col-lg-7">-->
+    <!--                <div class="col-md-7   col-12 col-lg-7">-->
     <!--                  <span-->
     <!--                    style="font-size: 16px;letter-spacing: 0.15px;"-->
     <!--                    class="font-open-sans text-dark-->
@@ -629,30 +627,30 @@
     <!--                    </span>-->
     <!--                  </span>-->
     <!--                </div>-->
-    <!--                <div class="col-md-1 border-right  text-center col-12 col-lg-1">-->
+    <!--                <div class="col-md-1    text-center col-12 col-lg-1">-->
     <!--                  <div-->
     <!--                    class="legend_circle mt-lg-4  mx-auto "-->
     <!--                    :style="'background-color:' + legend.color + ';'"-->
     <!--                  ></div>-->
     <!--                </div>-->
     <!--                <div-->
-    <!--                  class="col-md-1    border-right text-center col-12 col-lg-1"-->
+    <!--                  class="col-md-1      text-center col-12 col-lg-1"-->
     <!--                >-->
     <!--                  <p class="text-black  w-100 mx-auto font-open-sanst  m-3">-->
     <!--                    SLA-->
     <!--                  </p>-->
     <!--                </div>-->
-    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                <div class="col-md-1    text-center col-12 col-lg-1">-->
     <!--                  <p class="text-black  font-open-sanst  m-3">-->
     <!--                    253-->
     <!--                  </p>-->
     <!--                </div>-->
-    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                <div class="col-md-1    text-center col-12 col-lg-1">-->
     <!--                  <p class="text-black  font-open-sanst  m-3">-->
     <!--                    642-->
     <!--                  </p>-->
     <!--                </div>-->
-    <!--                <div class="col-md-1  border-right text-center col-12 col-lg-1">-->
+    <!--                <div class="col-md-1    text-center col-12 col-lg-1">-->
     <!--                  <p class="text-black  font-open-sanst  m-3">-->
     <!--                    1.12-->
     <!--                  </p>-->
@@ -763,9 +761,12 @@
     <!--    </d-row>-->
     <d-row class="p-3 mb-3" no-gutters>
       <div class="col-lg-12 mx-auto ">
-        <d-select class="col-md-3 mb-4">
-          <option selected :value="undefined">All</option>
-        </d-select>
+        <select class="form-control col-md-3 mb-4" v-model="current_filter">
+          <option :value="undefined">All</option>
+          <option value="admin">Admins</option>
+          <option value="user">Users</option>
+          <option value="coach">Coaches</option>
+        </select>
         <d-card
           class="  col-md-12  col-lg-12 "
           style="border-radius:0!important;"
@@ -801,10 +802,10 @@
               </div>
               <div
                 :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="(user, idx) in fetchTopUsers"
+                v-for="(user, idx) in filterTopUsers"
                 :key="idx"
               >
-                <div class="col-md-7 border-right col-12 col-lg-7">
+                <div class="col-md-7   col-12 col-lg-7">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     :class="[
@@ -818,24 +819,22 @@
                     </span>
                   </span>
                 </div>
-                <div
-                  class="col-md-1 border-right  text-center p-lg-3  col-12 col-lg-1"
-                >
+                <div class="col-md-1    text-center p-lg-3  col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     {{ user.count }}
                   </p>
                 </div>
-                <!-- <div class="col-md-1  border-right text-center p-lg-3  col-12 col-lg-1">
+                <!-- <div class="col-md-1    text-center p-lg-3  col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center p-lg-3 col-12 col-lg-1">
+                <div class="col-md-1    text-center p-lg-3 col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     0
                   </p>
@@ -896,7 +895,7 @@
                 v-for="(location, idx) in fetchTopLocations"
                 :key="idx"
               >
-                <div class="col-md-4 border-right col-12 col-lg-4">
+                <div class="col-md-4   col-12 col-lg-4">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     :class="[
@@ -909,27 +908,27 @@
                     </span>
                   </span>
                 </div>
-                <!-- <div class="col-md-1 border-right  text-center col-12 col-lg-1">
+                <!-- <div class="col-md-1    text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-1  border-right text-center col-12 col-lg-1">
+                <div class="col-md-1    text-center col-12 col-lg-1">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black w-100 mx-auto  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     0
                   </p>
                 </div>
-                <div class="col-md-2  border-right text-center col-12 col-lg-2">
+                <div class="col-md-2    text-center col-12 col-lg-2">
                   <p class="text-black  font-open-sanst  m-3">
                     0
                   </p>
@@ -958,14 +957,19 @@
                     Top Courses
                   </p>
                 </div>
-                <div class="col-md-3 text-center  col-12 col-lg-3">
+                <div class="col-md-2 text-center  col-12 col-lg-2">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
                     Number of Enrollees
                   </p>
                 </div>
-                <div class="col-md-3 text-center  col-12 col-lg-3">
+                <div class="col-md-2 text-center  col-12 col-lg-2">
                   <p class="text-black font-poppings w-100 mx-auto m-3">
                     Completion Rate
+                  </p>
+                </div>
+                <div class="col-md-2 text-center  col-12 col-lg-2">
+                  <p class="text-black font-poppings w-100 mx-auto m-3">
+                    Engagements
                   </p>
                 </div>
               </div>
@@ -974,7 +978,7 @@
                 v-for="(data, idx) in fetchTopCourses"
                 :key="idx"
               >
-                <div class="col-md-6 border-right col-12 col-lg-6">
+                <div class="col-md-6  col-12 col-lg-6">
                   <span
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     class="font-open-sans text-dark
@@ -984,26 +988,31 @@
                       :style="
                         'width:87px!important;height: 63px!important;' +
                           'backgroundImage:url(' +
-                          (data.course ? data.course.cover_image : '') +
+                          (data ? data.cover_image : '') +
                           ');' +
                           ' background-size:cover; background-position:center'
                       "
                     >
                     </d-card>
                     <span class="m-1 ml-4">
-                      {{ data.course ? data.course.title : "" }}
+                      {{ data ? data.title : "" }}
                     </span>
                   </span>
                 </div>
                 <div
-                  class="col-md-3 border-right mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-3"
+                  class="col-md-2  mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-2"
                 >
-                  {{ data.count }}
+                  {{ data.enrollments }}
                 </div>
                 <div
-                  class="col-md-3 border-right mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-3"
+                  class="col-md-2  mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-2"
                 >
-                  0
+                  {{ data.enrollments }}
+                </div>
+                <div
+                  class="col-md-2   mt-lg-3  p-lg-3 m-3 m-lg-0 m-md-0 text-center col-12 col-lg-2"
+                >
+                  {{ data.engagements }}
                 </div>
               </div>
             </div>
@@ -1068,6 +1077,7 @@ export default {
   },
   data() {
     return {
+      current_filter: "All",
       loginChartData: [["Year", "Users", "Coaches"]],
       loginChartOptions: {
         legend: {
@@ -1471,6 +1481,15 @@ export default {
       return self.loginChartData;
     },
 
+    filterTopUsers() {
+      if (this.current_filter === "All") {
+        return this.fetchTopUsers;
+      }
+      return this.fetchTopUsers.filter(
+        res => res.userType === this.current_filter
+      );
+      // const self = this
+    },
     fetchTopAnnouncements() {
       const self = this;
       let series = [];

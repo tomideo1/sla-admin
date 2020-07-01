@@ -20,6 +20,10 @@ export const setCoachesGroups = (state, data) => {
 export const setSurveys = (state, data) => {
   state.Surveys = data.data.surveys;
 };
+
+export const setCoachSurveys = (state, data) => {
+  state.CoachSurveys = data.surveys;
+};
 export const setSchduledSurveys = (state, data) => {
   state.scheduledSurveys = data.data.surveys;
 };

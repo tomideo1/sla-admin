@@ -404,7 +404,7 @@ const baseRoutes = [
         }
       },
       {
-        path: "user/:id",
+        path: "user/:id/:scorecard_id",
         name: "admin-user-scorecard",
         component: () => import("@/views/scoreCard/user_scorecard.vue"),
         meta: {

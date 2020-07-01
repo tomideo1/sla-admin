@@ -31,6 +31,9 @@
             >
               <div class="row m-lg-1 m-0 m-md-1 py-4">
                 <div style="border: 1px solid #e7e6e6; box-sizing: border-box;">
+                  <h5 class="text-black font-open-sans m-3 ">
+                    {{ announcement.annoucement.title }}
+                  </h5>
                   <p
                     class="m-3 font-open-sans text-dark"
                     v-html="announcement.annoucement.rich_details"
@@ -197,14 +200,26 @@
           <d-col sm="10">
             <h5 class="font-poppings text-black m-5">Surveys</h5>
             <div class="mx-auto m-3">
-              <div class="col-md-10 col-10 col-lg-10  m-2">
+              <div
+                v-if="latest_survey.length > 0"
+                class="col-md-10 col-10 col-lg-10  m-2"
+              >
                 <div
                   class="p-3"
                   style="border:1px solid #E7E6E6; box-sizing:border-box;"
                 >
+                  <h6 class=" font-open-sans tex-black">
+                    l{{ latest_survey[0].survey.title }}
+                    <span class="float-right"
+                      ><small>{{
+                        latest_survey[0].survey.createdAt | chatTime
+                      }}</small></span
+                    >
+                  </h6>
+
                   <img
                     class="p-3 w-100 h-100 border-bottom"
-                    :src="latest_survey.survey.survey_image"
+                    :src="latest_survey[0].survey.survey_image"
                   />
                 </div>
 
@@ -215,10 +230,18 @@
                   text="TAKE SURVEY"
                   @click="
                     $router.push({
-                      path: 'coach/survey/single/' + latest_survey.survey._id
+                      path: 'coach/survey/single/' + latest_survey[0].survey._id
                     })
                   "
                 />
+              </div>
+              <div class="col" v-else>
+                <icon name="empty" class="m-3" size="retain" />
+                <span
+                  class="font-poppings text-dark justify-content-center d-flex"
+                  style="font-size: 16px;"
+                  >You don’t have any surveys</span
+                >
               </div>
             </div>
           </d-col>
@@ -288,7 +311,7 @@ export default {
       Groups: "app/getCoachGroups",
       announcements: "app/getAnnouncements",
       Admin: "auth/getAdmin",
-      surveys: "app/getSurveys"
+      surveys: "app/getCoachSurveys"
     })
   },
   methods: {
@@ -296,7 +319,7 @@ export default {
       "getCoachesGroups",
       "getAllAnnouncements",
       "getAnnouncementDetails",
-      "getAllSurveys"
+      "getAllCoachSurveys"
     ]),
 
     async sendComment(commentObj) {
@@ -381,7 +404,7 @@ export default {
   async mounted() {
     await this.getCoachesGroups();
     await this.getAllAnnouncements();
-    await this.getAllSurveys();
+    await this.getAllCoachSurveys();
     const self = this;
     await this.announcements.forEach(res => {
       let data = this.getAnnouncementDetails({ id: res._id });
@@ -389,25 +412,34 @@ export default {
         self.individual_announcement.push(res);
       });
     });
-    let latest_survey = this.surveys
-      .sort(helper.GetSortOrder("createdAt"))
-      .reverse()[0];
-    await axios
-      .get(
-        `${process.env.VUE_APP_API}/survey/` +
-          latest_survey._id +
-          `/questions/list`,
-        {
-          headers: {
-            Authorization: `Bearer ${token} `
+
+    let latest_survey = null;
+    if (this.surveys.length > 0) {
+      latest_survey = this.surveys
+        .sort(helper.GetSortOrder("createdAt"))
+        .reverse()[0];
+    }
+
+    if (latest_survey !== null) {
+      await axios
+        .get(
+          `${process.env.VUE_APP_API}/survey/coach/` +
+            latest_survey._id +
+            `/questions/list`,
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
           }
-        }
-      )
-      .then(res => {
-        self.latest_survey = res.data.data;
-        self.isLoaded = true;
-      })
-      .catch(ex => {});
+        )
+        .then(res => {
+          self.latest_survey.push(res.data.data);
+          self.isLoaded = true;
+        })
+        .catch(ex => {});
+    } else {
+      self.isLoaded = true;
+    }
   }
 };
 </script>
