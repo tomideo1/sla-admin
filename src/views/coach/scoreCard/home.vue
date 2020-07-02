@@ -24,6 +24,7 @@
           class=" col-12 col-lg-3 col-md-6"
           v-for="(card, index) in scorecards"
           :key="index"
+          v-if="scorecards.length > 0"
         >
           <d-card class="m-3">
             <d-card-header class="border-bottom text-center">
@@ -61,6 +62,14 @@
               </p>
             </d-card-header>
           </d-card>
+        </div>
+        <div v-else class="col">
+          <icon name="empty" class="m-3" size="retain" />
+          <span
+            class="font-poppings text-dark justify-content-center d-flex"
+            style="font-size: 16px;"
+            >You don’t have any user scorecards</span
+          >
         </div>
       </d-row>
     </d-container>
