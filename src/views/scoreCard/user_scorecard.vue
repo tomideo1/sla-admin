@@ -142,7 +142,7 @@ export default {
             ? res.data.message
             : "An error occured")
         );
-        this.$router.push({ path: "/coach/scorecards/all" });
+        this.$router.push({ path: "/scorecards/all" });
       } else {
         this.isLoading = false;
         this.text = "SUBMIT";
