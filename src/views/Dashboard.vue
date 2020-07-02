@@ -1077,7 +1077,7 @@ export default {
   },
   data() {
     return {
-      current_filter: "All",
+      current_filter: undefined,
       loginChartData: [["Year", "Users", "Coaches"]],
       loginChartOptions: {
         legend: {
