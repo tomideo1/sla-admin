@@ -5,6 +5,7 @@
     v-bind="$attrs"
     v-on="$listeners"
     :ref="refs"
+    style="cursor:pointer!important"
   >
     <div
       class="nav-circle"
