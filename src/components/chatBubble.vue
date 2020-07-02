@@ -9,10 +9,17 @@
     >
       <span class="flex-inline flex-column message  p-2">
         <span
-          v-if="position !== 'right'"
+          v-if="position !== 'right' && chat.type !== null"
           class="name text-black font-open-sans "
-          >{{ chat.username }}</span
-        >
+          >{{
+            chat.username +
+              (chat.type === "coach"
+                ? " (coach)"
+                : chat.type === "admin"
+                ? " (admin) "
+                : "")
+          }}
+        </span>
         <div style="display: inline;">
           <span style="word-break: break-all;">{{ chat.message }}</span>
         </div>
