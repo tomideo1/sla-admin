@@ -72,6 +72,7 @@
       <d-modal-body>
         <d-row class="text-center">
           <div
+            v-if="Users.length > 0"
             v-for="(user, idx) in Users"
             :key="idx"
             class="col-lg-12 col-md-12 col-12 p-2 "
@@ -98,6 +99,14 @@
                 />
               </d-col>
             </d-row>
+          </div>
+          <div v-else class="col">
+            <icon name="empty" class="m-3" size="retain" />
+            <span
+              class="font-poppings text-dark justify-content-center d-flex"
+              style="font-size: 16px;"
+              >You don’t have any assigned users</span
+            >
           </div>
         </d-row>
       </d-modal-body>
