@@ -181,7 +181,7 @@
       >
         <div>
           <h6 class="text-dark title text-capitalize m-1">
-            {{ course.courses.tag }}
+            {{ course.courses.course[0].category }}
           </h6>
           <carousel refs="content">
             <div class="scroll m-2" v-for="tags in course.courses.course">
