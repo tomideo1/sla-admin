@@ -456,7 +456,7 @@
         >
           <div class="row" style="max-height:500px;overflow-y:auto">
             <div class="col-md-12 col-lg-12 col-12">
-              <div class="row">
+              <div class="row sticky-top bg-white">
                 <div class="col-md-4  text-center text-lg-left col-12 col-lg-4">
                   <p class="text-black font-poppings  m-3">
                     Posts
@@ -773,7 +773,7 @@
         >
           <div class="row " style="max-height:400px;overflow-y:auto">
             <div class="col-md-12 col-lg-12 col-12">
-              <div class="row ">
+              <div class="row sticky-top bg-white ">
                 <div class="col-md-7  text-center text-lg-left col-12 col-lg-7">
                   <p class="text-black font-poppings  m-3">
                     User
@@ -857,7 +857,7 @@
         >
           <div class="row " style="max-height400px; overflow-y:auto">
             <div class="col-md-12 col-lg-12 col-12">
-              <div class="row  ">
+              <div class="row sticky-top bg-white ">
                 <div class="col-md-4  text-center text-lg-left col-12 col-lg-4">
                   <p class="text-black font-poppings  m-3">
                     Top Locations
