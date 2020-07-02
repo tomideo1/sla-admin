@@ -1,7 +1,6 @@
-export default function({ store, next }) {
-  if (!store.state.auth.user.type === "admin") {
-    console.log("not admin");
-    return router.back();
+export default function({ store, next, router }) {
+  if (store.state.auth.role === "coach") {
+    router.go(-1);
   }
 
   next();

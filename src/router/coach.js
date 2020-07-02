@@ -6,6 +6,7 @@ import PasswordCreate from "../views/auth/password-create";
 import PasswordReset from "../views/auth/password-reset";
 import SettingsPasswordReset from "../views/auth/settings-password-reset";
 import forgotPassword from "../views/auth/forgotPassword";
+import isAdmin from "./middleware/isAdmin";
 
 export default [
   {

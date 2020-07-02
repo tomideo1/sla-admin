@@ -31,7 +31,7 @@
                 {{ user.user.first_name + " " + user.user.last_name }}
               </h6>
               <p class="text-black  font-open-sans">
-                {{ JSON.parse(user.user.intrests) }}
+                {{ JSON.parse(user.user.intrests.toString()) }}
               </p>
               <p class="text-grey font-open-sans">
                 <span><icon size="sm" name="location"/></span>

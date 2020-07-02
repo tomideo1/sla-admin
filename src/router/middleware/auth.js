@@ -1,10 +1,9 @@
-export default function({ store, next }) {
-
-  if(!store.state.auth.isLoggedIn) {
+export default function({ store, next, router }) {
+  if (!store.state.auth.isLoggedIn) {
     return next({
-      name: 'login'
-    })
+      name: "login"
+    });
   }
-  
-  next()
+
+  next();
 }

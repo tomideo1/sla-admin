@@ -8,6 +8,7 @@ import ComponentsOverview from "../views/common/ComponentsOverview.vue";
 import Groups from "../views/common/Groups.vue";
 import BlogPosts from "../views/common/BlogPosts.vue";
 import auth from "./middleware/auth.js";
+import isAdmin from "./middleware/isAdmin.js";
 import middlewarePipeline from "./kernel/middlewarePipeline";
 Vue.use(Router);
 
@@ -34,7 +35,7 @@ const baseRoutes = [
     name: "home",
     component: Dashboard,
     meta: {
-      middleware: [auth]
+      middleware: [auth, isAdmin]
     }
   },
   {
@@ -42,7 +43,7 @@ const baseRoutes = [
     name: "dashboard",
     component: Dashboard,
     meta: {
-      middleware: [auth]
+      middleware: [auth, isAdmin]
     }
   },
   {
@@ -58,7 +59,7 @@ const baseRoutes = [
         name: "all-users",
         component: () => import("@/views/users/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -66,7 +67,7 @@ const baseRoutes = [
         name: "create-user",
         component: () => import("@/views/users/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -74,7 +75,7 @@ const baseRoutes = [
         name: "single-user",
         component: () => import("@/views/users/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -82,7 +83,7 @@ const baseRoutes = [
         name: "all-coaches",
         component: () => import("@/views/users/coaches/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -90,7 +91,7 @@ const baseRoutes = [
         name: "create-coach",
         component: () => import("@/views/users/coaches/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -98,7 +99,7 @@ const baseRoutes = [
         name: "single-user",
         component: () => import("@/views/users/coaches/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -106,7 +107,7 @@ const baseRoutes = [
         name: "single-user",
         component: () => import("@/views/users/coaches/participants.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -124,7 +125,7 @@ const baseRoutes = [
         name: "all-courses",
         component: () => import("@/views/courses/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -132,7 +133,7 @@ const baseRoutes = [
         name: "create-course",
         component: () => import("@/views/courses/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -140,7 +141,7 @@ const baseRoutes = [
         name: "schedule-courses",
         component: () => import("@/views/courses/scheduled.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -148,7 +149,7 @@ const baseRoutes = [
         name: "saved-courses",
         component: () => import("@/views/courses/save.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -156,7 +157,7 @@ const baseRoutes = [
         name: "single-course",
         component: () => import("@/views/courses/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -174,7 +175,7 @@ const baseRoutes = [
         name: "all-groups",
         component: () => import("@/views/groups/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -182,7 +183,7 @@ const baseRoutes = [
         name: "create-group",
         component: () => import("@/views/groups/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -190,7 +191,7 @@ const baseRoutes = [
         name: "edit-group",
         component: () => import("@/views/groups/edit.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -208,7 +209,7 @@ const baseRoutes = [
         name: "all-announcements",
         component: () => import("@/views/announcement/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -216,7 +217,7 @@ const baseRoutes = [
         name: "create-announcement",
         component: () => import("@/views/announcement/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -224,7 +225,7 @@ const baseRoutes = [
         name: "saved-announcement",
         component: () => import("@/views/announcement/save.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -232,7 +233,7 @@ const baseRoutes = [
         name: "scheduled-announcement",
         component: () => import("@/views/announcement/schedule.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -240,7 +241,7 @@ const baseRoutes = [
         name: "single-announcement",
         component: () => import("@/views/announcement/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -248,7 +249,7 @@ const baseRoutes = [
         name: "edit-announcement",
         component: () => import("@/views/announcement/edit.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -266,7 +267,7 @@ const baseRoutes = [
         name: "all-surveys",
         component: () => import("@/views/survey/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -274,7 +275,7 @@ const baseRoutes = [
         name: "create-survey",
         component: () => import("@/views/survey/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -282,7 +283,7 @@ const baseRoutes = [
         name: "schedule-survey",
         component: () => import("@/views/survey/schedule.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -290,7 +291,7 @@ const baseRoutes = [
         name: "save-survey",
         component: () => import("@/views/survey/save.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -298,7 +299,7 @@ const baseRoutes = [
         name: "single-survey",
         component: () => import("@/views/survey/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -306,7 +307,7 @@ const baseRoutes = [
         name: "edit-survey",
         component: () => import("@/views/survey/edit.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -325,7 +326,7 @@ const baseRoutes = [
         name: "all-polls",
         component: () => import("@/views/poll/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -333,7 +334,7 @@ const baseRoutes = [
         name: "create-poll",
         component: () => import("@/views/poll/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -341,7 +342,7 @@ const baseRoutes = [
         name: "saved-poll",
         component: () => import("@/views/poll/save.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -349,7 +350,7 @@ const baseRoutes = [
         name: "scheduled-poll",
         component: () => import("@/views/poll/schedule.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -357,7 +358,7 @@ const baseRoutes = [
         name: "single-poll",
         component: () => import("@/views/poll/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -365,7 +366,7 @@ const baseRoutes = [
         name: "edit-poll",
         component: () => import("@/views/poll/edit.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -384,7 +385,7 @@ const baseRoutes = [
         name: "all-scorecards",
         component: () => import("@/views/scoreCard/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -392,7 +393,7 @@ const baseRoutes = [
         name: "create-scorecard",
         component: () => import("@/views/scoreCard/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -400,7 +401,7 @@ const baseRoutes = [
         name: "single-scorecard",
         component: () => import("@/views/scoreCard/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -408,7 +409,7 @@ const baseRoutes = [
         name: "admin-user-scorecard",
         component: () => import("@/views/scoreCard/user_scorecard.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -435,7 +436,7 @@ const baseRoutes = [
         name: "create-resources",
         component: () => import("@/views/resources/create.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -443,7 +444,7 @@ const baseRoutes = [
         name: "scheduled-resources",
         component: () => import("@/views/resources/scheduled.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -451,7 +452,7 @@ const baseRoutes = [
         name: "saved-resources",
         component: () => import("@/views/resources/saved.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -459,7 +460,7 @@ const baseRoutes = [
         name: "single-resources",
         component: () => import("@/views/resources/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -477,7 +478,7 @@ const baseRoutes = [
         name: "all-tickets",
         component: () => import("@/views/support/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -485,7 +486,7 @@ const baseRoutes = [
         name: "single-ticket",
         component: () => import("@/views/support/single.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -495,7 +496,7 @@ const baseRoutes = [
     name: "leaderboard",
     component: LeaderBoard,
     meta: {
-      middleware: [auth]
+      middleware: [auth, isAdmin]
     }
   },
   {
@@ -503,14 +504,14 @@ const baseRoutes = [
     name: "assets",
     component: Asset,
     meta: {
-      middleware: [auth]
+      middleware: [auth, isAdmin]
     }
   },
 
   {
     path: "/messages",
     meta: {
-      middleware: [auth]
+      middleware: [auth, isAdmin]
     },
     component: () => import("@/views/messages/index.vue"),
     children: [
@@ -519,7 +520,7 @@ const baseRoutes = [
         name: "all-messages",
         component: () => import("@/views/messages/home.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -537,7 +538,7 @@ const baseRoutes = [
         name: "all-admins",
         component: () => import("@/views/admin/all-admins.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       },
       {
@@ -545,7 +546,7 @@ const baseRoutes = [
         name: "create-admin",
         component: () => import("@/views/admin/createAdmin.vue"),
         meta: {
-          middleware: [auth]
+          middleware: [auth, isAdmin]
         }
       }
     ]
@@ -635,7 +636,6 @@ router.beforeEach((to, from, next) => {
   }
 
   const middleware = to.meta.middleware;
-
   const context = {
     to,
     from,
