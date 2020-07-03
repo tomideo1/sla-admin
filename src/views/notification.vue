@@ -98,6 +98,7 @@ import store from "@/store/index";
 import { BeatLoader } from "@saeris/vue-spinners";
 import moment from "moment";
 const token = store.state.auth.token;
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   name: "notification",
@@ -109,6 +110,9 @@ export default {
       last_week_notifications: [],
       others: []
     };
+  },
+  computed: {
+    ...mapState("auth/", ["user"])
   },
   components: {
     Noty: () => import("@/components/slaNotyCard"),
@@ -128,6 +132,7 @@ export default {
         self.notifications = res.data.notifications.slice(
           Math.max(res.data.notifications.length - 10, 0)
         );
+        self.user.notificationCounter = 0;
         self.this_week_notifications = self.notifications.filter(notif => {
           let this_week = moment(notif.createdAt);
           let last_week = moment().subtract(1, "days");
