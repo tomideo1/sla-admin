@@ -729,7 +729,6 @@ export default {
           this.buttons.isLoading = true;
           this.buttons.text = "Loading.....";
           this.formData.saved = false;
-
           break;
         default:
           break;

@@ -16,6 +16,11 @@
         <span v-if="completed" class="text-bold">Completed</span>
         <icon class="z-index-0 m-2" name="video-icon" />
       </div>
+      <sla-progress
+        v-if="hasProgress && !completed"
+        :percentage="percentage"
+        class="mt-1 px-2 mb-2"
+      />
     </div>
   </div>
 </template>
@@ -45,7 +50,8 @@ export default {
     }
   },
   components: {
-    Icon: () => import("@/components/SlaIcon.vue")
+    Icon: () => import("@/components/SlaIcon.vue"),
+    SlaProgress: () => import("@/components/progress/progress.vue")
   }
 };
 </script>
