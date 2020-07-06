@@ -35,7 +35,7 @@
                     {{ announcement.annoucement.title }}
                   </h5>
                   <p
-                    class="m-3 font-open-sans text-dark"
+                    class="m-3 font-open-sansz text-dark"
                     v-html="announcement.annoucement.rich_details"
                   ></p>
                   <div>

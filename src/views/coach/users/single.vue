@@ -76,6 +76,7 @@
               :title="iter.course.title"
               :image="iter.course.cover_image"
               :id="iter.course.cover_image"
+              :percentage="iter.progress.toFixed(1)"
             />
           </div>
           <p class="font-poppins m-4 text-bold text-black">Activity</p>
