@@ -1,20 +1,13 @@
 <template>
   <component :is="tag" v-bind="$attrs" v-on="$listeners" :class="[classes]">
     <div class="d-flex flex-row m-2 m-lg-3 m-md-3 ">
-      <sla-avatar
-        v-if="avatar === undefined || avatar === null"
-        class="avatar  m-lg-4 "
-        size="lg"
-        :user="{ name: userName }"
-      />
-      <sla-avatar
-        class="avatar m-lg-4 "
-        v-else
-        size="lg"
-        :user="{ image: avatar }"
+      <img
+        class="ml-auto d-lg-block ml-lg-5 d-md-block d-none"
+        :src="image"
+        style="width:48px; height:48px;border-radius: 50%;"
       />
 
-      <div class="m-4 d-flex flex-row">
+      <div class="m-2 d-flex flex-row">
         <span class="  font-poppins">
           <slot />
         </span>
@@ -34,6 +27,9 @@ export default {
       default: "div"
     },
     avatar: {
+      type: String
+    },
+    image: {
       type: String
     },
     userName: {

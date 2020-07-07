@@ -49,6 +49,7 @@
             <p class="heading text-bold font-poppings text-dark ">Last Week</p>
             <noty
               :userName="notification.message.substring(0)"
+              :image="notification.image"
               v-for="notification in last_week_notifications"
               :key="notification._id"
             >
@@ -63,15 +64,6 @@
                     notification.createdAt | moment("from")
                   }}</small>
                 </p>
-                <img
-                  v-if="
-                    notification.image !== null &&
-                      notification.image !== undefined
-                  "
-                  class="ml-auto d-lg-block ml-lg-5 d-md-block d-none"
-                  :src="notification.image"
-                  style="width:56px; height:56px;border-radius: 5px;"
-                />
               </span>
             </noty>
           </div>
@@ -125,7 +117,7 @@ export default {
     let res = await axios
       .get(`${process.env.VUE_APP_API}/notification/admin/getAll?page=371`, {
         headers: {
-          Authorization: `Bearer ${token} `
+          Authorization: `Bearer ${store.state.auth.token} `
         }
       })
       .then(res => {
