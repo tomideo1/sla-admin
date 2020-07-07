@@ -29,20 +29,23 @@
               v-for="(announcement, index) in individual_announcement"
               :key="index"
             >
-              <div class="row m-lg-1 m-0 m-md-1 py-4">
+              <div class=" m-lg-1 m-0 m-md-1 py-4">
                 <div style="border: 1px solid #e7e6e6; box-sizing: border-box;">
                   <h5 class="text-black font-open-sans m-3 ">
                     {{ announcement.annoucement.title }}
                   </h5>
-                  <p
-                    class="m-3 font-open-sansz text-dark"
+                  <!--<span
+                    class=" font-open-sansz text-dark"
                     v-html="announcement.annoucement.rich_details"
-                  ></p>
+                  ></span>-->
                   <div>
-                    <img
-                      class="p-3 w-100 h-100 border-bottom"
-                      :src="announcement.annoucement.cover_image"
-                    />
+                    <div class="announcement-image-holder">
+                      <img
+                        class="p-3 announcement-image border-bottom"
+                        :src="announcement.annoucement.cover_image"
+                      />
+                    </div>
+
                     <div class="border-bottom p-2 d-flex flex-row">
                       <span class="ml-3">
                         <icon name="wave" size="xs" />
@@ -84,6 +87,7 @@
                       </span>
                     </div>
                   </div>
+                  <!-- comments com here -->
                   <div
                     class="col-md-12"
                     style="max-height: 300px !important; overflow-y: auto;"
@@ -202,7 +206,7 @@
             <div class="mx-auto m-3">
               <div
                 v-if="latest_survey.length > 0"
-                class="col-md-10 col-10 col-lg-10  m-2"
+                class="col-md-12 col-12 col-lg-12  m-2"
               >
                 <div
                   class="p-3"
@@ -483,5 +487,25 @@ hr.style1 {
 }
 .btn-warning {
   background: #ffdea3 !important;
+}
+.announcement-image {
+  max-width: 100%;
+  max-height: auto;
+  position: relative;
+  vertical-align: middle;
+  left: 50%;
+  transform: translate(-50%);
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.announcement-image-holder {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
 }
 </style>
