@@ -30,12 +30,17 @@
               <h6 class="font-weight-bold text-black   font-open-sans ">
                 {{ user.user.first_name + " " + user.user.last_name }}
               </h6>
-              <p class="text-black  font-open-sans">
-                {{ JSON.parse(user.user.intrests.toString()) }}
-              </p>
+              <span
+                class="text-black  font-open-sans"
+                v-for="(int, i) in JSON.parse(user.user.intrests)"
+                :key="i"
+              >
+                {{ int }}
+                <span v-if="i < 1">,</span>
+              </span>
               <p class="text-grey font-open-sans">
                 <span><icon size="sm" name="location"/></span>
-                {{ user.user.location }}
+                {{ user.user.city }}, {{ user.user.location }}
               </p>
               <div class="">
                 <span
@@ -86,7 +91,9 @@
             v-for="(activity, idx) in user.activity"
             :key="idx"
           >
-            <p class="font-open-sans">{{ activity.content }}y</p>
+            <p class="font-open-sans">
+              {{ user.user.first_name }} {{ activity.content }}
+            </p>
             <span class="ml-5">{{ activity.createdAt | fromNow }}</span>
           </div>
         </div>
