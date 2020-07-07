@@ -87,7 +87,7 @@
           </div>
           <p class="font-poppins m-4 text-bold text-black">Activity</p>
           <div
-            class="d-flex flex-row m-4"
+            class="d-flex flex-row m-2"
             v-for="(activity, idx) in user.activity"
             :key="idx"
           >

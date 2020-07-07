@@ -17,6 +17,7 @@
           <noty
             :userName="notification.message.substring(0)"
             v-for="notification in this_week_notifications"
+            :image="notification.image"
             :key="notification._id"
           >
             <span class="d-flex flex-row flex-grow-1 justify-content-lg-start">
@@ -28,15 +29,6 @@
                   notification.createdAt | moment("from")
                 }}</small>
               </p>
-              <img
-                v-if="
-                  notification.image !== null &&
-                    notification.image !== undefined
-                "
-                class="ml-auto d-lg-block ml-lg-5 d-md-block d-none"
-                :src="notification.image"
-                style="width:56px; height:56px;border-radius: 5px;"
-              />
             </span>
           </noty>
           <div class="col" v-if="this_week_notifications.length === 0">
