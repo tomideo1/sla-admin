@@ -26,13 +26,13 @@
             <h5 class="font-poppings mt-5  m-5 text-black">Announcement</h5>
             <div
               class="col-md-12 col-lg-12 col-12"
-              v-for="(announcement, index) in processIndividual"
+              v-for="(announcement, index) in announcements"
               :key="index"
             >
               <div class=" m-lg-1 m-0 m-md-1 py-4">
                 <div style="border: 1px solid #e7e6e6; box-sizing: border-box;">
                   <h5 class="text-black font-open-sans m-3 ">
-                    {{ announcement.annoucement.title }}
+                    {{ announcement.title }}
                   </h5>
                   <!--<span
                     class=" font-open-sansz text-dark"
@@ -42,7 +42,7 @@
                     <div class="announcement-image-holder">
                       <img
                         class="p-3 announcement-image border-bottom"
-                        :src="announcement.annoucement.cover_image"
+                        :src="announcement.cover_image"
                       />
                     </div>
 
@@ -51,35 +51,41 @@
                         <icon name="wave" size="xs" />
                         <icon name="thumbs" size="xs" />
                         <small class="font-open-sans"
-                          >&nbsp;{{
-                            announcement.annoucement.likes + " likes"
-                          }}</small
+                          >&nbsp;{{ announcement.likes + " likes" }}</small
                         >
                       </span>
                       <span class="mr-3 ml-auto">
                         <small class="font-open-sans">{{
-                          announcement.annoucement.comments + " Comments"
+                          announcement.comments + " Comments"
                         }}</small>
                       </span>
                     </div>
                     <div class="d-flex flex-row m-3">
                       <span class="mr-3 ml-3">
                         <icon
-                          v-if="announcement.isLiked"
+                          v-if="announcement.liked"
                           name="thumb-filled"
                           size="sm"
                         />
                         <icon
                           v-else
                           name="thumb-unfilled"
-                          @click="likeAnnouncement(announcement.annoucement)"
+                          @click="likeAnnouncement(announcement)"
                           size="sm"
                         />
                         <span class="text-primary justify-content-center"
                           >&nbsp;&nbsp;&nbsp;Like</span
                         >
                       </span>
-                      <span class="mr-3 ml-3">
+                      <span
+                        class="mr-3 ml-3"
+                        style="cursor:pointer"
+                        @click="
+                          $router.push(
+                            `coach/announcement/single/${announcement._id}`
+                          )
+                        "
+                      >
                         <icon name="comment" size="sm" />
                         <span class="justify-content-center"
                           >&nbsp;&nbsp;&nbsp;Comment</span
@@ -88,115 +94,6 @@
                     </div>
                   </div>
                   <!-- comments com here -->
-                  <div
-                    class="col-md-12"
-                    style="max-height: 300px !important; overflow-y: auto;"
-                  >
-                    <div
-                      class="d-flex flex-column"
-                      v-for="(comment, idx) in announcement.comments"
-                      :key="idx"
-                    >
-                      <span
-                        v-if="comment.user !== null"
-                        class="ml-2 d-flex  flex-row"
-                      >
-                        <sla-avatar
-                          class="avatar m-1"
-                          size="md"
-                          v-if="comment.user.image === null"
-                          :user="{ name: comment.user.first_name }"
-                        />
-                        <sla-avatar
-                          class="avatar m-1"
-                          v-else
-                          size="md"
-                          :user="{ image: comment.user.image }"
-                        />
-                        <p class="  m-2 d-flex flex-column ">
-                          <span class="d-flex flex-row">
-                            <span class="mt-3 text-bold text-black">
-                              {{ comment.user.first_name }}
-                            </span>
-                            <span class="text-grey-500  mt-3 ml-3 ">
-                              <small>{{ comment.createdAt | chatTime }}</small>
-                            </span>
-                          </span>
-                          <span class=" mb-1">
-                            {{ comment.content }}
-                          </span>
-                        </p>
-                      </span>
-                      <span
-                        v-else-if="comment.admin !== null"
-                        class="ml-2 d-flex m-2 flex-row"
-                      >
-                        <sla-avatar
-                          class="avatar m-1"
-                          size="md"
-                          v-if="comment.admin.image === null"
-                          :user="{ name: comment.admin.first_name }"
-                        />
-                        <sla-avatar
-                          class="avatar m-1"
-                          v-else
-                          size="md"
-                          :user="{ image: comment.admin.image }"
-                        />
-                        <p class="  m-1 d-flex flex-column ">
-                          <span class="d-flex flex-row">
-                            <span class="mt-3 text-bold text-black">
-                              {{
-                                comment.admin.first_name +
-                                  "  " +
-                                  (comment.admin.type === "coach"
-                                    ? "(Coach)"
-                                    : "(Admin)")
-                              }}
-                            </span>
-                            <span class="text-grey-500  mt-3 ml-3 ">
-                              <small>{{ comment.createdAt | chatTime }}</small>
-                            </span>
-                          </span>
-                          <span class=" mb-1">
-                            {{ comment.content }}
-                          </span>
-                        </p>
-                        <!--                <small class="text-grey-500 ml-5 mt-n2">Like</small>-->
-                        <!--                <small class="text-grey-500 ml-5 mt-n2">Reply</small>-->
-                      </span>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-lg-row flex-column w-100 mt-3">
-                    <sla-avatar
-                      size="md"
-                      v-if="Admin.image === null"
-                      :user="{ name: Admin.first_name }"
-                      class="ml-5  mt-4 d-none d-lg-block d-md-block  "
-                    />
-                    <sla-avatar
-                      size="md"
-                      v-else
-                      :user="{ image: Admin.image }"
-                      class="ml-5  mt-4 d-none d-lg-block d-md-block  "
-                    />
-                    <chat-box
-                      @keyup="
-                        handleComment(
-                          announcement.annoucement,
-                          announcement.comments
-                        )
-                      "
-                      class="col-md-12 col-lg-12 col-12"
-                      @send="
-                        handleComment(
-                          announcement.annoucement,
-                          announcement.comments
-                        )
-                      "
-                      v-model="announcement.annoucement.content"
-                    />
-                  </div>
                 </div>
               </div>
             </div>
@@ -316,10 +213,7 @@ export default {
       announcements: "app/getAnnouncements",
       Admin: "auth/getAdmin",
       surveys: "app/getCoachSurveys"
-    }),
-    processIndividual() {
-      return this.individual_announcement.slice(0, 3);
-    }
+    })
   },
   methods: {
     ...mapActions("app/", [
@@ -413,13 +307,6 @@ export default {
     await this.getAllAnnouncements();
     await this.getAllCoachSurveys();
     const self = this;
-    await this.announcements.forEach(res => {
-      let data = this.getAnnouncementDetails({ id: res._id });
-      data.then(res => {
-        self.individual_announcement.push(res);
-      });
-    });
-
     let latest_survey = null;
     if (this.surveys.length > 0) {
       latest_survey = this.surveys
