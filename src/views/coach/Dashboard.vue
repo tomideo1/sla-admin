@@ -26,7 +26,7 @@
             <h5 class="font-poppings mt-5  m-5 text-black">Announcement</h5>
             <div
               class="col-md-12 col-lg-12 col-12"
-              v-for="(announcement, index) in individual_announcement"
+              v-for="(announcement, index) in processIndividual"
               :key="index"
             >
               <div class=" m-lg-1 m-0 m-md-1 py-4">
@@ -316,7 +316,10 @@ export default {
       announcements: "app/getAnnouncements",
       Admin: "auth/getAdmin",
       surveys: "app/getCoachSurveys"
-    })
+    }),
+    processIndividual() {
+      return this.individual_announcement.slice(0, 3);
+    }
   },
   methods: {
     ...mapActions("app/", [
