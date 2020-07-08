@@ -46,7 +46,7 @@
         <span
           class="font-poppings text-dark justify-content-center d-flex"
           style="font-size: 16px;"
-          >You don’t have any C=vourses</span
+          >You don’t have any Courses</span
         >
       </div>
       <div v-if="Categories.length > 0" class="col-lg-12">
