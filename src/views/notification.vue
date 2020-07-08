@@ -113,9 +113,7 @@ export default {
         }
       })
       .then(res => {
-        self.notifications = res.data.notifications.slice(
-          Math.max(res.data.notifications.length - 10, 0)
-        );
+        self.notifications = res.data.notifications;
         self.user.notificationCounter = 0;
         self.this_week_notifications = self.notifications.filter(notif => {
           let this_week = moment(notif.createdAt);
