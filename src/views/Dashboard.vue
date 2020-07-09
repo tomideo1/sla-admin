@@ -900,7 +900,7 @@
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     :class="[
                       ' font-open-sans text-dark mt-lg-3 p-lg-3' +
-                        '  m-3 m-lg-0 m-md-0 d-flex flex-row '
+                        '  m-3 m-lg-0 mt-3  m-md-0 d-flex flex-row '
                     ]"
                   >
                     <span class="ml-2">
