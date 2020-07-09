@@ -10,6 +10,9 @@ export const getCategories = state => {
 export const getAdmins = state => {
   return state.Admins;
 };
+export const getIndustry = state => {
+  return state.Industry;
+};
 export const getAssets = state => {
   return state.Assets;
 };

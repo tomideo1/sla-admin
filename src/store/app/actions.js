@@ -39,6 +39,15 @@ export const getAllAdmins = async ({ commit }) => {
   }
 };
 
+export const getAllIndustry = async ({ commit }) => {
+  let res = await Api.get(`industry/list `, true);
+  if (res.status === 200) {
+    commit("setIndustry", res.data);
+  } else {
+    return res;
+  }
+};
+
 export const getAllAssets = async ({ commit }) => {
   let res = await Api.get(`assets/getAll`, true);
   if (res.status === 200) {

@@ -21,5 +21,6 @@ export default {
   UserScoreCards: null,
   CoachTickets: null,
   CoachGroups: null,
-  CoachSurveys: null
+  CoachSurveys: null,
+  Industry: null
 };

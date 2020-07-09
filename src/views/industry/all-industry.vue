@@ -4,33 +4,52 @@
       <!-- Page Header - Page Title -->
       <d-col col sm="4" class="text-center text-sm-left mb-4 mb-sm-0">
         <span class="text-uppercase page-subtitle">Dashboards</span>
-        <h3 class="page-title">All Admins</h3>
+        <h3 class="page-title">All Industry</h3>
       </d-col>
 
       <!-- Page Header - Datepicker -->
     </d-row>
-    <v-client-table
-      class="dataTables_wrapper"
-      :data="fetchAdmins"
-      :columns="columns"
-      :options="clientTableOptions"
-    >
-      <!-- Actions Column Slot -->
-      <d-button-group
-        slot="actions"
-        slot-scope="props"
-        size="small"
-        class="d-flex justify-content-center"
-      >
-        <d-button
-          class="btn-white"
-          @click="handleActionClick('deleted', props.row.first_name)"
-          v-d-tooltip.hover="'Delete'"
+    <d-container fluid>
+      <d-row>
+        <div
+          class="col-12 col-lg-3 col-md-6"
+          v-for="(user, idx) in tableData"
+          :key="idx"
         >
-          <i class="material-icons">&#xE872;</i>
-        </d-button>
-      </d-button-group>
-    </v-client-table>
+          <d-card class="m-3 text-center">
+            <d-card-header class="border-bottom  mx-auto">
+              <!-- User Avatar -->
+              <div class="mb-3  ">
+                <sla-avatar
+                  class="avatar"
+                  size="xl"
+                  :user="{ name: user.name }"
+                />
+              </div>
+
+              <!-- User Name -->
+              <h5 class="mb-0">{{ user.name }}</h5>
+
+              <!-- User Job Title -->
+              <!--          <span class="text-muted d-block mb-2">{{ userDetails.jobTitle }}</span>-->
+
+              <!-- User Follow -->
+              <p
+                style="cursor: pointer"
+                class="mb-2 text-primary font-weight-bold"
+                @click="
+                  $router.push({
+                    path: 'single/' + user._id
+                  })
+                "
+              >
+                View Profile
+              </p>
+            </d-card-header>
+          </d-card>
+        </div>
+      </d-row>
+    </d-container>
   </d-container>
 </template>
 
@@ -40,62 +59,34 @@ import { ClientTable } from "vue-tables-2";
 import "@/assets/scss/vue-tables.scss";
 
 import { mapActions, mapGetters } from "vuex";
-Vue.use(ClientTable);
 
 export default {
   components: {
-    ClientTable
+    SlaAvatar: () => import("@/components/avatar"),
+    Icon: () => import("@/components/SlaIcon")
   },
   data() {
     return {
-      columns: ["first_name", "last_name", "phone_number", "email", "actions"],
-      isLoading: false,
-      /**
-       * Table Data
-       */
-
-      /**
-       * Vue Tables Configuration Options
-       * @see https://github.com/matfish2/vue-tables-2
-       */
-      clientTableOptions: {
-        perPage: 5,
-        recordsPerPage: [5, 10, 15, 20, 25],
-        skin: "transaction-history table dataTable",
-        sortIcon: {
-          base: "fas float-right mt-1 text-muted",
-          up: "fa-caret-up",
-          down: "fa-caret-down"
-        },
-        texts: {
-          filterPlaceholder: "",
-          limit: "Show"
-        },
-        pagination: {
-          edge: true,
-          nav: "scroll"
-        }
-      }
+      isLoading: false
     };
   },
   computed: {
     ...mapGetters({
-      tableData: "app/getAdmins"
+      tableData: "app/getIndustry"
     }),
-
     fetchAdmins() {
-      return this.tableData.filter(res => res.type === "admin");
+      return this.tableData;
     }
   },
   methods: {
     handleActionClick(type, id) {
       alert(`You have ${type} item ${id}`); // eslint-disable-line no-alert
     },
-    ...mapActions("app/", ["getAllAdmins"])
+    ...mapActions("app/", ["getAllIndustry"])
   },
 
   async mounted() {
-    await this.getAllAdmins();
+    await this.getAllIndustry();
   }
 };
 </script>

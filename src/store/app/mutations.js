@@ -46,6 +46,11 @@ export const setAdmins = (state, data) => {
   state.Admins = data.data.admin;
 };
 
+export const setIndustry = (state, data) => {
+  console.log({ data });
+  state.Industry = data.data.industry;
+};
+
 export const setAssets = (state, data) => {
   state.Assets = data.data.assets;
 };
