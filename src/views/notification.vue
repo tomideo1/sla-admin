@@ -26,7 +26,7 @@
                   {{ notification.message }}
                 </b>
                 <small class=" ml-lg-3 ml-md-3 ml-0 ">{{
-                  notification.createdAt
+                  notification.createdAt | moment("from")
                 }}</small>
               </p>
             </span>
