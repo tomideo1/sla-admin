@@ -108,7 +108,7 @@
         <apexchart
           type="heatmap"
           :options="options"
-          :series="series"
+          :series="Dashboard.heatMap"
           style="max-height: 300px!important;"
         ></apexchart>
       </d-card>
@@ -1532,6 +1532,7 @@ export default {
   async mounted() {
     await this.getAllAnalysis();
     this.fetchPopularTimesData();
+    console.log({ Dashboard: this.getAnalytics });
   }
 };
 </script>
