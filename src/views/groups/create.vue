@@ -13,7 +13,7 @@
       <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
         <d-form-row>
           <d-col md="12" class="form-group">
-            <label for="feFirstName"> Ttile</label>
+            <label for="feFirstName"> Title</label>
             <d-input
               size="lg"
               class="mb-3"

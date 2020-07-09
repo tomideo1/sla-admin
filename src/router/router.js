@@ -578,6 +578,24 @@ const baseRoutes = [
     ]
   },
   {
+    path: "/app-settings/",
+    meta: {
+      middleware: [auth]
+    },
+    name: "app-settings",
+    component: () => import("@/views/appsettings/index.vue"),
+    children: [
+      {
+        path: "",
+        name: "view-app-settings",
+        component: () => import("@/views/appsettings/create.vue"),
+        meta: {
+          middleware: [auth, isAdmin]
+        }
+      }
+    ]
+  },
+  {
     path: "/profile",
     name: "profile",
     component: Profile,

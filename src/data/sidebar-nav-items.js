@@ -37,6 +37,13 @@ export default function() {
       to: {
         name: "all-industry"
       }
+    },
+    {
+      title: "Settings",
+      htmlBefore: "group",
+      to: {
+        name: "view-app-settings"
+      }
     }
   ];
 
