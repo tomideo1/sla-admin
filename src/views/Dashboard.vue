@@ -1067,6 +1067,8 @@ import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 import store from "@/store/index";
 import moment from "moment";
+import firebase from "@/firebaseConfig.js";
+const { messaging } = firebase;
 export default {
   name: "Dashboard",
   components: {
@@ -1445,7 +1447,36 @@ export default {
     };
   },
   methods: {
-    ...mapActions("app/", ["getAllAnalysis"]),
+    notificationsPermisionRequest() {
+      messaging
+        .requestPermission()
+        .then(() => {
+          this.getMessagingToken();
+        })
+        .catch(err => {
+          console.log("Unable to get permission to notify.", err);
+        });
+    },
+    listenTokenRefresh() {
+      const currentMessageToken = window.localStorage.getItem("messagingToken");
+      if (!!currentMessageToken || currentMessageToken == null) {
+        messaging.onTokenRefresh(function() {
+          messaging
+            .getToken()
+            .then(function(token) {
+              this.saveToken({ token });
+            })
+            .catch(function(err) {
+              console.log("Unable to retrieve refreshed token ", err);
+            });
+        });
+      }
+    },
+    ...mapActions({
+      getAllAnalysis: "app/getAllAnalysis",
+      saveToken: "general/saveToken",
+      getMessagingToken: "getMessagingToken"
+    }),
     fetchPopularTimesData() {
       const self = this;
       let day = 0;
@@ -1530,6 +1561,15 @@ export default {
     }
   },
   async mounted() {
+    if (Notification.permission !== "allow") {
+      console.log({ kkkk: Object.entries(messaging).length });
+      if (Object.entries(messaging).length > 0) {
+        this.notificationsPermisionRequest();
+      }
+    }
+    if (Object.entries(messaging).length > 0) {
+      this.listenTokenRefresh();
+    }
     await this.getAllAnalysis();
     this.fetchPopularTimesData();
     console.log({ Dashboard: this.getAnalytics });

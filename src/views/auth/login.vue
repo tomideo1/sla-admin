@@ -126,7 +126,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      login: "auth/login"
+      login: "auth/login",
+      getMessageToken: "auth/getMessageToken"
     }),
     async submit() {
       // console.log('something gets here')
@@ -138,6 +139,7 @@ export default {
         // route to dashboard
         this.isLoading = false;
         this.button.text = "Login";
+        await this.getMessageToken();
         console.log({ res });
         if (res.data.admin.type == "coach") {
           this.$router.replace({

@@ -16,3 +16,7 @@ export const logout = state => {
 export const setProfileImage = (state, data) => {
   state.user.image = data;
 };
+
+export const setSocketToken = (state, data) => {
+  state.socketToken = data;
+};

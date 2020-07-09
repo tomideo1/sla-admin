@@ -216,12 +216,14 @@ export default {
     })
   },
   methods: {
-    ...mapActions("app/", [
-      "getCoachesGroups",
-      "getAllAnnouncements",
-      "getAnnouncementDetails",
-      "getAllCoachSurveys"
-    ]),
+    ...mapActions({
+      getAllAnnouncements: "app/getAllAnnouncements",
+      getAllAnnouncements: "app/getAllAnnouncements",
+      getAnnouncementDetails: "app/getAnnouncementDetails",
+      getAllCoachSurveys: "app/getAllCoachSurveys",
+      saveToken: "general/saveToken",
+      getMessagingToken: "getMessagingToken"
+    }),
 
     async sendComment(commentObj) {
       const self = this;
@@ -303,6 +305,14 @@ export default {
     }
   },
   async mounted() {
+    if (Notification.permission !== "allow") {
+      if (Object.entries(messaging).length > 0) {
+        this.notificationsPermisionRequest();
+      }
+    }
+    if (Object.entries(messaging).length > 0) {
+      this.listenTokenRefresh();
+    }
     await this.getCoachesGroups();
     await this.getAllAnnouncements();
     await this.getAllCoachSurveys();

@@ -18,6 +18,11 @@ export const uploadProfileImage = async ({ commit }, payload) => {
   commit("setProfileImage", res.data.user.image);
 };
 
+export const getMessageToken = async ({ commit }) => {
+  let res = await Api.get("/admin/messaging-token", true);
+  commit("setSocketToken", res.data.token);
+};
+
 export const Logout = async ({ commit }) => {
   commit("setToken", {});
   commit("setUserDetails", {});

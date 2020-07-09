@@ -32,40 +32,28 @@
               "
             >
             </d-card>
-            <div class="d-flex flex-row justify-content-between mt-2">
+            <div class="d-flex flex-row mt-2">
               <small class="font-open-sans text-grey-500">{{
                 $moment(announcement.createdAt).format("YYYY/MM/DD")
               }}</small>
+
               <small class="font-open-sans text-grey-500 ml-5">
-                {{
-                  announcement.likes +
-                    announcement.comments +
-                    announcement.engagements +
-                    " Responses "
-                }}
+                {{ announcement.engagements + " Responses " }}
               </small>
             </div>
-            <div style=" word-wrap: break-word!important;">
-              <p
-                class="title-card  text-capitalize mt-2  text-truncate text-bold font-open-sans "
+            <p class="d-flex flex-column">
+              <span
+                style=" max-width: 200px;!important; word-wrap: break-word!important;"
+                class="title-card  text-capitalize text-truncate text-bold font-open-sans "
               >
                 {{ announcement.title }}
-              </p>
-            </div>
-
-            <!--            <p class=" text-capitalize mt-n2 d-flex flex-row text-underline" style="color: #999999;" v-for="announcement_tag in announcement.tags.split(',')">-->
-            <!--            {{ announcement_tag }}-->
-            <!--            </p>-->
-            <div class="d-flex flex-row  mt-3 ">
-              <small
-                class="ml-2 "
-                style="text-decoration: underline"
-                v-if="announcement.tags.length > 0"
-                v-for="tag in announcement.tags.split(',')"
-                >{{ tag }}</small
-              >
-              <small class="ml-2" v-else>{{ announcement.tags }}</small>
-            </div>
+              </span>
+              <span class="d-flex">
+                <small class=" mr-1 flex-row" v-if="announcement.tags">{{
+                  announcement.tags
+                }}</small>
+              </span>
+            </p>
           </div>
         </div>
       </div>
