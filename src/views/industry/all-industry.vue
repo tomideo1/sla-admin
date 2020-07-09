@@ -1,5 +1,13 @@
 <template>
   <d-container fluid class="main-content-container px-4 pb-4">
+    <d-alert
+      :theme="error.type"
+      @alert-dismissed="error.show = false"
+      :show="error.show"
+      dismissible
+    >
+      {{ error.message }}
+    </d-alert>
     <d-row no-gutters class="page-header py-4">
       <!-- Page Header - Page Title -->
       <d-col col sm="4" class="text-center text-sm-left mb-4 mb-sm-0">
@@ -22,7 +30,7 @@
               <div class="mb-3  ">
                 <sla-avatar
                   class="avatar"
-                  size="xl"
+                  size="lg"
                   :user="{ name: user.name }"
                 />
               </div>
@@ -30,20 +38,12 @@
               <!-- User Name -->
               <h5 class="mb-0">{{ user.name }}</h5>
 
-              <!-- User Job Title -->
-              <!--          <span class="text-muted d-block mb-2">{{ userDetails.jobTitle }}</span>-->
-
-              <!-- User Follow -->
               <p
                 style="cursor: pointer"
-                class="mb-2 text-primary font-weight-bold"
-                @click="
-                  $router.push({
-                    path: 'single/' + user._id
-                  })
-                "
+                class="mb-2 text-danger font-weight-bold"
+                @click="deleteEntry(user._id)"
               >
-                View Profile
+                Delete
               </p>
             </d-card-header>
           </d-card>
@@ -55,8 +55,9 @@
 
 <script>
 import Vue from "vue";
-import { ClientTable } from "vue-tables-2";
-import "@/assets/scss/vue-tables.scss";
+import store from "@/store/index";
+import state from "../../store/auth/state";
+import axios from "axios";
 
 import { mapActions, mapGetters } from "vuex";
 
@@ -67,22 +68,49 @@ export default {
   },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      error: {
+        message: null,
+        type: null,
+        show: false
+      }
     };
   },
   computed: {
     ...mapGetters({
       tableData: "app/getIndustry"
-    }),
-    fetchAdmins() {
-      return this.tableData;
-    }
+    })
   },
   methods: {
     handleActionClick(type, id) {
       alert(`You have ${type} item ${id}`); // eslint-disable-line no-alert
     },
-    ...mapActions("app/", ["getAllIndustry"])
+    ...mapActions("app/", ["getAllIndustry"]),
+    async deleteEntry(id) {
+      let token = store.state.auth.token;
+      try {
+        let res = await axios.delete(
+          `${process.env.VUE_APP_API}/industry/admin/delete/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token} `
+            }
+          }
+        );
+        this.isLoading = false;
+        console.log({ res });
+        this.error.message = "Industry Deleted successfuly";
+        this.error.type = "success";
+        this.error.show = true;
+        this.getAllIndustry();
+      } catch (e) {
+        console.log({ e });
+        this.isLoading = false;
+        this.error.message = e.response.data.message;
+        this.error.type = "danger";
+        this.error.show = true;
+      }
+    }
   },
 
   async mounted() {

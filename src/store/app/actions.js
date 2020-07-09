@@ -48,6 +48,15 @@ export const getAllIndustry = async ({ commit }) => {
   }
 };
 
+export const deleteIndustry = async ({ commit }, id) => {
+  let res = await Api.delete(`industry/admin/delete/${id} `, true);
+  if (res.status === 200) {
+    this.getAllIndustry();
+  } else {
+    return res;
+  }
+};
+
 export const getAllAssets = async ({ commit }) => {
   let res = await Api.get(`assets/getAll`, true);
   if (res.status === 200) {
