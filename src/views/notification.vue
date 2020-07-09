@@ -20,13 +20,13 @@
             :image="notification.image"
             :key="notification._id"
           >
-            <span class="d-flex flex-row flex-grow-1 justify-content-lg-start">
+            <span class="d-flex flex-row flex-grow-1 justify-content-start">
               <p class="mt-2  ">
                 <b>
                   {{ notification.message }}
                 </b>
                 <small class=" ml-lg-3 ml-md-3 ml-0 ">{{
-                  notification.createdAt | moment("from")
+                  notification.createdAt
                 }}</small>
               </p>
             </span>
