@@ -30,6 +30,13 @@ export default function() {
       //     }
       //   }
       // ]
+    },
+    {
+      title: "Industry",
+      htmlBefore: "group",
+      to: {
+        name: "all-industry"
+      }
     }
   ];
 

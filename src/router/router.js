@@ -552,6 +552,32 @@ const baseRoutes = [
     ]
   },
   {
+    path: "/industry",
+    meta: {
+      middleware: [auth]
+    },
+    name: "industry",
+    component: () => import("@/views/industry/index.vue"),
+    children: [
+      {
+        path: "all",
+        name: "all-industry",
+        component: () => import("@/views/industry/all-industry.vue"),
+        meta: {
+          middleware: [auth, isAdmin]
+        }
+      },
+      {
+        path: "create",
+        name: "create-industry",
+        component: () => import("@/views/industry/createIndustry.vue"),
+        meta: {
+          middleware: [auth, isAdmin]
+        }
+      }
+    ]
+  },
+  {
     path: "/profile",
     name: "profile",
     component: Profile,
