@@ -33,14 +33,14 @@ export default function() {
     },
     {
       title: "Industry",
-      htmlBefore: "group",
+      htmlBefore: "activity",
       to: {
         name: "all-industry"
       }
     },
     {
       title: "Settings",
-      htmlBefore: "group",
+      htmlBefore: "setting",
       to: {
         name: "view-app-settings"
       }
