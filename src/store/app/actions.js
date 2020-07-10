@@ -346,3 +346,12 @@ export const deleteLesson = async ({ commit }, payload) => {
     return false;
   }
 };
+
+export const updateLesson = async ({ commit }, payload) => {
+  let res = await Api.delete(`course/${payload.id}/lessons/update`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};

@@ -443,7 +443,7 @@
                 type="filled"
                 size="md"
                 text="YES, DELETE"
-                @click="deleteCourse(resource._id, 'courses/admin/delete/')"
+                @click="handleDelete(course._id)"
               />
               <sla-button
                 class="m-2 col-md-12"
@@ -467,6 +467,7 @@ import axios from "axios";
 import Multiselect from "vue-multiselect";
 import store from "@/store/index";
 import helper from "@/helpers/helper";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "course-create",
   data: () => {
@@ -581,6 +582,7 @@ export default {
   },
 
   methods: {
+    ...mapActions("app/", ["deleteCourse", "deleteLesson", "updateLesson"]),
     resize() {
       let resizeInfo = {
         srcX: 0,
@@ -597,9 +599,6 @@ export default {
     },
     deleteValue(index) {
       this.lesson.fields.splice(index, 1);
-    },
-    deleteCourse(id, Url) {
-      return helper.handleDelete(id, Url, "/courses/all");
     },
     addValue() {
       this.lesson.fields.push({});
@@ -896,6 +895,17 @@ export default {
               break;
           }
         });
+    },
+    async handleDelete(id) {
+      let res = await this.deleteCourse({
+        id: id
+      });
+      if (res) {
+        this.$toast.success("course deleted successfully");
+        this.$router.go(-1);
+      } else {
+        this.$toast.error("something went wrong ");
+      }
     },
 
     splitDateString(dateString, Obj, Obj2) {
