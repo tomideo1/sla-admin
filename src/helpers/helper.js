@@ -23,8 +23,8 @@ export default {
       })
       .then(res => {
         setTimeout(function() {
-          location.reload();
-          // self.$router.push({ path: redirect });
+          // location.reload();
+          self.$router.push({ path: redirect });
         }, 2000);
       })
       .catch(ex => {
