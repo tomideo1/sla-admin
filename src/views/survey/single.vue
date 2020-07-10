@@ -166,6 +166,24 @@
           DELETE SURVEY
         </p>
       </footer>
+      <d-modal-body>
+        <div class="text-center">
+          <sla-button
+            class="m-2 col-md-12"
+            type="filled"
+            size="md"
+            text="YES, DELETE"
+            @click="deleteCourse(Survey._id, 'courses/admin/delete/')"
+          />
+          <sla-button
+            class="m-2 col-md-12"
+            type="outline"
+            size="md"
+            :text="'CANCEL'"
+            @click="modalStatus = false"
+          />
+        </div>
+      </d-modal-body>
     </d-container>
   </div>
 </template>
@@ -184,6 +202,7 @@ export default {
       deleteModal: false,
       pageNumber: 0,
       toggleResponse: false,
+      deleteModal: false,
       tabs: [{ name: "Summary Response" }, { name: "Individual Response" }],
       size: 1,
       chartData: [["value", "count"]],
