@@ -186,6 +186,7 @@ import axios from "axios";
 import store from "@/store/index";
 const token = store.state.auth.token;
 import helper from "@/helpers/helper";
+const { messaging } = firebase;
 export default {
   name: "Dashboard",
   data() {

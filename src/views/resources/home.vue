@@ -117,7 +117,7 @@ export default {
     ...mapActions("app/", [
       "getAllResources",
       "getAllResourceCategories",
-      "deleteResource"
+      "deleteResources"
     ]),
     checkContains(name) {
       var found = this.Resources.filter(function(resource) {
@@ -127,6 +127,22 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+
+    async handleDelete(id) {
+      let res = await this.deleteResources({
+        id: this.$route.params.id
+      });
+      if (res && res.status == 200) {
+        this.$toast.success("resource deleted successfully");
+        this.$router.go(-1);
+      } else {
+        this.$toast.error(
+          (this.error.message = res.data
+            ? res.data.message
+            : "An error occured")
+        );
       }
     }
 
