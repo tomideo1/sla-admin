@@ -294,7 +294,7 @@ export const submitScoreCard = async ({ commit }, payload) => {
 };
 
 export const deleteCourse = async ({ commit }, payload) => {
-  let res = await Api.delete(`course/${payload._id}`, true);
+  let res = await Api.delete(`course/${payload.id}`, true);
   if (res && res.status == 200) {
     return true;
   } else {
@@ -303,7 +303,7 @@ export const deleteCourse = async ({ commit }, payload) => {
 };
 
 export const deleteResource = async ({ commit }, payload) => {
-  let res = await Api.delete(`resource/admin/delete/${payload._id}`, true);
+  let res = await Api.delete(`resource/admin/delete/${payload.id}`, true);
   if (res && res.status == 200) {
     return true;
   } else {
@@ -312,7 +312,7 @@ export const deleteResource = async ({ commit }, payload) => {
 };
 
 export const deletePoll = async ({ commit }, payload) => {
-  let res = await Api.delete(`poll/delete/${payload._id}`, true);
+  let res = await Api.delete(`poll/delete/${payload.id}`, true);
   if (res && res.status == 200) {
     return true;
   } else {
@@ -321,7 +321,7 @@ export const deletePoll = async ({ commit }, payload) => {
 };
 
 export const deleteAnnouncement = async ({ commit }, payload) => {
-  let res = await Api.delete(`annoucement/admin/delete/${payload._id}`, true);
+  let res = await Api.delete(`annoucement/admin/delete/${payload.id}`, true);
   if (res && res.status == 200) {
     return true;
   } else {
@@ -330,7 +330,7 @@ export const deleteAnnouncement = async ({ commit }, payload) => {
 };
 
 export const deleteSurvey = async ({ commit }, payload) => {
-  let res = await Api.delete(`survey/${payload._id}`, true);
+  let res = await Api.delete(`survey/${payload.id}`, true);
   if (res && res.status == 200) {
     return true;
   } else {
@@ -339,7 +339,7 @@ export const deleteSurvey = async ({ commit }, payload) => {
 };
 
 export const deleteLesson = async ({ commit }, payload) => {
-  let res = await Api.delete(`lesson/${payload._id}`, true);
+  let res = await Api.delete(`lesson/${payload.id}`, true);
   if (res && res.status == 200) {
     return true;
   } else {

@@ -59,9 +59,7 @@
                         type="filled"
                         size="md"
                         text="YES, DELETE"
-                        @click="
-                          deleteResource(resource._id, 'resource/admin/delete/')
-                        "
+                        @click="handleDelete(resource._id)"
                       />
                       <sla-button
                         class="m-2 col-md-12"
@@ -117,7 +115,7 @@ export default {
     ...mapActions("app/", [
       "getAllResources",
       "getAllResourceCategories",
-      "deleteResources"
+      "deleteResource"
     ]),
     checkContains(name) {
       var found = this.Resources.filter(function(resource) {
@@ -131,18 +129,14 @@ export default {
     },
 
     async handleDelete(id) {
-      let res = await this.deleteResources({
-        id: this.$route.params.id
+      let res = await this.deleteResource({
+        id: id
       });
-      if (res && res.status == 200) {
+      if (res) {
         this.$toast.success("resource deleted successfully");
         this.$router.go(-1);
       } else {
-        this.$toast.error(
-          (this.error.message = res.data
-            ? res.data.message
-            : "An error occured")
-        );
+        this.$toast.error("something went wrong ");
       }
     }
 
