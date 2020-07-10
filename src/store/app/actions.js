@@ -291,58 +291,58 @@ export const submitScoreCard = async ({ commit }, payload) => {
   } else {
     return res;
   }
+};
 
-  export const deleteCourse = async ({ commit }, payload) => {
-    let res = await Api.delete(`course/${payload._id}`, true);
-    if (res && res.status == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+export const deleteCourse = async ({ commit }, payload) => {
+  let res = await Api.delete(`course/${payload._id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-  export const deleteResource = async ({ commit }, payload) => {
-    let res = await Api.delete(`resource/admin/delete/${payload._id}`, true);
-    if (res && res.status == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+export const deleteResource = async ({ commit }, payload) => {
+  let res = await Api.delete(`resource/admin/delete/${payload._id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-  export const deletePoll = async ({ commit }, payload) => {
-    let res = await Api.delete(`poll/delete/${payload._id}`, true);
-    if (res && res.status == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+export const deletePoll = async ({ commit }, payload) => {
+  let res = await Api.delete(`poll/delete/${payload._id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-  export const deleteAnnouncement = async ({ commit }, payload) => {
-    let res = await Api.delete(`annoucement/admin/delete/${payload._id}`, true);
-    if (res && res.status == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+export const deleteAnnouncement = async ({ commit }, payload) => {
+  let res = await Api.delete(`annoucement/admin/delete/${payload._id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-  export const deleteSurvey = async ({ commit }, payload) => {
-    let res = await Api.delete(`survey/${payload._id}`, true);
-    if (res && res.status == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+export const deleteSurvey = async ({ commit }, payload) => {
+  let res = await Api.delete(`survey/${payload._id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-  export const deleteLesson = async ({ commit }, payload) => {
-    let res = await Api.delete(`lesson/${payload._id}`, true);
-    if (res && res.status == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+export const deleteLesson = async ({ commit }, payload) => {
+  let res = await Api.delete(`lesson/${payload._id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
 };

@@ -114,10 +114,11 @@ export default {
     })
   },
   methods: {
-    ...mapActions("app/", ["getAllResources", "getAllResourceCategories"]),
-    deleteResource(id, Url) {
-      return helper.handleDelete(id, Url, "/resources/all");
-    },
+    ...mapActions("app/", [
+      "getAllResources",
+      "getAllResourceCategories",
+      "deleteResource"
+    ]),
     checkContains(name) {
       var found = this.Resources.filter(function(resource) {
         return resource.category === name;
