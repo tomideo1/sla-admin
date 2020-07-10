@@ -27,12 +27,7 @@
           type="filled"
           size="sm"
         />
-        <sla-button
-          class="btn  m-3  text-uppercase float-right"
-          :text="'CLOSE POLL'"
-          type="outline"
-          size="sm"
-        />
+
         <p
           class="font-open-sans float-right m-4"
           style="color:#0087DB; cursor: pointer; font-size: 14px;"

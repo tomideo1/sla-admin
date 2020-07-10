@@ -161,29 +161,35 @@
         <p
           class="font-open-sans float-right m-4"
           style="color: #FF4133; cursor: pointer; font-size: 14px;"
-          @click="deleteModal = true"
+          @click="modalStatus = true"
         >
           DELETE SURVEY
         </p>
       </footer>
-      <d-modal-body>
-        <div class="text-center">
-          <sla-button
-            class="m-2 col-md-12"
-            type="filled"
-            size="md"
-            text="YES, DELETE"
-            @click="deleteCourse(Survey._id, 'courses/admin/delete/')"
-          />
-          <sla-button
-            class="m-2 col-md-12"
-            type="outline"
-            size="md"
-            :text="'CANCEL'"
-            @click="modalStatus = false"
-          />
-        </div>
-      </d-modal-body>
+      <d-modal v-if="modalStatus" @close="modalStatus = false" size="lg">
+        <div style="border-top: 4px solid #0087DB;" class="modal-header"></div>
+        <h6 class="text-center m-2 text-bold text-dark font-poppings">
+          Are you sure you want to delete this survey?
+        </h6>
+        <d-modal-body>
+          <div class="text-center">
+            <sla-button
+              class="m-2 col-md-12"
+              type="filled"
+              size="md"
+              text="YES, DELETE"
+              @click="handleDelete(Survey._id)"
+            />
+            <sla-button
+              class="m-2 col-md-12"
+              type="outline"
+              size="md"
+              :text="'CANCEL'"
+              @click="modalStatus = false"
+            />
+          </div>
+        </d-modal-body>
+      </d-modal>
     </d-container>
   </div>
 </template>
@@ -192,17 +198,16 @@
 import { GChart } from "vue-google-charts";
 import axios from "axios";
 import store from "@/store/index";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { BeatLoader } from "@saeris/vue-spinners";
 export default {
   name: "single-survey",
   data() {
     return {
       isLoaded: false,
-      deleteModal: false,
+      modalStatus: false,
       pageNumber: 0,
       toggleResponse: false,
-      deleteModal: false,
       tabs: [{ name: "Summary Response" }, { name: "Individual Response" }],
       size: 1,
       chartData: [["value", "count"]],
@@ -288,6 +293,18 @@ export default {
     }
   },
   methods: {
+    ...mapActions("app/", ["deleteSurvey"]),
+    async handleDelete(id) {
+      let res = await this.deleteSurvey({
+        id: id
+      });
+      if (res) {
+        this.$toast.success("survey deleted successfully");
+        this.$router.go(-1);
+      } else {
+        this.$toast.error("something went wrong ");
+      }
+    },
     nextPage() {
       if (this.pageNumber + 1 < this.pageCount) {
         this.pageNumber++;
