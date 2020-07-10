@@ -339,7 +339,7 @@ export const deleteSurvey = async ({ commit }, payload) => {
 };
 
 export const deleteLesson = async ({ commit }, payload) => {
-  let res = await Api.delete(`lesson/${payload.id}`, true);
+  let res = await Api.delete(`course/${payload.id}/lesson`, true);
   if (res && res.status == 200) {
     return true;
   } else {
@@ -348,7 +348,24 @@ export const deleteLesson = async ({ commit }, payload) => {
 };
 
 export const updateLesson = async ({ commit }, payload) => {
-  let res = await Api.delete(`course/${payload.id}/lessons/update`, true);
+  let res = await Api.post(
+    `course/${payload.id}/lessons/update`,
+    payload.lesson,
+    true
+  );
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const addLesson = async ({ commit }, payload) => {
+  let res = await Api.post(
+    `course/${payload.id}/lesson/create`,
+    payload.lesson,
+    true
+  );
   if (res && res.status == 200) {
     return true;
   } else {

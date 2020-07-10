@@ -178,9 +178,31 @@
                 <div class="d-flex flex-row m-2">
                   <icon
                     size="lg"
+                    class=" border-right "
+                    @click="handleLessonDelete(index)"
+                    name="bin"
+                  />
+                  <icon
+                    size="lg"
                     class="ml-auto border-right"
                     @click="deleteValue(index)"
-                    name="bin"
+                    name="cancel"
+                  />
+                  <sla-button
+                    type="filled"
+                    class="btn"
+                    v-if="!item.new_lesson"
+                    @click="handleLessonUpdate(index)"
+                    size="sm"
+                    text="update"
+                  />
+                  <sla-button
+                    type="outline"
+                    class="btn "
+                    v-if="item.new_lesson"
+                    @click="handleLessonAddition(course._id, index)"
+                    size="sm"
+                    text="Save"
                   />
                   <div class="d-flex flex-row m-1 mt-n1"></div>
                 </div>
@@ -545,15 +567,7 @@ export default {
         }
       },
       lesson: {
-        fields: [
-          {
-            title: undefined,
-            lesson_type: undefined,
-            details: undefined,
-            content: undefined,
-            lesson_number: undefined
-          }
-        ]
+        fields: []
       },
       quiz: [
         {
@@ -582,7 +596,12 @@ export default {
   },
 
   methods: {
-    ...mapActions("app/", ["deleteCourse", "deleteLesson", "updateLesson"]),
+    ...mapActions("app/", [
+      "deleteCourse",
+      "deleteLesson",
+      "updateLesson",
+      "addLesson"
+    ]),
     resize() {
       let resizeInfo = {
         srcX: 0,
@@ -601,7 +620,7 @@ export default {
       this.lesson.fields.splice(index, 1);
     },
     addValue() {
-      this.lesson.fields.push({});
+      this.lesson.fields.push({ new_lesson: true });
       // this.$emit('input', this.fields);
     },
     addQuiz() {
@@ -903,6 +922,42 @@ export default {
       if (res) {
         this.$toast.success("course deleted successfully");
         this.$router.go(-1);
+      } else {
+        this.$toast.error("something went wrong ");
+      }
+    },
+
+    async handleLessonDelete(index) {
+      let res = await this.deleteLesson({
+        id: this.lesson.fields[index]._id.trim()
+      });
+      if (res) {
+        this.lesson.fields.splice(index, 1);
+        this.$toast.success("lesson deleted successfully");
+      } else {
+        this.$toast.error("something went wrong ");
+      }
+    },
+
+    async handleLessonUpdate(index) {
+      let res = await this.updateLesson({
+        id: this.lesson.fields[index]._id,
+        lesson: this.lesson.fields[index]
+      });
+      if (res) {
+        this.$toast.success("lesson updated successfully");
+      } else {
+        this.$toast.error("something went wrong ");
+      }
+    },
+
+    async handleLessonAddition(course_id, index) {
+      let res = await this.addLesson({
+        id: course_id,
+        lesson: this.lesson.fields[index]
+      });
+      if (res) {
+        this.$toast.success("lesson added successfully");
       } else {
         this.$toast.error("something went wrong ");
       }
