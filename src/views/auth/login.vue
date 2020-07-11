@@ -102,6 +102,8 @@
 
 <script>
 import { mapActions } from "vuex";
+import firebase from "@/firebaseConfig.js";
+const { messaging } = firebase;
 export default {
   name: "sla-login",
   data() {
