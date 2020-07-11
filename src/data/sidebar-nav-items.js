@@ -17,20 +17,6 @@ export default function() {
       to: {
         name: "all-admins"
       }
-    },
-    {
-      title: "Industry",
-      htmlBefore: "activity",
-      to: {
-        name: "all-industry"
-      }
-    },
-    {
-      title: "Settings",
-      htmlBefore: "setting",
-      to: {
-        name: "view-app-settings"
-      }
     }
   ];
 
@@ -143,13 +129,6 @@ export default function() {
           to: {
             name: "view-app-settings"
           }
-        },
-        {
-          title: "Logout",
-          htmlBefore: "logout",
-          to: {
-            name: "logout"
-          }
         }
       ]
     }
@@ -232,6 +211,10 @@ export default function() {
       ...superAdminRoutes,
       ...logout
     ];
+  }
+
+  if (store.state.auth.role === "admin") {
+    appRoutes[0].items = [...appRoutes[0].items, ...logout];
   }
 
   if (store.state.auth.role === "coach") {
