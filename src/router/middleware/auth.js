@@ -4,6 +4,5 @@ export default function({ store, next, router }) {
       name: "login"
     });
   }
-
   next();
 }
