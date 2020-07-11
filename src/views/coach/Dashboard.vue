@@ -219,8 +219,33 @@ export default {
     })
   },
   methods: {
+    notificationsPermisionRequest() {
+      messaging
+        .requestPermission()
+        .then(() => {
+          this.getMessagingToken();
+        })
+        .catch(err => {
+          console.log("Unable to get permission to notify.", err);
+        });
+    },
+    listenTokenRefresh() {
+      const currentMessageToken = window.localStorage.getItem("messagingToken");
+      if (!!currentMessageToken || currentMessageToken == null) {
+        messaging.onTokenRefresh(function() {
+          messaging
+            .getToken()
+            .then(function(token) {
+              this.saveToken({ token });
+            })
+            .catch(function(err) {
+              console.log("Unable to retrieve refreshed token ", err);
+            });
+        });
+      }
+    },
     ...mapActions({
-      getAllAnnouncements: "app/getAllAnnouncements",
+      getCoachesGroups: "app/getCoachesGroups",
       getAllAnnouncements: "app/getAllAnnouncements",
       getAnnouncementDetails: "app/getAnnouncementDetails",
       getAllCoachSurveys: "app/getAllCoachSurveys",
