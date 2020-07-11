@@ -22,7 +22,7 @@
                 </d-col>
                 <d-col md="12" lg="12" sm="12">
                   <p class="font-poppings text-center login-text mb-5 `">
-                    Login with your email
+                    Login with your email.
                   </p>
                 </d-col>
               </d-row>
