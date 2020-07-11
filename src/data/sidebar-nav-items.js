@@ -17,28 +17,20 @@ export default function() {
       to: {
         name: "all-admins"
       }
-      // title: "Admin",
-      // htmlBefore: "group",
-      // items: [
-      //   {
-      //     title: "All Admins",
-      //     to: {
-      //       name: "all-admins"
-      //     }
-      //   },
-      //   {
-      //     title: "Add New",
-      //     to: {
-      //       name: "create-admin"
-      //     }
-      //   },
-      //   {
-      //     title: " Admin Profile",
-      //     to: {
-      //       name: "edit-profile"
-      //     }
-      //   }
-      // ]
+    },
+    {
+      title: "Industry",
+      htmlBefore: "activity",
+      to: {
+        name: "all-industry"
+      }
+    },
+    {
+      title: "Settings",
+      htmlBefore: "setting",
+      to: {
+        name: "view-app-settings"
+      }
     }
   ];
 
@@ -150,6 +142,13 @@ export default function() {
           htmlBefore: "setting",
           to: {
             name: "view-app-settings"
+          }
+        },
+        {
+          title: "Logout",
+          htmlBefore: "logout",
+          to: {
+            name: "logout"
           }
         }
       ]
