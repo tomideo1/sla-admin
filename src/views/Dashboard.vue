@@ -855,7 +855,7 @@
           class="  col-md-12  col-lg-12 "
           style="border-radius:0!important;"
         >
-          <div class="row " style="max-height400px; overflow-y:auto">
+          <div class="row " style="">
             <div class="col-md-12 col-lg-12 col-12">
               <div class="row sticky-top bg-white ">
                 <div class="col-md-4  text-center text-lg-left col-12 col-lg-4">
@@ -892,7 +892,7 @@
               <span class="border-top"></span>
               <div
                 :class="['row ', idx % 2 === 0 ? 'scorecard-selected' : '']"
-                v-for="(location, idx) in fetchTopLocations"
+                v-for="(location, idx) in Dashboard.topLocations"
                 :key="idx"
               >
                 <div class="col-md-4   col-12 col-lg-4">
@@ -900,10 +900,11 @@
                     style="font-size: 16px;letter-spacing: 0.15px;"
                     :class="[
                       ' font-open-sans text-dark mt-lg-3 p-lg-3' +
-                        '  m-3 m-lg-0 m-md-0 d-flex flex-row '
+                        '  m-3 m-lg-0 mt-3  m-md-0 d-flex flex-row '
                     ]"
                   >
-                    <span class="ml-2">
+                    <span></span>
+                    <span class="ml-2" v-if="location._id !== ''">
                       {{ location._id }}
                     </span>
                   </span>
@@ -1526,16 +1527,6 @@ export default {
       let series = [];
       // for (let i = 0; i < self.Dashboard.dailySessions.length; i++) {
       self.Dashboard.topAnnoucement.forEach(sessions => {
-        series.push(sessions);
-      });
-      return series;
-    },
-
-    fetchTopLocations() {
-      const self = this;
-      let series = [];
-      // for (let i = 0; i < self.Dashboard.dailySessions.length; i++) {
-      self.Dashboard.topLocations.sort(sessions => {
         series.push(sessions);
       });
       return series;

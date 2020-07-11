@@ -229,12 +229,7 @@
               type="filled"
               size="md"
               text="YES, DELETE"
-              @click="
-                deleteAnnouncement(
-                  Announcement._id,
-                  'annoucement/admin/delete/'
-                )
-              "
+              @click="handleDelete(Announcement._id)"
             />
             <sla-button
               class="m-2 col-md-12"
@@ -322,6 +317,7 @@ export default {
   },
 
   methods: {
+    ...mapActions("app/", ["deleteAnnouncement"]),
     handleComment() {
       if (this.content == "") {
         return;
@@ -356,28 +352,6 @@ export default {
       let hours = duration.asHours();
       return parseInt(hours);
     },
-    deleteAnnouncement(id, Url) {
-      return this.handleDelete(id, Url, "/announcements/all");
-    },
-
-    async handleDelete(id, deleteUrl, redirect) {
-      const self = this;
-      const token = store.state.auth.token;
-      let res = await axios
-        .delete(`${process.env.VUE_APP_API}/` + deleteUrl + id, {
-          headers: {
-            Authorization: `Bearer ${token} `
-          }
-        })
-        .then(res => {
-          setTimeout(function() {
-            self.$router.push({ path: "/announcements/all" });
-          }, 2000);
-        })
-        .catch(ex => {
-          alert(ex.response.data.message);
-        });
-    },
 
     async sendComment(commentObj) {
       const self = this;
@@ -399,6 +373,17 @@ export default {
           );
           return false;
         });
+    },
+    async handleDelete(id) {
+      let res = await this.deleteAnnouncement({
+        id: id
+      });
+      if (res) {
+        this.$toast.success("announcement deleted successfully");
+        this.$router.go(-1);
+      } else {
+        this.$toast.error("something went wrong ");
+      }
     },
 
     async likeAnnouncement() {

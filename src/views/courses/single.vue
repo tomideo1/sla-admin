@@ -178,9 +178,31 @@
                 <div class="d-flex flex-row m-2">
                   <icon
                     size="lg"
+                    class=" border-right "
+                    @click="handleLessonDelete(index)"
+                    name="bin"
+                  />
+                  <icon
+                    size="lg"
                     class="ml-auto border-right"
                     @click="deleteValue(index)"
-                    name="bin"
+                    name="cancel"
+                  />
+                  <sla-button
+                    type="filled"
+                    class="btn"
+                    v-if="!item.new_lesson"
+                    @click="handleLessonUpdate(index)"
+                    size="sm"
+                    text="update"
+                  />
+                  <sla-button
+                    type="outline"
+                    class="btn "
+                    v-if="item.new_lesson"
+                    @click="handleLessonAddition(course._id, index)"
+                    size="sm"
+                    text="Save"
                   />
                   <div class="d-flex flex-row m-1 mt-n1"></div>
                 </div>
@@ -443,7 +465,7 @@
                 type="filled"
                 size="md"
                 text="YES, DELETE"
-                @click="deleteCourse(resource._id, 'courses/admin/delete/')"
+                @click="handleDelete(course._id)"
               />
               <sla-button
                 class="m-2 col-md-12"
@@ -467,6 +489,7 @@ import axios from "axios";
 import Multiselect from "vue-multiselect";
 import store from "@/store/index";
 import helper from "@/helpers/helper";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "course-create",
   data: () => {
@@ -544,15 +567,7 @@ export default {
         }
       },
       lesson: {
-        fields: [
-          {
-            title: undefined,
-            lesson_type: undefined,
-            details: undefined,
-            content: undefined,
-            lesson_number: undefined
-          }
-        ]
+        fields: []
       },
       quiz: [
         {
@@ -581,6 +596,12 @@ export default {
   },
 
   methods: {
+    ...mapActions("app/", [
+      "deleteCourse",
+      "deleteLesson",
+      "updateLesson",
+      "addLesson"
+    ]),
     resize() {
       let resizeInfo = {
         srcX: 0,
@@ -598,11 +619,8 @@ export default {
     deleteValue(index) {
       this.lesson.fields.splice(index, 1);
     },
-    deleteCourse(id, Url) {
-      return helper.handleDelete(id, Url, "/courses/all");
-    },
     addValue() {
-      this.lesson.fields.push({});
+      this.lesson.fields.push({ new_lesson: true });
       // this.$emit('input', this.fields);
     },
     addQuiz() {
@@ -896,6 +914,53 @@ export default {
               break;
           }
         });
+    },
+    async handleDelete(id) {
+      let res = await this.deleteCourse({
+        id: id
+      });
+      if (res) {
+        this.$toast.success("course deleted successfully");
+        this.$router.go(-1);
+      } else {
+        this.$toast.error("something went wrong ");
+      }
+    },
+
+    async handleLessonDelete(index) {
+      let res = await this.deleteLesson({
+        id: this.lesson.fields[index]._id.trim()
+      });
+      if (res) {
+        this.lesson.fields.splice(index, 1);
+        this.$toast.success("lesson deleted successfully");
+      } else {
+        this.$toast.error("something went wrong ");
+      }
+    },
+
+    async handleLessonUpdate(index) {
+      let res = await this.updateLesson({
+        id: this.lesson.fields[index]._id,
+        lesson: this.lesson.fields[index]
+      });
+      if (res) {
+        this.$toast.success("lesson updated successfully");
+      } else {
+        this.$toast.error("something went wrong ");
+      }
+    },
+
+    async handleLessonAddition(course_id, index) {
+      let res = await this.addLesson({
+        id: course_id,
+        lesson: this.lesson.fields[index]
+      });
+      if (res) {
+        this.$toast.success("lesson added successfully");
+      } else {
+        this.$toast.error("something went wrong ");
+      }
     },
 
     splitDateString(dateString, Obj, Obj2) {

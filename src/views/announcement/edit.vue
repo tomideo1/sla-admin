@@ -28,7 +28,7 @@
               v-if="Announcement !== undefined"
               v-model="Announcement.title"
             />
-            <editor v-model="Announcement.normal_details" />
+            <editor v-model="Announcement.rich_details" />
             <multiselect
               size="lg"
               class="mb-3"
@@ -422,7 +422,7 @@ export default {
           (this.error.message =
             "You can not  input a  schedule date in the past!")
         );
-        this.buttons.isLoading = true;
+        // this.buttons.isLoading = true;
       } else {
         this.buttons.isLoading = false;
       }

@@ -292,3 +292,83 @@ export const submitScoreCard = async ({ commit }, payload) => {
     return res;
   }
 };
+
+export const deleteCourse = async ({ commit }, payload) => {
+  let res = await Api.delete(`course/${payload.id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const deleteResource = async ({ commit }, payload) => {
+  let res = await Api.delete(`resource/admin/delete/${payload.id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const deletePoll = async ({ commit }, payload) => {
+  let res = await Api.delete(`poll/delete/${payload.id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const deleteAnnouncement = async ({ commit }, payload) => {
+  let res = await Api.delete(`annoucement/admin/delete/${payload.id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const deleteSurvey = async ({ commit }, payload) => {
+  let res = await Api.delete(`survey/${payload.id}`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const deleteLesson = async ({ commit }, payload) => {
+  let res = await Api.delete(`course/${payload.id}/lesson`, true);
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const updateLesson = async ({ commit }, payload) => {
+  let res = await Api.post(
+    `course/${payload.id}/lessons/update`,
+    payload.lesson,
+    true
+  );
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const addLesson = async ({ commit }, payload) => {
+  let res = await Api.post(
+    `course/${payload.id}/lesson/create`,
+    payload.lesson,
+    true
+  );
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};

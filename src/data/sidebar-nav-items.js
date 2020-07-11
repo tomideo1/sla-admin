@@ -1,6 +1,15 @@
 import store from "@/store/index";
 
 export default function() {
+  let logout = [
+    {
+      title: "Logout",
+      htmlBefore: "logout",
+      to: {
+        name: "logout"
+      }
+    }
+  ];
   let superAdminRoutes = [
     {
       title: "Admins",
@@ -30,20 +39,6 @@ export default function() {
       //     }
       //   }
       // ]
-    },
-    {
-      title: "Industry",
-      htmlBefore: "activity",
-      to: {
-        name: "all-industry"
-      }
-    },
-    {
-      title: "Settings",
-      htmlBefore: "setting",
-      to: {
-        name: "view-app-settings"
-      }
     }
   ];
 
@@ -144,10 +139,17 @@ export default function() {
           }
         },
         {
-          title: "Logout",
-          htmlBefore: "logout",
+          title: "Industry",
+          htmlBefore: "activity",
           to: {
-            name: "logout"
+            name: "all-industry"
+          }
+        },
+        {
+          title: "Settings",
+          htmlBefore: "setting",
+          to: {
+            name: "view-app-settings"
           }
         }
       ]
@@ -226,7 +228,11 @@ export default function() {
   ];
 
   if (store.state.auth.role === "superadmin") {
-    appRoutes[0].items = [...appRoutes[0].items, ...superAdminRoutes];
+    appRoutes[0].items = [
+      ...appRoutes[0].items,
+      ...superAdminRoutes,
+      ...logout
+    ];
   }
 
   if (store.state.auth.role === "coach") {
