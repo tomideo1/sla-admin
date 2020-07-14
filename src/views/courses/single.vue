@@ -31,17 +31,16 @@
           :class="['mr-2  ', pages.lessons ? 'text-dark' : '']"
           @click="step('lesson')"
           >Add Lesson
-          <!--        <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span-->
-          <!--        >-->
+          <span> <icon size="xs" class="mt-n1" name="arrow-right"/></span>
         </a>
-        <!--      <a-->
-        <!--        href="javascript:void(0)"-->
-        <!--        style="color: inherit;text-decoration: none;"-->
-        <!--        :class="['mr-2  ', pages.quiz ? 'text-dark' : '']"-->
-        <!--        @click="step('quiz')"-->
-        <!--      >-->
-        <!--        Add Quiz</a-->
-        <!--      >-->
+        <a
+          href="javascript:void(0)"
+          style="color: inherit;text-decoration: none;"
+          :class="['mr-2  ', pages.quiz ? 'text-dark' : '']"
+          @click="step('quiz')"
+        >
+          Add Quiz</a
+        >
       </div>
 
       <d-row no-gutters class="page-header py-4">
@@ -325,6 +324,12 @@
                 <icon name="add" /> <span> Add Quiz</span>
               </d-button>
             </div>
+            <d-button
+              class="btn  mt-4  p-3 col-md-6 mx-auto d-flex  text-center "
+              @click="handleQuizUpdate(course._id)"
+            >
+              <span class="text-center mx-auto">Save Quiz</span>
+            </d-button>
           </div>
         </d-col>
         <d-col sm="12" md="6" lg="6" class="mt-5 mt-lg-0 mt-md-0">
@@ -569,16 +574,7 @@ export default {
       lesson: {
         fields: []
       },
-      quiz: [
-        {
-          question_text: "",
-          has_options: true,
-          reward: "",
-          answer: "",
-          correction: "",
-          options: []
-        }
-      ],
+      quiz: [],
       questions_type: {
         value: "quiz"
       },
@@ -600,7 +596,8 @@ export default {
       "deleteCourse",
       "deleteLesson",
       "updateLesson",
-      "addLesson"
+      "addLesson",
+      "updateQuiz"
     ]),
     resize() {
       let resizeInfo = {
@@ -963,6 +960,18 @@ export default {
       }
     },
 
+    async handleQuizUpdate(course_id) {
+      let res = await this.updateQuiz({
+        id: course_id,
+        quizzes: this.quiz
+      });
+      if (res) {
+        this.$toast.success("quiz added successfully");
+      } else {
+        this.$toast.error("something went wrong ");
+      }
+    },
+
     splitDateString(dateString, Obj, Obj2) {
       let res = dateString.split("T");
       let res2 = res[0].split("-");
@@ -1042,6 +1051,10 @@ export default {
           // }
         });
         self.lesson.fields = res.data.data.lessons;
+        self.quiz =
+          res.data.data.course.quizzes === null
+            ? []
+            : res.data.data.course.quizzes;
       })
       .catch(ex => {});
 

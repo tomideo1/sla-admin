@@ -372,3 +372,18 @@ export const addLesson = async ({ commit }, payload) => {
     return false;
   }
 };
+
+export const updateQuiz = async ({ commit }, payload) => {
+  let res = await Api.post(
+    `course/${payload.id}/quizzes/update`,
+    {
+      quizzes: payload.quizzes
+    },
+    true
+  );
+  if (res && res.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
+};
