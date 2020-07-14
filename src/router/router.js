@@ -659,6 +659,12 @@ const baseRoutes = [
     name: "errors",
     meta: { layout: "no-sidebar" },
     component: Errors
+  },
+  {
+    path: "*",
+    name: "errors",
+    meta: { layout: "no-sidebar" },
+    component: Errors
   }
 ];
 
