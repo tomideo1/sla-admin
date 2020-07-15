@@ -66,7 +66,7 @@
               >
             </span>
             <p class="text-bold font-open-sans text-black ml-5 mt-4">Members</p>
-            <div v-for="p in Users" class="col-md-12 ml-5">
+            <div v-for="p in Users" class="col-md-12 ml-5" v-if="p !== null">
               <div class="d-flex flex-row">
                 <sla-avatar
                   v-if="p.image === null"
@@ -97,7 +97,7 @@
         <d-modal-body>
           <d-row>
             <div v-for="p in paginatedData" class="col-lg-6 col-md-6 col-6 p-2">
-              <d-row>
+              <d-row v-if="p !== null">
                 <d-col md="8">
                   <div class="d-flex flex-row flex-grow-1">
                     <sla-avatar

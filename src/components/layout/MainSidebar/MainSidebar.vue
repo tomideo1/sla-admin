@@ -19,7 +19,7 @@
               id="main-logo"
               class=""
               style="max-height:23px;max-width: 59.99px;"
-              src="@/assets/logos/logo.png"
+              src="https://res.cloudinary.com/sla-sheleadsafrica/image/upload/v1594840037/SLA_Logo_Color_3_ew0uba.png"
               alt="Shards Dashboard"
             />
             <span v-if="!hideLogoText" class="d-none d-md-inline ml-1"></span>

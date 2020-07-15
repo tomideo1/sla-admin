@@ -24,7 +24,9 @@
                   <d-image
                     center
                     class="mb-lg-4 pb-lg-4 "
-                    src="https://res.cloudinary.com/dwpu7jpku/image/upload/v1584552409/SLA_Logo_Color_3_yzo3ce.png"
+                    width="80"
+                    height="80"
+                    src="https://res.cloudinary.com/sla-sheleadsafrica/image/upload/v1594840037/SLA_Logo_Color_3_ew0uba.png"
                   />
                 </d-col>
                 <d-col md="12" lg="12" sm="12">
