@@ -19,7 +19,7 @@
         "
         @keydown.enter.exact="emitEnter"
         placeholder="Type your comment"
-        class="text-bold  width-100 text-grey-500  m-2"
+        class="text-bold  width-100 text-grey-500 p-1"
         type="text"
       >
       </textarea>
