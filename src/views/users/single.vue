@@ -48,9 +48,9 @@
                   style="font-size: 12px "
                   >Leaderboard Position</span
                 >
-                <div class="user-rank   d-flex justify-content-center mt-3">
+                <div class="  d-flex justify-content-center mt-3">
                   <div
-                    class="rank  text-dark bg-white d-flex justify-content-center align-items-center text-align-center"
+                    class="rank p-4  text-dark bg-white d-flex justify-content-center align-items-center text-align-center"
                   >
                     {{
                       user.leaderboard.length > 0
@@ -59,11 +59,11 @@
                     }}
                   </div>
                   <div
-                    class="rank flip d-flex justify-content-center align-items-center text-align-center"
+                    class="rank p-4 flip d-flex justify-content-center align-items-center text-align-center"
                   >
                     {{
                       user.leaderboard.length > 0
-                        ? user.leaderboard[0].total
+                        ? user.leaderboard[0].total + "XP"
                         : "0" + "XP"
                     }}
                   </div>
