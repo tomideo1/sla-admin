@@ -72,10 +72,9 @@
             @tag="addTag"
           >
           </multiselect>
-          <d-textarea
-            style="min-height: 140px;"
+          <editor
             v-model="formData.details"
-            class="form-control mb-3"
+            class=" mb-3"
             placeholder="Description"
           />
           <d-textarea

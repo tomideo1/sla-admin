@@ -81,12 +81,11 @@
               @tag="addTag"
             >
             </multiselect>
-            <textarea
-              style="min-height: 140px;"
+            <editor
               v-model="course.details"
-              class="form-control mb-3"
-            >
-            </textarea>
+              class=" mb-3"
+              placeholder="Description"
+            />
             <textarea
               style="min-height: 140px;"
               v-model="course.requirements"
