@@ -118,12 +118,9 @@
                   <option value="video">Video</option>
                   <option value="audio">Audio</option>
                 </d-select>
-                <d-textarea
-                  class="col-md-12 col-12 col-lg-12 border-bottom m-2"
-                  style="border: none;"
-                  placeholder="Details"
-                  v-model="item.details"
-                />
+                <div class="col-md-12 col-12 col-lg-12 border-bottom m-2">
+                  <editor v-model="item.details" />
+                </div>
               </div>
               <div class="m-2" v-show="item.lesson_type === 'article'">
                 <editor v-model="item.content" />
