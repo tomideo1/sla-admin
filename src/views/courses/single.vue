@@ -140,6 +140,7 @@
                     <option value="audio">Audio</option>
                   </d-select>
                   <div class="col-md-12 col-12 col-lg-12 border-bottom m-2">
+                    <p class="m-2 text-bold ">Lesson Details</p>
                     <editor v-model="item.details" />
                   </div>
                 </div>
