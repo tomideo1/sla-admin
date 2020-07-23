@@ -144,6 +144,7 @@
                     <editor v-model="item.details" />
                   </div>
                 </div>
+                <p class="m-2 text-bold ">Lesson Content</p>
                 <div class="m-2" v-if="item.lesson_type === 'article'">
                   <editor v-model="item.content" />
                 </div>
@@ -167,7 +168,7 @@
                     v-model="item.content"
                     class="border-bottom p-3"
                     style="border: none;"
-                    placeholder="Post an embedded video script of your audio file "
+                    placeholder="Post an embedded audio script of your audio file "
                   />
                 </div>
                 <div class="d-flex flex-row m-2">

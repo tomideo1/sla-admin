@@ -21,7 +21,7 @@
           }}
         </span>
         <div style="display: inline;">
-          <span style="word-break: break-all;">{{ chat.message }}</span>
+          <span>{{ chat.message }}</span>
         </div>
       </span>
       <div class="text-grey-500 text-align-right">
