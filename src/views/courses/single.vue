@@ -207,7 +207,7 @@
               <d-button
                 class="btn btn-outline-light  mt-4  p-3 col-md-8 "
                 style="background: #FFFFFF;border: 1px solid #E7E6E6;border-radius: 5px; color: black"
-                @click="addValue()"
+                @click="addValue(lesson.fields.length)"
               >
                 <icon name="add" /> <span> Add Lesson</span>
               </d-button>
@@ -612,8 +612,8 @@ export default {
     deleteValue(index) {
       this.lesson.fields.splice(index, 1);
     },
-    addValue() {
-      this.lesson.fields.push({ new_lesson: true });
+    addValue(index) {
+      this.lesson.fields.push({ new_lesson: true, lesson_number: index + 1 });
       // this.$emit('input', this.fields);
     },
     addQuiz() {
